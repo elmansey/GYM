@@ -5,7 +5,7 @@ import router from '../router'
 import layout from './modules/layout'
 import menu from './modules/menu'
 import auth from './modules/auth'
-
+import role from './modules/role'
 Vue.use(Vuex);
 
 export const store = new Vuex.Store({
@@ -20,6 +20,7 @@ export const store = new Vuex.Store({
       layout,
       menu,
         auth,
+        role
 
     }
 });

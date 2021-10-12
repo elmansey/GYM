@@ -27,7 +27,7 @@ class CreateDefaultAdminSeeder extends Seeder
             'name' => 'test',
             'email' => 'admin@gmail.com',
             'password' => bcrypt(123456),
-            'role_id'  => $role->id
+            'role'  => json_encode(['Admin'])
 
         ]);
 

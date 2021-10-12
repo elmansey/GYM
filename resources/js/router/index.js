@@ -25,9 +25,9 @@ const routes = [
     },
 
         {
-            path: 'addRole',
-            name: 'addRole',
-            component: require('@/pages/roles/addRole').default,
+            path: 'role',
+            name: 'role',
+            component: require('@/pages/roles/Role').default,
 
         },
 

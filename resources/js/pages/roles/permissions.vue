@@ -8,11 +8,7 @@
                         <div class="card-body">
                             <div class="datatable-vue m-0">
 
-                                <button id="default-outline-primary-sm" type="button" class="btn btn-pull btn-outline-primary btn-outline-primary btn-sm mb-3">
-
-                                    <router-link :to="{name : 'addRole'}">add Role</router-link>
-
-                                </button>
+                                <button id="default-outline-primary-sm" @click.prevent="add"  class="btn btn-pull btn-outline-primary btn-outline-primary btn-sm mb-3">add Role  </button>
 
                                 <div class="table-responsive vue-smart">
                                     <v-table
@@ -25,38 +21,41 @@
                                     >
                                         <thead slot="head">
 
-                                        <th sortKey="id">ID</th>
+                                        <th></th>
                                         <th sortKey="name">name</th>
+                                        <th sortKey="name">permission</th>
                                         <th sortKey="options">options</th>
                                         </thead>
 
                                         <tbody slot="body" slot-scope="{ displayData }">
                                         <tr v-for="(row, index) in displayData" :key="index">
-                                            <td>{{ row.id }}</td>
-                                            <td>{{ row.name }}</td>
+                                            <td></td>
+                                            <td>{{ row.role }}</td>
+                                            <td><span class="badge badge-success" style="cursor:pointer"  @click="showPermission" >{{ row.role }}</span></td>
                                             <td>
                                                 <div>
                                                     <b-button-group class="btn-container ">
 
-                                                        <router-link
-                                                            class="custom-color"
-                                                            :to="{name: '',params: { id: row.id } }" >
+
                                                             <b-button
                                                                 squared
                                                                 variant="outline-warning"
                                                                 class="btn-sm btn-child"
+                                                                @click.prevent="edit(row)"
                                                             >
-                                                                <i class="icon-pencil-alt"></i>
+                                                               Edit
                                                             </b-button>
-                                                        </router-link>
+
 
                                                         <b-button
                                                             squared
                                                             variant="outline-danger"
-                                                            @click=""
+
                                                             class="btn-sm btn-child"
-                                                        ><i class="fa fa-trash"></i
-                                                        ></b-button>
+                                                            @click="twoEvent(row.id)" >
+
+                                                           Delete
+                                                        </b-button>
 
 
 
@@ -79,8 +78,23 @@
                                 </div>
 
 
-
                             </div>
+
+
+
+
+                            <b-modal id="bv-modal-example" hide-footer>
+                                <template #modal-title>
+                                   Delete Role
+                                </template>
+                                <div class="d-block text-center">
+                                    <h5>are you sure to delete this Role</h5>
+                                </div>
+                                <b-button class="mt-3"  v-b-modal.modal-sm variant="default" @click="$bvModal.hide('bv-modal-example')">Cansel</b-button>
+                                <b-button class="mt-3"  v-b-modal.modal-sm variant="danger"  @click="destroy">delete</b-button>
+                            </b-modal>
+                        </div>
+
                         </div>
                     </div>
                 </div>
@@ -97,26 +111,77 @@ export default {
     data() {
         return {
             roles: [],
+
             filter: {
                 currentPage: 1,
                 totalPages: 0,
             },
+            id:''
 
         };
     },
     beforeMount() {
         axios.get("roles")
             .then((res) => {
-                this.roles = res.data.roles;
+                this.roles = res.data.RoleAndPermission;
+
             })
             .catch((err) => {
                 console.log(err);
             });
     },
     methods: {
+        async edit(roleData) {
+            await this.$store.dispatch('EDIT')
+            await this.$store.dispatch('ROLEDATATOEDIT', roleData)
+            this.$router.push('role')
+        },
+        async add() {
+            await this.$store.dispatch('ADD')
+            this.$router.push('role')
+        },
 
-    },
-};
+
+        showPermission() {
+
+        },
+        async twoEvent(id){
+            await this.$store.dispatch('DELETEID',id)
+            this.id = this.$store.getters.DELETEID
+            this.$bvModal.show('bv-modal-example')
+
+        },
+
+
+        destroy(){
+
+
+                axios.post('roleDelete',this.id)
+                .then(res => {
+
+                    if(res.data.success == true){
+
+                        Toast.fire({
+                            icon: 'success',
+                            title: 'Role deleted successfully'
+                        })
+                        this.$store.dispatch('DELETEID','')
+                        this.$bvModal.hide('bv-modal-example')
+
+                    }
+
+
+                })
+                .catch(err => {
+                    console.log(err.message)
+                })
+
+
+        }
+    }
+
+}
+
 </script>
 <style lang="scss">
 .btn-container {
