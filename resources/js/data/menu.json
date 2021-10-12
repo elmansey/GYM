@@ -1,0 +1,28 @@
+{
+  "data": [
+        {
+          "title": "Dashboard",
+            "icon": "home",
+            "type": "link",
+            "badgeType": "primary",
+            "active": true,
+            "path": "/dashboard"
+
+      },
+
+
+      {
+          "title": "Permissions",
+          "icon": "user-check",
+          "type": "sub",
+          "badgeType": "primary",
+          "active": false,
+          "children": [
+
+          { "path": "/dashboard/permissions", "title": "User permissions", "type": "link" }
+
+
+      ]
+      }
+      ]
+}
