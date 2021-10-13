@@ -1,6 +1,7 @@
 const  state = {
     edit : false,
     roleDataToEdit:{},
+    roleDataToShow:''
 }
 
 const  getters = {
@@ -11,6 +12,9 @@ const  getters = {
     ROLEDATATOEDIT(state){
         return state.roleDataToEdit
     },
+    roleDataToShow(state){
+        return state.roleDataToShow
+    }
 
 }
 
@@ -24,6 +28,9 @@ const  mutations = {
     ROLEDATATOEDIT(state,payload){
         state.roleDataToEdit = payload
     },
+    roleDataToShow(state,payload){
+            state.roleDataToShow = payload
+    }
 
 }
 
@@ -37,6 +44,9 @@ const  actions = {
     ROLEDATATOEDIT({commit},payload){
         commit('ROLEDATATOEDIT',payload)
     },
+    roleDataToShow({commit},payload){
+        commit('roleDataToShow',payload)
+    }
 
 }
 

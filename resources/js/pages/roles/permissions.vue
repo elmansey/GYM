@@ -1,5 +1,10 @@
+
+
+
 <template>
-    <div>
+
+    <div v-if="isLoadig">
+
         <Breadcrumbs main="Dashboard" title="permissions" />
         <div class="container-fluid">
             <div class="row">
@@ -23,7 +28,7 @@
 
                                         <th></th>
                                         <th sortKey="name">name</th>
-                                        <th sortKey="name">permission</th>
+                                        <th sortKey="name" >permission</th>
                                         <th sortKey="options">options</th>
                                         </thead>
 
@@ -31,7 +36,7 @@
                                         <tr v-for="(row, index) in displayData" :key="index">
                                             <td></td>
                                             <td>{{ row.role }}</td>
-                                            <td><span class="badge badge-success" style="cursor:pointer"  @click="showPermission" >{{ row.role }}</span></td>
+                                            <td><span class="badge badge-success" style="cursor:pointer" @click.prevent="showRole(row)" >{{ row.role }}</span></td>
                                             <td>
                                                 <div>
                                                     <b-button-group class="btn-container ">
@@ -99,8 +104,20 @@
                     </div>
                 </div>
             </div>
+
+
+
+     </div>
+
+    <div v-else class="col-md-3" style="margin: auto; position: absolute;top: 50%; right: 50%;transform: translate(50%,-50%);">
+        <h6 class="sub-title mb-0 text-center"></h6>
+        <div class="loader-box" >
+            <div class="loader-3"></div>
         </div>
     </div>
+
+
+
 </template>
 
 <script>
@@ -117,7 +134,8 @@ export default {
                 totalPages: 0,
             },
             id:'',
-            key:''
+            key:'',
+            isLoadig:false
 
 
         };
@@ -126,7 +144,7 @@ export default {
         axios.get("roles")
             .then((res) => {
                 this.roles = res.data.RoleAndPermission;
-
+                this.isLoadig = true
             })
             .catch((err) => {
                 console.log(err);
@@ -162,6 +180,7 @@ export default {
                 .then(res => {
 
                     if(res.data.success == true){
+
                         this.id = ''
                         this.key = ''
                        this.roles.splice(this.key,1)
@@ -181,6 +200,11 @@ export default {
                 })
 
 
+        },
+
+       async showRole(data){
+           await this.$store.dispatch('roleDataToShow',data)
+            this.$router.push('showRole')
         }
     }
 

@@ -16,18 +16,21 @@ class CreateDefaultAdminSeeder extends Seeder
         DB::table('users')->delete();
 
 
-        $role = Role::create(['name' => 'Admin']);
+        $role = Role::create(['name' => 'owner']);
         $permissions = Permission::pluck('id','id')->all();
         $role->syncPermissions($permissions);
 
 
+        $ElRoles = ['owner'];
 
         $user = User::create([
 
+
             'name' => 'test',
-            'email' => 'admin@gmail.com',
+            'email' => 'owner@gmail.com',
             'password' => bcrypt(123456),
-            'role'  => json_encode(['Admin'])
+            'phone' => '01019535581' ,
+            'roles'  => json_encode($ElRoles)
 
         ]);
 

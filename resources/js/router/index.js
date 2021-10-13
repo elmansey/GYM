@@ -30,6 +30,29 @@ const routes = [
             component: require('@/pages/roles/Role').default,
 
         },
+        {
+            path: 'showRole',
+            name: 'showRole',
+            component: require('@/pages/roles/showRole').default,
+            meta: {
+                requirIsSetData: true
+            },
+        },
+        {
+            path: 'adminsList',
+            name: 'adminsList',
+            component: require('@/pages/admins/admins_list').default,
+
+        },
+
+        {
+            path: 'addAdmin',
+            name: 'addAdmin',
+            component: require('@/pages/admins/addAdmin').default,
+
+        },
+
+
 
     ]
   },
@@ -74,6 +97,19 @@ router.beforeEach(async (to, from, next) => {
         }
 
     }
+    if (to.matched.some(record => record.meta.requirIsSetData)) {
+
+        if (store.getters.roleDataToShow) {
+            next();
+
+        } else {
+            next({ name: "permissions" });
+        }
+
+    }
+
+
+
 
     next();
 

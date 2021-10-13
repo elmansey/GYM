@@ -38,8 +38,9 @@ Route::group(['middleware'=>'JWTchecker'],function (){
     Route::resource('roles', RoleController::class);
 
     //user
-    Route::post('users',[UserController::class,'index'])->name('users');
-    Route::post('userAdd',[UserController::class,'store'])->name('userAdd');
+    Route::get('users',[UserController::class,'index'])->name('users');
+    Route::post('adminAdd',[UserController::class,'store'])->name('adminAdd');
+    Route::get('createUser',[UserController::class,'create'])->name('createUser');
     Route::post('userUpdate',[UserController::class,'update'])->name('userUpdate');
     Route::post('userDelete',[UserController::class,'destroy'])->name('userDelete');
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\user;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\RolesResource;
 use App\Http\Resources\UsersResource;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -16,14 +17,14 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $data = User::all();
-        return response()->json(['success'=>true ,'users'=> UsersResource::collection($data)] ,200);
+        return response()->json(['success'=>true ,'admins'=> UsersResource::collection($data)] ,200);
     }
 
 
     public function create()
     {
-        $roles = Role::pluck('name','name')->all();
-        return response()->json(['success'=>true ,'roles'=> $roles] ,200);
+        $roles = Role::all();
+        return response()->json(['success'=>true ,'roles'=> RolesResource::collection($roles)] ,200);
     }
 
 
@@ -32,9 +33,12 @@ class UserController extends Controller
         $validator = validator::make($request->all(), [
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|same:confirm-password',
+            'phone' => 'required',
+            'password' => 'required|same:confirm_password',
+            'confirm_password' => 'required',
             'roles' => 'required'
         ]);
+
 
 
         if($validator->fails()){
@@ -44,11 +48,26 @@ class UserController extends Controller
 
         }
 
+
+
+
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
 
+        $input['roles'] =collect( $input['roles'])->pluck('name');
+
         $user = User::create($input);
-        $user->assignRole($request->input('roles')); // بيحطها في جدول الرول
+        $User_role = $request->input('roles');
+        $role = [];
+
+        foreach ($User_role as $k => $v){
+
+            $role[] = $v['name'];
+
+        }
+
+
+        $user->assignRole($role); // بيحطها في جدول الرول
 
         return response()->json(['success'=>true,'message'=>'User created successfully','user'=>new UsersResource($user)],200);
 
