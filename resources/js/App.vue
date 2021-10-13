@@ -15,8 +15,11 @@
 </template>
 
 <script>
+import PulseLoader from "vue-spinner/src/PulseLoader";
+
 export default {
   name: 'app',
+
   data(){
     return{
       show: true

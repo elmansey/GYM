@@ -7,6 +7,7 @@ import { store } from './store';
 import Breadcrumbs from './components/bread_crumbs'
 import SmartTable from "vuejs-smart-table";
 import { FormGroupPlugin } from 'bootstrap-vue'
+Vue.component('pulse-loader', require('vue-spinner/src/PulseLoader.vue'));
 
 import './axios'
 
@@ -50,5 +51,7 @@ new Vue({
   router,
   store,
   render: h => h(App)
+
+
 }).$mount('#app')
 

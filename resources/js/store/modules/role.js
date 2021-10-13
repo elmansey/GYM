@@ -1,7 +1,6 @@
 const  state = {
     edit : false,
     roleDataToEdit:{},
-    deleteId:null
 }
 
 const  getters = {
@@ -12,9 +11,7 @@ const  getters = {
     ROLEDATATOEDIT(state){
         return state.roleDataToEdit
     },
-    DELETEID(state){
-        return state.deleteId
-    }
+
 }
 
 
@@ -27,9 +24,7 @@ const  mutations = {
     ROLEDATATOEDIT(state,payload){
         state.roleDataToEdit = payload
     },
-    DELETEID(state,payload){
-        state.deleteId = payload
-    }
+
 }
 
 const  actions = {
@@ -42,9 +37,7 @@ const  actions = {
     ROLEDATATOEDIT({commit},payload){
         commit('ROLEDATATOEDIT',payload)
     },
-    DELETEID({commit},payload){
-        commit('DELETEID',payload)
-    }
+
 }
 
 export default {

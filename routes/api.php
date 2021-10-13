@@ -49,7 +49,7 @@ Route::group(['middleware'=>'JWTchecker'],function (){
     Route::get('createRole',[RoleController::class,'create'])->name('create');
     Route::post('roleAdd',[RoleController::class,'store'])->name('roleAdd');
     Route::post('roleUpdate',[RoleController::class,'update'])->name('roleUpdate');
-    Route::post('roleDelete',[RoleController::class,'destroy'])->name('roleDelete');
+    Route::get('roleDelete/{id}',[RoleController::class,'destroy'])->name('roleDelete');
 
 
 

@@ -52,7 +52,7 @@
                                                             variant="outline-danger"
 
                                                             class="btn-sm btn-child"
-                                                            @click="twoEvent(row.id)" >
+                                                            @click="twoEvent(row.id,index)" >
 
                                                            Delete
                                                         </b-button>
@@ -116,7 +116,9 @@ export default {
                 currentPage: 1,
                 totalPages: 0,
             },
-            id:''
+            id:'',
+            key:''
+
 
         };
     },
@@ -145,9 +147,9 @@ export default {
         showPermission() {
 
         },
-        async twoEvent(id){
-            await this.$store.dispatch('DELETEID',id)
-            this.id = this.$store.getters.DELETEID
+         twoEvent(id,key){
+             this.id = id
+             this.key = key
             this.$bvModal.show('bv-modal-example')
 
         },
@@ -156,16 +158,18 @@ export default {
         destroy(){
 
 
-                axios.post('roleDelete',this.id)
+                axios.get('roleDelete/'+this.id)
                 .then(res => {
 
                     if(res.data.success == true){
-
+                        this.id = ''
+                        this.key = ''
+                       this.roles.splice(this.key,1)
                         Toast.fire({
                             icon: 'success',
                             title: 'Role deleted successfully'
                         })
-                        this.$store.dispatch('DELETEID','')
+
                         this.$bvModal.hide('bv-modal-example')
 
                     }
