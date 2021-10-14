@@ -26,7 +26,7 @@
                                         <div class="col-form-label">Choose the permissions for this Role</div>
 
                                         <multiselect  v-model="role.permission" tag-placeholder="Add this as new tag" placeholder="Search or add a tag"
-                                                :class="['form-control',error.permission ? 'is-invalid' : '']"      label="name" track-by="id"   @search-change="asyncFind" :options="options"  :multiple="true"   :taggable="true" @tag="addTag"  >
+                                                :class="[error.permission ? 'is-invalid' : '']"      label="name" track-by="id"   @search-change="asyncFind" :options="options"  :multiple="true"   :taggable="true" @tag="addTag"  >
 
                                         </multiselect>
                                         <small  style="color: red" v-if="error.permission">{{ error.permission[0] }}</small>

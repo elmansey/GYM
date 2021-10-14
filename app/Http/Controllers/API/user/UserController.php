@@ -69,7 +69,7 @@ class UserController extends Controller
 
         $user->assignRole($role); // بيحطها في جدول الرول
 
-        return response()->json(['success'=>true,'message'=>'User created successfully','user'=>new UsersResource($user)],200);
+        return response()->json(['success'=>true,'message'=>'User created successfully','user'=>new UsersResource($user),'roles'=> RolesResource::collection($User_role)],200);
 
     }
 

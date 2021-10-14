@@ -1,6 +1,6 @@
 const  state = {
     editAdmin : false,
-    AdminInfoToEdit:''
+    AdminInfoToEdit: ''
 
 }
 
@@ -24,6 +24,10 @@ const  mutations = {
          state.editAdmin = payload
     },
 
+    addAdmin(state,payload){
+        state.editAdmin = payload
+    },
+
     AdminInfoToEdit(state,payload){
         state.AdminInfoToEdit = payload
     },
@@ -37,6 +41,11 @@ const  actions = {
         commit('AdminInfoToEdit',payload)
         commit('editAdmin',true)
     },
+
+    addAdmin({commit}){
+        commit('AdminInfoToEdit','')
+        commit('addAdmin',false)
+    }
 
 }
 

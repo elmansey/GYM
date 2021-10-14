@@ -25,14 +25,14 @@
       ]
       },
       {
-          "title": "Administration",
+          "title": "Work Team",
           "icon": "users",
           "type": "sub",
           "badgeType": "primary",
           "active": false,
           "children": [
 
-              { "path": "/dashboard/adminsList", "title": "admin list", "type": "link" }
+              { "path": "/dashboard/adminsList", "title": "team list", "type": "link" }
 
 
           ]

@@ -165,8 +165,10 @@ export default {
     },
     methods: {
 
-        addAdmin(){
-            this.$router.push('addAdmin')
+        async addAdmin(){
+
+           await this.$store.dispatch('addAdmin')
+               this.$router.push('addAdmin')
         },
       async EditAdmin(admin){
 

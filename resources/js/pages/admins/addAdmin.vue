@@ -1,3 +1,4 @@
+<script src="../../../../../ح/gexeer_project/resources/js/app.js"></script>
 <template>
     <div>
         <Breadcrumbs main="dashboard" :title="this.$store.getters.editAdmin ? 'edit admin' : 'add admin'"/>
@@ -37,7 +38,7 @@
                                         <div class="col-form-label">Choose the  Roles</div>
 
                                         <multiselect  v-model="adminData.roles" tag-placeholder="Add this as new tag" placeholder="Search or add a tag"
-                                                      :class="['form-control',error.roles ? 'is-invalid' : '']"     label="name" track-by="id"   @search-change="asyncFind" :options="options"  :multiple="true"   :taggable="true" @tag="addTag"  >
+                                                      :class="[error.roles ? 'is-invalid' : '']"     label="name" track-by="id"   @search-change="asyncFind" :options="options"  :multiple="true"   :taggable="true" @tag="addTag"  >
 
                                         </multiselect>
                                         <small  style="color: red" v-if="error.roles">{{ error.roles[0]}}</small>
@@ -91,7 +92,7 @@ export default {
                 phone:'',
                 password:'',
                 confirm_password:'',
-                roles: ''
+                roles: null
             },
 
             options: [],
@@ -114,6 +115,7 @@ export default {
         })
         .catch(err => {
 
+            console.log(err)
         })
 
     },
@@ -121,11 +123,9 @@ export default {
     created() {
 
         if(this.$store.getters.editAdmin == true){
-            this.adminData.id = this.$store.getters.AdminInfoToEdit.id
-            this.adminData.name = this.$store.getters.AdminInfoToEdit.name
-            this.adminData.email = this.$store.getters.AdminInfoToEdit.email
-            this.adminData.phone = this.$store.getters.AdminInfoToEdit.phone
-            this.adminData.roles = JSON.parse(this.$store.getters.AdminInfoToEdit.roles)
+
+            this.adminData = this.$store.getters.AdminInfoToEdit
+
         }
 
     },

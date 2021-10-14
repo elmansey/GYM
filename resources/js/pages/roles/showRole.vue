@@ -12,7 +12,7 @@
                         </div>
                         <div class="card-body">
                             <b-list-group tag="ul" v-for="(item,index) in data.permission" :key="index">
-                                <b-list-group-item tag="li"><span class="badge badge-success">{{item.name}}</span></b-list-group-item>
+                                <b-list-group-item tag="li" ><span class="badge badge-primary" style="font-size: 14px;">{{item.name}}</span></b-list-group-item>
 
                             </b-list-group>
                         </div>
