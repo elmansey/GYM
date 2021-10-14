@@ -47,6 +47,36 @@ Vue.component('Breadcrumbs', Breadcrumbs)
 Vue.use(SmartTable);
 Vue.use(FormGroupPlugin)
 
+
+// global mixin
+Vue.mixin({
+    methods:{
+
+        // can:(permission) => store.getters.authPermission.includes(permission) ? true : false,
+        can:function (permission){
+            var  perm = store.getters.authPermission
+            var len  = perm.length
+
+
+            for(var i = 0 ; i < len ; i++){
+                if(perm[i].name == permission){
+
+                    return true
+                }else {
+                    return false
+
+                }
+
+            }
+
+        }
+
+    }
+})
+
+
+
+
 new Vue({
   router,
   store,

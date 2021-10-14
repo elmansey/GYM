@@ -1,33 +1,14 @@
 import axios from 'axios'
 import router from '@/router/index'
+import paypal from "vue-rate-it/glyphs/paypal";
 //to save
 const  state = {
     isAuth : false,
     user:null,
     errors:'',
-    token:localStorage.getItem('token')
-}
-
-// to show item saved in state
-const getters = {
-
-    authentication(state){
-        return state.isAuth
-    },
-
-    AllError(state){
-        return state.errors
-    },
-
-    USER(state){
-        return state.user
-    },
-
-    AUTH_TOKEN(state){
-        return state.token
-    },
-
-
+    token:localStorage.getItem('token'),
+    authUserRole:null,
+    authPermission:null
 }
 
 
@@ -97,6 +78,16 @@ const  mutations = {
         state.user = null;
     },
 
+    authUserRole(state,payload){
+
+        state.authUserRole = payload
+    },
+
+    authPermission(state,payload){
+        state.authPermission = payload
+
+    },
+
 
 }
 
@@ -105,7 +96,7 @@ const  mutations = {
 // do conection with api and call mutations
 const actions = {
 
-   loginUser({commit},payload){
+    loginUser({commit},payload){
 
        axios.post('login',{
            email:payload.email,
@@ -124,8 +115,26 @@ const actions = {
                })
 
            }else{
-               commit('loginSuccess',res.data.data.access_token)
+
+                commit('loginSuccess',res.data.data.access_token)
                commit('SET_USER',res.data.data.user)
+
+                  axios.get('info')
+                      .then(res => {
+
+                          commit('USER_INFO_SUCCESS', res.data.data)
+                          commit('authUserRole',res.data.role)
+                          commit('authPermission',res.data.permission)
+
+                      })
+                      .catch(err => {
+                          commit('USER_INFO_FAILD')
+
+                      })
+
+
+
+
            }
 
 
@@ -150,13 +159,16 @@ const actions = {
        })
    },
 
-    async userInfo({commit}) {
+    async userInfo({commit,getters}) {
 
        try{
          const res =   await  axios.get('info')
 
 
            commit('USER_INFO_SUCCESS', res.data.data)
+          await commit('authUserRole',res.data.role)
+           await commit('authPermission',res.data.permission)
+
 
        }catch(err ){
 
@@ -166,9 +178,45 @@ const actions = {
 
 
 
-    }
+    },
+
+
+
+
 
 }
+
+    // to show item saved in state
+const getters = {
+
+    authentication(state){
+        return state.isAuth
+    },
+
+    AllError(state){
+        return state.errors
+    },
+
+    USER(state){
+        return state.user
+    },
+
+    AUTH_TOKEN(state){
+        return state.token
+    },
+
+    authUserRole(state){
+        return state.authUserRole
+    },
+    authPermission(state){
+        return state.authPermission
+
+    }
+
+
+
+}
+
 
 
 

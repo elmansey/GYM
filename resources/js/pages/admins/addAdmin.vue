@@ -61,7 +61,7 @@
                                 <button class="btn btn-primary mt-3"  v-if="!this.$store.getters.editAdmin" @click.prevent="storeAdmin">
                                     Save
                                 </button>
-                                <button class="btn btn-success mt-3"   v-if="this.$store.getters.editAdmin" @click.prevent="">
+                                <button class="btn btn-success mt-3"   v-if="this.$store.getters.editAdmin" @click.prevent="editAdmin">
                                     update
                                 </button>
 
@@ -161,6 +161,28 @@ export default {
             .catch(err => {
                 console.log(err)
             })
+        },
+        editAdmin(){
+
+            axios.post('userUpdate',this.adminData)
+                .then(res => {
+
+                    if(res.data.success == true){
+                        Toast.fire({
+                            icon: 'success',
+                            title: 'admin updated successfully'
+                        })
+                        this.$router.push('adminsList')
+                    }else if(res.data.success == false) {
+
+                        this.error = res.data.message
+                    }
+
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+
         }
     }
 

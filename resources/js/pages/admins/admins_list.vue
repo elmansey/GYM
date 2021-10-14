@@ -5,7 +5,7 @@
 
     <div v-if="isLoadig">
 
-        <Breadcrumbs main="Dashboard" title="admins list" />
+        <Breadcrumbs main="Dashboard" title="Team member list" />
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
@@ -13,7 +13,7 @@
                         <div class="card-body">
                             <div class="datatable-vue m-0">
 
-                                <button id="default-outline-primary-sm" @click.prevent="addAdmin"  class="btn btn-pull btn-outline-primary btn-outline-primary btn-sm mb-3">add admin  </button>
+                                <button id="default-outline-primary-sm" @click.prevent="addAdmin"  class="btn btn-pull btn-primary  btn-xs mb-3 p-1">add member  </button>
 
                                 <div class="table-responsive vue-smart">
                                     <v-table
@@ -40,7 +40,12 @@
                                             <td>{{ row.name}}</td>
                                             <td>{{ row.email}}</td>
                                             <td>{{ row.phone}}</td>
-                                            <td  > <span class="badge badge-success "    v-for="(val,key) in (JSON.parse(row.roles))" :key="key" >{{ val }}</span> </td>
+                                            <td >
+                                                <span class="badge badge-success" v-for="(v,k) in row.roles">
+                                                    {{v.name}}
+                                                </span>
+
+                                            </td>
                                             <td>
                                                 <div>
                                                     <b-button-group class="btn-container ">
@@ -61,7 +66,7 @@
                                                             variant="outline-danger"
 
                                                             class="btn-sm btn-child"
-                                                            @click="" >
+                                                            @click="DeleteAdminModal(row.id,index)" >
 
                                                            Delete
                                                         </b-button>
@@ -94,13 +99,13 @@
 
                             <b-modal id="bv-modal-example" hide-footer>
                                 <template #modal-title>
-                                   Delete Role
+                                   Delete Team member
                                 </template>
                                 <div class="d-block text-center">
-                                    <h5>are you sure to delete this Role</h5>
+                                    <h5>are you sure to delete this Admin</h5>
                                 </div>
-                                <b-button class="mt-3"  v-b-modal.modal-sm variant="default" @click="$bvModal.hide('bv-modal-example')">Cansel</b-button>
-                                <b-button class="mt-3"  v-b-modal.modal-sm variant="danger"  @click="">delete</b-button>
+                                <b-button class="mt-3"  v-b-modal.modal-sm variant="default" @click="$bvModal.hide('bv-modal-example')">Cancel</b-button>
+                                <b-button class="mt-3"  v-b-modal.modal-sm variant="danger"  @click.prevent="deleteAdmin">delete</b-button>
                             </b-modal>
                         </div>
 
@@ -131,8 +136,7 @@ import axios from "axios";
 export default {
     data() {
         return {
-            admins: [],
-
+            admins: null,
             filter: {
                 currentPage: 1,
                 totalPages: 0,
@@ -159,8 +163,14 @@ export default {
 
         })
         .catch(err => {
-            console.log(err.message)
+
+
         })
+
+    },
+    created() {
+
+
 
     },
     methods: {
@@ -174,6 +184,35 @@ export default {
 
            await this.$store.dispatch('AdminInfoToEdit',admin)
           this.$router.push('addAdmin')
+        },
+        DeleteAdminModal(id,key){
+             this.id = id
+             this.key = key
+           this.$bvModal.show('bv-modal-example')
+
+       },
+        deleteAdmin(){
+
+
+            axios.get('userDelete/'+this.id)
+            .then(res => {
+
+                if(res.data.success == true){
+                    this.id = ''
+                    this.key = ''
+                    this.admins.splice(this.key,1)
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'admin deleted successfully'
+                    })
+
+                    this.$bvModal.hide('bv-modal-example')
+                }
+            })
+            .catch(err => {
+
+            })
+
         }
     }
 }

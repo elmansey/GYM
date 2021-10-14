@@ -5,25 +5,11 @@
             "icon": "home",
             "type": "link",
             "badgeType": "primary",
-            "active": true,
+            "active": false,
             "path": "/dashboard"
 
       },
 
-
-      {
-          "title": "Permissions",
-          "icon": "user-check",
-          "type": "sub",
-          "badgeType": "primary",
-          "active": false,
-          "children": [
-
-          { "path": "/dashboard/permissions", "title": "User permissions", "type": "link" }
-
-
-      ]
-      },
       {
           "title": "Work Team",
           "icon": "users",
@@ -36,6 +22,19 @@
 
 
           ]
+      },
+      {
+          "title": "Permissions",
+          "icon": "user-check",
+          "type": "sub",
+          "badgeType": "primary",
+          "active": false,
+          "children": [
+
+              { "path": "/dashboard/permissions", "title": "User permissions", "type": "link" }
+
+
+          ]
       }
-      ]
+  ]
 }

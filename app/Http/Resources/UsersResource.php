@@ -16,6 +16,7 @@ class UsersResource extends JsonResource
             'phone' => $this->phone,
             'roles' => $this->roles
 
+
         ];
     }
 }

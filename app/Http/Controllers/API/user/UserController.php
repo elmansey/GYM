@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
@@ -48,19 +49,16 @@ class UserController extends Controller
 
         }
 
-
-
-
         $input = $request->all();
-        $input['password'] = bcrypt($input['password']);
+        $input['password']  = bcrypt($input['password']);
 
-        $input['roles'] =collect( $input['roles'])->pluck('name');
 
-        $user = User::create($input);
-        $User_role = $request->input('roles');
+
+        $user =  User::create($input);
+
         $role = [];
 
-        foreach ($User_role as $k => $v){
+        foreach ($request->roles as $k => $v){
 
             $role[] = $v['name'];
 
@@ -69,7 +67,7 @@ class UserController extends Controller
 
         $user->assignRole($role); // بيحطها في جدول الرول
 
-        return response()->json(['success'=>true,'message'=>'User created successfully','user'=>new UsersResource($user),'roles'=> RolesResource::collection($User_role)],200);
+        return response()->json(['success'=>true,'message'=>'User created successfully','user'=>new UsersResource($user)],200);
 
     }
 
@@ -81,31 +79,28 @@ class UserController extends Controller
 
 
 
-    public function edit($id)
-    {
-        $user = User::find($id);
-        $roles = Role::pluck('name','name')->all(); // all role to  mind change
-        $userRole = $user->roles->pluck('name','name')->all(); //role related this user
-
-        return response()->json(['success'=>true ,'data'=> [
-            'user'                  => $user,
-            'allRoles'              => $roles,
-            'roleRelatedThisUser'   => $userRole
-
-        ]] ,200);
-    }
-
-
-
 
     public function update(Request $request)
     {
-        $validator = validator::make($request->all(), [
+
+        if($request->input('password')){
+
+            $required = true;
+
+
+        }else{
+            $required = false;
+
+        }
+
+            $validator = validator::make($request->all(), [
             'name'     => 'required',
             'email'    => 'required|email|unique:users,email,'.$request->id,
-            'password' => 'required|same:confirm-password',
+            'password' => 'same:confirm_password',
+            'confirm_password' => Rule::requiredIf($required),
             'roles'    => 'required'
         ]);
+
 
 
         if($validator->fails()){
@@ -132,7 +127,13 @@ class UserController extends Controller
 
         DB::table('model_has_roles')->where('model_id',$request->id)->delete();
 
-        $user->assignRole($request->input('roles'));
+        $role = [];
+
+        foreach ($request->roles as $k => $v){
+
+            $role[] = $v['name'];
+        }
+        $user->assignRole($role);
 
         return response()->json(['success'=>true ,'message'=> 'updated successfully','user'=>new UsersResource($user)] ,200);
 
@@ -140,9 +141,11 @@ class UserController extends Controller
 
 
 
-    public function destroy(Request $request)
+    public function destroy($id)
     {
-        User::find($request->id)->delete();
+
+       $user =  User::find($id);
+       $user->delete();
         return response()->json(['success'=>true ,'message'=> 'deleted successfully'] ,200);
 
     }

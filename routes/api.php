@@ -42,7 +42,7 @@ Route::group(['middleware'=>'JWTchecker'],function (){
     Route::post('adminAdd',[UserController::class,'store'])->name('adminAdd');
     Route::get('createUser',[UserController::class,'create'])->name('createUser');
     Route::post('userUpdate',[UserController::class,'update'])->name('userUpdate');
-    Route::post('userDelete',[UserController::class,'destroy'])->name('userDelete');
+    Route::get('userDelete/{id}',[UserController::class,'destroy'])->name('userDelete');
 
 
     //role

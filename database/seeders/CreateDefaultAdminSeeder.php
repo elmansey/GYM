@@ -21,7 +21,7 @@ class CreateDefaultAdminSeeder extends Seeder
         $role->syncPermissions($permissions);
 
 
-        $ElRoles = ['owner'];
+
 
         $user = User::create([
 
@@ -30,7 +30,7 @@ class CreateDefaultAdminSeeder extends Seeder
             'email' => 'owner@gmail.com',
             'password' => bcrypt(123456),
             'phone' => '01019535581' ,
-            'roles'  => json_encode($ElRoles)
+
 
         ]);
 

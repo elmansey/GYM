@@ -39,8 +39,8 @@ export default {
     beforeMount() {
       if(!this.$store.getters.authentication   && this.$store.getters.AUTH_TOKEN ){
           this.$store.dispatch('userInfo')
-
       }
+
     }
 }
 </script>

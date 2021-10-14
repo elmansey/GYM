@@ -1,6 +1,7 @@
 const  state = {
     editAdmin : false,
-    AdminInfoToEdit: ''
+    AdminInfoToEdit: '',
+
 
 }
 
@@ -45,7 +46,9 @@ const  actions = {
     addAdmin({commit}){
         commit('AdminInfoToEdit','')
         commit('addAdmin',false)
-    }
+    },
+
+
 
 }
 

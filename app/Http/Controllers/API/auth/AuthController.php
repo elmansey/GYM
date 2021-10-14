@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\API\auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\PermissionResource;
+use App\Http\Resources\RolesResource;
 use App\Http\Resources\UsersResource;
 use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Spatie\Permission\Models\Permission;
 
 class AuthController extends Controller
 {
@@ -56,7 +59,25 @@ class AuthController extends Controller
            auth()->refresh();
        }
 
-       return response()->json(['success'=>true, 'data'=>  new UsersResource(auth()->user())],200);
+
+       $user = new UsersResource(auth()->user());
+
+       $roles =   RolesResource::collection($user['roles']);
+       $permission = Permission::all();
+
+
+       $role= [];
+
+
+
+       foreach ($roles as $k => $v){
+
+           $role[] = ['id'=>$v->id,'role'=>$v->name,'permission' => PermissionResource::collection(Permission::join('role_has_permissions','role_has_permissions.permission_id','=','permissions.id')
+               ->where('role_has_permissions.role_id',$v->id)->get())];
+       }
+
+
+       return response()->json(['success'=>true, 'data'=>  new UsersResource(auth()->user()),'role'=>$role,'permission'=>PermissionResource::collection($permission)],200);
 
    }
 
@@ -84,7 +105,7 @@ class AuthController extends Controller
            'access_token' => $token,
            'token_type'   => 'bearer',
            'expires_in'   => auth('api')->factory()->getTTL() * 10080 ,
-           'user'         => auth()->guard('api')->user()
+           'user'         =>  auth()->guard('api')->user()
 
        ]);
    }

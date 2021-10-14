@@ -95,7 +95,7 @@
                                 <div class="d-block text-center">
                                     <h5>are you sure to delete this Role</h5>
                                 </div>
-                                <b-button class="mt-3"  v-b-modal.modal-sm variant="default" @click="$bvModal.hide('bv-modal-example')">Cansel</b-button>
+                                <b-button class="mt-3"  v-b-modal.modal-sm variant="default" @click="$bvModal.hide('bv-modal-example')">Cancel</b-button>
                                 <b-button class="mt-3"  v-b-modal.modal-sm variant="danger"  @click="destroy">delete</b-button>
                             </b-modal>
                         </div>
@@ -149,6 +149,13 @@ export default {
             .catch((err) => {
                 console.log(err);
             });
+
+            if(this.can('role-create')){
+                alert('true')
+            }else{
+                alert('false can')
+            }
+
     },
     methods: {
         async edit(roleData) {

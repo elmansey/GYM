@@ -85,6 +85,7 @@ router.beforeEach(async (to, from, next) => {
 
         await store.dispatch("userInfo");
 
+
     }
 
     if (to.matched.some(record => record.meta.requiresAuth)) {
