@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\PermissionResource;
 use App\Http\Resources\RolesResource;
 use App\Http\Resources\UsersResource;
+use App\Http\Resources\UserToRoleResource;
 use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -60,9 +61,11 @@ class AuthController extends Controller
        }
 
 
-       $user = new UsersResource(auth()->user());
 
-       $roles =   RolesResource::collection($user['roles']);
+           $user = auth()->user();
+
+           $roles = RolesResource::collection($user['roles']);
+
        $permission = Permission::all();
 
 
@@ -72,12 +75,12 @@ class AuthController extends Controller
 
        foreach ($roles as $k => $v){
 
-           $role[] = ['id'=>$v->id,'role'=>$v->name,'permission' => PermissionResource::collection(Permission::join('role_has_permissions','role_has_permissions.permission_id','=','permissions.id')
+           $roleAndPermission[] = ['id'=>$v->id,'role'=>$v->name,'permission' => PermissionResource::collection(Permission::join('role_has_permissions','role_has_permissions.permission_id','=','permissions.id')
                ->where('role_has_permissions.role_id',$v->id)->get())];
        }
 
 
-       return response()->json(['success'=>true, 'data'=>  new UsersResource(auth()->user()),'role'=>$role,'permission'=>PermissionResource::collection($permission)],200);
+       return response()->json(['success'=>true, 'data'=>  new UserToRoleResource(auth()->user()),'roleAndPermission'=>$roleAndPermission],200);
 
    }
 

@@ -9,10 +9,27 @@ import SmartTable from "vuejs-smart-table";
 import { FormGroupPlugin } from 'bootstrap-vue'
 Vue.component('pulse-loader', require('vue-spinner/src/PulseLoader.vue'));
 
+
+
 import './axios'
 
-// import PxCard  from './components/Pxcard.vue'
-// Vue.component(PxCard.name, PxCard)
+import PxCard  from './components/Pxcard.vue'
+Vue.component(PxCard.name, PxCard)
+
+
+import VueApexCharts from 'vue-apexcharts';
+import FunctionalCalendar from 'vue-functional-calendar';
+
+Vue.use(require('vue-chartist'))
+
+Vue.component('apexchart', VueApexCharts)
+
+
+Vue.use(FunctionalCalendar, {
+    dayNames: ['M', 'T', 'W', 'T', 'F', 'S', 'S']
+});
+
+
 
 
 // Import Theme scss
@@ -52,22 +69,34 @@ Vue.use(FormGroupPlugin)
 Vue.mixin({
     methods:{
 
-        // can:(permission) => store.getters.authPermission.includes(permission) ? true : false,
+        // can:(permission) => store.getters.authUserRole[].includes(permission) ? true : false,
         can:function (permission){
-            var  perm = store.getters.authPermission
+            var  perm = store.getters.authUserRole
             var len  = perm.length
+            let FinalPer = []
 
 
             for(var i = 0 ; i < len ; i++){
-                if(perm[i].name == permission){
 
+                store.getters.authUserRole[i].permission.forEach((element,index) => {
+
+                    FinalPer.push(element['name'])
+
+                })
+
+            }
+
+            let FinalPerLen = FinalPer.length
+            for(var t = 0 ; t < FinalPerLen ; t++){
+
+                if(FinalPer[t] == permission){
                     return true
-                }else {
-                    return false
-
                 }
 
             }
+
+
+            return false
 
         }
 

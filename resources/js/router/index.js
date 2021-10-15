@@ -17,6 +17,19 @@ const routes = [
           requiresAuth: true
       },
     children: [
+
+        {
+            path: '',
+            name: 'main',
+            component: require('@/pages/home/home').default,
+
+        },
+        {
+            path: 'error_403',
+            name: 'error_403',
+            component: require('@/pages/errors/error_403').default,
+
+        },
     {
       path: 'Permissions',
       name: 'permissions',
@@ -49,6 +62,16 @@ const routes = [
             path: 'addAdmin',
             name: 'addAdmin',
             component: require('@/pages/admins/addAdmin').default,
+            meta:{
+                permission:'add-member-in-team'
+            }
+
+        },
+
+        {
+            path: 'products',
+            name: 'products',
+            component: require('@/pages/products/products').default,
 
         },
 
@@ -98,6 +121,8 @@ router.beforeEach(async (to, from, next) => {
         }
 
     }
+
+    // should to through to show permition related this role should going through button
     if (to.matched.some(record => record.meta.requirIsSetData)) {
 
         if (store.getters.roleDataToShow) {
@@ -110,6 +135,57 @@ router.beforeEach(async (to, from, next) => {
     }
 
 
+    let FinalPer;
+    function checker(permi){
+
+        var  perm = store.getters.authUserRole
+        var len  = perm.length
+         FinalPer = []
+
+
+        for(var i = 0 ; i < len ; i++){
+
+            store.getters.authUserRole[i].permission.forEach((element,index) => {
+
+                FinalPer.push(element['name'])
+
+            })
+
+        }
+
+
+        var res = FinalPer.includes(permi)  ? true : false
+
+        if(res){
+            return true
+        }else{
+            return false
+        }
+
+    }
+
+
+
+    if (to.matched.some(record => record.meta.permission)) {
+
+        let {meta: { permission }} = to.matched.find(record => record.meta.permission);
+
+
+        if (checker(permission)) {
+
+            next();
+
+        } else {
+
+
+            // router.back()
+            window.history.back()
+            next(false)
+
+            // next({ name: "error_403" });
+
+        }
+    }
 
 
     next();

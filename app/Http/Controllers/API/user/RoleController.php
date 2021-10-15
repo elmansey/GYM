@@ -15,6 +15,13 @@ use Spatie\Permission\Models\Role;
 class RoleController extends Controller
 {
 
+
+//    public function __construct()
+//    {
+//
+//    }
+
+
     public function index(Request $request)
     {
         $roles = Role::all();

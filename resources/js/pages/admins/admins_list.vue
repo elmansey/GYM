@@ -13,7 +13,7 @@
                         <div class="card-body">
                             <div class="datatable-vue m-0">
 
-                                <button id="default-outline-primary-sm" @click.prevent="addAdmin"  class="btn btn-pull btn-primary  btn-xs mb-3 p-1">add member  </button>
+                                <button id="default-outline-primary-sm" @click.prevent="addAdmin" v-if="can('add-member-in-team')"  class="btn btn-pull btn-primary  btn-xs mb-3 p-1">add member  </button>
 
                                 <div class="table-responsive vue-smart">
                                     <v-table
@@ -56,6 +56,7 @@
                                                                 variant="outline-warning"
                                                                 class="btn-sm btn-child"
                                                                 @click.prevent="EditAdmin(row)"
+                                                                v-if="can('edit-member-from-team')"
                                                             >
                                                                Edit
                                                             </b-button>
@@ -66,7 +67,9 @@
                                                             variant="outline-danger"
 
                                                             class="btn-sm btn-child"
-                                                            @click="DeleteAdminModal(row.id,index)" >
+                                                            @click="DeleteAdminModal(row.id,index)"
+                                                            v-if="can('delete-member-from-team')"
+                                                        >
 
                                                            Delete
                                                         </b-button>

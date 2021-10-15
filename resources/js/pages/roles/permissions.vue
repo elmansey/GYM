@@ -13,7 +13,7 @@
                         <div class="card-body">
                             <div class="datatable-vue m-0">
 
-                                <button id="default-outline-primary-sm" @click.prevent="add"  class="btn btn-pull btn-outline-primary btn-outline-primary btn-sm mb-3">add Role  </button>
+                                <button id="default-outline-primary-sm" v-if="can('add-role')" @click.prevent="add"  class="btn btn-pull btn-outline-primary btn-outline-primary btn-sm mb-3">add Role  </button>
 
                                 <div class="table-responsive vue-smart">
                                     <v-table
@@ -47,6 +47,8 @@
                                                                 variant="outline-warning"
                                                                 class="btn-sm btn-child"
                                                                 @click.prevent="edit(row)"
+                                                                v-if="can('edit-role')"
+
                                                             >
                                                                Edit
                                                             </b-button>
@@ -57,7 +59,9 @@
                                                             variant="outline-danger"
 
                                                             class="btn-sm btn-child"
-                                                            @click="twoEvent(row.id,index)" >
+                                                            @click="twoEvent(row.id,index)"
+                                                            v-if="can('delete-role')"
+                                                        >
 
                                                            Delete
                                                         </b-button>
@@ -150,11 +154,11 @@ export default {
                 console.log(err);
             });
 
-            if(this.can('role-create')){
-                alert('true')
-            }else{
-                alert('false can')
-            }
+
+
+    },
+    mounted() {
+
 
     },
     methods: {

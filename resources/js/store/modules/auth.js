@@ -1,6 +1,6 @@
 import axios from 'axios'
 import router from '@/router/index'
-import paypal from "vue-rate-it/glyphs/paypal";
+
 //to save
 const  state = {
     isAuth : false,
@@ -8,9 +8,35 @@ const  state = {
     errors:'',
     token:localStorage.getItem('token'),
     authUserRole:null,
-    authPermission:null
+
 }
 
+// to show item saved in state
+const getters = {
+
+    authentication(state){
+        return state.isAuth
+    },
+
+    AllError(state){
+        return state.errors
+    },
+
+    USER(state){
+        return state.user
+    },
+
+    AUTH_TOKEN(state){
+        return state.token
+    },
+
+    authUserRole(state){
+        return state.authUserRole
+    },
+
+
+
+}
 
 
 // to chang value in state and do every thing
@@ -21,12 +47,13 @@ const  mutations = {
     },
 
 
-    loginSuccess(state,token){
+    loginSuccess(state,token,user){
 
         localStorage.setItem('token',token)
         state.token = token
         state.isAuth = true
         state.errors = ''
+        state.user = user
         router.push({
             name:'dashboard'
         })
@@ -83,10 +110,7 @@ const  mutations = {
         state.authUserRole = payload
     },
 
-    authPermission(state,payload){
-        state.authPermission = payload
 
-    },
 
 
 }
@@ -116,15 +140,15 @@ const actions = {
 
            }else{
 
-                commit('loginSuccess',res.data.data.access_token)
+                commit('loginSuccess',res.data.data.access_token,res.data.data.user)
                commit('SET_USER',res.data.data.user)
 
                   axios.get('info')
                       .then(res => {
 
                           commit('USER_INFO_SUCCESS', res.data.data)
-                          commit('authUserRole',res.data.role)
-                          commit('authPermission',res.data.permission)
+                          commit('authUserRole',res.data.roleAndPermission)
+
 
                       })
                       .catch(err => {
@@ -159,15 +183,18 @@ const actions = {
        })
    },
 
-    async userInfo({commit,getters}) {
+    async userInfo({commit}) {
 
        try{
          const res =   await  axios.get('info')
 
 
-           commit('USER_INFO_SUCCESS', res.data.data)
-          await commit('authUserRole',res.data.role)
-           await commit('authPermission',res.data.permission)
+           await commit('USER_INFO_SUCCESS', res.data.data)
+
+               commit('authUserRole',res.data.roleAndPermission)
+
+
+
 
 
        }catch(err ){
@@ -186,36 +213,6 @@ const actions = {
 
 }
 
-    // to show item saved in state
-const getters = {
-
-    authentication(state){
-        return state.isAuth
-    },
-
-    AllError(state){
-        return state.errors
-    },
-
-    USER(state){
-        return state.user
-    },
-
-    AUTH_TOKEN(state){
-        return state.token
-    },
-
-    authUserRole(state){
-        return state.authUserRole
-    },
-    authPermission(state){
-        return state.authPermission
-
-    }
-
-
-
-}
 
 
 

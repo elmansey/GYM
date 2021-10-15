@@ -1,13 +1,29 @@
 {
   "data": [
-        {
-          "title": "Dashboard",
-            "icon": "home",
-            "type": "link",
-            "badgeType": "primary",
-            "active": false,
-            "path": "/dashboard"
 
+
+      {
+          "title": "Dashboard",
+          "icon": "home",
+          "type": "link",
+          "badgeType": "primary",
+          "active": false,
+          "path": "/dashboard"
+
+
+      },
+
+      {
+          "title": "store",
+          "icon": "shopping-bag",
+          "type": "sub",
+          "badgeType": "primary",
+          "active": false,
+          "children": [
+
+              { "path": "/dashboard/products", "title": "products", "type": "link" }
+
+          ]
       },
 
       {
@@ -20,9 +36,9 @@
 
               { "path": "/dashboard/adminsList", "title": "team list", "type": "link" }
 
-
           ]
       },
+
       {
           "title": "Permissions",
           "icon": "user-check",
@@ -31,10 +47,11 @@
           "active": false,
           "children": [
 
-              { "path": "/dashboard/permissions", "title": "User permissions", "type": "link" }
-
+              { "path": "/dashboard/permissions", "title": "team permissions", "type": "link" }
 
           ]
       }
+
+
   ]
 }
