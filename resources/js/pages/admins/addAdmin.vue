@@ -90,6 +90,8 @@
 
 <script>
 import Multiselect from 'vue-multiselect'
+
+
 import axios from 'axios'
 
 export default {
@@ -118,45 +120,38 @@ export default {
     components: {
         Multiselect,
 
+    },
+
+    beforeCreate() {
+    axios.get('createUser')
+        .then(res => {
+
+            if(res.data.success == true){
+                this.options = res.data.roles
+                this.isLoading = true
+            }
+
+        })
+        .catch(err => {
+
+            console.log(err)
+        });
 
     },
-    // beforeCreate() {
-    //     axios.get('createUser')
-    //     .then(res => {
-    //
-    //         if(res.data.success == true){
-    //             this.options = res.data.roles
-    //         }
-    //
-    //     })
-    //     .catch(err => {
-    //
-    //         console.log(err)
-    //     });
-    // },
+
     beforeMount() {
-
-        axios.get('createUser')
-            .then(res => {
-
-                if(res.data.success == true){
-                    this.options = res.data.roles
-                    this.isLoading = true
-                }
-
-            })
-            .catch(err => {
-
-                console.log(err)
-            });
 
         if(this.$route.params.adminId){
             this.edit = true
             axios.get(`getUserById/${this.$route.params.adminId}` )
 
              .then(res => {
-                 this.adminData = res.data.data
-                 this.adminData.roles = res.data.role
+
+                     this.adminData.id  = res.data.data.id,
+                     this.adminData.name  = res.data.data.name,
+                     this.adminData.email  = res.data.data.email,
+                     this.adminData.phone  = res.data.data.phone,
+                  this.adminData.roles = res.data.role
                  this.isLoading = true
 
             })
@@ -184,6 +179,7 @@ export default {
         asyncFind (query) {
             this.options = findService(query)
         },
+
         addTag (newTag) {
             const tag = {
                 name: newTag,
@@ -192,7 +188,10 @@ export default {
             this.taggingOptions.push(tag)
             this.taggingSelected.push(tag)
         },
+
+
         storeAdmin(){
+
             axios.post('adminAdd',this.adminData)
             .then(res => {
 
@@ -243,7 +242,14 @@ export default {
         $route(to,from){
 
             if(to.name == 'addAdmin'){
-                this.edit = false
+                   this.edit = false
+                    this.adminData.id  =  ''
+                    this.adminData.name  =  ''
+                    this.adminData.email  =  ''
+                    this.adminData.phone  =  ''
+                    this.adminData.password  =  ''
+                    this.adminData.confirm_password  =  ''
+                    this.adminData.roles  =   []
             }
 
         }

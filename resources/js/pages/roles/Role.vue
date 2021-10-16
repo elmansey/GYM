@@ -85,11 +85,7 @@ export default {
     components: {
         Multiselect
     },
-
-
-    beforeMount() {
-
-
+    beforeCreate(){
 
         axios.get('createRole')
             .then(res => {
@@ -101,21 +97,29 @@ export default {
             })
 
 
+
+    },
+
+
+    beforeMount() {
+
+
         if(this.$route.params.roleId){
             this.edit  = true
 
             axios.get(`getRoleById/${this.$route.params.roleId}`)
-            .then(res => {
+                .then(res => {
 
-                this.role = res.data.data.role
-                this.role.permission = res.data.data.allPermissionRelatedThisRole
-                this.isLoading = true
+                    this.role.id = res.data.data.role.id
+                    this.role.name = res.data.data.role.name
+                    this.role.permission = res.data.data.allPermissionRelatedThisRole
+                    this.isLoading = true
 
 
-            })
-            .catch(err => {
+                })
+                .catch(err => {
 
-            })
+                })
 
 
         }else {
@@ -123,6 +127,11 @@ export default {
             this.edit = false
 
         }
+
+
+
+
+
 
     },
 
