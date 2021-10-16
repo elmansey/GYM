@@ -84,6 +84,8 @@
                         :key="index"
                         :class="{'active': menuItem.active, 'sidebar-main-title' : menuItem.type == 'headtitle'}"
                         class="sidebar-list"
+                        v-if="can(menuItem.permission)"
+
                     >
                         <!-- link title -->
                         <div v-if="menuItem.type == 'headtitle'">
@@ -155,12 +157,14 @@
                                 v-for="(childrenItem, index) in menuItem.children"
                                 :key="index"
                                 :class="{'active': childrenItem.active}"
+                                v-if="can(childrenItem.permission)"
                             >
                                 <!-- Sub -->
                                 <a
                                     class="submenu-title"
                                     href="javascript:void(0)"
                                     v-if="childrenItem.type == 'sub'"
+
                                     @click="setNavActive(childrenItem, index)"
                                 >
                                     {{ childrenItem.title }}

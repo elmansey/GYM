@@ -13,7 +13,7 @@
                         <div class="card-body">
                             <div class="datatable-vue m-0">
 
-                                <button id="default-outline-primary-sm" @click.prevent="addAdmin" v-if="can('add-member-in-team')"  class="btn btn-pull btn-primary  btn-xs mb-3 p-1">add member  </button>
+<!--                                <button id="default-outline-primary-sm" @click.prevent="addAdmin" v-if="can('add-member-in-team')"  class="btn btn-pull btn-primary  btn-xs mb-3 p-1">add member  </button>-->
 
                                 <div class="table-responsive vue-smart">
                                     <v-table
@@ -51,15 +51,15 @@
                                                     <b-button-group class="btn-container ">
 
 
-                                                            <b-button
+                                                            <router-link
                                                                 squared
                                                                 variant="outline-warning"
                                                                 class="btn-sm btn-child"
-                                                                @click.prevent="EditAdmin(row)"
+                                                                :to="{name: 'updateAdmin', params: {adminId : row.id}}"
                                                                 v-if="can('edit-member-from-team')"
                                                             >
                                                                Edit
-                                                            </b-button>
+                                                            </router-link>
 
 
                                                         <b-button
@@ -178,15 +178,15 @@ export default {
     },
     methods: {
 
-        async addAdmin(){
-
-           await this.$store.dispatch('addAdmin')
-               this.$router.push('addAdmin')
-        },
+        // async addAdmin(){
+        //
+        //    await this.$store.dispatch('addAdmin')
+        //        this.$router.push('addAdmin')
+        // },
       async EditAdmin(admin){
 
-           await this.$store.dispatch('AdminInfoToEdit',admin)
-          this.$router.push('addAdmin')
+           // await this.$store.dispatch('AdminInfoToEdit',admin)
+          this.$router.push({name: 'updateAdmin', params: {admin}})
         },
         DeleteAdminModal(id,key){
              this.id = id

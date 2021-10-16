@@ -1,7 +1,6 @@
-<script src="../../../../../ح/gexeer_project/resources/js/app.js"></script>
 <template>
     <div>
-        <Breadcrumbs main="dashboard" :title="this.$store.getters.editAdmin ? 'edit admin' : 'add admin'"/>
+        <Breadcrumbs main="dashboard" :title="edit ? 'edit admin' : 'add admin'"/>
         <!-- Container-fluid starts-->
         <div class="container-fluid">
             <div class="select2-drpdwn">
@@ -58,10 +57,10 @@
                                     </div>
                                 </div>
 
-                                <button class="btn btn-primary mt-3"  v-if="!this.$store.getters.editAdmin" @click.prevent="storeAdmin">
+                                <button class="btn btn-primary mt-3"  v-if="!edit" @click.prevent="storeAdmin">
                                     Save
                                 </button>
-                                <button class="btn btn-success mt-3"   v-if="this.$store.getters.editAdmin" @click.prevent="editAdmin">
+                                <button class="btn btn-success mt-3"   v-if="edit" @click.prevent="editAdmin">
                                     update
                                 </button>
 
@@ -97,6 +96,7 @@ export default {
 
             options: [],
             error:'',
+            edit:false
 
 
         }
@@ -120,15 +120,15 @@ export default {
 
     },
 
-    created() {
-
-        if(this.$store.getters.editAdmin == true){
-
-            this.adminData = this.$store.getters.AdminInfoToEdit
-
-        }
-
-    },
+    // created() {
+    //
+    //     if(this.$store.getters.editAdmin == true){
+    //
+    //         this.adminData = this.$store.getters.AdminInfoToEdit
+    //
+    //     }
+    //
+    // },
 
     methods: {
         asyncFind (query) {
@@ -182,6 +182,28 @@ export default {
                 .catch(err => {
                     console.log(err)
                 })
+
+        }
+    },
+
+    watch:{
+        $route(to,from){
+
+            console.log(to)
+            // if(to.name === 'addAdmin'){
+            //
+            //      // this.edit = false
+            //     alert(to.name)
+            // }
+
+
+            if(to.name === 'updateAdmin'){
+
+                // this.edit = true
+                alert(to.name)
+                console.log("edit")
+
+            }
 
         }
     }

@@ -4,6 +4,7 @@
 
       {
           "title": "Dashboard",
+          "permission": "dashboard",
           "icon": "home",
           "type": "link",
           "badgeType": "primary",
@@ -32,10 +33,21 @@
           "type": "sub",
           "badgeType": "primary",
           "active": false,
+          "permission": "show-team",
           "children": [
 
-              { "path": "/dashboard/adminsList", "title": "team list", "type": "link" }
-
+              {
+                  "path": "/dashboard/adminsList",
+                  "title": "team list",
+                  "type": "link",
+                  "permission": "show-team-member-list"
+              },
+              {
+                  "path": "/dashboard/addAdmin",
+                  "title": "add member in staff",
+                  "type": "link",
+                  "permission": "add-member-in-team"
+              }
           ]
       },
 
@@ -44,10 +56,18 @@
           "icon": "user-check",
           "type": "sub",
           "badgeType": "primary",
+          "permission": "show-roles",
           "active": false,
           "children": [
 
-              { "path": "/dashboard/permissions", "title": "team permissions", "type": "link" }
+              { "path": "/dashboard/permissions",
+                  "title": "team permissions",
+                  "type": "link",
+                  "permission": "show-roles-list"
+
+
+
+              }
 
           ]
       }

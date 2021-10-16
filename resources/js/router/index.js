@@ -19,7 +19,7 @@ const routes = [
     children: [
 
         {
-            path: '',
+            path: '/',
             name: 'main',
             component: require('@/pages/home/home').default,
 
@@ -34,6 +34,12 @@ const routes = [
       path: 'Permissions',
       name: 'permissions',
       component: require('@/pages/roles/permissions').default,
+        meta: {
+
+            permission:'show-roles-list'
+
+        },
+
 
     },
 
@@ -42,19 +48,25 @@ const routes = [
             name: 'role',
             component: require('@/pages/roles/Role').default,
 
+
         },
         {
             path: 'showRole',
             name: 'showRole',
             component: require('@/pages/roles/showRole').default,
             meta: {
-                requirIsSetData: true
+                requirIsSetData: true,
+                permission:'show-team-member-list'
+
             },
         },
         {
             path: 'adminsList',
             name: 'adminsList',
             component: require('@/pages/admins/admins_list').default,
+            meta:{
+                permission:'show-team-member-list'
+            }
 
         },
 
@@ -64,6 +76,15 @@ const routes = [
             component: require('@/pages/admins/addAdmin').default,
             meta:{
                 permission:'add-member-in-team'
+            }
+
+        },
+        {
+            path: 'updateAdmin/:adminId',
+            name: 'updateAdmin',
+            component: require('@/pages/admins/addAdmin').default,
+            meta:{
+                permission:'edit-member-from-team'
             }
 
         },

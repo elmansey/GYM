@@ -55,7 +55,7 @@ const  mutations = {
         state.errors = ''
         state.user = user
         router.push({
-            name:'dashboard'
+            name:'main'
         })
     },
 
