@@ -13,7 +13,6 @@
                         <div class="card-body">
                             <div class="datatable-vue m-0">
 
-                                <button id="default-outline-primary-sm" v-if="can('add-role')" @click.prevent="add"  class="btn btn-pull btn-outline-primary btn-outline-primary btn-sm mb-3">add Role  </button>
 
                                 <div class="table-responsive vue-smart">
                                     <v-table
@@ -42,16 +41,17 @@
                                                     <b-button-group class="btn-container ">
 
 
-                                                            <b-button
+                                                            <router-link
                                                                 squared
                                                                 variant="outline-warning"
                                                                 class="btn-sm btn-child"
-                                                                @click.prevent="edit(row)"
+                                                               :to="{name : 'editRole',params : {roleId : row.id}}"
+
                                                                 v-if="can('edit-role')"
 
                                                             >
                                                                Edit
-                                                            </b-button>
+                                                            </router-link>
 
 
                                                         <b-button
@@ -162,15 +162,15 @@ export default {
 
     },
     methods: {
-        async edit(roleData) {
-            await this.$store.dispatch('EDIT')
-            await this.$store.dispatch('ROLEDATATOEDIT', roleData)
-            this.$router.push('role')
-        },
-        async add() {
-            await this.$store.dispatch('ADD')
-            this.$router.push('role')
-        },
+        // async edit(roleData) {
+        //     await this.$store.dispatch('EDIT')
+        //     await this.$store.dispatch('ROLEDATATOEDIT', roleData)
+        //     this.$router.push('role')
+        // },
+        // async add() {
+        //     await this.$store.dispatch('ADD')
+        //     this.$router.push('role')
+        // },
 
 
         showPermission() {

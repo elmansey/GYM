@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <Breadcrumbs main="Permissions" :title="this.$store.getters.EDIT ? 'edit Role' : 'add Role'"/>
+    <div v-if="isLoading">
+        <Breadcrumbs main="Permissions" :title="edit ? 'edit Role' : 'add Role'"/>
         <!-- Container-fluid starts-->
         <div class="container-fluid">
             <div class="select2-drpdwn">
@@ -34,10 +34,10 @@
                                     </div>
                                 </div>
 
-                                <button class="btn btn-primary mt-3"  v-if="!this.$store.getters.EDIT" @click.prevent="storeRole">
+                                <button class="btn btn-primary mt-3"  v-if="!edit" @click.prevent="storeRole">
                                     Save
                                 </button>
-                                <button class="btn btn-success mt-3"  v-if="this.$store.getters.EDIT" @click.prevent="UpdateRole">
+                                <button class="btn btn-success mt-3"  v-if="edit" @click.prevent="UpdateRole">
                                     update
                                 </button>
 
@@ -51,6 +51,13 @@
             </div>
         </div>
         <!-- Container-fluid Ends-->
+    </div>
+
+    <div v-else class="col-md-3" style="margin: auto; position: absolute;top: 50%; right: 50%;transform: translate(50%,-50%);">
+        <h6 class="sub-title mb-0 text-center"></h6>
+        <div class="loader-box" >
+            <div class="loader-3"></div>
+        </div>
     </div>
 </template>
 
@@ -69,6 +76,8 @@ export default {
 
             options: [],
             error:'',
+            edit:true,
+            isLoading:false
 
 
         }
@@ -76,32 +85,54 @@ export default {
     components: {
         Multiselect
     },
-    beforeCreate() {
+
+
+    beforeMount() {
+
+
 
         axios.get('createRole')
-        .then(res => {
-            this.options = res.data.permission
-        })
-        .catch(err => {
-            console.log(err.message)
-        })
+            .then(res => {
+                this.options = res.data.permission
+                this.isLoading = true
+            })
+            .catch(err => {
+                console.log(err.message)
+            })
 
-    },
 
-    created() {
+        if(this.$route.params.roleId){
+            this.edit  = true
 
-        if(this.$store.getters.EDIT  == true){
-            this.role.name = this.$store.getters.ROLEDATATOEDIT.role
-            this.role.id = this.$store.getters.ROLEDATATOEDIT.id
-            this.role.permission = this.$store.getters.ROLEDATATOEDIT.permission
+            axios.get(`getRoleById/${this.$route.params.roleId}`)
+            .then(res => {
+
+                this.role = res.data.data.role
+                this.role.permission = res.data.data.allPermissionRelatedThisRole
+                this.isLoading = true
+
+
+            })
+            .catch(err => {
+
+            })
+
+
+        }else {
+
+            this.edit = false
+
         }
 
     },
 
+
     methods: {
+
         asyncFind (query) {
             this.options = findService(query)
         },
+
         addTag (newTag) {
             const tag = {
                 name: newTag,
@@ -153,7 +184,7 @@ export default {
                         title: 'Update Role successfully'
                     })
 
-                    this.$router.push('Permissions')
+                    this.$router.push({name: 'permissions'})
 
                 }else if (res.data.success == false){
 
@@ -169,6 +200,16 @@ export default {
         }
 
 
+    },
+    watch:{
+        $route (to,from){
+            if(to.name == 'addRole'){
+                this.edit = false
+                this.role.id = ''
+                this.role.name = ''
+                this.role.permission = []
+            }
+        }
     }
 }
 </script>

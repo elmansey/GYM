@@ -31,7 +31,7 @@ const routes = [
 
         },
     {
-      path: 'Permissions',
+      path: 'permissions',
       name: 'permissions',
       component: require('@/pages/roles/permissions').default,
         meta: {
@@ -44,8 +44,15 @@ const routes = [
     },
 
         {
-            path: 'role',
-            name: 'role',
+            path: 'addRole',
+            name: 'addRole',
+            component: require('@/pages/roles/Role').default,
+
+
+        },
+        {
+            path: 'editRole/:roleId',
+            name: 'editRole',
             component: require('@/pages/roles/Role').default,
 
 
@@ -84,7 +91,7 @@ const routes = [
             name: 'updateAdmin',
             component: require('@/pages/admins/addAdmin').default,
             meta:{
-                permission:'edit-member-from-team'
+                permission:'add-member-in-team'
             }
 
         },

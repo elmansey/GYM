@@ -77,7 +77,7 @@ class RoleController extends Controller
 
 
 
-    public function show($id)
+    public function getRoleById($id)
     {
         $role = Role::find($id);
         $rolePermissions = Permission::join("role_has_permissions","role_has_permissions.permission_id","=","permissions.id")
@@ -87,7 +87,7 @@ class RoleController extends Controller
         return response()->json(['success'=>true,'data'=>[
 
             'role'  => $role,
-            'allPermissionRelatedThisRole' =>$rolePermissions
+            'allPermissionRelatedThisRole' =>PermissionResource::collection($rolePermissions)
         ]]);
     }
 

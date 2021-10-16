@@ -9,6 +9,7 @@ import SmartTable from "vuejs-smart-table";
 import { FormGroupPlugin } from 'bootstrap-vue'
 Vue.component('pulse-loader', require('vue-spinner/src/PulseLoader.vue'));
 
+import vue2Dropzone from 'vue2-dropzone'
 
 
 import './axios'
@@ -63,7 +64,7 @@ Vue.use(BootstrapVue)
 Vue.component('Breadcrumbs', Breadcrumbs)
 Vue.use(SmartTable);
 Vue.use(FormGroupPlugin)
-
+Vue.use(vue2Dropzone)
 
 // global mixin
 Vue.mixin({

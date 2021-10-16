@@ -163,7 +163,7 @@
           <div class="media profile-media">
             <img
               class="b-r-10"
-                style="width: 40px;height: 40px;border-radius: 50%"
+              style="width: 40px;height: 40px;border-radius: 50%"
               :src="require('@/assets/images/dashboard/DefaultProfile.jpg').default"
               alt=""
             />

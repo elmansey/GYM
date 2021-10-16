@@ -3,14 +3,17 @@
 namespace App\Http\Controllers\API\user;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\PermissionResource;
 use App\Http\Resources\RolesResource;
 use App\Http\Resources\UsersResource;
+use App\Http\Resources\UserToRoleResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
@@ -136,6 +139,22 @@ class UserController extends Controller
         $user->assignRole($role);
 
         return response()->json(['success'=>true ,'message'=> 'updated successfully','user'=>new UsersResource($user)] ,200);
+
+    }
+
+
+    public function getUserById($id){
+
+        $user = User::find($id);
+        $roles = RolesResource::collection($user['roles']);
+
+        $role= [];
+
+
+        return response()->json(['success'=>true, 'data'=>  new UserToRoleResource($user),'role'=>RolesResource::collection($roles)],200);
+
+
+
 
     }
 

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="isLoading">
         <Breadcrumbs main="dashboard" :title="edit ? 'edit admin' : 'add admin'"/>
         <!-- Container-fluid starts-->
         <div class="container-fluid">
@@ -55,6 +55,8 @@
                                         <input  :class="['form-control',error.confirm_password ? 'is-invalid' : '']"  v-model="adminData.confirm_password"/>
                                         <small style="color: red" v-if="error.confirm_password">{{ error.confirm_password[0]}}</small>
                                     </div>
+
+
                                 </div>
 
                                 <button class="btn btn-primary mt-3"  v-if="!edit" @click.prevent="storeAdmin">
@@ -75,6 +77,15 @@
         </div>
         <!-- Container-fluid Ends-->
     </div>
+
+    <div v-else class="col-md-3" style="margin: auto; position: absolute;top: 50%; right: 50%;transform: translate(50%,-50%);">
+        <h6 class="sub-title mb-0 text-center"></h6>
+        <div class="loader-box" >
+            <div class="loader-3"></div>
+        </div>
+    </div>
+
+
 </template>
 
 <script>
@@ -91,32 +102,71 @@ export default {
                 phone:'',
                 password:'',
                 confirm_password:'',
-                roles: null
+                roles: [],
             },
+            isLoading:false,
 
             options: [],
             error:'',
-            edit:false
+            edit:true,
+
+
 
 
         }
     },
     components: {
-        Multiselect
+        Multiselect,
+
+
     },
-    beforeCreate() {
+    // beforeCreate() {
+    //     axios.get('createUser')
+    //     .then(res => {
+    //
+    //         if(res.data.success == true){
+    //             this.options = res.data.roles
+    //         }
+    //
+    //     })
+    //     .catch(err => {
+    //
+    //         console.log(err)
+    //     });
+    // },
+    beforeMount() {
+
         axios.get('createUser')
-        .then(res => {
+            .then(res => {
 
-            if(res.data.success == true){
-                this.options = res.data.roles
-            }
+                if(res.data.success == true){
+                    this.options = res.data.roles
+                    this.isLoading = true
+                }
 
-        })
-        .catch(err => {
+            })
+            .catch(err => {
 
-            console.log(err)
-        })
+                console.log(err)
+            });
+
+        if(this.$route.params.adminId){
+            this.edit = true
+            axios.get(`getUserById/${this.$route.params.adminId}` )
+
+             .then(res => {
+                 this.adminData = res.data.data
+                 this.adminData.roles = res.data.role
+                 this.isLoading = true
+
+            })
+            .catch(err => {
+                console.log(err.message)
+
+            })
+        }else{
+            this.edit = false
+        }
 
     },
 
@@ -172,7 +222,8 @@ export default {
                             icon: 'success',
                             title: 'admin updated successfully'
                         })
-                        this.$router.push('adminsList')
+                        this.$router.push({name : 'adminsList'})
+
                     }else if(res.data.success == false) {
 
                         this.error = res.data.message
@@ -187,25 +238,16 @@ export default {
     },
 
     watch:{
+
+
         $route(to,from){
 
-            console.log(to)
-            // if(to.name === 'addAdmin'){
-            //
-            //      // this.edit = false
-            //     alert(to.name)
-            // }
-
-
-            if(to.name === 'updateAdmin'){
-
-                // this.edit = true
-                alert(to.name)
-                console.log("edit")
-
+            if(to.name == 'addAdmin'){
+                this.edit = false
             }
 
         }
+
     }
 
 }

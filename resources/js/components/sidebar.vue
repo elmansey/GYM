@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="logo-wrapper">
-            <router-link :to="{name : 'dashboard'}">
+            <router-link :to="{name : 'main'}">
                 <img
                     class="img-fluid for-light"
                     :src="require('@/assets/images/logo/logo.png').default"

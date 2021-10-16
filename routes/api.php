@@ -43,7 +43,7 @@ Route::group(['middleware'=>'JWTchecker'],function (){
     Route::get('createUser',[UserController::class,'create'])->name('createUser');
     Route::post('userUpdate',[UserController::class,'update'])->name('userUpdate');
     Route::get('userDelete/{id}',[UserController::class,'destroy'])->name('userDelete');
-
+    Route::get('getUserById/{id}',[UserController::class,'getUserById'])->name('getUserById');
 
     //role
     Route::get('roles',[RoleController::class,'index'])->name('roles');
@@ -51,6 +51,9 @@ Route::group(['middleware'=>'JWTchecker'],function (){
     Route::post('roleAdd',[RoleController::class,'store'])->name('roleAdd');
     Route::post('roleUpdate',[RoleController::class,'update'])->name('roleUpdate');
     Route::get('roleDelete/{id}',[RoleController::class,'destroy'])->name('roleDelete');
+    Route::get('getRoleById/{id}',[RoleController::class,'getRoleById'])->name('getRoleById');
+
+
 
 
 

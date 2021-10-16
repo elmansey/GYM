@@ -13,7 +13,6 @@
                         <div class="card-body">
                             <div class="datatable-vue m-0">
 
-<!--                                <button id="default-outline-primary-sm" @click.prevent="addAdmin" v-if="can('add-member-in-team')"  class="btn btn-pull btn-primary  btn-xs mb-3 p-1">add member  </button>-->
 
                                 <div class="table-responsive vue-smart">
                                     <v-table

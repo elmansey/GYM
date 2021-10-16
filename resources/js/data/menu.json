@@ -9,7 +9,7 @@
           "type": "link",
           "badgeType": "primary",
           "active": false,
-          "path": "/dashboard"
+          "path": "/dashboard/"
 
 
       },
@@ -65,10 +65,14 @@
                   "type": "link",
                   "permission": "show-roles-list"
 
+              },
 
+              { "path": "/dashboard/addRole",
+                  "title": "add role",
+                  "type": "link",
+                  "permission": "add-role"
 
               }
-
           ]
       }
 
