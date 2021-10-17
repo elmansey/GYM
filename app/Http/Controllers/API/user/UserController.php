@@ -34,43 +34,47 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        $validator = validator::make($request->all(), [
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email',
-            'phone' => 'required',
-            'password' => 'required|same:confirm_password',
-            'confirm_password' => 'required',
-            'roles' => 'required'
-        ]);
 
 
+        return  $request;
 
-        if($validator->fails()){
-
-            return response()->json(['success'=>false,'message'=>$validator->errors()],200);
-
-
-        }
-
-        $input = $request->all();
-        $input['password']  = bcrypt($input['password']);
-
-
-
-        $user =  User::create($input);
-
-        $role = [];
-
-        foreach ($request->roles as $k => $v){
-
-            $role[] = $v['name'];
-
-        }
-
-
-        $user->assignRole($role); // بيحطها في جدول الرول
-
-        return response()->json(['success'=>true,'message'=>'User created successfully','user'=>new UsersResource($user)],200);
+//        $validator = validator::make($request->all(), [
+//            'name' => 'required',
+//            'email' => 'required|email|unique:users,email',
+//            'phone' => 'required',
+//            'password' => 'required|same:confirm_password',
+//            'confirm_password' => 'required',
+//            'roles' => 'required'
+//        ]);
+//
+//
+//
+//        if($validator->fails()){
+//
+//            return response()->json(['success'=>false,'message'=>$validator->errors()],200);
+//
+//
+//        }
+//
+//        $input = $request->all();
+//        $input['password']  = bcrypt($input['password']);
+//
+//
+//
+//        $user =  User::create($input);
+//
+//        $role = [];
+//
+//        foreach ($request->roles as $k => $v){
+//
+//            $role[] = $v['name'];
+//
+//        }
+//
+//
+//        $user->assignRole($role); // بيحطها في جدول الرول
+//
+//        return response()->json(['success'=>true,'message'=>'User created successfully','user'=>new UsersResource($user)],200);
 
     }
 
