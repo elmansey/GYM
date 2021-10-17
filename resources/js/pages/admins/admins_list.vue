@@ -200,6 +200,7 @@ export default {
             .then(res => {
 
                 if(res.data.success == true){
+
                     this.id = ''
                     this.key = ''
                     this.admins.splice(this.key,1)
@@ -237,3 +238,5 @@ export default {
     }
 }
 </style>
+
+

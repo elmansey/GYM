@@ -12,78 +12,86 @@
                             </div>
                             <div class="card-body">
 
+                                          <form onsubmit="handleSubmit" id="myform">
 
-                                <b-form>
-                                        <div class="row">
-                                            <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
-                                                <div class="col-form-label">name</div>
+                                              <div class="row">
 
-                                                <input  :class="['form-control',error.name ? 'is-invalid' : '']"  v-model="adminData.name"/>
-                                                <small style="color: red" v-if="error.name">{{ error.name[0]}}</small>
-                                            </div>
-                                            <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
-                                                <div class="col-form-label"> email</div>
+                                                  <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
+                                                      <div class="col-form-label">name</div>
 
-                                                <input  :class="['form-control',error.email ? 'is-invalid' : '']"  v-model="adminData.email"/>
-                                                <small style="color: red" v-if="error.email">{{ error.email[0]}}</small>
-                                            </div>
-                                            <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
-                                                <div class="col-form-label"> phone number</div>
+                                                      <input name="name" :class="['form-control',error.name ? 'is-invalid' : '']"  v-model="adminData.name"/>
+                                                      <small style="color: red" v-if="error.name">{{ error.name[0]}}</small>
+                                                  </div>
 
-                                                <input :class="['form-control',error.phone ? 'is-invalid' : '']" v-model="adminData.phone"/>
-                                                <small style="color: red" v-if="error.phone">{{ error.phone[0]}}</small>
-                                            </div>
-                                            <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
-                                                <div class="col-form-label">Choose the  Roles</div>
+                                                  <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
+                                                      <div class="col-form-label"> email</div>
 
-                                                <multiselect  v-model="adminData.roles" tag-placeholder="Add this as new tag" placeholder="Search or add a tag"
-                                                              :class="[error.roles ? 'is-invalid' : '']"     label="name" track-by="id"   @search-change="asyncFind" :options="options"  :multiple="true"   :taggable="true" @tag="addTag"  >
+                                                      <input name="email"  :class="['form-control',error.email ? 'is-invalid' : '']"  v-model="adminData.email"/>
+                                                      <small style="color: red" v-if="error.email">{{ error.email[0]}}</small>
+                                                  </div>
 
-                                                </multiselect>
-                                                <small  style="color: red" v-if="error.roles">{{ error.roles[0]}}</small>
+                                                  <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
+                                                      <div class="col-form-label"> phone number</div>
 
-                                            </div>
-                                            <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
-                                                <div class="col-form-label"> password</div>
+                                                      <input name="phone" :class="['form-control',error.phone ? 'is-invalid' : '']" v-model="adminData.phone"/>
+                                                      <small style="color: red" v-if="error.phone">{{ error.phone[0]}}</small>
+                                                  </div>
 
-                                                <input  :class="['form-control',error.password ? 'is-invalid' : '']"  v-model="adminData.password"/>
-                                                <small style="color: red" v-if="error.password">{{ error.password[0]}}</small>
-                                            </div>
-                                            <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
-                                                <div class="col-form-label"> confirm password</div>
+                                                  <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
+                                                      <div class="col-form-label">Choose the  Roles</div>
 
-                                                <input  :class="['form-control',error.confirm_password ? 'is-invalid' : '']"  v-model="adminData.confirm_password"/>
-                                                <small style="color: red" v-if="error.confirm_password">{{ error.confirm_password[0]}}</small>
-                                            </div>
+                                                      <multiselect name="role" v-model="adminData.roles" tag-placeholder="Add this as new tag" placeholder="Search or add a tag"
+                                                                    :class="[error.roles ? 'is-invalid' : '']"     label="name" track-by="id"   @search-change="asyncFind" :options="options"  :multiple="true"   :taggable="true" @tag="addTag"  >
 
-                                            <div class="mb-2 col-md-12 col-lg-12 col-sm-12">
-                                                <div class="col-form-label"> Upload profile picture</div>
+                                                      </multiselect>
+                                                      <small  style="color: red" v-if="error.roles">{{ error.roles[0]}}</small>
 
-                                                    <vue-dropzone
-                                                        ref="adminData.file"
-                                                        id="dropzone"
-                                                        :options="dropzoneOptions"
-                                                        @change="sendFile"
-                                                    ></vue-dropzone>
+                                                  </div>
 
-        <!--                                        <small style="color: red" v-if="error.confirm_password">{{ error.confirm_password[0]}}</small>-->
-                                            </div>
+                                                  <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
+                                                      <div class="col-form-label"> password</div>
 
+                                                      <input name="password"  :class="['form-control',error.password ? 'is-invalid' : '']"  v-model="adminData.password"/>
+                                                      <small style="color: red" v-if="error.password">{{ error.password[0]}}</small>
+                                                  </div>
 
+                                                  <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
+                                                      <div class="col-form-label"> confirm password</div>
 
+                                                      <input name="confirm_password" :class="['form-control',error.confirm_password ? 'is-invalid' : '']"  v-model="adminData.confirm_password"/>
+                                                      <small style="color: red" v-if="error.confirm_password">{{ error.confirm_password[0]}}</small>
+                                                  </div>
 
+                                              <div class="mb-2 col-md-12 col-lg-12 col-sm-12">
+                                                  <div class="col-form-label"> Upload profile picture</div>
 
+                                                  <div class="card-body">
+                                                      <vue-dropzone
+                                                          name="file"
+                                                          ref="myVueDropzone"
+                                                          id="singledropzone"
+                                                          :options="singledropzoneOptions"
+                                                          class="dropzone digits"
+                                                          @vdropzone-complete="handleFileComplete"
+                                                          @vdropzone-success="handleFileSuccess"
+                                                      >
+                                                      </vue-dropzone>
+                                                  </div>
 
+                                                  <!--                                        <small style="color: red" v-if="error.confirm_password">{{ error.confirm_password[0]}}</small>-->
+                                              </div>
 
-                                        </div>
-                                </b-form>
-                                <button class="btn btn-primary mt-3"  v-if="!edit" @click.prevent="storeAdmin">
-                                    Save
-                                </button>
-                                <button class="btn btn-success mt-3"   v-if="edit" @click.prevent="editAdmin">
-                                    update
-                                </button>
+                                              <button type="submit" class="btn btn-primary mt-3"  v-if="!edit" @click.prevent="handleSubmit">
+                                                  Save
+                                              </button>
 
+                                              <button class="btn btn-success mt-3"   v-if="edit" @click.prevent="editAdmin">
+                                                  update
+                                              </button>
+
+                                              </div>
+
+                                          </form>
 
 
                             </div>
@@ -125,25 +133,28 @@ export default {
                 confirm_password:'',
                 roles: [],
                 file:[]
-
             },
             isLoading:false,
 
             options: [],
             error:'',
             edit:true,
-            dropzoneOptions: {
-                url: 'https://httpbin.org/post', // this just demo url we want to change it
+
+
+            singledropzoneOptions:{
+                url:'http://127.0.0.1:8000/api/adminAdd',
                 thumbnailWidth: 150,
-                maxFilesize: 2,
+                maxFiles:1,
                 autoProcessQueue: false,
+                maxFilesize: 2,
                 acceptedFiles: ".jpg , .jpeg, .png",
-                uploadMultiple: false,
                 maxNumberOfFiles: 1,
                 addRemoveLinks: true,
                 dictDefaultMessage:
-                    "Select Profile Picture",
-            }
+                    "<i class='icon-cloud-up'></i><br />Select Profile Picture",
+            },
+
+
 
 
 
@@ -154,6 +165,7 @@ export default {
     components: {
         Multiselect,
         vueDropzone: vue2Dropzone
+
     },
 
     beforeCreate() {
@@ -203,11 +215,24 @@ export default {
 
     methods: {
 
-        sendFile(){
+        handleFileComplete(response){
+             console.log(response)
+        },
 
-            const file = this.$refs.file.files[0]
-            this.adminData.file.append('file',file)
+        handleFileSuccess(file,res){
             console.log(file)
+        },
+
+        handleSubmit(){
+            // console.log(new FormData(myform))
+            console.log('submit')
+        },
+
+        vdropzoneComplete:async function(file,response){
+
+            console.log(file)
+            console.log(response)
+
 
         },
 
