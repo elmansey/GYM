@@ -86,7 +86,7 @@
                                                   Save
                                               </button>
 
-                                              <button class="btn btn-success mt-3"   v-if="edit" >
+                                              <button  type="submit" class="btn btn-success mt-3"   v-if="edit" >
                                                   update
                                               </button>
 
@@ -218,45 +218,51 @@ export default {
 
         handelSubmitData(){
 
-            let formData = new FormData();
+            if(this.edit == false){
+
+                let formData = new FormData();
 
 
-            formData.append('name',this.adminData.name);
-            formData.append('email',this.adminData.email);
-            formData.append('phone',this.adminData.phone);
-            formData.append('password',this.adminData.password);
-            formData.append('confirm_password',this.adminData.confirm_password);
-            formData.append('role', JSON.stringify(this.adminData.roles));
-            formData.append('profile_picture',this.adminData.file);
+                formData.append('name',this.adminData.name);
+                formData.append('email',this.adminData.email);
+                formData.append('phone',this.adminData.phone);
+                formData.append('password',this.adminData.password);
+                formData.append('confirm_password',this.adminData.confirm_password);
+                formData.append('role', JSON.stringify(this.adminData.roles));
+                formData.append('profile_picture',this.adminData.file);
 
 
 
-            let config = {
-                headers:{
-                    "Content-Type":"multipart/form-data; charset=utf-8 ; boundary="+ Math.random().toString().substr(2),
-                }
-            }
-
-            axios.post('adminAdd',formData,config)
-                .then(res => {
-
-                    if(res.data.success == true){
-                        Toast.fire({
-                            icon: 'success',
-                            title: 'admin added successfully'
-                        })
-                        this.$router.push('adminsList')
-
-                    }else if(res.data.success == false) {
-
-                        this.error = res.data.message
+                let config = {
+                    headers:{
+                        "Content-Type":"multipart/form-data; charset=utf-8 ; boundary="+ Math.random().toString().substr(2),
                     }
+                }
 
-                })
-                .catch(err => {
-                    console.log(err)
-                })
+                axios.post('adminAdd',formData,config)
+                    .then(res => {
 
+                        if(res.data.success == true){
+                            Toast.fire({
+                                icon: 'success',
+                                title: 'admin added successfully'
+                            })
+                            this.$router.push('adminsList')
+
+                        }else if(res.data.success == false) {
+
+                            this.error = res.data.message
+                        }
+
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
+
+
+
+
+            }
 
             if(this.edit){
 
@@ -288,7 +294,7 @@ export default {
                                 icon: 'success',
                                 title: 'admin updated successfully'
                             })
-                            this.$router.push('adminsList')
+                            this.$router.push({name:'adminsList'})
 
                         }else if(res.data.success == false) {
 
@@ -372,6 +378,7 @@ export default {
                     this.adminData.password  =  ''
                     this.adminData.confirm_password  =  ''
                     this.adminData.roles  =   []
+                   this.adminData.file  =   []
             }
 
         }

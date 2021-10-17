@@ -8,6 +8,7 @@ use App\Http\Resources\RolesResource;
 use App\Http\Resources\UsersResource;
 use App\Http\Resources\UserToRoleResource;
 use App\Models\User;
+use Faker\Core\File;
 use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -46,7 +47,6 @@ class UserController extends Controller
             'password' => 'required|same:confirm_password',
             'confirm_password' => 'required',
             'role' => 'required',
-            'profile_picture' => 'mimes:jpg,jpeg,png'
 
         ]);
 
@@ -114,10 +114,11 @@ class UserController extends Controller
 
     public function update(Request $request,$id)
     {
+        $input = $request->all();
 
-        $request['role'] = json_decode($request['role'],true);
+        $input['role'] = json_decode($input['role'],true);
 
-        if(!empty($request->input('password'))){
+        if($input['password']){
 
             $required = true;
 
@@ -130,7 +131,8 @@ class UserController extends Controller
 
             $validator = validator::make($request->all(), [
             'name'     => 'required',
-            'email'    => 'required|email|unique:users,email,'.$id,
+            'email'    => ['required','email',Rule::unique('users')->ignore($id)],
+            'phone' => 'required',
             'password' => 'same:confirm_password',
             'confirm_password' => Rule::requiredIf($required),
              'role' => 'required',
@@ -146,14 +148,18 @@ class UserController extends Controller
         }
 
 
-        $input = $request->all();
-
-        try{
-
-            DB::beginTransaction();
-            if($input->profile_picture){
 
                 if($request->file('profile_picture')){
+
+                    $oldImg = User::where('id','=',$id)->pluck('profile_picture');
+
+                    $path =  public_path('profile_pictures\\'.$oldImg[0]);
+                    if($oldImg[0]){
+                        if(file_exists($path)){
+
+                            unlink($path);
+                        }
+                    }
 
 
                     $file = $request->file('profile_picture');
@@ -163,23 +169,14 @@ class UserController extends Controller
 
                     $file->move(public_path('profile_pictures'),$fileName);
 
+                    $input['profile_picture'] = $input['profile_picture'] ? $fileName : null;
+
+                }else{
+                   $input =  Arr::except($input,array('profile_picture'));
                 }
 
 
-            }else{
 
-                $input = Arr::except($input,$input->profile_picture);
-            }
-
-            DB::commit();
-
-        }catch(\Exception $e){
-
-            DB::rollBack();
-
-        }
-
-        $input['profile_picture'] = $input['profile_picture'] ? $fileName : null;
 
         if(!empty($input['password'])){
 
@@ -190,7 +187,6 @@ class UserController extends Controller
             $input = Arr::except($input,array('password'));
         }
 
-
         $user = User::find($id);
         $user->update($input);
 
@@ -198,7 +194,7 @@ class UserController extends Controller
 
         $role = [];
 
-        foreach ($request['role'] as $k => $v){
+        foreach ($input['role'] as $k => $v){
 
             $role[] = $v['name'];
         }
@@ -230,7 +226,15 @@ class UserController extends Controller
 
     public function destroy($id)
     {
+        $oldImg = User::where('id','=',$id)->pluck('profile_picture');
 
+        $path =  public_path('profile_pictures\\'.$oldImg[0]);
+        if($oldImg[0]){
+            if(file_exists($path)){
+
+                unlink($path);
+            }
+        }
        $user =  User::find($id);
        $user->delete();
         return response()->json(['success'=>true ,'message'=> 'deleted successfully'] ,200);

@@ -33,7 +33,7 @@
 
                                         <tbody slot="body" slot-scope="{ displayData }">
                                         <tr v-for="(row, index) in displayData" :key="index">
-                                            <td></td>
+                                            <td><i class="fa fa-key"></i></td>
                                             <td>{{ row.role }}</td>
                                             <td><span class="badge badge-success" style="cursor:pointer" @click.prevent="showRole(row)" >{{ row.role }}</span></td>
                                             <td>

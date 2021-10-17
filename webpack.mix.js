@@ -10,6 +10,8 @@ mix.js('resources/js/main.js', 'public/js')
         resolve: {
           alias: {
             '@' : path.join(__dirname, './resources/js'),
+              '~' : path.join(__dirname, './public'),
+
           },
           modules: [
             'node_modules',

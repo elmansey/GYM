@@ -26,6 +26,7 @@
                                         <thead slot="head">
 
                                         <th></th>
+                                        <th sortKey="name">Profile Picture</th>
                                         <th sortKey="name">name</th>
                                         <th sortKey="name" >email</th>
                                         <th sortKey="options">phone number</th>
@@ -36,6 +37,7 @@
                                         <tbody slot="body" slot-scope="{ displayData }">
                                         <tr v-for="(row, index) in displayData" :key="index">
                                             <td></td>
+                                            <td><img style="width: 40px;height: 40px;border-radius: 50%;"  :src="[ row['profile_picture'] ? require('~/profile_pictures/'+row['profile_picture']).default : require('@/assets/images/dashboard/DefaultProfile.jpg').default ]"  /></td>
                                             <td>{{ row.name}}</td>
                                             <td>{{ row.email}}</td>
                                             <td>{{ row.phone}}</td>
@@ -177,11 +179,7 @@ export default {
     },
     methods: {
 
-        // async addAdmin(){
-        //
-        //    await this.$store.dispatch('addAdmin')
-        //        this.$router.push('addAdmin')
-        // },
+
       async EditAdmin(admin){
 
            // await this.$store.dispatch('AdminInfoToEdit',admin)
@@ -201,9 +199,11 @@ export default {
 
                 if(res.data.success == true){
 
+
+                    this.admins.splice(this.key,1)
+
                     this.id = ''
                     this.key = ''
-                    this.admins.splice(this.key,1)
                     Toast.fire({
                         icon: 'success',
                         title: 'admin deleted successfully'
