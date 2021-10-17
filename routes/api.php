@@ -41,7 +41,7 @@ Route::group(['middleware'=>'JWTchecker'],function (){
     Route::get('users',[UserController::class,'index'])->name('users');
     Route::post('adminAdd',[UserController::class,'store'])->name('adminAdd');
     Route::get('createUser',[UserController::class,'create'])->name('createUser');
-    Route::post('userUpdate',[UserController::class,'update'])->name('userUpdate');
+    Route::post('userUpdate/{id}',[UserController::class,'update'])->name('userUpdate');
     Route::get('userDelete/{id}',[UserController::class,'destroy'])->name('userDelete');
     Route::get('getUserById/{id}',[UserController::class,'getUserById'])->name('getUserById');
 

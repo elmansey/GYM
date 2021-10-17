@@ -37,7 +37,7 @@ class AuthController extends Controller
 
        }else{
 
-           if(!$token = auth()->guard('api')->attempt($request->only(['email','password']))){
+           if(!$token = auth()->guard()->attempt($request->only(['email','password']))){
 
                return response()->json(['success'=>false,'message'=>'Unauthorized','status'=>'401']);
 
@@ -55,7 +55,7 @@ class AuthController extends Controller
    public function info(Request $request){
 
        try{
-           $stillValid = auth('api')->check();
+           $stillValid = auth()->check();
        }catch(\Tymon\JWTAuth\Exceptions\TokenExpiredException $e){
            auth()->refresh();
        }
@@ -94,7 +94,7 @@ class AuthController extends Controller
 
    public function logout(Request $request){
 
-       auth()->guard('api')->logout();
+       auth()->guard()->logout();
        return response()->json(['success' =>true ,'message' => 'Successfully logged out']);
    }
 
@@ -107,8 +107,8 @@ class AuthController extends Controller
        return ([
            'access_token' => $token,
            'token_type'   => 'bearer',
-           'expires_in'   => auth('api')->factory()->getTTL() * 10080 ,
-           'user'         =>  auth()->guard('api')->user()
+           'expires_in'   => auth()->factory()->getTTL() * 10080 ,
+           'user'         =>  auth()->guard()->user()
 
        ]);
    }

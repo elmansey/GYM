@@ -12,7 +12,7 @@
                             </div>
                             <div class="card-body">
 
-                                          <form onsubmit="handleSubmit" id="myform">
+                                          <form @submit.prevent="handelSubmitData" id="myform">
 
                                               <div class="row">
 
@@ -41,10 +41,10 @@
                                                       <div class="col-form-label">Choose the  Roles</div>
 
                                                       <multiselect name="role" v-model="adminData.roles" tag-placeholder="Add this as new tag" placeholder="Search or add a tag"
-                                                                    :class="[error.roles ? 'is-invalid' : '']"     label="name" track-by="id"   @search-change="asyncFind" :options="options"  :multiple="true"   :taggable="true" @tag="addTag"  >
+                                                                    :class="[error.role ? 'is-invalid' : '']"     label="name" track-by="id"   @search-change="asyncFind" :options="options"  :multiple="true"   :taggable="true" @tag="addTag"  >
 
                                                       </multiselect>
-                                                      <small  style="color: red" v-if="error.roles">{{ error.roles[0]}}</small>
+                                                      <small  style="color: red" v-if="error.role">{{ error.role[0]}}</small>
 
                                                   </div>
 
@@ -71,21 +71,22 @@
                                                           ref="myVueDropzone"
                                                           id="singledropzone"
                                                           :options="singledropzoneOptions"
-                                                          class="dropzone digits"
-                                                          @vdropzone-complete="handleFileComplete"
-                                                          @vdropzone-success="handleFileSuccess"
+                                                          :class="['dropzone digits',error.password ? 'is-invalid' : '']"
+                                                          @vdropzone-file-added="handleFileAdded"
+                                                          @vdropzone-removed-file="removed"
+
                                                       >
                                                       </vue-dropzone>
                                                   </div>
 
-                                                  <!--                                        <small style="color: red" v-if="error.confirm_password">{{ error.confirm_password[0]}}</small>-->
+                                                  <small style="color: red" v-if="error.profile_picture">{{ error.profile_picture[0]}}</small>
                                               </div>
 
-                                              <button type="submit" class="btn btn-primary mt-3"  v-if="!edit" @click.prevent="handleSubmit">
+                                              <button type="submit" class="btn btn-primary mt-3"  v-if="!edit" >
                                                   Save
                                               </button>
 
-                                              <button class="btn btn-success mt-3"   v-if="edit" @click.prevent="editAdmin">
+                                              <button class="btn btn-success mt-3"   v-if="edit" >
                                                   update
                                               </button>
 
@@ -215,27 +216,109 @@ export default {
 
     methods: {
 
-        handleFileComplete(response){
-             console.log(response)
+        handelSubmitData(){
+
+            let formData = new FormData();
+
+
+            formData.append('name',this.adminData.name);
+            formData.append('email',this.adminData.email);
+            formData.append('phone',this.adminData.phone);
+            formData.append('password',this.adminData.password);
+            formData.append('confirm_password',this.adminData.confirm_password);
+            formData.append('role', JSON.stringify(this.adminData.roles));
+            formData.append('profile_picture',this.adminData.file);
+
+
+
+            let config = {
+                headers:{
+                    "Content-Type":"multipart/form-data; charset=utf-8 ; boundary="+ Math.random().toString().substr(2),
+                }
+            }
+
+            axios.post('adminAdd',formData,config)
+                .then(res => {
+
+                    if(res.data.success == true){
+                        Toast.fire({
+                            icon: 'success',
+                            title: 'admin added successfully'
+                        })
+                        this.$router.push('adminsList')
+
+                    }else if(res.data.success == false) {
+
+                        this.error = res.data.message
+                    }
+
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+
+
+            if(this.edit){
+
+
+                let formData = new FormData();
+
+
+                formData.append('name',this.adminData.name);
+                formData.append('email',this.adminData.email);
+                formData.append('phone',this.adminData.phone);
+                formData.append('password',this.adminData.password);
+                formData.append('confirm_password',this.adminData.confirm_password);
+                formData.append('role', JSON.stringify(this.adminData.roles));
+                formData.append('profile_picture',this.adminData.file);
+
+
+
+                let config = {
+                    headers:{
+                        "Content-Type":"multipart/form-data; charset=utf-8 ; boundary="+ Math.random().toString().substr(2),
+                    }
+                }
+
+                axios.post(`userUpdate/${this.$route.params.adminId}`,formData,config)
+                    .then(res => {
+
+                        if(res.data.success == true){
+                            Toast.fire({
+                                icon: 'success',
+                                title: 'admin updated successfully'
+                            })
+                            this.$router.push('adminsList')
+
+                        }else if(res.data.success == false) {
+
+                            this.error = res.data.message
+                        }
+
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
+
+
+            }
+
         },
+        handleFileAdded(file) {
 
-        handleFileSuccess(file,res){
-            console.log(file)
-        },
-
-        handleSubmit(){
-            // console.log(new FormData(myform))
-            console.log('submit')
-        },
-
-        vdropzoneComplete:async function(file,response){
-
-            console.log(file)
-            console.log(response)
-
+            console.log(file);
+            if (this.adminData.file.length < 1) {
+                this.adminData.file = file;
+            }
 
         },
+        removed(files){
 
+            if(files.name == this.adminData.file.name){
+
+                this.adminData.file = []
+            }
+        },
         asyncFind (query) {
             this.options = findService(query)
         },
@@ -250,27 +333,6 @@ export default {
         },
 
 
-        storeAdmin(){
-
-            axios.post('adminAdd',this.adminData)
-            .then(res => {
-
-                if(res.data.success == true){
-                    Toast.fire({
-                        icon: 'success',
-                        title: 'admin added successfully'
-                    })
-                    this.$router.push('adminsList')
-                }else if(res.data.success == false) {
-
-                    this.error = res.data.message
-                }
-
-            })
-            .catch(err => {
-                console.log(err)
-            })
-        },
         editAdmin(){
 
             axios.post('userUpdate',this.adminData)

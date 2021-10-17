@@ -8,6 +8,7 @@ use App\Http\Resources\RolesResource;
 use App\Http\Resources\UsersResource;
 use App\Http\Resources\UserToRoleResource;
 use App\Models\User;
+use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
@@ -35,46 +36,70 @@ class UserController extends Controller
     public function store(Request $request)
     {
 
+        $request['role'] = json_decode($request['role'],true);
 
-        return  $request;
 
-//        $validator = validator::make($request->all(), [
-//            'name' => 'required',
-//            'email' => 'required|email|unique:users,email',
-//            'phone' => 'required',
-//            'password' => 'required|same:confirm_password',
-//            'confirm_password' => 'required',
-//            'roles' => 'required'
-//        ]);
-//
-//
-//
-//        if($validator->fails()){
-//
-//            return response()->json(['success'=>false,'message'=>$validator->errors()],200);
-//
-//
-//        }
-//
-//        $input = $request->all();
-//        $input['password']  = bcrypt($input['password']);
-//
-//
-//
-//        $user =  User::create($input);
-//
-//        $role = [];
-//
-//        foreach ($request->roles as $k => $v){
-//
-//            $role[] = $v['name'];
-//
-//        }
-//
-//
-//        $user->assignRole($role); // بيحطها في جدول الرول
-//
-//        return response()->json(['success'=>true,'message'=>'User created successfully','user'=>new UsersResource($user)],200);
+        $validator = validator::make($request->all(), [
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'phone' => 'required',
+            'password' => 'required|same:confirm_password',
+            'confirm_password' => 'required',
+            'role' => 'required',
+            'profile_picture' => 'mimes:jpg,jpeg,png'
+
+        ]);
+
+
+
+        if($validator->fails()){
+
+            return response()->json(['success'=>false,'message'=>$validator->errors()],200);
+
+        }
+
+        try{
+
+            DB::beginTransaction();
+            if($request->file('profile_picture')){
+
+                $file = $request->file('profile_picture');
+                $extension = $file->extension();
+
+                $fileName = md5(time().now().rand(1,10)).'.'.$extension;
+
+                $file->move(public_path('profile_pictures'),$fileName);
+
+
+            }
+            DB::commit();
+
+        }catch(\Exception $e){
+
+            DB::rollBack();
+
+       }
+
+
+            $input = $request->all();
+            $input['password']  = bcrypt($input['password']);
+            $input['profile_picture'] = $input['profile_picture'] ? $fileName : null;
+
+        $user =  User::create($input);
+
+        $role = [];
+
+
+        foreach ($request['role'] as $k => $v){
+
+            $role[] = $v['name'];
+
+        }
+
+
+        $user->assignRole($role); // بيحطها في جدول الرول
+
+        return response()->json(['success'=>true,'message'=>'User created successfully','user'=>new UsersResource($user)],200);
 
     }
 
@@ -87,25 +112,29 @@ class UserController extends Controller
 
 
 
-    public function update(Request $request)
+    public function update(Request $request,$id)
     {
 
-        if($request->input('password')){
+        $request['role'] = json_decode($request['role'],true);
+
+        if(!empty($request->input('password'))){
 
             $required = true;
 
 
         }else{
+
             $required = false;
 
         }
 
             $validator = validator::make($request->all(), [
             'name'     => 'required',
-            'email'    => 'required|email|unique:users,email,'.$request->id,
+            'email'    => 'required|email|unique:users,email,'.$id,
             'password' => 'same:confirm_password',
             'confirm_password' => Rule::requiredIf($required),
-            'roles'    => 'required'
+             'role' => 'required',
+
         ]);
 
 
@@ -119,6 +148,39 @@ class UserController extends Controller
 
         $input = $request->all();
 
+        try{
+
+            DB::beginTransaction();
+            if($input->profile_picture){
+
+                if($request->file('profile_picture')){
+
+
+                    $file = $request->file('profile_picture');
+                    $extension = $file->extension();
+
+                    $fileName = md5(time().now().rand(1,10)).'.'.$extension;
+
+                    $file->move(public_path('profile_pictures'),$fileName);
+
+                }
+
+
+            }else{
+
+                $input = Arr::except($input,$input->profile_picture);
+            }
+
+            DB::commit();
+
+        }catch(\Exception $e){
+
+            DB::rollBack();
+
+        }
+
+        $input['profile_picture'] = $input['profile_picture'] ? $fileName : null;
+
         if(!empty($input['password'])){
 
             $input['password'] = bcrypt($input['password']);
@@ -129,14 +191,14 @@ class UserController extends Controller
         }
 
 
-        $user = User::find($request->id);
+        $user = User::find($id);
         $user->update($input);
 
-        DB::table('model_has_roles')->where('model_id',$request->id)->delete();
+        DB::table('model_has_roles')->where('model_id',$id)->delete();
 
         $role = [];
 
-        foreach ($request->roles as $k => $v){
+        foreach ($request['role'] as $k => $v){
 
             $role[] = $v['name'];
         }
@@ -145,6 +207,8 @@ class UserController extends Controller
         return response()->json(['success'=>true ,'message'=> 'updated successfully','user'=>new UsersResource($user)] ,200);
 
     }
+
+
 
 
     public function getUserById($id){
