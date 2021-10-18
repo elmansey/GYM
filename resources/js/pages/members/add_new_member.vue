@@ -227,6 +227,16 @@ export default {
         return{
             memberData:{
 
+                first_name:'',
+                middle_name:'',
+                last_name:'',
+                gender:'',
+                data_of_birth:'',
+                group:''
+
+
+
+
             },
             isLoading:true,
 
