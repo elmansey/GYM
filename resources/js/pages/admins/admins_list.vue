@@ -182,7 +182,6 @@ export default {
 
       async EditAdmin(admin){
 
-           // await this.$store.dispatch('AdminInfoToEdit',admin)
           this.$router.push({name: 'updateAdmin', params: {admin}})
         },
         DeleteAdminModal(id,key){

@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call(PermissionTableSeeder::class);
         $this->call(CreateDefaultAdminSeeder::class);
-
+        $this->call(membershipsDefaultSeeder::class);
+        $this->call(groupsDefaultSeeder::class);
     }
 }

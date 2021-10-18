@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\API\auth\AuthController;
+use App\Http\Controllers\API\Groups\GroupsController;
+use App\Http\Controllers\API\Memberships\MembershipsController;
 use App\Http\Controllers\API\user\RoleController;
 use App\Http\Controllers\API\user\UserController;
 use Illuminate\Http\Request;
@@ -37,6 +39,7 @@ Route::group(['middleware'=>'JWTchecker'],function (){
     // role
     Route::resource('roles', RoleController::class);
 
+
     //user
     Route::get('users',[UserController::class,'index'])->name('users');
     Route::post('adminAdd',[UserController::class,'store'])->name('adminAdd');
@@ -54,7 +57,20 @@ Route::group(['middleware'=>'JWTchecker'],function (){
     Route::get('getRoleById/{id}',[RoleController::class,'getRoleById'])->name('getRoleById');
 
 
+    //memberships
+    Route::get('memberships',[MembershipsController::class,'index']);
+    Route::post('addMemberships',[MembershipsController::class,'store']);
+    Route::get('getMembershipsById/{id}',[MembershipsController::class,'getMembershipsById']);
+    Route::post('updateMemberships/{id}',[MembershipsController::class,'update']);
+    Route::get('deleteMemberships/{id}',[MembershipsController::class,'destroy']);
 
+
+    //memberships
+    Route::get('groups',[GroupsController::class,'index']);
+    Route::post('addGroup',[GroupsController::class,'store']);
+    Route::get('getGroupsById/{id}',[GroupsController::class,'getGroupsById']);
+    Route::post('updateGroup/{id}',[GroupsController::class,'update']);
+    Route::get('deleteGroup/{id}',[GroupsController::class,'destroy']);
 
 
 });

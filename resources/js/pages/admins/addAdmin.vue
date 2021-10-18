@@ -290,6 +290,9 @@ export default {
                     .then(res => {
 
                         if(res.data.success == true){
+
+                            // this.$store.dispatch('userInfo')
+
                             Toast.fire({
                                 icon: 'success',
                                 title: 'admin updated successfully'

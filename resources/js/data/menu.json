@@ -13,16 +13,79 @@
 
 
       },
-
       {
-          "title": "store",
-          "icon": "shopping-bag",
+          "title": "Registration member",
+          "icon": "user-plus",
           "type": "sub",
           "badgeType": "primary",
           "active": false,
+          "permission": "show-Registration-member",
           "children": [
 
-              { "path": "/dashboard/products", "title": "products", "type": "link" }
+              {
+                  "path": "/dashboard/membersList",
+                  "title": "members list",
+                  "type": "link",
+                  "permission": "show-Registration-member-list"
+              },
+              {
+                  "path": "/dashboard/addMember",
+                  "title": "add new member",
+                  "type": "link",
+                  "permission": "add-member-in-gym"
+              }
+          ]
+      },
+
+      {
+          "title": "Memberships",
+          "icon": "layers",
+          "type": "sub",
+          "badgeType": "primary",
+          "active": false,
+          "permission": "show-memberships",
+          "children": [
+
+              {
+                  "path": "/dashboard/memberships",
+                  "title": "memberships list",
+                  "type": "link",
+                  "permission": "show-memberships-list"
+
+              },
+
+              {
+                  "path": "/dashboard/addMembership",
+                  "title": "add new Membership",
+                  "type": "link",
+                  "permission": "add-membership"
+
+              }
+          ]
+      },
+      {
+          "title": "Groups",
+          "icon": "bookmark",
+          "type": "sub",
+          "badgeType": "primary",
+          "active": false,
+          "permission": "show-groups",
+          "children": [
+
+              {
+                  "path": "/dashboard/groups",
+                  "title": "groups list",
+                  "type": "link",
+                  "permission": "show-groups-list"
+
+              },
+              {
+                  "path": "/dashboard/addGroup",
+                  "title": "add group",
+                  "type": "link",
+                  "permission": "add-group"
+
+              }
 
           ]
       },
@@ -44,7 +107,7 @@
               },
               {
                   "path": "/dashboard/addAdmin",
-                  "title": "add member in staff",
+                  "title": "add person in staff",
                   "type": "link",
                   "permission": "add-member-in-team"
               }

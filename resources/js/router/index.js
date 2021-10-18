@@ -25,6 +25,68 @@ const routes = [
 
         },
         {
+
+            path: 'membersList',
+            name: 'membersList',
+            component: require('@/pages/members/membersList').default,
+
+        },
+        {
+
+            path: 'addMember',
+            name: 'addMember',
+            component: require('@/pages/members/add_new_member').default,
+
+        },
+        {
+
+            path: 'updateMember',
+            name: 'updateMember',
+            component: require('@/pages/members/add_new_member').default,
+
+        },
+
+        {
+            path: 'addMembership',
+            name: 'addMembership',
+            component: require('@/pages/memberships/Membership').default,
+
+        },
+
+        {
+            path: 'updateMembership/:membershipId',
+            name: 'updateMembership',
+            component: require('@/pages/memberships/Membership').default,
+
+        },
+        {
+            path: 'memberships',
+            name: 'memberships',
+            component: require('@/pages/memberships/memberships').default,
+
+        },
+
+        {
+            path: 'groups',
+            name: 'groups',
+            component: require('@/pages/groups/groups_list').default,
+
+        },
+        {
+            path: 'addGroup',
+            name: 'addGroup',
+            component: require('@/pages/groups/add_group').default,
+
+        },
+
+        {
+            path: 'updateGroup/:groupId',
+            name: 'updateGroup',
+            component: require('@/pages/groups/add_group').default,
+
+        },
+
+        {
             path: 'error_403',
             name: 'error_403',
             component: require('@/pages/errors/error_403').default,
