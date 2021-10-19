@@ -20,10 +20,16 @@ class groupsDefaultSeeder extends Seeder
             'name'=>'Bodybuilding'
         ]);
         $group  = Groups::create([
-            'name'=>'regime'
+            'name'=>'WeightLoss'
         ]);
         $group  = Groups::create([
             'name'=>'Yoga'
         ]);
+        $group  = Groups::create([
+            'name'=>'GeneralTraining'
+        ]);
+
+
+
     }
 }

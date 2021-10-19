@@ -17,7 +17,7 @@
                                     <div class="row">
 
 
-                                            <div  class="mb-2 col-md-12 col-lg-12 col-sm-12">personal information</div><br/>
+<!--                                            <div  class="mb-2 col-md-12 col-lg-12 col-sm-12">personal information</div><br/>-->
                                             <div class="mb-2 col-md-6 col-lg-4 col-sm-12">
                                                 <div class="col-form-label">first name</div>
 
@@ -66,7 +66,7 @@
 
 
 
-                                        <div  class="mb-2 col-md-12 col-lg-12 col-sm-12">contact information</div><br/>
+<!--                                        <div  class="mb-2 col-md-12 col-lg-12 col-sm-12">contact information</div><br/>-->
 
 
                                         <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
@@ -99,7 +99,7 @@
 
 
 
-                                        <div  class="mb-2 col-md-12 col-lg-12 col-sm-12">login information</div><br/>
+<!--                                        <div  class="mb-2 col-md-12 col-lg-12 col-sm-12">login information</div><br/>-->
 
                                         <div class="mb-2 col-md-6 col-lg-4 col-sm-12">
                                             <div class="col-form-label">  user name  </div>
@@ -125,9 +125,9 @@
                                         </div>
 
                                         <div class="mb-2 col-md-12 col-lg-12 col-sm-12">
-                                            <div class="col-form-label"> Upload profile picture</div>
 
-                                            <div class="card-body">
+                                                <div class="col-form-label"> Upload profile picture</div>
+
                                                 <vue-dropzone
                                                     name="file"
                                                     ref="myVueDropzone"
@@ -137,24 +137,23 @@
 
                                                 >
                                                 </vue-dropzone>
-                                            </div>
 
                                             <small style="color: red" ></small>
                                         </div>
 
 
-                                        <div  class="mb-2 col-md-12 col-lg-12 col-sm-12">extra information</div><br/>
+<!--                                        <div  class="mb-2 col-md-12 col-lg-12 col-sm-12">extra information</div><br/>-->
 
 
 
-                                        <div class="mb-2 col-md-12 col-lg-6 col-sm-12">
+                                        <div class="mb-2 col-md-12 col-lg-12 col-sm-12">
                                             <div class="col-form-label">  interested area  </div>
 
                                            <textarea style="width: 100%"  class="form-control"></textarea>
                                             <small style="color: red" ></small>
                                         </div>
 
-                                        <div class="mb-2 col-md-12 col-lg-6 col-sm-12">
+                                        <div class="mb-2 col-md-12 col-lg-12 col-sm-12">
                                             <div class="col-form-label">  source </div>
 
                                             <textarea style="width: 100%" class="form-control"></textarea>
@@ -232,7 +231,28 @@ export default {
                 last_name:'',
                 gender:'',
                 data_of_birth:'',
-                group:''
+                group:'',
+
+
+
+                address:'',
+                city:'',
+                phoneNumber:'',
+                email:'',
+
+
+                userName:'',
+                password:'',
+                confirm_password:'',
+                profile_picture:[],
+
+
+
+                interested_area:'',
+                source:'',
+                membership:'',
+                start_data:''
+
 
 
 
