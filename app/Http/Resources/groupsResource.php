@@ -17,6 +17,7 @@ class groupsResource extends JsonResource
         return [
             'id'=> $this->id,
             'name'=> $this->name,
+            'TotalGroupMembers'=>$this->TotalGroupMembers
 
         ];
     }

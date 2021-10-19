@@ -11,7 +11,9 @@ class MembershipsRersource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name
+            'name' => $this->name,
+            'Membership_price' => $this->Membership_price,
+            'Membership_Period' => $this->Membership_Period
         ];
     }
 }

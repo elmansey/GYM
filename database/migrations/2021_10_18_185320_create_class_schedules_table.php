@@ -17,6 +17,7 @@ class CreateClassSchedulesTable extends Migration
             $table->id();
             $table->string('className');
             $table->string('coachName');
+            $table->string('days');
             $table->time('startingTime');
             $table->time('endingTime');
             $table->string('trainingLocation');

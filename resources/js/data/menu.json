@@ -38,7 +38,43 @@
       },
 
       {
-          "title": "Memberships",
+          "title": "class schedule",
+          "icon": "calendar",
+          "type": "sub",
+          "badgeType": "primary",
+          "active": false,
+          "permission": "show-class-schedule-all",
+          "children": [
+
+              {
+                  "path": "/dashboard/classList",
+                  "title": "class list",
+                  "type": "link",
+                  "permission": "show-class_schedule-list"
+
+              },
+
+              {
+                  "path": "/dashboard/ClassSchedule",
+                  "title": "class schedule",
+                  "icon": "calendar",
+                  "type": "link",
+                  "permission": "show-class_schedule"
+
+              },
+
+              {
+                  "path": "/dashboard/addClassSchedule",
+                  "title": "add in class schedule ",
+                  "type": "link",
+                  "permission": "add-membership"
+
+              }
+          ]
+      },
+
+      {
+          "title": "Memberships type",
           "icon": "layers",
           "type": "sub",
           "badgeType": "primary",
@@ -92,7 +128,7 @@
 
       {
           "title": "Work Team",
-          "icon": "users",
+          "icon": "briefcase",
           "type": "sub",
           "badgeType": "primary",
           "active": false,
@@ -101,16 +137,42 @@
 
               {
                   "path": "/dashboard/adminsList",
-                  "title": "team list",
+                  "title": "admin list",
                   "type": "link",
                   "permission": "show-team-member-list"
               },
               {
                   "path": "/dashboard/addAdmin",
-                  "title": "add person in staff",
+                  "title": "add admin ",
                   "type": "link",
                   "permission": "add-member-in-team"
               }
+
+          ]
+      },
+
+      {
+          "title": "staff",
+          "icon": "users",
+          "type": "sub",
+          "badgeType": "primary",
+          "active": false,
+          "permission": "show-staff",
+          "children": [
+
+              {
+                  "path": "/dashboard/staff",
+                  "title": "staff list",
+                  "type": "link",
+                  "permission": "show-staff-list"
+              },
+              {
+                  "path": "/dashboard/addInStaff",
+                  "title": "add person in staff",
+                  "type": "link",
+                  "permission": "add-person-in-staff"
+              }
+
           ]
       },
 

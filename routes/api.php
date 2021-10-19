@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\API\auth\AuthController;
+use App\Http\Controllers\API\ClassSchedule\ClassScheduleController;
 use App\Http\Controllers\API\Groups\GroupsController;
 use App\Http\Controllers\API\Memberships\MembershipsController;
+use App\Http\Controllers\API\staff\staffController;
 use App\Http\Controllers\API\user\RoleController;
 use App\Http\Controllers\API\user\UserController;
 use Illuminate\Http\Request;
@@ -48,6 +50,7 @@ Route::group(['middleware'=>'JWTchecker'],function (){
     Route::get('userDelete/{id}',[UserController::class,'destroy'])->name('userDelete');
     Route::get('getUserById/{id}',[UserController::class,'getUserById'])->name('getUserById');
 
+
     //role
     Route::get('roles',[RoleController::class,'index'])->name('roles');
     Route::get('createRole',[RoleController::class,'create'])->name('create');
@@ -65,12 +68,29 @@ Route::group(['middleware'=>'JWTchecker'],function (){
     Route::get('deleteMemberships/{id}',[MembershipsController::class,'destroy']);
 
 
-    //memberships
+    //groups
     Route::get('groups',[GroupsController::class,'index']);
     Route::post('addGroup',[GroupsController::class,'store']);
     Route::get('getGroupsById/{id}',[GroupsController::class,'getGroupsById']);
     Route::post('updateGroup/{id}',[GroupsController::class,'update']);
     Route::get('deleteGroup/{id}',[GroupsController::class,'destroy']);
 
+
+    //class_schedules
+    Route::get('classes',[ClassScheduleController::class,'index']);
+    Route::post('addClass',[ClassScheduleController::class,'store']);
+    Route::get('getClassById/{id}',[ClassScheduleController::class,'getClassById']);
+    Route::post('updateClass/{id}',[ClassScheduleController::class,'update']);
+    Route::get('deleteClass/{id}',[ClassScheduleController::class,'destroy']);
+
+
+
+
+    //staff
+    Route::get('staff',[staffController::class,'index']);
+    Route::post('addInStaff',[staffController::class,'store']);
+    Route::get('getItemFromStaffById/{id}',[staffController::class,'getItemFromStaffById']);
+    Route::post('updateInStaff/{id}',[staffController::class,'update']);
+    Route::get('deleteItemInStaff/{id}',[staffController::class,'destroy']);
 
 });

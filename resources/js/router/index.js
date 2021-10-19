@@ -86,6 +86,60 @@ const routes = [
 
         },
 
+
+        {
+            path: 'staff',
+            name: 'staff',
+            component: require('@/pages/staff/staffList').default,
+
+        },
+        {
+            path: 'updateInStaff/:staffId',
+            name: 'updateInStaff',
+            component: require('@/pages/staff/add_person_in_staff').default,
+
+        },
+        {
+            path: 'addInStaff',
+            name: 'addInStaff',
+            component: require('@/pages/staff/add_person_in_staff').default,
+
+        },
+
+
+
+
+
+        {
+            path: 'classList',
+            name: 'classList',
+            component: require('@/pages/classSchedule/classList').default,
+
+        },
+        {
+            path: 'classSchedule',
+            name: 'classSchedule',
+            component: require('@/pages/classSchedule/classSchedule').default,
+
+        },
+        {
+            path: 'updateClassSchedule/:classScheduleId',
+            name: 'updateClassSchedule',
+            component: require('@/pages/classSchedule/classScheduleAddEDIT').default,
+
+        },
+        {
+            path: 'addClassSchedule',
+            name: 'addClassSchedule',
+            component: require('@/pages/classSchedule/classScheduleAddEDIT').default,
+
+        },
+
+
+
+
+
+
         {
             path: 'error_403',
             name: 'error_403',

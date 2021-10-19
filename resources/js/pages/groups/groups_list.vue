@@ -27,7 +27,7 @@
 
                                         <th></th>
                                         <th sortKey="name">name</th>
-                                        <th sortKey="name" >____</th>
+                                        <th sortKey="name" >TotalGroupMembers</th>
                                         <th sortKey="options">options</th>
                                         </thead>
 
@@ -35,7 +35,7 @@
                                         <tr v-for="(row, index) in displayData" :key="index">
                                             <td></td>
                                             <td>{{row.name}}</td>
-                                            <td></td>
+                                            <td>{{row.TotalGroupMembers}}</td>
                                             <td>
                                                 <div>
                                                     <b-button-group class="btn-container ">

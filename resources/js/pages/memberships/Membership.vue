@@ -22,6 +22,18 @@
                                             <input name="name" v-model="data.name" :class="['form-control',error.name ? 'is-invalid' : '']" />
                                             <small style="color: red"  v-if="error.name">{{error.name[0]}}</small>
                                         </div>
+                                        <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
+                                            <div class="col-form-label">membership Period</div>
+
+                                            <input name="name" v-model="data.Membership_Period" :class="['form-control',error.Membership_Period ? 'is-invalid' : '']" />
+                                            <small style="color: red"  v-if="error.Membership_Period">{{error.Membership_Period[0]}}</small>
+                                        </div>
+                                        <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
+                                            <div class="col-form-label">membership price</div>
+
+                                            <input name="name" v-model="data.Membership_price" :class="['form-control',error.Membership_price ? 'is-invalid' : '']" />
+                                            <small style="color: red"  v-if="error.Membership_price">{{error.Membership_price[0]}}</small>
+                                        </div>
 
 
                                     </div>
@@ -66,6 +78,8 @@ export default {
 
             data:{
                 name:'',
+                Membership_Period:'',
+                Membership_price:'',
 
             },
 
@@ -93,6 +107,8 @@ export default {
             axios.get(`getMembershipsById/${this.$route.params.membershipId}`)
             .then(res => {
                 this.data.name  = res.data.membership.name
+                this.data.Membership_Period  = res.data.membership.Membership_Period
+                this.data.Membership_price  = res.data.membership.Membership_price
                 this.isLoading = true
             })
             .catch(err => {
@@ -103,6 +119,8 @@ export default {
         }else{
             this.edit = false
             this.data.name = ''
+            this.data.Membership_Period = ''
+            this.data.Membership_price = ''
             this.isLoading = true
         }
     },
@@ -118,6 +136,9 @@ export default {
 
                 let formData = new FormData()
                 await formData.append('name',this.data.name)
+                await formData.append('Membership_Period',this.data.Membership_Period)
+                await formData.append('Membership_price',this.data.Membership_price)
+
                 axios.post(`updateMemberships/${this.$route.params.membershipId}`,formData)
                 .then(res => {
 
@@ -148,6 +169,10 @@ export default {
 
                 let formData = new FormData()
                 await formData.append('name',this.data.name)
+                await formData.append('Membership_Period',this.data.Membership_Period)
+                await formData.append('Membership_price',this.data.Membership_price)
+
+
                 axios.post('addMemberships',formData)
                     .then(res => {
 
@@ -184,6 +209,8 @@ export default {
 
             if(to.name == 'addMembership'){
                 this.data.name = ''
+                this.data.Membership_Period = ''
+                this.data.Membership_price = ''
                 this.edit = false
             }
         }

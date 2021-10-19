@@ -9,5 +9,5 @@ class Memberships extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name'];
+    protected $fillable = ['name','Membership_Period','Membership_price'];
 }

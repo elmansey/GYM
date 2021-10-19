@@ -24,7 +24,9 @@ class MembershipsController extends Controller
 
 
         $validator = validator::make($request->all(),[
-            'name' => 'required|max:25|unique:memberships,name'
+            'name' => 'required|max:25|unique:memberships,name',
+            'Membership_Period' => 'required',
+            'Membership_price' => 'required'
         ]);
 
         if($validator->fails()){
@@ -52,7 +54,9 @@ class MembershipsController extends Controller
         public function update(Request $request,$id){
 
             $validator = validator::make($request->all(),[
-                'name' => ['required','max:25',Rule::unique('memberships')->ignore($id)]
+                'name' => ['required','max:25',Rule::unique('memberships')->ignore($id)],
+                'Membership_Period' => 'required',
+                'Membership_price' => 'required'
             ]);
 
             if($validator->fails()){
@@ -60,11 +64,12 @@ class MembershipsController extends Controller
             }
 
 
+
             $membership = Memberships::find($id);
             $membership->update($request->all());
 
 
-            return  response()->json(['success'=> true,'membership'=>$membership],200);
+            return  response()->json(['success'=> true,'membership'=>new  MembershipsRersource($membership)],200);
 
 
 

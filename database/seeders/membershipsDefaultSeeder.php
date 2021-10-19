@@ -14,20 +14,32 @@ class membershipsDefaultSeeder extends Seeder
      * @return void
      */
     public function run()
+
+
+
     {
         DB::table('memberships')->delete();
 
         $memberShips  = Memberships::create([
-           'name'=>'golden'
+           'name'=>'golden',
+            'Membership_Period' => '1month',
+            'Membership_price'  => 2000
+
         ]);
         $memberShips  = Memberships::create([
-            'name'=>'silver'
+            'name'=>'silver',
+            'Membership_Period' => '1month',
+            'Membership_price'  =>  1500
         ]);
         $memberShips  = Memberships::create([
-            'name'=>'Platinum'
+            'name'=>'Platinum',
+            'Membership_Period' => '1week',
+            'Membership_price'  =>  1000
         ]);
         $memberShips  = Memberships::create([
-            'name'=>'Normal'
+            'name'=>'Normal',
+            'Membership_Period' => '1week',
+            'Membership_price'  =>  800
         ]);
 
     }

@@ -34,14 +34,26 @@ class PermissionTableSeeder extends Seeder
             'add-membership',
             'edit-membership',
             'delete-membership',
+            'show-staff',
+            'show-staff-list',
+            'add-person-in-staff',
+            'edit-person-in-staff',
+            'delete-person-in-staff',
             'show-groups',
             'show-groups-list',
             'add-group',
             'edit-group',
             'delete-group',
+            'show-class-schedule-all',
+            'show-class_schedule-list',
+            'show-class_schedule',
+            'add-class-schedule',
+            'edit-class-schedule',
+            'delete-class-schedule',
             'show-Registration-member',
             'show-Registration-member-list',
             'add-member-in-gym',
+
 
         ];
 

@@ -5,7 +5,7 @@
 
     <div v-if="isLoadig">
 
-        <Breadcrumbs main="Dashboard" title="Team member list" />
+        <Breadcrumbs main="Dashboard" title="admin list" />
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
@@ -42,7 +42,7 @@
                                             <td>{{ row.email}}</td>
                                             <td>{{ row.phone}}</td>
                                             <td >
-                                                <span class="badge badge-success" v-for="(v,k) in row.roles">
+                                                <span class="badge badge-success" v-for="(v,k) in row.role">
                                                     {{v.name}}
                                                 </span>
 
