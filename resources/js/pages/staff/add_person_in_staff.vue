@@ -182,13 +182,21 @@ export default {
 
     beforeMount() {
 
-        if(this.$route.params.updateInStaffId){
+        if(this.$route.params.staffId){
             this.edit = true
 
-            axios.get(`getItemFromStaffById/${this.$route.params.updateInStaffId}`)
+            axios.get(`getItemFromStaffById/${this.$route.params.staffId}`)
             .then(res => {
+                this.StaffData.firstName = res.data.staff.firstName
+                this.StaffData.middleName = res.data.staff.middleName
+                this.StaffData.lastName = res.data.staff.lastName
+                this.StaffData.email = res.data.staff.email
+                this.StaffData.phone = res.data.staff.phone
+                this.StaffData.jop = res.data.staff.jop
+                this.StaffData.notes = res.data.staff.notes
                 this.isLoading = true
-                this.StaffData = res.data.staff
+
+
             })
             .catch(err => {
 
@@ -228,7 +236,10 @@ export default {
 
         handelStaffFormSubmit(){
 
-            let formData = new FormData()
+            if(this.edit == false ){
+
+
+                     let formData = new FormData()
 
             formData.append('firstName',this.StaffData.firstName)
             formData.append('middleName',this.StaffData.middleName)
@@ -273,6 +284,54 @@ export default {
 
 
 
+            }
+            if(this.edit){
+
+                let formData = new FormData()
+
+                    formData.append('firstName',this.StaffData.firstName)
+                    formData.append('middleName',this.StaffData.middleName)
+                    formData.append('lastName',this.StaffData.lastName)
+                    formData.append('email',this.StaffData.email)
+                    formData.append('phone',this.StaffData.phone)
+                    formData.append('jop',this.StaffData.jop)
+                    formData.append('notes',this.StaffData.notes)
+                    formData.append('avatar',this.StaffData.avatar)
+
+                    let config = {
+                        headers:{
+                            "Content-Type":"multipart/form-data; charset=utf-8 ; boundary="+ Math.random().toString().substr(2),
+                        }
+                    }
+
+                    axios.post(`updateInStaff/${this.$route.params.staffId}`,formData,config)
+                    .then(res => {
+
+
+                        if(res.data.success == false){
+                            this.error = res.data.message
+                        }
+
+                        if(res.data.success ){
+
+                            Toast.fire({
+                                icon: 'success',
+                                title: ' updated  successfully'
+                            })
+                            this.$router.push({name:'staff'})
+
+                        }
+
+
+                        console.log(res)
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
+
+
+
+            }
 
         }
     },

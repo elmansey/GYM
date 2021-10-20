@@ -36,9 +36,9 @@
 
                                         <tbody slot="body" slot-scope="{ displayData }">
                                         <tr v-for="(row, index) in displayData" :key="index">
-                                            <td></td>
+                                            <td> </td>
 
-                                            <td><img style="width: 40px;height: 40px;border-radius: 50%;"  :src="[ row['avatar'] ? require('~/staff_pictures/'+row['avatar']).default : require('@/assets/images/dashboard/DefaultProfile.jpg').default ]"  /></td>
+                                            <td><img style="width: 40px;height: 40px;border-radius: 50%;"  :src="require(`~/staff_pictures/${row.avatar}`).default"  /></td>
                                             <td>{{ row.firstName +' '+ row.middleName +' '+ row.lastName}}</td>
                                             <td>{{ row.email}}</td>
                                             <td>{{ row.phone}}</td>
@@ -55,7 +55,7 @@
                                                             :to="{name: 'updateInStaff', params: {staffId : row.id}}"
                                                             v-if="can('edit-person-in-staff')"
                                                         >
-                                                            Edituuu
+                                                           edit
                                                         </router-link>
 
                                                         <b-button
@@ -101,7 +101,7 @@
                                     Delete Team member
                                 </template>
                                 <div class="d-block text-center">
-                                    <h5>are you sure to delete this Admin</h5>
+                                    <h5>are you sure to delete  this item from staff</h5>
                                 </div>
                                 <b-button class="mt-3"  v-b-modal.modal-sm variant="default" @click="$bvModal.hide('bv-modal-example')">Cancel</b-button>
                                 <b-button class="mt-3"  v-b-modal.modal-sm variant="danger"  @click.prevent="deleteAdmin">delete</b-button>
@@ -185,19 +185,19 @@ export default {
         deleteAdmin(){
 
 
-            axios.get('userDelete/'+this.id)
+            axios.get('deleteItemInStaff/'+this.id)
                 .then(res => {
 
                     if(res.data.success == true){
 
 
-                        this.admins.splice(this.key,1)
+                        this.staff.splice(this.key,1)
 
                         this.id = ''
                         this.key = ''
                         Toast.fire({
                             icon: 'success',
-                            title: 'admin deleted successfully'
+                            title: 'item deleted successfully'
                         })
 
                         this.$bvModal.hide('bv-modal-example')

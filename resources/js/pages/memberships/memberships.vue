@@ -27,8 +27,8 @@
 
                                         <th></th>
                                         <th sortKey="name">name</th>
-                                        <th sortKey="name" >Membership_Period</th>
-                                        <th sortKey="name" >Membership_price</th>
+                                        <th sortKey="name" >Membership Period</th>
+                                        <th sortKey="name" >Membership price</th>
                                         <th sortKey="options">options</th>
                                         </thead>
 

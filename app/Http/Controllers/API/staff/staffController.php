@@ -79,7 +79,11 @@ class staffController extends Controller
 
     }
 
+
+
+
     public function update(Request $request , $id){
+        $input = $request->all();
 
         $validator = validator::make($request->all(),[
 
@@ -100,9 +104,7 @@ class staffController extends Controller
 
 
 
-        $input = $request->all();
-
-        if($request->file('avatar')){
+        if($request->hasFile('avatar')){
 
             $oldImg = staff::where('id','=',$id)->pluck('avatar');
 
@@ -116,7 +118,7 @@ class staffController extends Controller
 
 
 
-            $file = $request->file('staff_picture');
+            $file = $request->file('avatar');
             $extension = $file->extension();
 
             $fileName = md5(time().now().rand(1,10)).'.'.$extension;
@@ -126,6 +128,7 @@ class staffController extends Controller
             $input['avatar'] = $input['avatar'] ? $fileName : null;
 
         }else{
+
             $input =  Arr::except($input,array('avatar'));
         }
 
@@ -152,8 +155,26 @@ class staffController extends Controller
         return response()->json(['success'=>true, 'staff'=>  $staff],200);
 
 
+    }
+
+    public function destroy($id){
 
 
+        $oldImg = staff::where('id','=',$id)->pluck('avatar');
+
+        $path =  public_path('staff_pictures\\'.$oldImg[0]);
+        if($oldImg[0]){
+            if(file_exists($path)){
+
+                unlink($path);
+            }
+        }
+
+        $staff = staff::find($id);
+        $staff->delete();
+
+
+        return response()->json(['success'=> true],200);
 
 
 
