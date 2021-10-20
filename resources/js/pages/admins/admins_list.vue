@@ -37,7 +37,21 @@
                                         <tbody slot="body" slot-scope="{ displayData }">
                                         <tr v-for="(row, index) in displayData" :key="index">
                                             <td></td>
-                                            <td><img style="width: 40px;height: 40px;border-radius: 50%;"  :src="[ row['profile_picture'] ? require('~/profile_pictures/'+row['profile_picture']).default : require('@/assets/images/dashboard/DefaultProfile.jpg').default ]"  /></td>
+
+
+                                            <td><img
+                                            style="width: 40px;height: 40px;border-radius: 50%;"
+
+
+                                            :src="row.profile_picture ? '../../profile_pictures/'+row.profile_picture :
+                                             '../../profile_pictures/DefaultProfile.jpg'"
+
+
+                                              />
+                                              </td>
+
+
+
                                             <td>{{ row.name}}</td>
                                             <td>{{ row.email}}</td>
                                             <td>{{ row.phone}}</td>
@@ -147,10 +161,13 @@ export default {
             },
             id:'',
             key:'',
-            isLoadig:false
+            isLoadig:false,
+           path:'~/profile_pictures/',
+           defaultImg:'@/assets/images/dashboard/DefaultProfile.jpg'
 
 
         };
+
     },
     beforeMount() {
 

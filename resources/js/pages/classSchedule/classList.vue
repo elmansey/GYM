@@ -26,19 +26,23 @@
                                         <thead slot="head">
 
                                         <th></th>
-                                        <th sortKey="name">className</th>
-                                        <th sortKey="name" >coachName</th>
-                                        <th sortKey="name" >startingTime</th>
-                                        <th sortKey="name" >endingTime</th>
-                                        <th sortKey="name" >trainingLocation</th>
+                                        <th sortKey="name">class Name</th>
+                                        <th sortKey="name" >captain Name</th>
+                                        <th sortKey="name" >starting Time</th>
+                                        <th sortKey="name" >ending Time</th>
+                                        <th sortKey="name" >training Location</th>
                                         <th sortKey="options">options</th>
                                         </thead>
 
                                         <tbody slot="body" slot-scope="{ displayData }">
                                         <tr v-for="(row, index) in displayData" :key="index">
                                             <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            <td>  {{row.className }}  </td>
+                                            <td>  {{ row.captain_relation.firstName + ' ' + row.captain_relation.lastName}}  </td>
+                                            <td>  {{ row.startingTime}}  </td>
+                                            <td>  {{ row.endingTime}}  </td>
+                                            <td>  {{ row.trainingLocation}}  </td>
+
                                             <td>
                                                 <div>
                                                     <b-button-group class="btn-container ">
@@ -48,7 +52,7 @@
                                                             squared
                                                             variant="outline-warning"
                                                             class="btn-sm btn-child"
-                                                            to=""
+                                                            :to="{name : 'updateClassSchedule',params : {classScheduleId : row.id}}"
                                                             v-if="can('edit-class-schedule')"
 
                                                         >
@@ -60,7 +64,7 @@
                                                             squared
                                                             variant="outline-danger"
                                                             class="btn-sm btn-child"
-                                                            @click=""
+
                                                             v-if="can('delete-class-schedule')"
                                                         >
 
@@ -148,6 +152,18 @@ export default {
 
 
         };
+    },
+    beforeCreate(){
+
+        axios.get('classes')
+        .then(res => {
+            this.classes = res.data.classes
+        })
+        .catch(err => {
+            console.error(err);
+        })
+
+
     },
     beforeMount() {
 

@@ -291,7 +291,7 @@ export default {
 
                         if(res.data.success == true){
 
-                            // this.$store.dispatch('userInfo')
+                            this.$store.dispatch('userInfo')
 
                             Toast.fire({
                                 icon: 'success',

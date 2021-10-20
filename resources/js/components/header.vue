@@ -164,7 +164,7 @@
             <img
               class="b-r-10"
               style="width: 40px;height: 40px;border-radius: 50%"
-              :src="[ this.$store.getters.USER['profile_picture'] ? require('~/profile_pictures/'+this.$store.getters.USER['profile_picture']).default : require('@/assets/images/dashboard/DefaultProfile.jpg').default ]"
+              :src=" this.$store.getters.USER['profile_picture'] ? '../../profile_pictures/'+this.$store.getters.USER['profile_picture'] :  '../../profile_pictures/DefaultProfile.jpg' "
               alt=""
             />
             <div class="media-body">

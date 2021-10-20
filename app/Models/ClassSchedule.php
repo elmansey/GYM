@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\staff;
 
 class ClassSchedule extends Model
 {
@@ -11,14 +12,25 @@ class ClassSchedule extends Model
 
     protected $table= 'class_schedules';
 
-    protected $fillable = [
+    protected $fillable = [ 'className','captainName', 'days','startingTime', 'endingTime','trainingLocation'];
 
-        'className',
-        'coachName',
-        'days',
-        'startingTime',
-        'endingTime',
-        'trainingLocation'
 
+
+
+
+
+    protected $casts = [
+        'days' => 'array'
     ];
+
+
+
+
+
+
+    public function captain_relation(){
+
+        return $this->belongsTo(staff::class,'captainName');
+
+    }
 }

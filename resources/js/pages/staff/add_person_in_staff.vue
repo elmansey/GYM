@@ -204,7 +204,19 @@ export default {
 
 
         }else{
+
+
+
+
             this.edit = false
+            this.StaffData.firstName = ''
+            this.StaffData.middleName = ''
+            this.StaffData.lastName = ''
+            this.StaffData.email = ''
+            this.StaffData.phone = ''
+            this.StaffData.jop = ''
+            this.StaffData.avatar = []
+            this.StaffData.notes = ''
             this.isLoading = true
         }
 
@@ -343,6 +355,14 @@ export default {
 
             if(to.name == 'addInStaff'){
                 this.edit = false
+                 this.StaffData.firstName = ''
+                this.StaffData.middleName = ''
+                this.StaffData.lastName = ''
+                this.StaffData.email = ''
+                this.StaffData.phone = ''
+                this.StaffData.jop = ''
+                this.StaffData.avatar = []
+                this.StaffData.notes = ''
                 this.isLoading = true
 
             }

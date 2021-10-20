@@ -76,12 +76,17 @@ Route::group(['middleware'=>'JWTchecker'],function (){
     Route::get('deleteGroup/{id}',[GroupsController::class,'destroy']);
 
 
+
+
+
     //class_schedules
     Route::get('classes',[ClassScheduleController::class,'index']);
     Route::post('addClass',[ClassScheduleController::class,'store']);
     Route::get('getClassById/{id}',[ClassScheduleController::class,'getClassById']);
     Route::post('updateClass/{id}',[ClassScheduleController::class,'update']);
     Route::get('deleteClass/{id}',[ClassScheduleController::class,'destroy']);
+    Route::get('getAllCaptainToCreateClass',[ClassScheduleController::class,'getAllCaptainToCreateClass']);
+
 
 
 

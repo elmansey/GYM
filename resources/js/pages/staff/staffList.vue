@@ -38,7 +38,15 @@
                                         <tr v-for="(row, index) in displayData" :key="index">
                                             <td> </td>
 
-                                            <td><img style="width: 40px;height: 40px;border-radius: 50%;"  :src="require(`~/staff_pictures/${row.avatar}`).default"  /></td>
+                                            <td><img style="width: 40px;height: 40px;border-radius: 50%;"
+                                              :src="row.avatar ? '../../staff_pictures/'+row.avatar :
+                                             '../../profile_pictures/DefaultProfile.jpg'"
+
+
+                                             />
+                                            </td>
+
+
                                             <td>{{ row.firstName +' '+ row.middleName +' '+ row.lastName}}</td>
                                             <td>{{ row.email}}</td>
                                             <td>{{ row.phone}}</td>

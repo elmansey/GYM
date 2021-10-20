@@ -32,21 +32,24 @@
                                             <div class="col-form-label">select day</div>
 
                                             <multiselect :disabled="selectAll" v-model="data.days" tag-placeholder="Add this as new tag" placeholder="Search or add a tag"
-                                                          :class="[error.day ? 'is-invalid' : '']"      label="name" track-by="id"   @search-change="asyncFind" :options="options"  :multiple="true"   :taggable="true" @tag="addTag"  >
+                                                          :class="[error.days ? 'is-invalid' : '']"      label="name" track-by="id"   @search-change="asyncFind" :options="options"  :multiple="true"   :taggable="true" @tag="addTag"  >
 
                                             </multiselect>
-                                            <small  style="color: red" v-if="error.day">{{ error.day[0] }}</small>
+                                            <small  style="color: red" v-if="error.days">{{ error.days[0] }}</small>
 
                                         </div>
 
 
                                         <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
-                                            <div class="col-form-label">Coach Name </div>
+                                            <div class="col-form-label">captain Name </div>
 
-                                            <select name="coachName" v-model="data.coachName" :class="['form-control',error.coachName ? 'is-invalid' : '']" >
+                                            <select name="coachName" v-model="data.captainName"  :class="['form-control',error.captainName ? 'is-invalid' : '']" >
 
+                                                        <option   v-for="(item,index) in captain" :key="index"  :value="id(item.id)">
+                                                            {{ item.firstName + ' '  + item.middleName +  ' ' + item.lastName }}
+                                                            </option>
                                             </select>
-                                            <small style="color: red"  v-if="error.coachName">{{error.coachName[0]}}</small>
+                                            <small style="color: red"  v-if="error.captainName">{{error.captainName[0]}}</small>
                                         </div>
 
                                         <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
@@ -106,17 +109,21 @@
 <script>
 import axios from 'axios'
 import Multiselect from "vue-multiselect";
-
+import moment from 'moment'
 export default {
     data(){
         return{
 
             data:{
                 className:'',
-                coachName:'',
+                captainName:'',
                 startingTime:'',
+                endingTime:'',
                 trainingLocation:'',
-                days:''
+                days:[]
+
+
+
             },
 
             options: [
@@ -129,10 +136,11 @@ export default {
                 { id: 6 , name: 'Thursday'},
                 { id: 7 , name: 'Friday'}
             ],
+            captain:[],
             error:'',
             edit:true,
-            isLoading : true,
-            selectAll:false
+            isLoading : false,
+            selectAll:false,
 
 
         }
@@ -143,6 +151,15 @@ export default {
 
     beforeCreate(){
 
+        axios.get(`getAllCaptainToCreateClass`)
+        .then(res => {
+           this.captain = res.data.captain
+        })
+        .catch(err => {
+
+
+            console.error(err);
+        })
 
 
     },
@@ -154,17 +171,43 @@ export default {
         if(this.$route.params.classScheduleId){
             this.edit = true
 
+            axios.get(`getClassById/${this.$route.params.classScheduleId}`)
+            .then(res => {
+                // var startime = res.data.class.startingTime.split(' ');
+                this.edit = true
+                this.data.className           = res.data.class.className
+                this.data.captainName         = res.data.class.captainName
+                this.data.startingTime        = res.data.class.startingTime
+                this.data.endingTime          = res.data.class.endingTime
+                this.data.trainingLocation    = res.data.class.trainingLocation
+                this.data.days                = res.data.class.days
+                 this.isLoading = true
+
+
+            })
+            .catch(err => {
+
+                console.log(err)
+            })
+
 
 
 
         }else{
+
             this.edit = false
+            this.isLoading = true
 
         }
     },
 
 
     methods: {
+        id(id){
+
+                return id;
+
+        },
 
         handelData(){
 
@@ -172,13 +215,94 @@ export default {
 
                 let formData = new FormData()
                 formData.append('className',this.data.className)
-                formData.append('coachName',this.data.coachName)
+                formData.append('captainName',this.data.captainName)
                 formData.append('startingTime',this.data.startingTime)
+                formData.append('endingTime',this.data.endingTime)
                 formData.append('trainingLocation',this.data.trainingLocation)
-                formData.append('days',this.data.days)
+                formData.append('days',JSON.stringify(this.data.days))
 
 
-                axios.post('')
+
+                axios.post('addClass',formData)
+                .then(res => {
+
+
+                    if(res.data.success == false){
+
+                        this.error = res.data.message
+                    }
+                    if(res.data.success){
+
+
+
+                            Toast.fire({
+                                icon: 'success',
+                                title: 'class adedd successfully'
+                            })
+                            this.$router.push({name:'classList'})
+
+
+                    }
+
+                })
+                .catch(err => {
+
+                        console.log(err)
+                })
+
+
+
+            }
+
+
+
+            if(this.edit){
+
+
+
+
+                let formData = new FormData()
+                formData.append('className',this.data.className)
+                formData.append('captainName',this.data.captainName)
+                formData.append('startingTime',this.data.startingTime)
+                formData.append('endingTime',this.data.endingTime)
+                formData.append('trainingLocation',this.data.trainingLocation)
+                formData.append('days',JSON.stringify(this.data.days))
+
+
+
+                axios.post(`updateClass/${this.$route.params.classScheduleId}`,formData)
+                .then(res => {
+
+
+                    if(res.data.success == false){
+
+                        this.error = res.data.message
+                    }
+                    if(res.data.success){
+
+
+
+                            Toast.fire({
+                                icon: 'success',
+                                title: 'class adedd successfully'
+                            })
+                            this.$router.push({name:'classList'})
+
+
+                    }
+
+                })
+                .catch(err => {
+
+                        console.log(err)
+                })
+
+
+
+
+
+
             }
 
 
@@ -208,31 +332,32 @@ export default {
         },
 
 
-        async handeleFormSubmit(){
 
-
-            if(this.edit){
-
-            }
-
-            if(this.edit == false){
-
-
-
-            }
-
-
-
-    }
   },
 
     watch:{
 
+        $route(to,from){
+                    if(to.name == 'addClassSchedule'){
+
+                        this.isLoading = true
+                        this.edit = false
+                        this.data.className           = ''
+                        this.data.captainName         = ''
+                        this.data.startingTime        = ''
+                        this.data.endingTime          = ''
+                        this.data.trainingLocation    = ''
+                        this.data.days                = ''
+
+                    }
+                }
+
+    }
 
 
     }
 
-}
+
 </script>
 <style>
 
