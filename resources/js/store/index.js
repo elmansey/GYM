@@ -10,20 +10,16 @@ import admin from './modules/admin'
 Vue.use(Vuex);
 
 export const store = new Vuex.Store({
-    state: {
-    },
-    mutations: {
-    },
-    actions: {
-    },
+    state: {},
+    mutations: {},
+    actions: {},
 
     modules: {
-      layout,
-      menu,
+        layout,
+        menu,
         auth,
         role,
         admin
 
     }
 });
-

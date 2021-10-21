@@ -1,51 +1,59 @@
-const  state = {
-    edit : false,
-    roleDataToEdit:{},
-    roleDataToShow:''
+const state = {
+    edit: false,
+    roleDataToEdit: {},
+    roleDataToShow: ''
 }
 
-const  getters = {
+const getters = {
 
-    EDIT(state){
+    EDIT(state) {
         return state.edit
     },
-    ROLEDATATOEDIT(state){
+    ROLEDATATOEDIT(state) {
         return state.roleDataToEdit
     },
-    roleDataToShow(state){
+    roleDataToShow(state) {
         return state.roleDataToShow
     }
 
 }
 
 
-const  mutations = {
+const mutations = {
 
-    EDIT(state,payload){
-         state.edit = payload
+    EDIT(state, payload) {
+        state.edit = payload
     },
 
-    ROLEDATATOEDIT(state,payload){
+    ROLEDATATOEDIT(state, payload) {
         state.roleDataToEdit = payload
     },
-    roleDataToShow(state,payload){
-            state.roleDataToShow = payload
+    roleDataToShow(state, payload) {
+        state.roleDataToShow = payload
     }
 
 }
 
-const  actions = {
-    EDIT({commit}){
-        commit('EDIT',true)
+const actions = {
+    EDIT({
+        commit
+    }) {
+        commit('EDIT', true)
     },
-    ADD({commit}){
-        commit('EDIT',false)
+    ADD({
+        commit
+    }) {
+        commit('EDIT', false)
     },
-    ROLEDATATOEDIT({commit},payload){
-        commit('ROLEDATATOEDIT',payload)
+    ROLEDATATOEDIT({
+        commit
+    }, payload) {
+        commit('ROLEDATATOEDIT', payload)
     },
-    roleDataToShow({commit},payload){
-        commit('roleDataToShow',payload)
+    roleDataToShow({
+        commit
+    }, payload) {
+        commit('roleDataToShow', payload)
     }
 
 }

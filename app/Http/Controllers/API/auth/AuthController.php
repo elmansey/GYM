@@ -14,102 +14,101 @@ use Spatie\Permission\Models\Permission;
 
 class AuthController extends Controller
 {
-   public function __construct()
-   {
-       $this->middleware(['JWTchecker'])->except(['login']);
-   }
+    public function __construct()
+    {
+        $this->middleware(['JWTchecker'])->except(['login']);
+    }
 
 
 
-   public function login(Request $request){
+    public function login(Request $request)
+    {
 
-       $validator = validator::make($request->all(),[
+        $validator = validator::make($request->all(), [
 
-           'email'     => 'required|email',
-           'password'  =>  'required'
+            'email'     => 'required|email',
+            'password'  =>  'required'
 
-       ]);
+        ]);
 
 
-       if($validator->fails()){
+        if ($validator->fails()) {
 
-           return response()->json(['success'=>false,'message'=>$validator->errors(),'status'=>'400']);
+            return response()->json(['success' => false, 'message' => $validator->errors(), 'status' => '400']);
+        } else {
 
-       }else{
+            if (!$token = auth()->guard()->attempt($request->only(['email', 'password']))) {
 
-           if(!$token = auth()->guard()->attempt($request->only(['email','password']))){
+                return response()->json(['success' => false, 'message' => 'Unauthorized', 'status' => '401']);
+            } else {
 
-               return response()->json(['success'=>false,'message'=>'Unauthorized','status'=>'401']);
-
-           }else{
-
-               return Response()->json(['success'=>true,'data'=>$this->CreateNewToken($token)]);
-           }
-
-       }
-
-   }
+                return Response()->json(['success' => true, 'data' => $this->CreateNewToken($token)]);
+            }
+        }
+    }
 
 
 
-   public function info(Request $request){
+    public function info(Request $request)
+    {
 
-       try{
-           $stillValid = auth()->check();
-       }catch(\Tymon\JWTAuth\Exceptions\TokenExpiredException $e){
-           auth()->refresh();
-       }
-
-
-
-           $user = auth()->user();
-
-           $roles = RolesResource::collection($user['roles']);
-
-       $permission = Permission::all();
-
-
-       $role= [];
+        try {
+            $stillValid = auth()->check();
+        } catch (\Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
+            auth()->refresh();
+        }
 
 
 
-       foreach ($roles as $k => $v){
+        $user = auth()->user();
 
-           $roleAndPermission[] = ['id'=>$v->id,'role'=>$v->name,'permission' => PermissionResource::collection(Permission::join('role_has_permissions','role_has_permissions.permission_id','=','permissions.id')
-               ->where('role_has_permissions.role_id',$v->id)->get())];
-       }
+        $roles = RolesResource::collection($user['roles']);
 
-
-       return response()->json(['success'=>true, 'data'=>  new UserToRoleResource(auth()->user()),'roleAndPermission'=>$roleAndPermission],200);
-
-   }
+        $permission = Permission::all();
 
 
-//    public function refresh()
-//    {
-//        return $this->respondWithToken($this->guard()->refresh());
-//    }
+        $role = [];
 
 
 
-   public function logout(Request $request){
+        foreach ($roles as $k => $v) {
 
-       auth()->guard()->logout();
-       return response()->json(['success' =>true ,'message' => 'Successfully logged out']);
-   }
+            $roleAndPermission[] = ['id' => $v->id, 'role' => $v->name, 'permission' => PermissionResource::collection(Permission::join('role_has_permissions', 'role_has_permissions.permission_id', '=', 'permissions.id')
+                ->where('role_has_permissions.role_id', $v->id)->get())];
+        }
 
+
+        return response()->json(['success' => true, 'data' =>  new UserToRoleResource(auth()->user()), 'roleAndPermission' => $roleAndPermission], 200);
+    }
+
+
+    //    public function refresh()
+    //    {
+    //        return $this->respondWithToken($this->guard()->refresh());
+    //    }
+
+
+
+    public function logout(Request $request)
+    {
+
+        auth()->guard()->logout();
+        return response()->json(['success' => true, 'message' => 'Successfully logged out']);
+    }
 
 
 
 
-   public function CreateNewToken($token){
 
-       return ([
-           'access_token' => $token,
-           'token_type'   => 'bearer',
-           'expires_in'   => auth()->factory()->getTTL() * 10080 ,
-           'user'         =>  auth()->guard()->user()
+    public function CreateNewToken($token)
+    {
 
-       ]);
-   }
+        return ([
+            'access_token' => $token,
+            'token_type'   => 'bearer',
+            'expires_in'   => auth()->factory()->getTTL() * 10080,
+            'user'         =>  auth()->guard()->user()
+
+        ]);
+    }
 }

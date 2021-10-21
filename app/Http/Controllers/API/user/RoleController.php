@@ -16,32 +16,32 @@ class RoleController extends Controller
 {
 
 
-//    public function __construct()
-//    {
-//
-//    }
+    //    public function __construct()
+    //    {
+    //
+    //    }
 
 
     public function index(Request $request)
     {
         $roles = Role::all();
-        $permission= [];
+        $permission = [];
 
 
-           foreach ($roles as $k => $v){
+        foreach ($roles as $k => $v) {
 
-                $permission[] = ['id'=>$v->id,'role'=>$v->name ,'permission' => PermissionResource::collection(Permission::join('role_has_permissions','role_has_permissions.permission_id','=','permissions.id')
-                   ->where('role_has_permissions.role_id',$v->id)->get())];
-           }
+            $permission[] = ['id' => $v->id, 'role' => $v->name, 'permission' => PermissionResource::collection(Permission::join('role_has_permissions', 'role_has_permissions.permission_id', '=', 'permissions.id')
+                ->where('role_has_permissions.role_id', $v->id)->get())];
+        }
 
-        return response()->json(['success'=>true,'RoleAndPermission'=> $permission],200);
+        return response()->json(['success' => true, 'RoleAndPermission' => $permission], 200);
     }
 
 
     public function create()
     {
         $permission = Permission::all();
-        return response()->json(['success'=>true,'permission'=> PermissionResource::collection($permission)],200);
+        return response()->json(['success' => true, 'permission' => PermissionResource::collection($permission)], 200);
     }
 
 
@@ -52,10 +52,9 @@ class RoleController extends Controller
             'permission' => 'required',
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
 
-            return response()->json(['success'=>false ,'message'=>$validator->errors()],200);
-
+            return response()->json(['success' => false, 'message' => $validator->errors()], 200);
         }
 
 
@@ -63,16 +62,16 @@ class RoleController extends Controller
         $role = Role::create(['name' => $request->input('name')]);
 
 
-            $per = $request->input('permission');
-            $permission = [];
-            foreach ( $per as $k => $v ){
+        $per = $request->input('permission');
+        $permission = [];
+        foreach ($per as $k => $v) {
 
-                $permission[] =  $v['name'];
-            }
+            $permission[] =  $v['name'];
+        }
 
-          $role->syncPermissions($permission);
+        $role->syncPermissions($permission);
 
-        return response()->json(['success'=>true,'message'=>'Role created successfully','role'=>new RolesResource($role),'permission'=>$permission],200);
+        return response()->json(['success' => true, 'message' => 'Role created successfully', 'role' => new RolesResource($role), 'permission' => $permission], 200);
     }
 
 
@@ -80,14 +79,14 @@ class RoleController extends Controller
     public function getRoleById($id)
     {
         $role = Role::find($id);
-        $rolePermissions = Permission::join("role_has_permissions","role_has_permissions.permission_id","=","permissions.id")
-            ->where("role_has_permissions.role_id",$id)
+        $rolePermissions = Permission::join("role_has_permissions", "role_has_permissions.permission_id", "=", "permissions.id")
+            ->where("role_has_permissions.role_id", $id)
             ->get();
 
-        return response()->json(['success'=>true,'data'=>[
+        return response()->json(['success' => true, 'data' => [
 
             'role'  => $role,
-            'allPermissionRelatedThisRole' =>PermissionResource::collection($rolePermissions)
+            'allPermissionRelatedThisRole' => PermissionResource::collection($rolePermissions)
         ]]);
     }
 
@@ -96,16 +95,15 @@ class RoleController extends Controller
     {
 
         $validator = validator::make($request->all(), [
-            'name' => 'required|unique:roles,name,'.$request->id,
+            'name' => 'required|unique:roles,name,' . $request->id,
             'permission' => 'required',
         ]);
 
 
 
-        if($validator->fails()){
+        if ($validator->fails()) {
 
-            return response()->json(['success'=>false ,'message'=>$validator->errors()],200);
-
+            return response()->json(['success' => false, 'message' => $validator->errors()], 200);
         }
 
 
@@ -115,15 +113,14 @@ class RoleController extends Controller
 
         $per = $request->input('permission');
         $permission = [];
-        foreach ( $per as $k => $v ){
+        foreach ($per as $k => $v) {
 
             $permission[] =  $v['name'];
         }
 
         $role->syncPermissions($permission);
 
-        return response()->json(['success'=>true,'message'=>'Role Updated successfully','role'=>new RolesResource($role),'permission'=>$permission],200);
-
+        return response()->json(['success' => true, 'message' => 'Role Updated successfully', 'role' => new RolesResource($role), 'permission' => $permission], 200);
     }
 
 
@@ -133,7 +130,6 @@ class RoleController extends Controller
 
         $role = Role::find($id);
         $role->delete();
-        return response()->json(['success'=> true,'message' => 'Role deleted successfully'],200);
+        return response()->json(['success' => true, 'message' => 'Role deleted successfully'], 200);
     }
-
 }

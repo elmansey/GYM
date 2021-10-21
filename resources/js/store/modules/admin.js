@@ -1,17 +1,17 @@
-const  state = {
-    editAdmin : false,
+const state = {
+    editAdmin: false,
     AdminInfoToEdit: '',
 
 
 }
 
-const  getters = {
+const getters = {
 
-    editAdmin(state){
+    editAdmin(state) {
         return state.editAdmin
     },
 
-    AdminInfoToEdit(state){
+    AdminInfoToEdit(state) {
         return state.AdminInfoToEdit
     },
 
@@ -19,33 +19,37 @@ const  getters = {
 }
 
 
-const  mutations = {
+const mutations = {
 
-    editAdmin(state,payload){
-         state.editAdmin = payload
-    },
-
-    addAdmin(state,payload){
+    editAdmin(state, payload) {
         state.editAdmin = payload
     },
 
-    AdminInfoToEdit(state,payload){
+    addAdmin(state, payload) {
+        state.editAdmin = payload
+    },
+
+    AdminInfoToEdit(state, payload) {
         state.AdminInfoToEdit = payload
     },
 
 
 }
 
-const  actions = {
+const actions = {
 
-    AdminInfoToEdit({commit},payload){
-        commit('AdminInfoToEdit',payload)
-        commit('editAdmin',true)
+    AdminInfoToEdit({
+        commit
+    }, payload) {
+        commit('AdminInfoToEdit', payload)
+        commit('editAdmin', true)
     },
 
-    addAdmin({commit}){
-        commit('AdminInfoToEdit','')
-        commit('addAdmin',false)
+    addAdmin({
+        commit
+    }) {
+        commit('AdminInfoToEdit', '')
+        commit('addAdmin', false)
     },
 
 

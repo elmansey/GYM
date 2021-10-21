@@ -3,10 +3,14 @@ import App from './App.vue'
 import BootstrapVue from 'bootstrap-vue'
 import VueFeather from 'vue-feather';
 import router from './router'
-import { store } from './store';
+import {
+    store
+} from './store';
 import Breadcrumbs from './components/bread_crumbs'
 import SmartTable from "vuejs-smart-table";
-import { FormGroupPlugin } from 'bootstrap-vue'
+import {
+    FormGroupPlugin
+} from 'bootstrap-vue'
 Vue.component('pulse-loader', require('vue-spinner/src/PulseLoader.vue'));
 
 import vue2Dropzone from 'vue2-dropzone'
@@ -14,7 +18,7 @@ import vue2Dropzone from 'vue2-dropzone'
 
 import './axios'
 
-import PxCard  from './components/Pxcard.vue'
+import PxCard from './components/Pxcard.vue'
 Vue.component(PxCard.name, PxCard)
 
 
@@ -68,18 +72,18 @@ Vue.use(vue2Dropzone)
 
 // global mixin
 Vue.mixin({
-    methods:{
+    methods: {
 
         // can:(permission) => store.getters.authUserRole[].includes(permission) ? true : false,
-        can:function (permission){
-            var  perm = store.getters.authUserRole
-            var len  = perm.length
+        can: function(permission) {
+            var perm = store.getters.authUserRole
+            var len = perm.length
             let FinalPer = []
 
 
-            for(var i = 0 ; i < len ; i++){
+            for (var i = 0; i < len; i++) {
 
-                store.getters.authUserRole[i].permission.forEach((element,index) => {
+                store.getters.authUserRole[i].permission.forEach((element, index) => {
 
                     FinalPer.push(element['name'])
 
@@ -88,9 +92,9 @@ Vue.mixin({
             }
 
             let FinalPerLen = FinalPer.length
-            for(var t = 0 ; t < FinalPerLen ; t++){
+            for (var t = 0; t < FinalPerLen; t++) {
 
-                if(FinalPer[t] == permission){
+                if (FinalPer[t] == permission) {
                     return true
                 }
 
@@ -108,10 +112,9 @@ Vue.mixin({
 
 
 new Vue({
-  router,
-  store,
-  render: h => h(App)
+    router,
+    store,
+    render: h => h(App)
 
 
 }).$mount('#app')
-

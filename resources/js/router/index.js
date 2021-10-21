@@ -1,14 +1,20 @@
 import Vue from 'vue'
 import Router from "vue-router";
-import { store } from '../store'
+import {
+    store
+} from '../store'
 
 
 // component
 
 Vue.use(Router)
 
-const routes = [
-    { path: '', redirect: { name: 'login' } },
+const routes = [{
+        path: '',
+        redirect: {
+            name: 'login'
+        }
+    },
     {
         path: '/dashboard',
         name: 'dashboard',
@@ -241,7 +247,10 @@ const router = new Router({
     mode: 'history',
     linkActiveClass: "active",
     scrollBehavior() {
-        return { x: 0, y: 0 }
+        return {
+            x: 0,
+            y: 0
+        }
     }
 });
 
@@ -261,7 +270,9 @@ router.beforeEach(async(to, from, next) => {
             next();
 
         } else {
-            next({ name: "login" });
+            next({
+                name: "login"
+            });
         }
 
     }
@@ -273,7 +284,9 @@ router.beforeEach(async(to, from, next) => {
             next();
 
         } else {
-            next({ name: "permissions" });
+            next({
+                name: "permissions"
+            });
         }
 
     }
@@ -313,7 +326,11 @@ router.beforeEach(async(to, from, next) => {
 
     if (to.matched.some(record => record.meta.permission)) {
 
-        let { meta: { permission } } = to.matched.find(record => record.meta.permission);
+        let {
+            meta: {
+                permission
+            }
+        } = to.matched.find(record => record.meta.permission);
 
 
         if (checker(permission)) {

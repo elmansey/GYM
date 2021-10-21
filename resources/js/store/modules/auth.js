@@ -2,35 +2,35 @@ import axios from 'axios'
 import router from '@/router/index'
 
 //to save
-const  state = {
-    isAuth : false,
-    user:null,
-    errors:'',
-    token:localStorage.getItem('token'),
-    authUserRole:null,
+const state = {
+    isAuth: false,
+    user: null,
+    errors: '',
+    token: localStorage.getItem('token'),
+    authUserRole: null,
 
 }
 
 // to show item saved in state
 const getters = {
 
-    authentication(state){
+    authentication(state) {
         return state.isAuth
     },
 
-    AllError(state){
+    AllError(state) {
         return state.errors
     },
 
-    USER(state){
+    USER(state) {
         return state.user
     },
 
-    AUTH_TOKEN(state){
+    AUTH_TOKEN(state) {
         return state.token
     },
 
-    authUserRole(state){
+    authUserRole(state) {
         return state.authUserRole
     },
 
@@ -40,58 +40,58 @@ const getters = {
 
 
 // to chang value in state and do every thing
-const  mutations = {
+const mutations = {
 
-    setAuthentecation(state,status){
+    setAuthentecation(state, status) {
         state.isAuth = status
     },
 
 
-    loginSuccess(state,token,user){
+    loginSuccess(state, token, user) {
 
-        localStorage.setItem('token',token)
+        localStorage.setItem('token', token)
         state.token = token
         state.isAuth = true
         state.errors = ''
         state.user = user
         router.push({
-            name:'main'
+            name: 'main'
         })
     },
 
 
-    setToken(state,token){
+    setToken(state, token) {
         state.token = token
         state.isAuth = true
-        localStorage.setItem('token',token)
+        localStorage.setItem('token', token)
 
     },
 
 
-    SET_USER(state,user){
+    SET_USER(state, user) {
         state.user = user
     },
 
 
-    loginFailed(state,error){
+    loginFailed(state, error) {
         state.token = ''
         state.isAuth = false
         state.errors = error
     },
 
 
-    logOut(state){
+    logOut(state) {
         localStorage.removeItem('token')
         state.isAuth = false
         state.user = ''
         state.token = ''
         router.push({
-            name:'login'
+            name: 'login'
         })
     },
 
 
-    USER_INFO_SUCCESS(state,data){
+    USER_INFO_SUCCESS(state, data) {
         state.isAuth = true
         state.user = data
         state.errors = ''
@@ -105,7 +105,7 @@ const  mutations = {
         state.user = null;
     },
 
-    authUserRole(state,payload){
+    authUserRole(state, payload) {
 
         state.authUserRole = payload
     },
@@ -120,84 +120,90 @@ const  mutations = {
 // do conection with api and call mutations
 const actions = {
 
-    loginUser({commit},payload){
+    loginUser({
+        commit
+    }, payload) {
 
-       axios.post('login',{
-           email:payload.email,
-           password:payload.password
-       }).then(res => {
+        axios.post('login', {
+            email: payload.email,
+            password: payload.password
+        }).then(res => {
 
-           if(res.data.status == 400){
+            if (res.data.status == 400) {
 
-               commit('loginFailed',res.data.message)
+                commit('loginFailed', res.data.message)
 
-           }else if (res.data.status == 401){
+            } else if (res.data.status == 401) {
 
-               Toast.fire({
-                   icon: 'error',
-                   title: '!! Wrong In Email Or Password'
-               })
+                Toast.fire({
+                    icon: 'error',
+                    title: '!! Wrong In Email Or Password'
+                })
 
-           }else{
+            } else {
 
-                commit('loginSuccess',res.data.data.access_token,res.data.data.user)
-               commit('SET_USER',res.data.data.user)
+                commit('loginSuccess', res.data.data.access_token, res.data.data.user)
+                commit('SET_USER', res.data.data.user)
 
-                  axios.get('info')
-                      .then(res => {
+                axios.get('info')
+                    .then(res => {
 
-                          commit('USER_INFO_SUCCESS', res.data.data)
-                          commit('authUserRole',res.data.roleAndPermission)
-
-
-                      })
-                      .catch(err => {
-                          commit('USER_INFO_FAILD')
-
-                      })
+                        commit('USER_INFO_SUCCESS', res.data.data)
+                        commit('authUserRole', res.data.roleAndPermission)
 
 
+                    })
+                    .catch(err => {
+                        commit('USER_INFO_FAILD')
 
-
-           }
-
-
-       }).catch(err => {
-
-           console.log(err.message)
-       })
-
-
-   },
-
-    async  userLogout({commit}){
-        await  axios.post('logout')
-           .then(res =>{
-
-                   commit('logOut')
-
-           }).catch(err => {
-
-               console.log(err.message)
-
-       })
-   },
-
-    async userInfo({commit}) {
-
-       try{
-         const res =   await  axios.get('info')
-
-
-           await commit('USER_INFO_SUCCESS', res.data.data)
-
-               commit('authUserRole',res.data.roleAndPermission)
+                    })
 
 
 
 
+            }
 
-       }catch(err ){
+
+        }).catch(err => {
+
+            console.log(err.message)
+        })
+
+
+    },
+
+    async userLogout({
+        commit
+    }) {
+        await axios.post('logout')
+            .then(res => {
+
+                commit('logOut')
+
+            }).catch(err => {
+
+                console.log(err.message)
+
+            })
+    },
+
+    async userInfo({
+        commit
+    }) {
+
+        try {
+            const res = await axios.get('info')
+
+
+            await commit('USER_INFO_SUCCESS', res.data.data)
+
+            commit('authUserRole', res.data.roleAndPermission)
+
+
+
+
+
+        } catch (err) {
 
             commit('USER_INFO_FAILD')
         }

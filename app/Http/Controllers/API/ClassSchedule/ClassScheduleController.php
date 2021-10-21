@@ -16,28 +16,18 @@ class ClassScheduleController extends Controller
 {
 
 
-
-
-
-
-    public function index(){
+    public function index()
+    {
 
         $classes = ClassSchedule::with('captain_relation')->get();
-        return response()->json(['success' => true,'classes' => $classes]);
-
-
-
-
+        return response()->json(['success' => true, 'classes' => $classes]);
     }
 
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
 
-
-
-
-
-        $validator = validator::make($request->all(),[
+        $validator = validator::make($request->all(), [
 
             'className'   => 'required|unique:class_schedules',
             'captainName'   => 'required',
@@ -48,25 +38,21 @@ class ClassScheduleController extends Controller
 
         ]);
 
-        if($validator->fails()){
 
-            return response()->json(['success'=> false,'message'=> $validator->errors()]);
+
+        if ($validator->fails()) {
+
+            return response()->json(['success' => false, 'message' => $validator->errors()]);
         }
-
-
-
-
 
 
         $days = [];
 
-        $day = json_decode($request->days,true);
-        foreach($day as $k => $v){
+        $day = json_decode($request->days, true);
+        foreach ($day as $k => $v) {
 
-                $days[] = $v;
+            $days[] = $v;
         }
-
-
 
 
         $class = new ClassSchedule();
@@ -75,26 +61,21 @@ class ClassScheduleController extends Controller
         $class->startingTime = $request->startingTime;
         $class->endingTime = $request->endingTime;
         $class->trainingLocation = $request->trainingLocation;
-         $class->days = $days;
+        $class->days = $days;
         $class->save();
 
 
 
-       return response()->json(['success' => true , 'class' => $class]);
-
-
+        return response()->json(['success' => true, 'class' => $class]);
     }
 
 
+    public function update(Request $request, $id)
+    {
 
+        $validator = validator::make($request->all(), [
 
-    public function update(Request $request,$id){
-
-
-
-        $validator = validator::make($request->all(),[
-
-            'className'   => ['required',Rule::unique('class_schedules')->ignore($id)],
+            'className'   => ['required', Rule::unique('class_schedules')->ignore($id)],
             'captainName'   => 'required',
             'days'   => 'required',
             'startingTime'   => 'required',
@@ -104,21 +85,23 @@ class ClassScheduleController extends Controller
         ]);
 
 
-
-        if($validator->fails()){
-
-            return response()->json(['success'=> false,'message'=> $validator->errors()]);
-        }
-
-
-
         $days = [];
 
-        $day = json_decode($request->days,true);
-        foreach($day as $k => $v){
+        $day = json_decode($request->days, true);
+        foreach ($day as $k => $v) {
 
-                $days[] = $v;
+            $days[] = $v;
         }
+
+
+        if ($validator->fails()) {
+
+            return response()->json(['success' => false, 'message' => $validator->errors()]);
+        }
+
+
+
+
 
 
 
@@ -128,55 +111,56 @@ class ClassScheduleController extends Controller
         $class->startingTime = $request->startingTime;
         $class->endingTime = $request->endingTime;
         $class->trainingLocation = $request->trainingLocation;
-         $class->days = $days;
+        $class->days = $days;
         $class->save();
 
 
 
-       return response()->json(['success' => true , 'class' => $class]);
-
-
-
-
-
+        return response()->json(['success' => true, 'class' => $class]);
     }
 
 
-
-    public function getClassById($id){
+    public function getClassById($id)
+    {
 
 
         $class = ClassSchedule::find($id);
 
-        return response()->json(['success'=>true,'class'=>new class_scheduleResource($class)]);
-
-
-
-
+        return response()->json(['success' => true, 'class' => new class_scheduleResource($class)]);
     }
 
 
-    public function getAllCaptainToCreateClass(){
+    public function getAllCaptainToCreateClass()
+    {
 
 
-        $captain = staff::where('jop','=','Captain')->get();
+        $captain = staff::where('jop', '=', 'Captain')->get();
 
-        return  response()->json(['success'=>true,'captain'=>captainResource::collection($captain)]);
-
-
+        return  response()->json(['success' => true, 'captain' => captainResource::collection($captain)]);
     }
 
 
-
-    public function destroy($id){
-
+    public function destroy($id)
+    {
 
         $class =  ClassSchedule::find($id);
 
         $class->delete();
 
-        return response()->json(['success'=>true],200);
-
+        return response()->json(['success' => true], 200);
     }
 
+
+
+    public function deleteSelectedItem(Request $request)
+    {
+
+        $uniqueId =  array_unique($request->all());
+
+        $classes = new ClassSchedule();
+        $classes->whereIn('id', $uniqueId)->delete();
+
+
+        return response()->json(['success' => true], 200);
+    }
 }
