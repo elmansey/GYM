@@ -6,11 +6,17 @@
     <div v-if="isLoadig">
 
         <Breadcrumbs main="Dashboard" title="class list" />
+
         <div class="container-fluid">
+
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
+
                         <div class="card-body">
+                              <div style="float:right">
+                                  <feather type="trash"> </feather>
+                            </div>
                             <div class="datatable-vue m-0">
 
 
@@ -24,8 +30,17 @@
 
                                     >
                                         <thead slot="head">
+                                         <th>
 
-                                        <th></th>
+                                                   <div class="checkbox checkbox-dark">
+                                                       <div class="custom-control custom-checkbox">
+                                                           <input type="checkbox" name="checkbox7" class="custom-control-input" v-model="selectAll" id="__BVID__4218">
+                                                           <label class="custom-control-label" for="__BVID__4218"></label>
+                                                       </div>
+                                                  </div>
+
+                                         </th>
+                                        <th sortKey="name">ID</th>
                                         <th sortKey="name">class Name</th>
                                         <th sortKey="name" >captain Name</th>
                                         <th sortKey="name" >starting Time</th>
@@ -36,7 +51,19 @@
 
                                         <tbody slot="body" slot-scope="{ displayData }">
                                         <tr v-for="(row, index) in displayData" :key="index">
-                                            <td></td>
+                                            <td>
+                                                <!-- <input  type="checkbox" v-model="selected" /> -->
+
+
+                                                   <div class="checkbox checkbox-dark">
+                                                       <div class="custom-control custom-checkbox">
+                                                           <input type="checkbox" name="checkbox7" class="custom-control-input" v-model="selected" id="__BVID__4218">
+                                                           <label class="custom-control-label" for="__BVID__4218"></label>
+                                                       </div>
+                                                  </div>
+
+                                            </td>
+                                            <td>{{++index}}</td>
                                             <td>  {{row.className }}  </td>
                                             <td>  {{ row.captain_relation.firstName + ' ' + row.captain_relation.lastName}}  </td>
                                             <td>  {{ row.startingTime}}  </td>
@@ -64,7 +91,7 @@
                                                             squared
                                                             variant="outline-danger"
                                                             class="btn-sm btn-child"
-
+                                                            @click="DeleteclassModal(row.id,index)"
                                                             v-if="can('delete-class-schedule')"
                                                         >
 
@@ -102,10 +129,10 @@
                                     Delete Role
                                 </template>
                                 <div class="d-block text-center">
-                                    <h5>are you sure to delete this Role</h5>
+                                    <h5>are you sure to delete this class</h5>
                                 </div>
                                 <b-button class="mt-3"  v-b-modal.modal-sm variant="default" @click="$bvModal.hide('bv-modal-example')">Cancel</b-button>
-                                <b-button class="mt-3"  v-b-modal.modal-sm variant="danger" @click="" >delete</b-button>
+                                <b-button class="mt-3"  v-b-modal.modal-sm variant="danger" @click="deleteclass" >delete</b-button>
                             </b-modal>
 
 
@@ -140,6 +167,8 @@ export default {
     data() {
         return {
             classes:[],
+            selected:[],
+            sellectAll:false,
 
             filter: {
                 currentPage: 1,
@@ -148,7 +177,7 @@ export default {
 
             id:'',
             key:'',
-            isLoadig:true
+            isLoadig:false
 
 
         };
@@ -158,6 +187,7 @@ export default {
         axios.get('classes')
         .then(res => {
             this.classes = res.data.classes
+            this.isLoadig = true
         })
         .catch(err => {
             console.error(err);
@@ -172,7 +202,36 @@ export default {
     },
 
     methods: {
+   DeleteclassModal(id,key){
+            this.id = id
+            this.key  = key
+            this.$bvModal.show('bv-modal-example')
+        },
 
+        deleteclass(){
+
+            axios.get(`deleteClass/${this.id}`)
+                .then(res => {
+
+                    if(res.data.success){
+
+                        this.classes.splice(this.key,1)
+                        this.id = ''
+                        this.key = ''
+                        Toast.fire({
+                            icon: 'success',
+                            title: 'class deleted successfully'
+                        })
+
+                        this.$bvModal.hide('bv-modal-example')
+                    }
+
+
+                })
+                .catch(err => {
+
+                })
+        }
 
     }
 }

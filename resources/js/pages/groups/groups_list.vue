@@ -97,7 +97,7 @@
                                     Delete Role
                                 </template>
                                 <div class="d-block text-center">
-                                    <h5>are you sure to delete this Role</h5>
+                                    <h5>are you sure to delete this group</h5>
                                 </div>
                                 <b-button class="mt-3"  v-b-modal.modal-sm variant="default" @click="$bvModal.hide('bv-modal-example')">Cancel</b-button>
                                 <b-button class="mt-3"  v-b-modal.modal-sm variant="danger" @click="deletegroup" >delete</b-button>

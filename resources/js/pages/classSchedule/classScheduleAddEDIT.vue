@@ -55,14 +55,14 @@
                                         <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
                                             <div class="col-form-label"> starting Time </div>
 
-                                            <input name="startingTime"  type="time" v-model="data.startingTime" :class="['form-control',error.startingTime ? 'is-invalid' : '']" />
+                                            <input name="startingTime" pattern="^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$" type="time" v-model="data.startingTime" :class="['form-control',error.startingTime ? 'is-invalid' : '']" />
                                             <small style="color: red"  v-if="error.startingTime">{{error.startingTime[0]}}</small>
                                         </div>
 
                                         <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
                                             <div class="col-form-label"> ending Time </div>
 
-                                            <input name="endingTime" type="time" v-model="data.endingTime" :class="['form-control',error.endingTime ? 'is-invalid' : '']" />
+                                            <input name="endingTime" pattern="^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$" type="time" v-model="data.endingTime" :class="['form-control',error.endingTime ? 'is-invalid' : '']" />
                                             <small style="color: red"  v-if="error.endingTime">{{error.endingTime[0]}}</small>
                                         </div>
 
@@ -109,7 +109,7 @@
 <script>
 import axios from 'axios'
 import Multiselect from "vue-multiselect";
-import moment from 'moment'
+
 export default {
     data(){
         return{
@@ -285,7 +285,7 @@ export default {
 
                             Toast.fire({
                                 icon: 'success',
-                                title: 'class adedd successfully'
+                                title: 'class updated successfully'
                             })
                             this.$router.push({name:'classList'})
 

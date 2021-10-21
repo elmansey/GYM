@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\API\ClassSchedule;
 
+use Carbon\Carbon;
 use App\Models\staff;
 use Illuminate\Http\Request;
 use App\Models\ClassSchedule;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\captainResource;
-use App\Http\Resources\class_scheduleResource;
-use Carbon\Carbon;
 use Illuminate\support\facades\Validator;
-
+use App\Http\Resources\class_scheduleResource;
+use Illuminate\Validation\Rule;
 
 class ClassScheduleController extends Controller
 {
@@ -33,13 +33,17 @@ class ClassScheduleController extends Controller
 
     public function store(Request $request){
 
+
+
+
+
         $validator = validator::make($request->all(),[
 
             'className'   => 'required|unique:class_schedules',
             'captainName'   => 'required',
             'days'   => 'required',
-            'startingTime'   => 'required|date_format:H:i',
-            'endingTime'   => 'required|date_format:H:i|after:startingTime',
+            'startingTime'   => 'required',
+            'endingTime'   => 'required|after:startingTime',
             'trainingLocation'   => 'required'
 
         ]);
@@ -50,6 +54,10 @@ class ClassScheduleController extends Controller
         }
 
 
+
+
+
+
         $days = [];
 
         $day = json_decode($request->days,true);
@@ -58,16 +66,14 @@ class ClassScheduleController extends Controller
                 $days[] = $v;
         }
 
-      $statTime =  date("g:i a", strtotime($request->startingTime));
-      $endTime =  date("g:i a", strtotime($request->endingTime));
 
 
 
         $class = new ClassSchedule();
         $class->className = $request->className;
         $class->captainName = $request->captainName;
-        $class->startingTime = $statTime;
-        $class->endingTime = $endTime;
+        $class->startingTime = $request->startingTime;
+        $class->endingTime = $request->endingTime;
         $class->trainingLocation = $request->trainingLocation;
          $class->days = $days;
         $class->save();
@@ -88,11 +94,11 @@ class ClassScheduleController extends Controller
 
         $validator = validator::make($request->all(),[
 
-            'className'   => 'required|unique:class_schedules,'.$id,
+            'className'   => ['required',Rule::unique('class_schedules')->ignore($id)],
             'captainName'   => 'required',
             'days'   => 'required',
-            'startingTime'   => 'required|date_format:H:i',
-            'endingTime'   => 'required|date_format:H:i|after:startingTime',
+            'startingTime'   => 'required',
+            'endingTime'   => 'required|after:startingTime',
             'trainingLocation'   => 'required'
 
         ]);
@@ -103,6 +109,31 @@ class ClassScheduleController extends Controller
 
             return response()->json(['success'=> false,'message'=> $validator->errors()]);
         }
+
+
+
+        $days = [];
+
+        $day = json_decode($request->days,true);
+        foreach($day as $k => $v){
+
+                $days[] = $v;
+        }
+
+
+
+        $class =  ClassSchedule::find($id);
+        $class->className = $request->className;
+        $class->captainName = $request->captainName;
+        $class->startingTime = $request->startingTime;
+        $class->endingTime = $request->endingTime;
+        $class->trainingLocation = $request->trainingLocation;
+         $class->days = $days;
+        $class->save();
+
+
+
+       return response()->json(['success' => true , 'class' => $class]);
 
 
 
@@ -135,5 +166,17 @@ class ClassScheduleController extends Controller
 
     }
 
+
+
+    public function destroy($id){
+
+
+        $class =  ClassSchedule::find($id);
+
+        $class->delete();
+
+        return response()->json(['success'=>true],200);
+
+    }
 
 }
