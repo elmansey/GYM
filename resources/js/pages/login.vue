@@ -9,24 +9,20 @@
             <!--        />-->
             <!--      </div>-->
             <div class="col-xl-12 p-0">
-                <div class="login-card">
+                <div class="login-card" >
                     <div>
-                        <div>
-                            <a class="logo text-left">
+                        <div >
+                            <a class="logo text-center mb-3" >
                                 <img
                                     class="img-fluid for-light"
-                                    :src="
-                                        require('@/assets/images/logo/login.png')
-                                            .default
-                                    "
+                                    :src="require('@/assets/images/avtar/3.jpg').default"
+                                    style="width: 60px;height: 60px;border-radius:50%;margin: auto;"
                                     alt="looginpage"
                                 />
                                 <img
                                     class="img-fluid for-dark"
-                                    :src="
-                                        require('@/assets/images/logo/logo_dark.png')
-                                            .default
-                                    "
+                                 :src="require('@/assets/images/avtar/3.jpg').default"
+                                    style="width: 60px;height: 60px;border-radius:50%;"
                                     alt="looginpage"
                                 />
                             </a>

@@ -12,7 +12,7 @@
                             </div>
                             <div class="card-body">
 
-                                <form @submit.prevent="" id="myform">
+                                <form @submit.prevent="handelSubmitData" id="myform">
 
                                     <div class="row">
 
@@ -21,47 +21,51 @@
                                             <div class="mb-2 col-md-6 col-lg-4 col-sm-12">
                                                 <div class="col-form-label">first name</div>
 
-                                                <input name="name" class="form-control"  />
-                                                <small style="color: red" ></small>
+                                                <input name="name" :class="['form-control',error.first_name? 'is-invalid' : '']" v-model="memberData.first_name"  />
+                                             <small style="color: red" v-if="error.first_name">{{ error.first_name[0] }}</small >
                                             </div>
 
                                             <div class="mb-2 col-md-6 col-lg-4 col-sm-12">
                                                 <div class="col-form-label">middle name</div>
 
-                                                <input name="name" class="form-control"  />
-                                                <small style="color: red" ></small>
+                                                <input name="name" :class="['form-control',error.middle_name? 'is-invalid' : '']" v-model="memberData.middle_name" />
+                                             <small style="color: red" v-if="error.middle_name">{{ error.middle_name[0] }}</small >
                                             </div>
                                             <div class="mb-2 col-md-6 col-lg-4 col-sm-12">
                                                 <div class="col-form-label">last name</div>
 
-                                                <input name="name" class="form-control"  />
-                                                <small style="color: red" ></small>
+                                                <input name="name" :class="['form-control',error.last_name? 'is-invalid' : '']" v-model="memberData.last_name"  />
+                                             <small style="color: red" v-if="error.last_name">{{ error.last_name[0] }}</small >
                                             </div>
 
                                             <div class="mb-2 col-md-6 col-lg-4 col-sm-12">
                                                 <div class="col-form-label"> Gender</div>
 
-                                                <select name="gender"  class="form-control"  >
+                                                <select name="gender"  :class="['form-control',error.gender? 'is-invalid' : '']"  v-model="memberData.gender" >
                                                     <option selected readonly disabled>__choose__</option>
                                                     <option value="Male">Male</option>
                                                     <option value="female">female </option>
                                                 </select>
-                                                <small style="color: red"></small>
+                                             <small style="color: red" v-if="error.gender">{{ error.gender[0] }}</small >
                                             </div>
 
                                             <div class="mb-2 col-md-6 col-lg-4 col-sm-12">
                                                 <div class="col-form-label"> Date of birth </div>
 
-                                                <input name="phone" type="date"  class="form-control" />
-                                                <small style="color: red" ></small>
+                                                <input name="phone" type="date"  :class="['form-control',error.date_of_birth? 'is-invalid' : '']"  v-model="memberData.data_of_birth"/>
+                                             <small style="color: red" v-if="error.date_of_birth">{{ error.date_of_birth[0] }}</small >
                                             </div>
 
 
                                             <div class="mb-2 col-md-6 col-lg-4 col-sm-12">
                                                 <div class="col-form-label"> Group</div>
 
-                                                <select name="group"  class="form-control"  ></select>
-                                                <small style="color: red" ></small>
+                                                <select name="group" :class="['form-control',error.group_id? 'is-invalid' : '']" v-model="memberData.group"  >
+                                                      <option :value="item.id" v-for="(item,index) in groups"  :key="index">
+                                                        {{ item.name }}
+                                                      </option>
+                                                </select>
+                                             <small style="color: red" v-if="error.group_id">{{ error.group_id[0] }}</small >
                                             </div>
 
 
@@ -72,29 +76,29 @@
                                         <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
                                             <div class="col-form-label"> address </div>
 
-                                            <input name="confirm_password" class="form-control"  />
-                                            <small style="color: red" ></small>
+                                            <input name="address" :class="['form-control',error.address? 'is-invalid' : '']" v-model="memberData.address" />
+                                             <small style="color: red" v-if="error.address">{{ error.address[0] }}</small >
                                         </div>
 
                                         <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
                                             <div class="col-form-label"> City </div>
 
-                                            <input name="city"  class="form-control"  />
-                                            <small style="color: red" ></small>
+                                            <input name="city"  :class="['form-control',error.city? 'is-invalid' : '']"  v-model="memberData.city" />
+                                             <small style="color: red" v-if="error.city">{{ error.city[0] }}</small >
                                         </div>
 
                                         <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
                                             <div class="col-form-label"> phone number  </div>
 
-                                            <input name="confirm_password" class="form-control"  />
-                                            <small style="color: red" ></small>
+                                            <input name="phone" :class="['form-control',error.phone_number? 'is-invalid' : '']" v-model="memberData.phone"/>
+                                             <small style="color: red" v-if="error.phone_number">{{ error.phone_number[0] }}</small >
                                         </div>
 
                                         <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
                                             <div class="col-form-label">  email  </div>
 
-                                            <input name="confirm_password" class="form-control"  />
-                                            <small style="color: red" ></small>
+                                            <input name="confirm_password" :class="['form-control',error.email? 'is-invalid' : '']"  v-model="memberData.email"  />
+                                             <small style="color: red" v-if="error.email">{{ error.email[0] }}</small >
                                         </div>
 
 
@@ -104,8 +108,8 @@
                                         <div class="mb-2 col-md-6 col-lg-4 col-sm-12">
                                             <div class="col-form-label">  user name  </div>
 
-                                            <input name="confirm_password" class="form-control"  />
-                                            <small style="color: red" ></small>
+                                            <input name="confirm_password" :class="['form-control',error.user_name? 'is-invalid' : '']"  v-model="memberData.userName"  />
+                                             <small style="color: red" v-if="error.user_name">{{ error.user_name[0] }}</small >
                                         </div>
 
 
@@ -113,15 +117,15 @@
                                         <div class="mb-2 col-md-6 col-lg-4 col-sm-12">
                                             <div class="col-form-label">  password  </div>
 
-                                            <input name="confirm_password" class="form-control"  />
-                                            <small style="color: red" ></small>
+                                            <input name="confirm_password" :class="['form-control',error.password? 'is-invalid' : '']"  v-model="memberData.password" />
+                                             <small style="color: red" v-if="error.password">{{ error.password[0] }}</small >
                                         </div>
 
                                         <div class="mb-2 col-md-6 col-lg-4 col-sm-12">
                                             <div class="col-form-label"> Confirm password  </div>
 
-                                            <input name="confirm_password" class="form-control"  />
-                                            <small style="color: red" ></small>
+                                            <input name="confirm_password" :class="['form-control',error.confirm_password? 'is-invalid' : '']" v-model="memberData.confirm_password"  />
+                                             <small style="color: red" v-if="error.confirm_password">{{ error.confirm_password[0] }}</small >
                                         </div>
 
                                         <div class="mb-2 col-md-12 col-lg-12 col-sm-12">
@@ -134,11 +138,13 @@
                                                     id="singledropzone"
                                                     :options="singledropzoneOptions"
                                                     class="dropzone digits"
+                                                    @vdropzone-file-added="handleFileAdded"
+                                                    @vdropzone-removed-file="removed"
 
                                                 >
                                                 </vue-dropzone>
 
-                                            <small style="color: red" ></small>
+                                             <small style="color: red" v-if="error.profile_picture">{{ error.profile_picture[0] }}</small >
                                         </div>
 
 
@@ -149,33 +155,59 @@
                                         <div class="mb-2 col-md-12 col-lg-12 col-sm-12">
                                             <div class="col-form-label">  interested area  </div>
 
-                                           <textarea style="width: 100%"  class="form-control"></textarea>
-                                            <small style="color: red" ></small>
+                                           <textarea style="width: 100%"  :class="['form-control',error.interested_area? 'is-invalid' : '']"   v-model="memberData.interested_area"></textarea>
+                                             <small style="color: red" v-if="error.interested_area">{{ error.interested_area[0] }}</small >
                                         </div>
 
                                         <div class="mb-2 col-md-12 col-lg-12 col-sm-12">
                                             <div class="col-form-label">  source </div>
 
-                                            <textarea style="width: 100%" class="form-control"></textarea>
-                                            <small style="color: red" ></small>
+                                            <textarea style="width: 100%" :class="['form-control',error.source? 'is-invalid' : '']"  v-model="memberData.source"></textarea>
+                                             <small style="color: red" v-if="error.source">{{ error.source[0] }}</small >
                                         </div>
 
-                                        <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
+                                        <div class="mb-2 col-md-4 col-lg-4 col-sm-12">
+                                            <div class="col-form-label">   class  </div>
+
+                                            <select name="class" :class="['form-control',error.class_id? 'is-invalid' : '']"   v-model="memberData.class">
+                                                  <option :value="item.id" v-for="(item,index) in classes"  :key="index">
+                                                        {{ item.className }}
+                                                </option>
+                                            </select>
+                                             <small style="color: red" v-if="error.class_id">{{ error.class_id[0] }}</small >
+                                        </div>
+
+                                       <div class="mb-2 col-md-4 col-lg-4 col-sm-12">
                                             <div class="col-form-label">   membership  </div>
 
-                                            <select name="membership"  class="form-control"  ></select>
-                                            <small style="color: red" ></small>
+                                            <select name="membership"  :class="['form-control',error.membership_id? 'is-invalid' : '']"  v-model="memberData.membership" >
+                                                <option :value="item.id" v-for="(item,index) in memberships"  :key="index">
+                                                        {{ item.name }}
+                                                </option>
+                                            </select>
+                                             <small style="color: red" v-if="error.membership_id">{{ error.membership_id[0] }}</small >
                                         </div>
 
-
-                                        <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
+                                        <div class="mb-2 col-md-4 col-lg-4 col-sm-12">
                                             <div class="col-form-label">   start data  </div>
 
-                                            <input name="" type="date" class="form-control"  />
-                                            <small style="color: red" ></small>
+                                            <input name="" type="date"    :class="['form-control',error.start_date? 'is-invalid' : '']"  v-model="memberData.start_data" />
+                                             <small style="color: red" v-if="error.start_date">{{ error.start_date[0] }}</small >
                                         </div>
 
 
+
+                                  <div class="mb-2  mt-4 col-md-12 col-lg-12 col-sm-12">
+
+                                           <div class="media">
+                                                <label class="col-form-label m-r-10">active</label>
+                                                <div class="media-body text-right icon-state">
+                                                <label class="switch">
+                                                    <input type="checkbox" checked="" v-model="memberData.isActive"><span class="switch-state bg-primary"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        </div>
 
 
 
@@ -215,7 +247,6 @@
 </template>
 
 <script>
-import Multiselect from 'vue-multiselect'
 import vue2Dropzone from 'vue2-dropzone'
 import 'vue2-dropzone/dist/vue2Dropzone.min.css'
 
@@ -251,22 +282,27 @@ export default {
                 interested_area:'',
                 source:'',
                 membership:'',
-                start_data:''
+                class:'',
+                start_data:'',
+                isActive:true
 
 
 
 
 
             },
-            isLoading:true,
+            isLoading:false,
 
-            options: [],
+            classes: [],
+            groups: [],
+            memberships: [],
+
             error:'',
-            edit:false,
+            edit:true,
 
 
             singledropzoneOptions:{
-                url:'http://127.0.0.1:8000/api/',
+                url:'http://127.0.0.1:8000/api/addMember',
                 thumbnailWidth: 150,
                 maxFiles:1,
                 autoProcessQueue: false,
@@ -299,6 +335,59 @@ export default {
     beforeMount() {
 
 
+            if(this.$route.params.memberId){
+
+                    this.edit = true
+
+
+
+            }else{
+
+                this.edit = false
+            }
+
+
+
+            axios.get('memberships')
+            .then(res => {
+
+                if(res.data.success){
+                    this.memberships = res.data.memberships
+                }
+            })
+            .catch(err => {
+
+               console.log(err.message)
+            })
+
+            axios.get('groups')
+            .then(res => {
+
+                 if(res.data.success){
+                    this.groups = res.data.groups
+                }
+
+            })
+            .catch(err => {
+                console.log(err.message)
+            })
+
+            axios.get('getClassToSelect')
+            .then(res => {
+
+
+                  if(res.data.success){
+                    this.classes = res.data.classes
+                }
+
+            })
+            .catch(err => {
+               console.log(err.message)
+            })
+
+
+            this.isLoading = true
+
 
     },
 
@@ -306,7 +395,86 @@ export default {
 
     methods: {
 
+      handleFileAdded(file) {
 
+
+            if (this.memberData.profile_picture.length < 1) {
+                this.memberData.profile_picture = file;
+            }
+
+        },
+        removed(files){
+
+            if(files.name == this.memberData.profile_picture.name){
+
+                this.memberData.profile_picture = []
+            }
+        },
+
+
+
+
+        handelSubmitData(){
+
+            if(this.edit == false){
+
+
+                let formData = new FormData()
+                formData.append('first_name'         , this.memberData.first_name)
+                formData.append('middle_name'        , this.memberData.middle_name)
+                formData.append('last_name'          , this.memberData.last_name)
+                formData.append('gender'             , this.memberData.gender)
+                formData.append('data_of_birth'      , this.memberData.data_of_birth)
+                formData.append('group'              , this.memberData.group)
+                formData.append('address'            , this.memberData.address)
+                formData.append('city'               , this.memberData.city)
+                formData.append('phoneNumber'        , this.memberData.phoneNumber)
+                formData.append('email'              , this.memberData.email)
+                formData.append('userName'           , this.memberData.userName)
+                formData.append('password'           , this.memberData.password)
+                formData.append('confirm_password'   , this.memberData.confirm_password)
+                formData.append('profile_picture'    , this.memberData.profile_picture)
+                formData.append('interested_area'    , this.memberData.interested_area)
+                formData.append('source'             , this.memberData.source)
+                formData.append('membership'         , this.memberData.membership)
+                formData.append('class'              , this.memberData.class)
+                formData.append('start_data'         , this.memberData.start_data)
+                formData.append('isActive'           , this.memberData.isActive)
+
+
+                 let config = {
+                    headers: {
+                        "Content-Type":
+                            "multipart/form-data; charset=utf-8 ; boundary=" +
+                            Math.random()
+                                .toString()
+                                .substr(2)
+                    }
+                };
+
+
+
+
+                axios.post('addMember',formData,config)
+                .then(res => {
+
+                    if(res.data.success == false){
+
+                        this.error = res.data.message
+                    }
+                    console.log(res)
+                })
+                .catch(err => {
+
+                    console.log(err)
+
+                })
+
+            }
+
+
+
+        }
 
 
     },
@@ -314,6 +482,33 @@ export default {
     watch:{
 
 
+        $route(to,from){
+            if(to.name == 'addMember'){
+                this.edit = false
+                this.memberData.first_name    = '',
+                this.memberData.middle_name    = '',
+                this.memberData.last_name    = '',
+                this.memberData.gender    = '',
+                this.memberData.data_of_birth    = '',
+                this.memberData.group    = '',
+                this.memberData.address    = '',
+                this.memberData.city    = '',
+                this.memberData.phoneNumber    = '',
+                this.memberData.email    = '',
+                this.memberData.userName    = '',
+                this.memberData.password    = '',
+                this.memberData.confirm_password    = '',
+                this.memberData.profile_picture    = [],
+                this.memberData.interested_area    = '',
+                this.memberData.source    = '',
+                this.memberData.membership    = '',
+                this.memberData.class    = '',
+                this.memberData.start_data    = '',
+                this.memberData.isActive    = true
+
+
+            }
+        }
 
     }
 

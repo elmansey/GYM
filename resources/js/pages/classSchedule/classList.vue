@@ -7,7 +7,7 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
-                            <div style="float:right;margin-bottom: 10px;">
+                            <div v-if="can('delete-By-Select-Multi-Class')" style="float:right;margin-bottom: 10px;">
                                 <div>
                                     <b-button-group style="height:auto;">
                                         <b-button size="sm" pill variant="dark">
@@ -104,6 +104,7 @@
                                                         type="checkbox"
                                                         :value="row.id"
                                                         v-model="selected"
+                                                        v-if="can('delete-By-Select-Multi-Class')"
                                                     />
                                                 </td>
                                                 <td>{{ ++index }}</td>

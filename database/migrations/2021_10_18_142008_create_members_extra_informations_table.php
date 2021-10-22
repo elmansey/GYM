@@ -19,6 +19,8 @@ class CreateMembersExtraInformationsTable extends Migration
             $table->text('interested_area')->nullable();
             $table->string('source');
             $table->foreignId('membership_id')->references('id')->on('memberships')->cascadeOnDelete();
+            $table->foreignId('group_id')->references('id')->on('groups')->cascadeOnDelete();
+            $table->foreignId('class_id')->references('id')->on('class_schedules')->cascadeOnDelete();
             $table->date('start_date');
             $table->timestamps();
         });

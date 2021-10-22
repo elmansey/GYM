@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\captainResource;
 use Illuminate\support\facades\Validator;
 use App\Http\Resources\class_scheduleResource;
+use App\Http\Resources\classSceduleResource;
 use Illuminate\Validation\Rule;
 
 class ClassScheduleController extends Controller
@@ -163,4 +164,89 @@ class ClassScheduleController extends Controller
 
         return response()->json(['success' => true], 200);
     }
+
+
+    public function getClassInDays(){
+
+        $classes = ClassSchedule::all();
+
+        $Saturday=[];
+        $Sunday=[];
+        $Monday=[];
+        $Tuesday=[];
+        $Wednesday=[];
+        $Thursday=[];
+        $Friday=[];
+
+        $cl = [];
+        $daysName = [];
+        foreach($classes as $k => $va){
+
+            foreach($va['days'] as $kay => $value){
+
+
+                if($value['name'] == 'Saturday'){
+
+                    $Saturday[] = new classSceduleResource($va);
+
+                }
+                 else if($value['name'] == 'Sunday'){
+
+                  $Sunday[]  = new classSceduleResource($va);
+                 }
+                else if($value['name'] == 'Monday'){
+                    $Monday[]  = new classSceduleResource($va);
+
+                }
+               else if($value['name'] == 'Tuesday'){
+                    $Tuesday[]  = new classSceduleResource($va);
+
+                }
+               else if($value['name'] == 'Wednesday'){
+                    $Wednesday[]  = new classSceduleResource($va);
+
+                }
+               else if($value['name'] == 'Thursday'){
+                    $Thursday[]  = new classSceduleResource($va);
+
+                }
+               else if($value['name'] == 'Friday'){
+                    $Friday[]  = new classSceduleResource($va);
+
+                }
+
+            }
+
+
+
+        }
+
+
+
+
+        return response()->json([
+            'success'=>true,
+            'classes'=>
+            ['saturdayClasses' => $Saturday,
+            'sundayClasses' => $Sunday,
+            'mondayClasses' => $Monday,
+            'tuesdayClasses' => $Tuesday,
+            'wednesdayClasses' => $Wednesday,
+            'thursdayClasses' => $Thursday,
+            'fridayClasses' => $Friday,]
+
+
+        ],200);
+
+
+    }
+
+    public function getClassToSelect(){
+
+        $classes = ClassSchedule::select('id','className')->get();
+        return  response()->json(['success'=>true,'classes'=>$classes]);
+    }
+
+
+
 }

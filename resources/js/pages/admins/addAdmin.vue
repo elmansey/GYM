@@ -26,7 +26,7 @@
                                                   <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
                                                       <div class="col-form-label"> email</div>
 
-                                                      <input name="email"  :class="['form-control',error.email ? 'is-invalid' : '']"  v-model="adminData.email"/>
+                                                      <input name="email" type="email" :class="['form-control',error.email ? 'is-invalid' : '']"  v-model="adminData.email"/>
                                                       <small style="color: red" v-if="error.email">{{ error.email[0]}}</small>
                                                   </div>
 
@@ -65,7 +65,7 @@
                                               <div class="mb-2 col-md-12 col-lg-12 col-sm-12">
                                                   <div class="col-form-label"> Upload profile picture</div>
 
-                                                  <div class="card-body">
+
                                                       <vue-dropzone
                                                           name="file"
                                                           ref="myVueDropzone"
@@ -77,7 +77,7 @@
 
                                                       >
                                                       </vue-dropzone>
-                                                  </div>
+
 
                                                   <small style="color: red" v-if="error.profile_picture">{{ error.profile_picture[0]}}</small>
                                               </div>

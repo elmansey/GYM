@@ -20,7 +20,6 @@ class CreateMembersPersonalInformationsTable extends Migration
             $table->string('last_name');
             $table->string('gender');
             $table->date('date_of_birth');
-            $table->foreignId('group_id')->references('id')->on('groups')->cascadeOnDelete();
             $table->timestamps();
 
         });

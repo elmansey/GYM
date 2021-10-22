@@ -20,9 +20,9 @@ class CreateStaffTable extends Migration
             $table->string('lastName');
             $table->string('phone');
             $table->string('email')->nullable();
-            $table->string('avatar');
+            $table->string('avatar')->nullable();
             $table->string('jop');
-            $table->string('notes');
+            $table->string('notes')->nullable();
             $table->timestamps();
         });
     }

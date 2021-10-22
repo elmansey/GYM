@@ -159,11 +159,11 @@
             <feather type="maximize"></feather
           ></a>
         </li>
-        <li class="profile-nav onhover-dropdown p-0 mr-0">
-          <div class="media profile-media">
+        <li class="profile-nav onhover-dropdown p-0 mr-0" >
+          <div class="media profile-media" >
             <img
               class="b-r-10"
-              style="width: 40px;height: 40px;border-radius: 50%"
+              style="width: 40px;height: 40px;border-radius: 50%!important"
               :src=" this.$store.getters.USER['profile_picture'] ? '../../profile_pictures/'+this.$store.getters.USER['profile_picture'] :  '../../profile_pictures/DefaultProfile.jpg' "
               alt=""
             />

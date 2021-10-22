@@ -1,14 +1,15 @@
 <?php
 
-use App\Http\Controllers\API\auth\AuthController;
-use App\Http\Controllers\API\ClassSchedule\ClassScheduleController;
-use App\Http\Controllers\API\Groups\GroupsController;
-use App\Http\Controllers\API\Memberships\MembershipsController;
-use App\Http\Controllers\API\staff\staffController;
-use App\Http\Controllers\API\user\RoleController;
-use App\Http\Controllers\API\user\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\auth\AuthController;
+use App\Http\Controllers\API\user\RoleController;
+use App\Http\Controllers\API\user\UserController;
+use App\Http\Controllers\API\staff\staffController;
+use App\Http\Controllers\API\Groups\GroupsController;
+use App\Http\Controllers\API\members\membersController;
+use App\Http\Controllers\API\Memberships\MembershipsController;
+use App\Http\Controllers\API\ClassSchedule\ClassScheduleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -87,7 +88,8 @@ Route::group(['middleware' => 'JWTchecker'], function () {
     Route::get('deleteClass/{id}', [ClassScheduleController::class, 'destroy']);
     Route::get('getAllCaptainToCreateClass', [ClassScheduleController::class, 'getAllCaptainToCreateClass']);
     Route::post('deleteSelectedItem', [ClassScheduleController::class, 'deleteSelectedItem']);
-
+    Route::get('getClassInDays',[ClassScheduleController::class, 'getClassInDays']);
+    Route::get('getClassToSelect',[ClassScheduleController::class, 'getClassToSelect']);
 
 
 
@@ -97,4 +99,18 @@ Route::group(['middleware' => 'JWTchecker'], function () {
     Route::get('getItemFromStaffById/{id}', [staffController::class, 'getItemFromStaffById']);
     Route::post('updateInStaff/{id}', [staffController::class, 'update']);
     Route::get('deleteItemInStaff/{id}', [staffController::class, 'destroy']);
+
+
+
+
+
+
+    //members
+    Route::get('members',[membersController::class,'index']);
+    Route::post('addMember',[membersController::class,'store']);
+
+
+
+
+
 });

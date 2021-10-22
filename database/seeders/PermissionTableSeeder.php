@@ -49,10 +49,12 @@ class PermissionTableSeeder extends Seeder
             'show-class_schedule',
             'add-class-schedule',
             'edit-class-schedule',
+            'edit-class-schedule-in-classSchedule',
             'delete-class-schedule',
             'show-Registration-member',
             'show-Registration-member-list',
             'add-member-in-gym',
+            'delete-By-Select-Multi-Class'
 
 
         ];

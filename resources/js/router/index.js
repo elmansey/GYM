@@ -30,6 +30,9 @@ const routes = [{
                 component: require('@/pages/home/home').default,
 
             },
+
+
+
             {
 
                 path: 'membersList',
@@ -44,6 +47,18 @@ const routes = [{
                 component: require('@/pages/members/add_new_member').default,
 
             },
+
+
+            {
+
+                path: 'updateMember/:memberId',
+                name: 'updateMember',
+                component: require('@/pages/members/add_new_member').default,
+
+            },
+
+
+
             {
 
                 path: 'updateMember',

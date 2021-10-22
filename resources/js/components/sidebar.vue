@@ -1,15 +1,17 @@
 <template>
     <div>
-        <div class="logo-wrapper">
+        <div class="logo-wrapper " style="padding: 17px;">
             <router-link :to="{name : 'main'}">
                 <img
                     class="img-fluid for-light"
-                    :src="require('@/assets/images/logo/logo.png').default"
+                    :src="require('@/assets/images/avtar/3.jpg').default"
+                      style="width: 50px;height: 50px;border-radius:50%;"
                     alt=""
                 /><img
                     class="img-fluid for-dark"
-                    :src="require('@/assets/images/logo/logo_dark.png').default"
+                    :src="require('@/assets/images/avtar/3.jpg').default"
                     alt=""
+                    style="width: 50px;height: 50px;border-radius:50%;"
                 />
             </router-link>
             <div class="back-btn" @click="toggle_sidebar">
@@ -23,11 +25,12 @@
                 ></feather>
             </div>
         </div>
-        <div class="logo-icon-wrapper">
+        <div class="logo-icon-wrapper" style="padding: 17px;">
             <router-link to="/">
                 <img
                     class="img-fluid"
-                    :src="require('@/assets/images/logo/logo-icon.png').default"
+                    :src="require('@/assets/images/avtar/3.jpg').default"
+                    style="width: 50px;height: 50px;border-radius:50%;"
                     alt=""
             /></router-link>
         </div>
@@ -65,10 +68,8 @@
                         <router-link to="/">
                             <img
                                 class="img-fluid"
-                                :src="
-                                    '@/assets/images/logo/logo-icon.png'.default
-                                "
-                                alt=""
+                                 :src="require('@/assets/images/avtar/3.jpg').default"
+                                  style="width: 50px;height: 50px;border-radius:50%;"
                         /></router-link>
                         <div class="mobile-back text-right">
                             <span>Back</span
@@ -80,11 +81,13 @@
                     </li>
 
                     <li
+
                         v-for="(menuItem, index) in menuItems"
                         :key="index"
                         :class="{'active': menuItem.active, 'sidebar-main-title' : menuItem.type == 'headtitle'}"
                         class="sidebar-list"
                         v-if="can(menuItem.permission)"
+                        style="margin-top:15px"
 
                     >
                         <!-- link title -->
