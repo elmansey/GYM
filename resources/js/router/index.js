@@ -249,6 +249,12 @@ const routes = [{
         path: '/login',
         name: 'login',
         component: require('@/pages/login').default
+    },
+
+    {
+        path: '/register',
+        name: 'register',
+        component: require('@/pages/register').default
     }
 
 

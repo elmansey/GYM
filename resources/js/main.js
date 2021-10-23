@@ -14,7 +14,9 @@ import {
 Vue.component('pulse-loader', require('vue-spinner/src/PulseLoader.vue'));
 
 import vue2Dropzone from 'vue2-dropzone'
+import VueFormWizared from 'vue-form-wizard'
 
+import Vuelidate from 'vuelidate'
 
 import './axios'
 
@@ -69,6 +71,8 @@ Vue.component('Breadcrumbs', Breadcrumbs)
 Vue.use(SmartTable);
 Vue.use(FormGroupPlugin)
 Vue.use(vue2Dropzone)
+Vue.use(VueFormWizared)
+Vue.use(Vuelidate)
 
 // global mixin
 Vue.mixin({

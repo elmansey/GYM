@@ -41,8 +41,7 @@
                                             <div class="mb-2 col-md-6 col-lg-4 col-sm-12">
                                                 <div class="col-form-label"> Gender</div>
 
-                                                <select name="gender"  :class="['form-control',error.gender? 'is-invalid' : '']"  v-model="memberData.gender" >
-                                                    <option selected readonly disabled>__choose__</option>
+                                                <select name="gender"   :class="['form-control',error.gender? 'is-invalid' : '']"  v-model="memberData.gender" >
                                                     <option value="Male">Male</option>
                                                     <option value="female">female </option>
                                                 </select>
@@ -52,15 +51,15 @@
                                             <div class="mb-2 col-md-6 col-lg-4 col-sm-12">
                                                 <div class="col-form-label"> Date of birth </div>
 
-                                                <input name="phone" type="date"  :class="['form-control',error.date_of_birth? 'is-invalid' : '']"  v-model="memberData.data_of_birth"/>
-                                             <small style="color: red" v-if="error.date_of_birth">{{ error.date_of_birth[0] }}</small >
+                                                <input name="phone" type="date"  :class="['form-control',error.data_of_birth? 'is-invalid' : '']"  v-model="memberData.data_of_birth"/>
+                                             <small style="color: red" v-if="error.data_of_birth">{{ error.data_of_birth[0] }}</small >
                                             </div>
 
 
                                             <div class="mb-2 col-md-6 col-lg-4 col-sm-12">
                                                 <div class="col-form-label"> Group</div>
 
-                                                <select name="group" :class="['form-control',error.group_id? 'is-invalid' : '']" v-model="memberData.group"  >
+                                                <select name="group" :class="['form-control',error.group_id? 'is-invalid' : '']" v-model="memberData.group_id"  >
                                                       <option :value="item.id" v-for="(item,index) in groups"  :key="index">
                                                         {{ item.name }}
                                                       </option>
@@ -90,14 +89,14 @@
                                         <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
                                             <div class="col-form-label"> phone number  </div>
 
-                                            <input name="phone" :class="['form-control',error.phone_number? 'is-invalid' : '']" v-model="memberData.phone"/>
+                                            <input name="phone" :class="['form-control',error.phone_number? 'is-invalid' : '']" v-model="memberData.phone_number"/>
                                              <small style="color: red" v-if="error.phone_number">{{ error.phone_number[0] }}</small >
                                         </div>
 
                                         <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
                                             <div class="col-form-label">  email  </div>
 
-                                            <input name="confirm_password" :class="['form-control',error.email? 'is-invalid' : '']"  v-model="memberData.email"  />
+                                            <input name="" :class="['form-control',error.email? 'is-invalid' : '']"  v-model="memberData.email"  />
                                              <small style="color: red" v-if="error.email">{{ error.email[0] }}</small >
                                         </div>
 
@@ -108,7 +107,7 @@
                                         <div class="mb-2 col-md-6 col-lg-4 col-sm-12">
                                             <div class="col-form-label">  user name  </div>
 
-                                            <input name="confirm_password" :class="['form-control',error.user_name? 'is-invalid' : '']"  v-model="memberData.userName"  />
+                                            <input name="" :class="['form-control',error.user_name? 'is-invalid' : '']"  v-model="memberData.user_name"  />
                                              <small style="color: red" v-if="error.user_name">{{ error.user_name[0] }}</small >
                                         </div>
 
@@ -117,14 +116,14 @@
                                         <div class="mb-2 col-md-6 col-lg-4 col-sm-12">
                                             <div class="col-form-label">  password  </div>
 
-                                            <input name="confirm_password" :class="['form-control',error.password? 'is-invalid' : '']"  v-model="memberData.password" />
+                                            <input name="" :class="['form-control',error.password? 'is-invalid' : '']"  v-model="memberData.password" />
                                              <small style="color: red" v-if="error.password">{{ error.password[0] }}</small >
                                         </div>
 
                                         <div class="mb-2 col-md-6 col-lg-4 col-sm-12">
                                             <div class="col-form-label"> Confirm password  </div>
 
-                                            <input name="confirm_password" :class="['form-control',error.confirm_password? 'is-invalid' : '']" v-model="memberData.confirm_password"  />
+                                            <input name="" :class="['form-control',error.confirm_password? 'is-invalid' : '']" v-model="memberData.confirm_password"  />
                                              <small style="color: red" v-if="error.confirm_password">{{ error.confirm_password[0] }}</small >
                                         </div>
 
@@ -169,7 +168,7 @@
                                         <div class="mb-2 col-md-4 col-lg-4 col-sm-12">
                                             <div class="col-form-label">   class  </div>
 
-                                            <select name="class" :class="['form-control',error.class_id? 'is-invalid' : '']"   v-model="memberData.class">
+                                            <select name="class" :class="['form-control',error.class_id? 'is-invalid' : '']"   v-model="memberData.class_id">
                                                   <option :value="item.id" v-for="(item,index) in classes"  :key="index">
                                                         {{ item.className }}
                                                 </option>
@@ -180,7 +179,7 @@
                                        <div class="mb-2 col-md-4 col-lg-4 col-sm-12">
                                             <div class="col-form-label">   membership  </div>
 
-                                            <select name="membership"  :class="['form-control',error.membership_id? 'is-invalid' : '']"  v-model="memberData.membership" >
+                                            <select name="membership"  :class="['form-control',error.membership_id? 'is-invalid' : '']"  v-model="memberData.membership_id" >
                                                 <option :value="item.id" v-for="(item,index) in memberships"  :key="index">
                                                         {{ item.name }}
                                                 </option>
@@ -191,7 +190,7 @@
                                         <div class="mb-2 col-md-4 col-lg-4 col-sm-12">
                                             <div class="col-form-label">   start data  </div>
 
-                                            <input name="" type="date"    :class="['form-control',error.start_date? 'is-invalid' : '']"  v-model="memberData.start_data" />
+                                            <input name="" type="date"    :class="['form-control',error.start_date? 'is-invalid' : '']"  v-model="memberData.start_date" />
                                              <small style="color: red" v-if="error.start_date">{{ error.start_date[0] }}</small >
                                         </div>
 
@@ -262,17 +261,19 @@ export default {
                 last_name:'',
                 gender:'',
                 data_of_birth:'',
-                group:'',
+                group_id:'',
+
+
 
 
 
                 address:'',
                 city:'',
-                phoneNumber:'',
+                phone_number:'',
                 email:'',
 
 
-                userName:'',
+                user_name:'',
                 password:'',
                 confirm_password:'',
                 profile_picture:[],
@@ -281,9 +282,9 @@ export default {
 
                 interested_area:'',
                 source:'',
-                membership:'',
-                class:'',
-                start_data:'',
+                membership_id:'',
+                class_id:'',
+                start_date:'',
                 isActive:true
 
 
@@ -297,7 +298,7 @@ export default {
             groups: [],
             memberships: [],
 
-            error:'',
+            error:[],
             edit:true,
 
 
@@ -425,21 +426,27 @@ export default {
                 formData.append('last_name'          , this.memberData.last_name)
                 formData.append('gender'             , this.memberData.gender)
                 formData.append('data_of_birth'      , this.memberData.data_of_birth)
-                formData.append('group'              , this.memberData.group)
+                formData.append('group_id'           , this.memberData.group_id)
                 formData.append('address'            , this.memberData.address)
                 formData.append('city'               , this.memberData.city)
-                formData.append('phoneNumber'        , this.memberData.phoneNumber)
+                formData.append('phone_number'        , this.memberData.phone_number)
                 formData.append('email'              , this.memberData.email)
-                formData.append('userName'           , this.memberData.userName)
+                formData.append('user_name'           , this.memberData.user_name)
                 formData.append('password'           , this.memberData.password)
                 formData.append('confirm_password'   , this.memberData.confirm_password)
                 formData.append('profile_picture'    , this.memberData.profile_picture)
                 formData.append('interested_area'    , this.memberData.interested_area)
                 formData.append('source'             , this.memberData.source)
-                formData.append('membership'         , this.memberData.membership)
-                formData.append('class'              , this.memberData.class)
-                formData.append('start_data'         , this.memberData.start_data)
+                formData.append('membership_id'         , this.memberData.membership_id)
+                formData.append('class_id'              , this.memberData.class_id)
+                formData.append('start_date'         , this.memberData.start_date)
                 formData.append('isActive'           , this.memberData.isActive)
+
+
+
+
+
+
 
 
                  let config = {
@@ -460,8 +467,26 @@ export default {
 
                     if(res.data.success == false){
 
-                        this.error = res.data.message
+                             this.error = res.data.message
                     }
+
+                    if(res.data.success){
+
+                        this.error = []
+                        this.memberData = []
+                     // this.$router.push({name:'membersList'})
+                        Toast.fire({
+                            icon: 'success',
+                            title: 'new member added successfully'
+                        })
+
+
+
+                    }
+
+
+
+
                     console.log(res)
                 })
                 .catch(err => {
@@ -490,19 +515,19 @@ export default {
                 this.memberData.last_name    = '',
                 this.memberData.gender    = '',
                 this.memberData.data_of_birth    = '',
-                this.memberData.group    = '',
+                this.memberData.group_id    = '',
                 this.memberData.address    = '',
                 this.memberData.city    = '',
                 this.memberData.phoneNumber    = '',
                 this.memberData.email    = '',
-                this.memberData.userName    = '',
+                this.memberData.user_name    = '',
                 this.memberData.password    = '',
                 this.memberData.confirm_password    = '',
                 this.memberData.profile_picture    = [],
                 this.memberData.interested_area    = '',
                 this.memberData.source    = '',
-                this.memberData.membership    = '',
-                this.memberData.class    = '',
+                this.memberData.membership_id    = '',
+                this.memberData.class_id    = '',
                 this.memberData.start_data    = '',
                 this.memberData.isActive    = true
 
