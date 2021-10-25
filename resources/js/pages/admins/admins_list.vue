@@ -27,6 +27,7 @@
 
                                         <th></th>
                                         <th sortKey="name">Profile Picture</th>
+                                        <th sortKey="name">Personal uuid</th>
                                         <th sortKey="name">name</th>
                                         <th sortKey="name">user name</th>
                                         <th sortKey="name" >email</th>
@@ -53,6 +54,7 @@
 
 
 
+                                            <td>{{ row.Personal_uuid}}</td>
                                             <td>{{ row.name}}</td>
                                             <td>{{ row.user_name}}</td>
                                             <td>{{ row.email}}</td>

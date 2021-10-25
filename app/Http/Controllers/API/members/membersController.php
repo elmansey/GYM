@@ -27,7 +27,7 @@ class membersController extends Controller
                     'gender'              => 'required',
                     'data_of_birth'       => 'required',
                     'group_id'            => 'required',
-                    'class_id'            => 'required',
+                    // 'class_id'            => 'required',
                     'user_name'           => 'required',
                     'password'            => 'required|same:confirm_password',
                     'confirm_password'    => 'required',
@@ -103,7 +103,7 @@ class membersController extends Controller
                 $ExtraInformation->source           = $request->input('source');
                 $ExtraInformation->membership_id    = $request->input('membership_id');
                 $ExtraInformation->group_id         = $request->input('group_id');
-                $ExtraInformation->class_id         = $request->input('class_id');
+                // $ExtraInformation->class_id         = $request->input('class_id');
                 $ExtraInformation->start_date       = $request->input('start_date');
                 $ExtraInformation->save();
 

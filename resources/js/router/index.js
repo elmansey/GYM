@@ -22,13 +22,21 @@ const routes = [
     {
         path: '/login',
         name: 'login',
-        component: require('@/pages/Login').default
+        component: require('@/pages/authentication/Login').default
     },
 
     {
         path: '/register',
         name: 'register',
-        component: require('@/pages/register').default
+        component: require('@/pages/authentication/register').default
+    },
+
+
+
+    {
+        path: '/resetPassword',
+        name: 'resetPassword',
+        component: require('@/pages/authentication/resetPassword').default
     },
 
 
@@ -37,13 +45,13 @@ const routes = [
 
     // required auth
     {
-        path:'/dashboard',
-        name:'dashboard',
+        path: '/dashboard',
+        name: 'dashboard',
         component: require('@/components/body').default,
         meta: {
             requiresAuth: true
         },
-        children:[
+        children: [
 
             {
                 path: '',

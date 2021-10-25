@@ -15,6 +15,7 @@ class CreateStaffTable extends Migration
     {
         Schema::create('staff', function (Blueprint $table) {
             $table->id();
+            $table->uuid('Personal_uuid')->unique()->nullable();
             $table->string('firstName');
             $table->string('middleName');
             $table->string('lastName');

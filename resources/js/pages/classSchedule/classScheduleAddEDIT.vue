@@ -58,10 +58,7 @@
                                                 tag-placeholder="Add this as new tag"
                                                 placeholder="Search or add a tag"
                                                 :class="[
-                                                    error.days
-                                                        ? 'is-invalid'
-                                                        : ''
-                                                ]"
+                                                    error.days ? 'is-invalid' : '']"
                                                 label="name"
                                                 track-by="id"
                                                 @search-change="asyncFind"
@@ -324,7 +321,7 @@ export default {
                 formData.append("startingTime", this.data.startingTime);
                 formData.append("endingTime", this.data.endingTime);
                 formData.append("trainingLocation", this.data.trainingLocation);
-                formData.append("days", JSON.stringify(this.data.days));
+                formData.append("days", this.data.days);
 
                 axios
                     .post("addClass", formData)

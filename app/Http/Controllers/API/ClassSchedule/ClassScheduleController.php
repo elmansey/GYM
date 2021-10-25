@@ -28,6 +28,8 @@ class ClassScheduleController extends Controller
     public function store(Request $request)
     {
 
+        //  return $request->days ;
+
         $validator = validator::make($request->all(), [
 
             'className'   => 'required|unique:class_schedules',
@@ -78,7 +80,7 @@ class ClassScheduleController extends Controller
 
             'className'   => ['required', Rule::unique('class_schedules')->ignore($id)],
             'captainName'   => 'required',
-            'days'   => 'required',
+            'days'         => 'required',
             'startingTime'   => 'required',
             'endingTime'   => 'required|after:startingTime',
             'trainingLocation'   => 'required'

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Tymon\JWTAuth\Contracts\JWTSubject;
@@ -58,6 +59,24 @@ class User extends Authenticatable implements JWTSubject
    public function getJWTCustomClaims()
     {
         return [];
+    }
+
+
+
+    protected static function boot()
+    {
+
+        parent::boot();
+
+
+        static::creating(function($model){
+
+            if(empty($model->Personal_uuid)){
+                $model->Personal_uuid = Str::uuid();
+            }
+
+        });
+
     }
 
 }
