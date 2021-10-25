@@ -50,8 +50,14 @@
                                                 <td>
                                                     <div>
                                                         <b-button-group
-                                                            class="btn-container "
+                                                            class="btn-container"
                                                         >
+
+                                                    <b-button
+                                                       squared
+                                                        variant="outline-primary"
+                                                        class="btn-sm btn-child"
+                                                    >
                                                             <router-link
                                                                 squared
                                                                 variant="outline-warning"
@@ -64,14 +70,11 @@
                                                                             row.id
                                                                     }
                                                                 }"
-                                                                v-if="
-                                                                    can(
-                                                                        'edit-role'
-                                                                    )
-                                                                "
+                                                                v-if="can('edit-role')"
                                                             >
                                                                 Edit
                                                             </router-link>
+                                                    </b-button>
 
                                                             <b-button
                                                                 squared

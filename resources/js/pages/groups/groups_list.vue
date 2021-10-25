@@ -40,11 +40,13 @@
                                                 <div>
                                                     <b-button-group class="btn-container ">
 
-
+                                                    <b-button
+                                                       squared
+                                                        variant="outline-primary"
+                                                        class="btn-sm btn-child"
+                                                    >
                                                         <router-link
-                                                            squared
-                                                            variant="outline-warning"
-                                                            class="btn-sm btn-child"
+
                                                             :to="{name : 'updateGroup',params : {groupId : row.id}}"
 
                                                             v-if="can('edit-group')"
@@ -52,7 +54,7 @@
                                                         >
                                                             Edit
                                                         </router-link>
-
+                                                    </b-button>
 
                                                         <b-button
                                                             squared

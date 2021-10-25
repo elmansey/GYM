@@ -61,13 +61,24 @@
                                             </div>
 
 
-                                            <div class="form-group">
+                                             <div class="mb-2 col-md-12 col-lg-12 col-sm-12">
+                                                <!-- <select :class="['form-control', (step1  &&  !$v.memberData.personalData.gender.required || error.gender) ? 'is-invalid' : '']"  required="" v-model="memberData.personalData.gender">
+                                                        <option > <i class="fa fa-male"></i>male</option>
+                                                        <option > <i class="fa fa-female"></i>female</option>
+                                                </select> -->
+                                            <div class="col">
                                                 <label class="col-form-label">gender</label>
-                                                <select :class="['form-control', (step1  &&  !$v.memberData.personalData.gender.required || error.gender) ? 'is-invalid' : '']"  required="" v-model="memberData.personalData.gender">
-                                                        <option >male</option>
-                                                        <option >famele</option>
-                                                </select>
-                                                   <b-form-invalid-feedback style="color:red" v-if="(!$v.memberData.personalData.gender.required )" > the gender failed  is required </b-form-invalid-feedback>
+                                                <div class="form-group m-t-15 m-checkbox-inline mb-0 custom-radio-ml">
+                                                    <div class="radio radio-primary d-inline-block">
+                                                        <b-form-radio name="radio3"  value="male"    v-model="memberData.personalData.gender"><i class="fa fa-male"></i> male</b-form-radio>
+                                                    </div>
+                                                    <div class="radio radio-primary d-inline-block">
+                                                        <b-form-radio name="radio3" value="female"  v-model="memberData.personalData.gender"><i class="fa fa-female"></i>  female</b-form-radio>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                                            <b-form-invalid-feedback style="color:red" v-if="(!$v.memberData.personalData.gender.required )" > the gender failed  is required </b-form-invalid-feedback>
                                                    <b-form-invalid-feedback style="color:red" v-if="error.gender" >   {{ error.gender[0] }} </b-form-invalid-feedback>
 
                                             </div>
@@ -319,7 +330,7 @@ export default {
                          first_name:'',
                         middle_name:'',
                         last_name:'',
-                        gender:'',
+                        gender:'male',
                         data_of_birth:'',
 
                     },

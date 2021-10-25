@@ -42,7 +42,7 @@
                                                 <div class="col-form-label"> Gender</div>
 
                                                 <select name="gender"   :class="['form-control',error.gender? 'is-invalid' : '']"  v-model="memberData.gender" >
-                                                    <option value="Male">Male</option>
+                                                    <option value="male">Male</option>
                                                     <option value="female">female </option>
                                                 </select>
                                              <small style="color: red" v-if="error.gender">{{ error.gender[0] }}</small >
@@ -259,7 +259,7 @@ export default {
                 first_name:'',
                 middle_name:'',
                 last_name:'',
-                gender:'',
+                gender:'male',
                 data_of_birth:'',
                 group_id:'',
 

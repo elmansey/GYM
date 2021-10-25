@@ -129,6 +129,13 @@
                                                         <b-button-group
                                                             class="btn-container "
                                                         >
+
+
+                                                    <b-button
+                                                       squared
+                                                        variant="outline-primary"
+                                                        class="btn-sm btn-child"
+                                                    >
                                                             <router-link
                                                                 squared
                                                                 variant="outline-warning"
@@ -144,11 +151,11 @@
                                                                 v-if="
                                                                     can(
                                                                         'edit-class-schedule'
-                                                                    )
-                                                                "
+                                                                    )"
                                                             >
                                                                 Edit
                                                             </router-link>
+                                                    </b-button>
 
                                                             <b-button
                                                                 squared

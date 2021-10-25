@@ -67,7 +67,11 @@
                                                 <div>
                                                     <b-button-group class="btn-container ">
 
-
+                                                    <b-button
+                                                       squared
+                                                        variant="outline-primary"
+                                                        class="btn-sm btn-child"
+                                                    >
                                                             <router-link
                                                                 squared
                                                                 variant="outline-warning"
@@ -78,7 +82,7 @@
                                                                Edit
                                                             </router-link>
 
-
+                                                    </b-button>
                                                         <b-button
                                                             squared
                                                             variant="outline-danger"
