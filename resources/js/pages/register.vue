@@ -5,7 +5,7 @@
         <div class="col-xl-12 p-0">
           <div class="login-card">
             <div>
-              <div>
+              <!-- <div>
 				  <a class="logo">
                   <img
                     class="img-fluid for-light"
@@ -18,15 +18,15 @@
                     alt="looginpage"
                   />
                 </a>
-				  </div>
+			 </div> -->
 
 
 
                     <div class="login-main login-form-card">
 
 
-                            <form-wizard @on-complete="sendDataToApiBeforeSubmit" color="#4466f2" :start-index="0" title="Create your account" subtitle="Enter your personal details to create account" back-button-text="back!" next-button-text="next!" finish-button-text="register">
-                                <tab-content :before-change="personalDataValidation" title="Personal details">
+                            <form-wizard  ref="wizard" @on-complete="sendDataToApiBeforeSubmit" color="#4466f2"  :start-index="0" title="Create your account" subtitle="Enter your personal details to create account" back-button-text="back!" next-button-text="next!" finish-button-text="register">
+                                <tab-content :before-change="personalDataValidation" title="Personal details" >
                                     <div class="setup-contentn" id="step-1">
                                         <div class="col-xs-12 personal details">
 
@@ -64,7 +64,6 @@
                                             <div class="form-group">
                                                 <label class="col-form-label">gender</label>
                                                 <select :class="['form-control', (step1  &&  !$v.memberData.personalData.gender.required || error.gender) ? 'is-invalid' : '']"  required="" v-model="memberData.personalData.gender">
-                                                        <option selected>__choose__</option>
                                                         <option >male</option>
                                                         <option >famele</option>
                                                 </select>
@@ -119,21 +118,13 @@
                                                    <b-form-invalid-feedback style="color:red" v-if="(step2 && !$v.memberData.contactData.phone_number.required)" > the  phone number faild is required</b-form-invalid-feedback>
                                                 </div>
 
-                                                <div class="mb-2 col-md-12 col-lg-12 col-sm-12">
-                                                    <div class="col-form-label">  email  </div>
-
-                                                    <input name="" :class="['form-control', (step2  &&  !$v.memberData.contactData.email.required || step2 && !$v.memberData.contactData.email.email || error.email) ? 'is-invalid' : '']"  v-model="memberData.contactData.email"  placeholder="email"/>
-                                                   <b-form-invalid-feedback style="color: red" v-if="error.email">{{ error.email[0] }}</b-form-invalid-feedback >
-                                                   <b-form-invalid-feedback style="color:red" v-if="(step2 && !$v.memberData.contactData.email.required)" > the  email  faild is required</b-form-invalid-feedback>
-                                                   <b-form-invalid-feedback style="color:red" v-if="(step2 && !$v.memberData.contactData.email.email)" > the  email  faild is must valide email</b-form-invalid-feedback>
-                                                </div>
 
                                         </div>
 
                                     </div>
                                 </tab-content>
 
-                                <tab-content title="login details">
+                                <tab-content :before-change="loginDatavalidation" title="login details">
                                     <div class="setup-content" id="step-3">
                                     <div class="col-xs-12">
 
@@ -141,30 +132,44 @@
                                         <div class="mb-2 col-md-12 col-lg-12 col-sm-12">
                                             <div class="col-form-label">  user name  </div>
 
-                                            <input name="" :class="['form-control',error.user_name? 'is-invalid' : '']"  v-model="memberData.user_name"  placeholder="user name">
-                                             <small style="color: red" v-if="error.user_name">{{ error.user_name[0] }}</small >
-                                        </div>
+                                            <input name="" :class="['form-control', (step3  &&  !$v.memberData.loginData.user_name.required  || step3 && !$v.memberData.loginData.user_name.maxLength || !$v.memberData.loginData.user_name.minLength || error.user_name) ? 'is-invalid' : '']"  v-model="memberData.loginData.user_name"  placeholder="user name">
+                                                   <b-form-invalid-feedback style="color: red" v-if="error.user_name">{{ error.user_name[0] }}</b-form-invalid-feedback >
+                                                   <b-form-invalid-feedback style="color:red" v-if="(step3 && !$v.memberData.loginData.user_name.required)" > the  user name  faild is required</b-form-invalid-feedback>
+                                                   <b-form-invalid-feedback style="color:red" v-if="( !$v.memberData.loginData.user_name.maxLength )" > the  user name  faild must  lessthan {{$v.memberData.loginData.user_name.$params.maxLength.max}}</b-form-invalid-feedback>
+                                                   <b-form-invalid-feedback style="color:red" v-if="( !$v.memberData.loginData.user_name.minLength )" > the  user name  faild must  longerthan {{$v.memberData.loginData.user_name.$params.minLength.min}}</b-form-invalid-feedback>
+                                            </div>
 
+                                          <div class="mb-2 col-md-12 col-lg-12 col-sm-12">
+                                                    <div class="col-form-label">  email  </div>
 
+                                                    <input name="" :class="['form-control', (step3  &&  !$v.memberData.loginData.email.required || step2 && !$v.memberData.loginData.email.email || error.email) ? 'is-invalid' : '']"  v-model="memberData.loginData.email"  placeholder="email"/>
+                                                   <b-form-invalid-feedback style="color: red" v-if="error.email">{{ error.email[0] }}</b-form-invalid-feedback >
+                                                   <b-form-invalid-feedback style="color:red" v-if="(step3 && !$v.memberData.loginData.email.required)" > the  email  faild is required</b-form-invalid-feedback>
+                                                   <b-form-invalid-feedback style="color:red" v-if="(!$v.memberData.loginData.email.email)" > the  email  faild is must valide email</b-form-invalid-feedback>
+                                                </div>
 
                                         <div class="mb-2 col-md-12 col-lg-12 col-sm-12">
                                             <div class="col-form-label">  password  </div>
 
-                                            <input name="" :class="['form-control',error.password? 'is-invalid' : '']"  v-model="memberData.password" placeholder="password" />
-                                             <small style="color: red" v-if="error.password">{{ error.password[0] }}</small >
-                                        </div>
+                                            <input name="" :class="['form-control', (step3  &&  !$v.memberData.loginData.password.required || step3 && !$v.memberData.loginData.password.maxLength || !$v.memberData.loginData.password.minLength || error.password) ? 'is-invalid' : '']"   v-model="memberData.loginData.password" placeholder="password" />
+                                                   <b-form-invalid-feedback style="color: red" v-if="error.password">{{ error.password[0] }}</b-form-invalid-feedback >
+                                                   <b-form-invalid-feedback style="color:red" v-if="(step3 && !$v.memberData.loginData.password.required)" > the  password  faild is required</b-form-invalid-feedback>
+                                                    <b-form-invalid-feedback style="color:red" v-if="( !$v.memberData.loginData.password.maxLength )" > the password  faild must  lessthan {{$v.memberData.loginData.password.$params.maxLength.max}}</b-form-invalid-feedback>
+                                                   <b-form-invalid-feedback style="color:red" v-if="( !$v.memberData.loginData.password.minLength )" > the  password  faild must  longerthan {{$v.memberData.loginData.password.$params.minLength.min}}</b-form-invalid-feedback>
+                                    </div>
 
 
                                         <div class="mb-2 col-md-12 col-lg-12 col-sm-12">
                                             <div class="col-form-label"> Confirm password  </div>
 
-                                            <input name="" :class="['form-control',error.confirm_password? 'is-invalid' : '']" v-model="memberData.confirm_password" placeholder="confirm password" />
-                                             <small style="color: red" v-if="error.confirm_password">{{ error.confirm_password[0] }}</small >
-                                        </div>
+                                            <input name="" :class="['form-control', (step3  &&  !$v.memberData.loginData.confirm_password.sameAsPassword || error.confirm_password) ? 'is-invalid' : '']" v-model="memberData.loginData.confirm_password" placeholder="confirm password" />
+                                              <b-form-invalid-feedback style="color: red" v-if="error.confirm_password">{{ error.confirm_password[0] }}</b-form-invalid-feedback >
+                                            <b-form-invalid-feedback style="color:red" v-if="(!$v.memberData.loginData.confirm_password.sameAsPassword)" > the  confirm password  must same the failde password</b-form-invalid-feedback>
+                                           </div>
 
                                         <div class="mb-2 col-md-12 col-lg-12 col-sm-12">
 
-                                                <div class="col-form-label"> Upload profile picture</div>
+                                                <div class="col-form-label"> Upload profile picture (optional)</div>
 
                                                 <vue-dropzone
                                                     name="file"
@@ -184,23 +189,23 @@
                                     </div>
                                     </div>
                                 </tab-content>
-                                  <tab-content title="extra details">
+                                  <tab-content  :before-change="extraDatavalidation" title="extra details">
                                     <div class="setup-content" id="step-3">
                                     <div class="col-xs-12">
 
 
                                         <div class="mb-2 col-md-12 col-lg-12 col-sm-12">
-                                            <div class="col-form-label">  interested area  </div>
+                                            <div class="col-form-label">  interested area (optional)  </div>
 
-                                           <textarea style="width: 100%"  :class="['form-control',error.interested_area? 'is-invalid' : '']"   v-model="memberData.interested_area"></textarea>
+                                           <textarea style="width: 100%"  :class="['form-control',error.interested_area? 'is-invalid' : '']"   v-model="memberData.extraData.interested_area"></textarea>
                                              <small style="color: red" v-if="error.interested_area">{{ error.interested_area[0] }}</small >
                                         </div>
 
 
                                         <div class="mb-2 col-md-12 col-lg-12 col-sm-12">
-                                            <div class="col-form-label">  source </div>
+                                            <div class="col-form-label">  source (optional) </div>
 
-                                            <textarea style="width: 100%" :class="['form-control',error.source? 'is-invalid' : '']"  v-model="memberData.source"></textarea>
+                                            <textarea style="width: 100%" :class="['form-control',error.source? 'is-invalid' : '']"  v-model="memberData.extraData.source"></textarea>
                                              <small style="color: red" v-if="error.source">{{ error.source[0] }}</small >
                                         </div>
 
@@ -208,37 +213,40 @@
                                         <div class="mb-2 col-md-12 col-lg-12 col-sm-12">
                                             <div class="col-form-label">   class  </div>
 
-                                            <select name="class" :class="['form-control',error.class_id? 'is-invalid' : '']"   v-model="memberData.class_id">
+                                            <select name="class" :class="['form-control', (step4  &&  !$v.memberData.extraData.class_id.required || error.class_id) ? 'is-invalid' : '']"   v-model="memberData.extraData.class_id">
                                                   <option :value="item.id" v-for="(item,index) in classes"  :key="index">
                                                         {{ item.className }}
                                                 </option>
                                             </select>
-                                             <small style="color: red" v-if="error.class_id">{{ error.class_id[0] }}</small >
+                                              <b-form-invalid-feedback style="color: red" v-if="error.class_id">{{ error.class_id[0] }}</b-form-invalid-feedback >
+                                            <b-form-invalid-feedback style="color:red" v-if="(!$v.memberData.extraData.class_id.requried)" > the  class failde is required</b-form-invalid-feedback>
                                         </div>
 
 
                                        <div class="mb-2 col-md-12 col-lg-12 col-sm-12">
                                             <div class="col-form-label">   membership  </div>
 
-                                            <select name="membership"  :class="['form-control',error.membership_id? 'is-invalid' : '']"  v-model="memberData.membership_id" >
+                                            <select name="membership"  :class="['form-control', (step4  &&  !$v.memberData.extraData.membership_id.required || error.membership_id) ? 'is-invalid' : '']"  v-model="memberData.extraData.membership_id" >
                                                 <option :value="item.id" v-for="(item,index) in memberships"  :key="index">
                                                         {{ item.name }}
                                                 </option>
                                             </select>
-                                             <small style="color: red" v-if="error.membership_id">{{ error.membership_id[0] }}</small >
-                                        </div>
+                                              <b-form-invalid-feedback style="color: red" v-if="error.membership_id">{{ error.membership_id[0] }}</b-form-invalid-feedback >
+                                            <b-form-invalid-feedback style="color:red" v-if="(!$v.memberData.extraData.membership_id.requried)" > the  membership  failde is required</b-form-invalid-feedback>
+                                      </div>
 
 
 
                                             <div class="mb-2 col-md-12 col-lg-12 col-sm-12">
                                                 <div class="col-form-label"> Group</div>
 
-                                                <select name="group" :class="['form-control',error.group_id? 'is-invalid' : '']" v-model="memberData.group_id"  >
+                                                <select name="group" :class="['form-control', (step4  &&  !$v.memberData.extraData.group_id.required || error.group_id) ? 'is-invalid' : '']" v-model="memberData.extraData.group_id"  >
                                                       <option :value="item.id" v-for="(item,index) in groups"  :key="index">
                                                         {{ item.name }}
                                                       </option>
                                                 </select>
-                                             <small style="color: red" v-if="error.group_id">{{ error.group_id[0] }}</small >
+                                            <b-form-invalid-feedback style="color: red" v-if="error.group_id">{{ error.group_id[0] }}</b-form-invalid-feedback >
+                                            <b-form-invalid-feedback style="color:red" v-if="(!$v.memberData.extraData.group_id.requried)" > the  group failde is required</b-form-invalid-feedback>
                                             </div>
 
 
@@ -246,13 +254,15 @@
                                         <div class="mb-2 col-md-12 col-lg-12 col-sm-12">
                                             <div class="col-form-label">   start data  </div>
 
-                                            <input name="" type="date"    :class="['form-control',error.start_date? 'is-invalid' : '']"  v-model="memberData.start_date" />
-                                             <small style="color: red" v-if="error.start_date">{{ error.start_date[0] }}</small >
+                                            <input name="" type="date"    :class="['form-control', (step4  &&  !$v.memberData.extraData.start_date.required || error.start_date) ? 'is-invalid' : '']"  v-model="memberData.extraData.start_date" />
+                                                                                         <b-form-invalid-feedback style="color: red" v-if="error.start_date">{{ error.start_date[0] }}</b-form-invalid-feedback >
+                                            <b-form-invalid-feedback style="color:red" v-if="(!$v.memberData.extraData.start_date.requried)" > the  start date failde is required</b-form-invalid-feedback>
                                         </div>
 
                                     </div>
                                     </div>
                                 </tab-content>
+
                             </form-wizard>
 
 
@@ -311,7 +321,6 @@ export default {
                         last_name:'',
                         gender:'',
                         data_of_birth:'',
-                        group_id:'',
 
                     },
 
@@ -331,6 +340,8 @@ export default {
                         password:'',
                         confirm_password:'',
                         profile_picture:[],
+                        isActive:true,
+
                    },
 
                    extraData:{
@@ -338,9 +349,9 @@ export default {
                          interested_area:'',
                         source:'',
                         membership_id:'',
+                        group_id:'',
                         class_id:'',
                         start_date:'',
-                        isActive:true,
                    }
 
                     },
@@ -413,10 +424,47 @@ export default {
                         phone_number:{
                             required,
                         },
-                        email:{
+
+
+                    },
+
+
+                    loginData:{
+
+                      user_name:{
+                          required,
+                            maxLength:maxLength(20),
+                             minLength:minLength(3)
+                      },
+                        password:{
+                            required,
+                             maxLength:maxLength(20),
+                             minLength:minLength(6)
+                        },
+                        confirm_password:{
+                            sameAsPassword:sameAs("password")
+                        },
+                         email:{
                             required,
                             email
                         }
+
+                    },
+
+                    extraData:{
+
+                          group_id:{
+                              required,
+                          },
+                          membership_id:{
+                              required,
+                          },
+                          class_id:{
+                              required,
+                          },
+                          start_date:{
+                              required,
+                          },
 
                     }
 
@@ -474,31 +522,32 @@ export default {
 
     methods:{
 
-        sendDataToApiBeforeSubmit(){
+         sendDataToApiBeforeSubmit(){
+
 
 
 
                 let formData = new FormData()
-                formData.append('first_name'         , this.memberData.first_name)
-                formData.append('middle_name'        , this.memberData.middle_name)
-                formData.append('last_name'          , this.memberData.last_name)
-                formData.append('gender'             , this.memberData.gender)
-                formData.append('data_of_birth'      , this.memberData.data_of_birth)
-                formData.append('group_id'           , this.memberData.group_id)
-                formData.append('address'            , this.memberData.address)
-                formData.append('city'               , this.memberData.city)
-                formData.append('phone_number'        , this.memberData.phone_number)
-                formData.append('email'              , this.memberData.email)
-                formData.append('user_name'           , this.memberData.user_name)
-                formData.append('password'           , this.memberData.password)
-                formData.append('confirm_password'   , this.memberData.confirm_password)
-                formData.append('profile_picture'    , this.memberData.profile_picture)
-                formData.append('interested_area'    , this.memberData.interested_area)
-                formData.append('source'             , this.memberData.source)
-                formData.append('membership_id'         , this.memberData.membership_id)
-                formData.append('class_id'              , this.memberData.class_id)
-                formData.append('start_date'         , this.memberData.start_date)
-                formData.append('isActive'           , this.memberData.isActive)
+                formData.append('first_name'         , this.memberData.personalData.first_name)
+                formData.append('middle_name'        , this.memberData.personalData.middle_name)
+                formData.append('last_name'          , this.memberData.personalData.last_name)
+                formData.append('gender'             , this.memberData.personalData.gender)
+                formData.append('data_of_birth'      , this.memberData.personalData.data_of_birth)
+                formData.append('group_id'           , this.memberData.extraData.group_id)
+                formData.append('address'            , this.memberData.contactData.address)
+                formData.append('city'               , this.memberData.contactData.city)
+                formData.append('phone_number'       , this.memberData.contactData.phone_number)
+                formData.append('email'              , this.memberData.loginData.email)
+                formData.append('user_name'          , this.memberData.loginData.user_name)
+                formData.append('password'           , this.memberData.loginData.password)
+                formData.append('confirm_password'   , this.memberData.loginData.confirm_password)
+                formData.append('profile_picture'    , this.memberData.loginData.profile_picture)
+                formData.append('interested_area'    , this.memberData.extraData.interested_area)
+                formData.append('source'             , this.memberData.extraData.source)
+                formData.append('membership_id'      , this.memberData.extraData.membership_id)
+                formData.append('class_id'           , this.memberData.extraData.class_id)
+                formData.append('start_date'         , this.memberData.extraData.start_date)
+                formData.append('isActive'           , this.memberData.loginData.isActive)
 
 
 
@@ -522,16 +571,15 @@ export default {
                     if(res.data.success == false){
 
                              this.error = res.data.message
+                             console.log(this.$refs.wizard)
                     }
 
                     if(res.data.success){
-
-                        this.error = []
-                        this.memberData = []
                         this.$router.push({name:'login'})
+                        this.error = []
                         Toast.fire({
                             icon: 'success',
-                            title: 'registeration  success  login into profile now'
+                            title: 'registeration success  login into profile now'
                         })
 
                     }
@@ -546,6 +594,38 @@ export default {
 
         },
 
+
+        extraDatavalidation(){
+
+            this.$v.memberData.$touch();
+
+            if(this.$v.memberData.extraData.$invalid){
+
+              this.step4 = true
+               return false
+
+            }else{
+
+                   this.step4 = true
+                   return true
+            }
+
+        },
+        loginDatavalidation(){
+              this.$v.memberData.$touch();
+
+            if(this.$v.memberData.loginData.$invalid){
+
+              this.step3 = true
+               return false
+
+            }else{
+
+                   this.step3 = true
+                   return true
+            }
+
+        },
         personalDataValidation(){
 
            this.$v.memberData.$touch();
@@ -581,16 +661,16 @@ export default {
           handleFileAdded(file) {
 
 
-            if (this.memberData.profile_picture.length < 1) {
-                this.memberData.profile_picture = file;
+            if (this.memberData.loginData.profile_picture.length < 1) {
+                this.memberData.loginData.profile_picture = file;
             }
 
         },
         removed(files){
 
-            if(files.name == this.memberData.profile_picture.name){
+            if(files.name == this.memberData.loginData.profile_picture.name){
 
-                this.memberData.profile_picture = []
+                this.memberData.loginData.profile_picture = []
             }
         },
 

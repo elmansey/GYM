@@ -27,6 +27,7 @@ class CreateDefaultAdminSeeder extends Seeder
 
 
             'name' => 'test',
+            'user_name' => 'user test',
             'email' => 'owner@gmail.com',
             'password' => bcrypt(123456),
             'phone' => '01019535581' ,
@@ -35,5 +36,6 @@ class CreateDefaultAdminSeeder extends Seeder
         ]);
 
         $user->assignRole([$role->id]);
+
     }
 }

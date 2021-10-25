@@ -10,6 +10,7 @@ use App\Models\members_extra_information;
 use App\Models\members_login_information;
 use App\Models\members_personal_information;
 use Illuminate\Support\Facades\Validator;
+use phpDocumentor\Reflection\Types\Boolean;
 
 class membersController extends Controller
 {
@@ -20,7 +21,7 @@ class membersController extends Controller
                 $validator = validator::make($request->all(),[
 
 
-                    'first_name'          => 'required|unique:members_personal_informations,first_name',
+                    'first_name'          => 'required',
                     'middle_name'         => 'required',
                     'last_name'           => 'required',
                     'gender'              => 'required',
@@ -35,10 +36,12 @@ class membersController extends Controller
                     'address'	          => 'required',
                     'city'                => 'required',
                     'phone_number'        => 'required',
-                    'email'	              => 'required'
+                    'email'	              => 'required|unique:members_login_informations,email'
 
 
                 ]);
+
+
 
                 if($validator->fails()){
 
@@ -48,13 +51,14 @@ class membersController extends Controller
 
 
 
+
               DB::beginTransaction();
 
                try{
 
 
 
-
+                $fileName = null;
                 if($request->hasFile('profile_picture')){
 
                     $file = $request->file('profile_picture');
@@ -89,7 +93,6 @@ class membersController extends Controller
                 $ContactInformation->address          = $request->input('address');
                 $ContactInformation->city             = $request->input('city');
                 $ContactInformation->phone_number     = $request->input('phone_number');
-                $ContactInformation->email            = $request->input('email');
                 $ContactInformation->save();
 
 
@@ -112,6 +115,8 @@ class membersController extends Controller
                 $LoginInformation->user_name        = $request->input('user_name');
                 $LoginInformation->password         = $request->input('password');
                 $LoginInformation->profile_picture  = $fileName;
+                $LoginInformation->isActive         = $request->input('isActive') == 'true' ? true : false;
+                $LoginInformation->email            = $request->input('email');
                 $LoginInformation->save();
 
 

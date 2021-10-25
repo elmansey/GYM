@@ -15,6 +15,7 @@ class CreateMembersPersonalInformationsTable extends Migration
     {
         Schema::create('members_personal_informations', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('member_id')->references('id')->on('users')->cascadeOnDelete();
             $table->string('first_name');
             $table->string('middle_name')->nullable();
             $table->string('last_name');

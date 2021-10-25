@@ -16,11 +16,18 @@
 
                                               <div class="row">
 
-                                                  <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
+                                                  <div class="mb-2 col-md-12 col-lg-12 col-sm-12">
                                                       <div class="col-form-label">name</div>
 
                                                       <input name="name" :class="['form-control',error.name ? 'is-invalid' : '']"  v-model="adminData.name"/>
                                                       <small style="color: red" v-if="error.name">{{ error.name[0]}}</small>
+                                                  </div>
+
+                                                  <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
+                                                      <div class="col-form-label">user name</div>
+
+                                                      <input name="name" :class="['form-control',error.user_name ? 'is-invalid' : '']"  v-model="adminData.user_name"/>
+                                                      <small style="color: red" v-if="error.user_name">{{ error.user_name[0]}}</small>
                                                   </div>
 
                                                   <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
@@ -127,6 +134,7 @@ export default {
         return{
             adminData:{
                 id:'',
+                user_name:'',
                 name:'',
                 email:'',
                 phone:'',
@@ -143,7 +151,7 @@ export default {
 
 
             singledropzoneOptions:{
-                url:'http://127.0.0.1:8000/api/adminAdd',
+                url:'http://127.0.0.1:8000/api/admin/adminAdd',
                 thumbnailWidth: 150,
                 maxFiles:1,
                 autoProcessQueue: false,
@@ -196,6 +204,7 @@ export default {
 
                      this.adminData.id  = res.data.data.id,
                      this.adminData.name  = res.data.data.name,
+                     this.adminData.user_name  = res.data.data.user_name,
                      this.adminData.email  = res.data.data.email,
                      this.adminData.phone  = res.data.data.phone,
                   this.adminData.roles = res.data.role
@@ -224,6 +233,7 @@ export default {
 
 
                 formData.append('name',this.adminData.name);
+                formData.append('user_name',this.adminData.user_name);
                 formData.append('email',this.adminData.email);
                 formData.append('phone',this.adminData.phone);
                 formData.append('password',this.adminData.password);
@@ -271,6 +281,7 @@ export default {
 
 
                 formData.append('name',this.adminData.name);
+                formData.append('user_name',this.adminData.user_name);
                 formData.append('email',this.adminData.email);
                 formData.append('phone',this.adminData.phone);
                 formData.append('password',this.adminData.password);
@@ -376,6 +387,7 @@ export default {
                    this.edit = false
                     this.adminData.id  =  ''
                     this.adminData.name  =  ''
+                    this.adminData.user_name  =  ''
                     this.adminData.email  =  ''
                     this.adminData.phone  =  ''
                     this.adminData.password  =  ''

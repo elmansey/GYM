@@ -11,7 +11,7 @@
             <div class="col-xl-12 p-0">
                 <div class="login-card" >
                     <div>
-                        <div >
+                        <!-- <div >
                             <a class="logo text-center mb-3" >
                                 <img
                                     class="img-fluid for-light"
@@ -26,14 +26,14 @@
                                     alt="looginpage"
                                 />
                             </a>
-                        </div>
+                        </div> -->
                         <div class="login-main login-form-card">
                             <form
                                 class="theme-form"
                                 method="post"
                                 @submit.prevent="login"
                             >
-                                <h4>Sign in to account</h4>
+                                <h4>Sign in to  account</h4>
                                 <p>Enter your email & password to login</p>
                                 <div class="form-group">
                                     <label class="col-form-label"
@@ -115,6 +115,7 @@ export default {
     data() {
         return {
             user: {
+                guard:'admin_api',
                 email: "",
                 password: ""
             }

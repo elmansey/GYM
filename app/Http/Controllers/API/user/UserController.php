@@ -42,6 +42,7 @@ class UserController extends Controller
 
         $validator = validator::make($request->all(), [
             'name' => 'required',
+            'user_name' => 'required',
             'email' => 'required|email|unique:users,email',
             'phone' => 'required',
             'password' => 'required|same:confirm_password',
@@ -57,6 +58,7 @@ class UserController extends Controller
             return response()->json(['success'=>false,'message'=>$validator->errors()],200);
 
         }
+
 
         try{
 
@@ -131,6 +133,7 @@ class UserController extends Controller
 
             $validator = validator::make($request->all(), [
             'name'     => 'required',
+            'user_name' => 'required',
             'email'    => ['required','email',Rule::unique('users')->ignore($id)],
             'phone' => 'required',
             'password' => 'same:confirm_password',

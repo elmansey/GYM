@@ -9,30 +9,48 @@ import {
 
 Vue.use(Router)
 
-const routes = [{
+const routes = [
+
+    {
         path: '',
         redirect: {
             name: 'login'
         }
     },
+
+
     {
-        path: '/dashboard',
-        name: 'dashboard',
+        path: '/login',
+        name: 'login',
+        component: require('@/pages/Login').default
+    },
+
+    {
+        path: '/register',
+        name: 'register',
+        component: require('@/pages/register').default
+    },
+
+
+
+
+
+    // required auth
+    {
+        path:'/dashboard',
+        name:'dashboard',
         component: require('@/components/body').default,
         meta: {
             requiresAuth: true
         },
-        children: [
+        children:[
 
             {
-                path: '/',
+                path: '',
                 name: 'main',
                 component: require('@/pages/home/home').default,
 
             },
-
-
-
             {
 
                 path: 'membersList',
@@ -104,26 +122,6 @@ const routes = [{
                 path: 'updateGroup/:groupId',
                 name: 'updateGroup',
                 component: require('@/pages/groups/add_group').default,
-
-            },
-
-
-            {
-                path: 'staff',
-                name: 'staff',
-                component: require('@/pages/staff/staffList').default,
-
-            },
-            {
-                path: 'updateInStaff/:staffId',
-                name: 'updateInStaff',
-                component: require('@/pages/staff/add_person_in_staff').default,
-
-            },
-            {
-                path: 'addInStaff',
-                name: 'addInStaff',
-                component: require('@/pages/staff/add_person_in_staff').default,
 
             },
 
@@ -240,25 +238,16 @@ const routes = [{
 
             },
 
-
-
         ]
     },
 
-    {
-        path: '/login',
-        name: 'login',
-        component: require('@/pages/login').default
-    },
 
-    {
-        path: '/register',
-        name: 'register',
-        component: require('@/pages/register').default
-    }
+
 
 
 ];
+
+
 
 
 

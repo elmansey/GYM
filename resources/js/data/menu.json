@@ -9,7 +9,7 @@
           "type": "link",
           "badgeType": "primary",
           "active": false,
-          "path": "/dashboard/"
+          "path": "/dashboard"
 
 
       },
@@ -137,13 +137,13 @@
 
               {
                   "path": "/dashboard/adminsList",
-                  "title": "admin list",
+                  "title": "work team list",
                   "type": "link",
                   "permission": "show-team-member-list"
               },
               {
                   "path": "/dashboard/addAdmin",
-                  "title": "add admin ",
+                  "title": "add person ",
                   "type": "link",
                   "permission": "add-member-in-team"
               }
@@ -151,30 +151,7 @@
           ]
       },
 
-      {
-          "title": "staff",
-          "icon": "users",
-          "type": "sub",
-          "badgeType": "primary",
-          "active": false,
-          "permission": "show-staff",
-          "children": [
 
-              {
-                  "path": "/dashboard/staff",
-                  "title": "staff list",
-                  "type": "link",
-                  "permission": "show-staff-list"
-              },
-              {
-                  "path": "/dashboard/addInStaff",
-                  "title": "add person in staff",
-                  "type": "link",
-                  "permission": "add-person-in-staff"
-              }
-
-          ]
-      },
 
       {
           "title": "Permissions",

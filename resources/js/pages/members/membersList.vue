@@ -3,119 +3,138 @@
 
 <template>
 
-<!--    <div v-if="isLoadig">-->
+    <div v-if="isLoadig">
 
-<!--        <Breadcrumbs main="Dashboard" title="member list" />-->
-<!--        <div class="container-fluid">-->
-<!--            <div class="row">-->
-<!--                <div class="col-md-12">-->
-<!--                    <div class="card">-->
-<!--                        <div class="card-body">-->
-<!--                            <div class="datatable-vue m-0">-->
-
-
-<!--                                <div class="table-responsive vue-smart">-->
-<!--&lt;!&ndash;                                    <v-table&ndash;&gt;-->
-<!--&lt;!&ndash;                                        :data="members"&ndash;&gt;-->
-<!--&lt;!&ndash;                                        class="table"&ndash;&gt;-->
-<!--&lt;!&ndash;                                        :currentPage.sync="filter.currentPage"&ndash;&gt;-->
-<!--&lt;!&ndash;                                        :pageSize="5"&ndash;&gt;-->
-<!--&lt;!&ndash;                                        @totalPagesChanged="filter.totalPages = $event"&ndash;&gt;-->
-
-<!--&lt;!&ndash;                                    >&ndash;&gt;-->
-<!--&lt;!&ndash;                                        <thead slot="head">&ndash;&gt;-->
-
-<!--&lt;!&ndash;                                        <th></th>&ndash;&gt;-->
-<!--&lt;!&ndash;                                        <th sortKey="name"></th>&ndash;&gt;-->
-<!--&lt;!&ndash;                                        <th sortKey="name"></th>&ndash;&gt;-->
-<!--&lt;!&ndash;                                        <th sortKey="name" ></th>&ndash;&gt;-->
-<!--&lt;!&ndash;                                        <th sortKey="options"></th>&ndash;&gt;-->
-<!--&lt;!&ndash;                                        <th sortKey="options"></th>&ndash;&gt;-->
-<!--&lt;!&ndash;                                        <th sortKey="options"></th>&ndash;&gt;-->
-<!--&lt;!&ndash;                                        </thead>&ndash;&gt;-->
-
-<!--&lt;!&ndash;                                        <tbody slot="body" slot-scope="{ displayData }">&ndash;&gt;-->
-<!--&lt;!&ndash;                                        <tr v-for="(row, index) in displayData" :key="index">&ndash;&gt;-->
-<!--&lt;!&ndash;                                            <td></td>&ndash;&gt;-->
-<!--&lt;!&ndash;                                            <td></td>&ndash;&gt;-->
-<!--&lt;!&ndash;                                            <td></td>&ndash;&gt;-->
-<!--&lt;!&ndash;                                            <td></td>&ndash;&gt;-->
-<!--&lt;!&ndash;                                            <td></td>&ndash;&gt;-->
-<!--&lt;!&ndash;                                            <td></td>&ndash;&gt;-->
-
-<!--&lt;!&ndash;                                            <td>&ndash;&gt;-->
-<!--&lt;!&ndash;                                                <div>&ndash;&gt;-->
-<!--&lt;!&ndash;                                                    <b-button-group class="btn-container ">&ndash;&gt;-->
+        <Breadcrumbs main="Dashboard" title="admin list" />
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="datatable-vue m-0">
 
 
-<!--&lt;!&ndash;                                                        <router-link&ndash;&gt;-->
-<!--&lt;!&ndash;                                                            squared&ndash;&gt;-->
-<!--&lt;!&ndash;                                                            variant="outline-warning"&ndash;&gt;-->
-<!--&lt;!&ndash;                                                            class="btn-sm btn-child"&ndash;&gt;-->
-<!--&lt;!&ndash;                                                            to=""&ndash;&gt;-->
-<!--&lt;!&ndash;                                                            v-if="can('')"&ndash;&gt;-->
-<!--&lt;!&ndash;                                                        >&ndash;&gt;-->
-<!--&lt;!&ndash;                                                            Edit&ndash;&gt;-->
-<!--&lt;!&ndash;                                                        </router-link>&ndash;&gt;-->
+                                <div class="table-responsive vue-smart">
+                                    <v-table
+                                        :data="admins"
+                                        class="table"
+                                        :currentPage.sync="filter.currentPage"
+                                        :pageSize="5"
+                                        @totalPagesChanged="filter.totalPages = $event"
+
+                                    >
+                                        <thead slot="head">
+
+                                        <th></th>
+                                        <th sortKey="name">Profile Picture</th>
+                                        <th sortKey="name">name</th>
+                                        <th sortKey="name" >email</th>
+                                        <th sortKey="options">phone number</th>
+                                        <th sortKey="options">roles</th>
+                                        <th sortKey="options">actions</th>
+                                        </thead>
+
+                                        <tbody slot="body" slot-scope="{ displayData }">
+                                        <tr v-for="(row, index) in displayData" :key="index">
+                                            <td></td>
 
 
-<!--&lt;!&ndash;                                                        <b-button&ndash;&gt;-->
-<!--&lt;!&ndash;                                                            squared&ndash;&gt;-->
-<!--&lt;!&ndash;                                                            variant="outline-danger"&ndash;&gt;-->
+                                            <td><img
+                                            style="width: 40px;height: 40px;border-radius: 50%;"
 
-<!--&lt;!&ndash;                                                            class="btn-sm btn-child"&ndash;&gt;-->
-<!--&lt;!&ndash;                                                            v-if="can('')"&ndash;&gt;-->
-<!--&lt;!&ndash;                                                        >&ndash;&gt;-->
 
-<!--&lt;!&ndash;                                                            Delete&ndash;&gt;-->
-<!--&lt;!&ndash;                                                        </b-button>&ndash;&gt;-->
+                                            :src="row.profile_picture ? '../../profile_pictures/'+row.profile_picture :
+                                             '../../profile_pictures/DefaultProfile.jpg'"
+
+
+                                              />
+                                              </td>
 
 
 
+                                            <td>{{ row.name}}</td>
+                                            <td>{{ row.email}}</td>
+                                            <td>{{ row.phone}}</td>
+                                            <td >
+                                                <span class="badge badge-success" v-for="(v,k) in row.role">
+                                                    {{v.name}}
+                                                </span>
+
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    <b-button-group class="btn-container ">
 
 
-<!--&lt;!&ndash;                                                    </b-button-group>&ndash;&gt;-->
-<!--&lt;!&ndash;                                                </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                                            </td>&ndash;&gt;-->
-<!--&lt;!&ndash;                                        </tr>&ndash;&gt;-->
-<!--&lt;!&ndash;                                        </tbody>&ndash;&gt;-->
-<!--&lt;!&ndash;                                    </v-table>&ndash;&gt;-->
-<!--                                </div>-->
-
-<!--                                <div >-->
-<!--                                    <smart-pagination-->
-
-<!--                                        :currentPage.sync="filter.currentPage"-->
-<!--                                        :totalPages="filter.totalPages"-->
-<!--                                    />-->
-<!--                                </div>-->
+                                                            <router-link
+                                                                squared
+                                                                variant="outline-warning"
+                                                                class="btn-sm btn-child"
+                                                                :to="{name: 'updateAdmin', params: {adminId : row.id}}"
+                                                                v-if="can('edit-member-from-team')"
+                                                            >
+                                                               Edit
+                                                            </router-link>
 
 
-<!--                            </div>-->
+                                                        <b-button
+                                                            squared
+                                                            variant="outline-danger"
+
+                                                            class="btn-sm btn-child"
+                                                            @click="DeleteAdminModal(row.id,index)"
+                                                            v-if="can('delete-member-from-team')"
+                                                        >
+
+                                                           Delete
+                                                        </b-button>
 
 
 
 
-<!--                            <b-modal id="bv-modal-example" hide-footer>-->
-<!--                                <template #modal-title>-->
-<!--                                    Delete Team member-->
-<!--                                </template>-->
-<!--                                <div class="d-block text-center">-->
-<!--                                    <h5>are you sure to delete this Admin</h5>-->
-<!--                                </div>-->
-<!--                                <b-button class="mt-3"  v-b-modal.modal-sm variant="default" @click="$bvModal.hide('bv-modal-example')">Cancel</b-button>-->
-<!--                                <b-button class="mt-3"  v-b-modal.modal-sm variant="danger"  @click.prevent="">delete</b-button>-->
-<!--                            </b-modal>-->
-<!--                        </div>-->
 
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
+                                                    </b-button-group>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </v-table>
+                                </div>
+
+                                <div >
+                                    <smart-pagination
+
+                                        :currentPage.sync="filter.currentPage"
+                                        :totalPages="filter.totalPages"
+                                    />
+                                </div>
+
+
+                            </div>
 
 
 
-<!--    </div>-->
+
+                            <b-modal id="bv-modal-example" hide-footer>
+                                <template #modal-title>
+                                   Delete Team member
+                                </template>
+                                <div class="d-block text-center">
+                                    <h5>are you sure to delete this Admin</h5>
+                                </div>
+                                <b-button class="mt-3"  v-b-modal.modal-sm variant="default" @click="$bvModal.hide('bv-modal-example')">Cancel</b-button>
+                                <b-button class="mt-3"  v-b-modal.modal-sm variant="danger"  @click.prevent="">delete</b-button>
+                            </b-modal>
+                        </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+     </div>
 
     <div v-else class="col-md-3" style="margin: auto; position: absolute;top: 50%; right: 50%;transform: translate(50%,-50%);">
         <h6 class="sub-title mb-0 text-center"></h6>
@@ -136,10 +155,21 @@ export default {
     data() {
         return {
             members: [],
+            filter: {
+                currentPage: 1,
+                totalPages: 0,
+            },
+            id:'',
+            key:'',
+            isLoadig:false,
+
+
 
         };
+
     },
     beforeMount() {
+
 
 
     },
@@ -152,7 +182,25 @@ export default {
 
 
 
+        DeleteAdminModal(id,key){
+             this.id = id
+             this.key = key
+           this.$bvModal.show('bv-modal-example')
 
+       },
+        deleteAdmin(){
+
+
+            axios.get('/'+this.id)
+            .then(res => {
+
+
+            })
+            .catch(err => {
+
+            })
+
+        }
     }
 }
 

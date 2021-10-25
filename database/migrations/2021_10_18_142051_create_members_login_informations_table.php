@@ -17,9 +17,11 @@ class CreateMembersLoginInformationsTable extends Migration
             $table->id();
             $table->foreignId('member_id')->references('id')->on('members_personal_informations')->cascadeOnDelete();
             $table->string('user_name')->unique();
+            $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('profile_picture')->nullable();
+            $table->boolean('isActive')->default(true);
             $table->rememberToken();
             $table->timestamps();
         });
