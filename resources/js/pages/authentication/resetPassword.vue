@@ -101,6 +101,9 @@ import {
       maxLength,
      sameAs
      } from 'vuelidate/lib/validators'
+
+     import axios from 'axios'
+
 export default {
 
     data(){
@@ -176,9 +179,24 @@ export default {
             if(!this.$v.user.data.$invalid){
 
                     //axios here
-                this.click1 = true
-                this.emailForm = false
-                 this.codeForm = true
+                    axios.post('resetPassword',this.user.data)
+                    .then(res => {
+
+                        if(res.data.success){
+
+                            this.click1 = true
+                            this.emailForm = false
+                            this.codeForm = true
+
+                        }
+                        if(res.data.success == false){
+                            this.error = res.data.message
+                        }
+                    })
+                    .catch(err  =>  {
+
+                    })
+
 
 
             }else{

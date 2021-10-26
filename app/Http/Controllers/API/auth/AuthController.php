@@ -2,21 +2,23 @@
 
 namespace App\Http\Controllers\API\auth;
 
+use http\Env\Response;
+use App\Mail\resetPassword;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\PermissionResource;
+use Illuminate\Support\Facades\Mail;
 use App\Http\Resources\RolesResource;
 use App\Http\Resources\UsersResource;
-use App\Http\Resources\UserToRoleResource;
-use http\Env\Response;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Models\Permission;
+use Illuminate\Support\Facades\Validator;
+use App\Http\Resources\PermissionResource;
+use App\Http\Resources\UserToRoleResource;
 
 class AuthController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['JWTchecker'])->except(['login']);
+        $this->middleware(['JWTchecker'])->except(['login','resetPassword']);
     }
 
 
@@ -47,12 +49,6 @@ class AuthController extends Controller
 
                     return Response()->json(['success' => true, 'data' => $this->CreateNewToken($token)]);
                 }
-
-
-
-
-
-
         }
     }
 
@@ -111,6 +107,7 @@ class AuthController extends Controller
 
 
 
+
     public function CreateNewToken($token)
     {
 
@@ -123,6 +120,28 @@ class AuthController extends Controller
         ]);
     }
 
+
+
+    public function  resetPassword(Request $request)
+    {
+
+        $validator = validator::make($request->all(),[
+            'email' => 'required|email'
+        ]);
+
+        if($validator->fails()){
+
+            return response()->json(['success' => false , 'message' => $validator->errors()]);
+
+        }
+        $email = $request->input('email');
+
+        mail::to($email)->send(new resetPassword);
+
+
+        return response()->json(['success' => true,'message' => 'sending mail successfully'],200);
+
+    }
 
 
 

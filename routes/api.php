@@ -34,6 +34,7 @@ use App\Http\Controllers\API\ClassSchedule\ClassScheduleController;
 
     /// global route
     Route::post('/login', [AuthController::class, 'login']);
+    Route::post('resetPassword', [AuthController::class, 'resetPassword']);
     Route::get('memberships', [MembershipsController::class, 'index']);
     Route::get('groups', [GroupsController::class, 'index']);
     Route::get('getClassToSelect',[ClassScheduleController::class, 'getClassToSelect']);
