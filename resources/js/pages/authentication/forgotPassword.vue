@@ -27,12 +27,12 @@
                             <form @submit.prevent="submitEmailResetForm">
                                 <div class="form-group">
                                     <label class="col-form-label">email</label>
-                                    <input :class="['form-control', ( click1 &&  !$v.user.data.email.required || !$v.user.data.email.email || emailNotFOund || error.email)  ? 'is-invalid' : '']" type="email" name="email"  v-model="user.data.email" >
+                                    <input :class="['form-control', ( click1 &&  !$v.user.data.email.required || !$v.user.data.email.email  || error.email)  ? 'is-invalid' : '']" type="email" name="email"  v-model="user.data.email" >
                                     <b-form-invalid-feedback style="color:red" v-if="( click1 && !$v.user.data.email.required )" > the  email  faild   is required</b-form-invalid-feedback>
                                     <b-form-invalid-feedback style="color:red" v-if="(  click1 &&!$v.user.data.email.email )" > the  email  must be valid email </b-form-invalid-feedback>
-                                    <b-form-invalid-feedback style="color:red" v-if="(emailNotFOund)" > this  email not found in our records  </b-form-invalid-feedback>
+                                    <b-form-invalid-feedback style="color:red" v-if="error.email" > {{ error.email[0] }}  </b-form-invalid-feedback>
                                 </div>
-                                  <button  class="btn btn-primary pull btn-sm" >send code to verify</button>
+                                  <button  class="btn btn-primary pull btn-sm" >reset password</button>
 
                             </form>
 
@@ -70,7 +70,6 @@ export default {
          },
 
         error:'',
-        emailNotFOund:false,
 
         click1:false,
 
@@ -106,7 +105,7 @@ export default {
             if(!this.$v.user.data.$invalid){
 
                     //axios here
-                    axios.post('resetPassword',this.user.data)
+                    axios.post('forgetPassword',this.user.data)
                     .then(res => {
 
                         if(res.data.success){
@@ -114,9 +113,9 @@ export default {
                             this.click1 = true
                               Toast.fire({
                                 icon: "success",
-                                title: "email verify send  successfully"
+                                title: "check your email  send  details successfully"
                             });
-                            this.emailToReset(res.data.email)
+
                             this.user.data.email = ''
                             this.click1 = false
 
@@ -125,12 +124,6 @@ export default {
                         }
                         if(res.data.success == false){
                             this.error = res.data.message
-                        }
-
-                        if(res.data.success == false && res.data.status == 400){
-
-                            this.error = res.data.message
-                            this.emailNotFOund = true
                         }
                     })
                     .catch(err  =>  {

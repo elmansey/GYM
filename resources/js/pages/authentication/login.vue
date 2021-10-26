@@ -83,10 +83,8 @@
                                     <div
                                         v-if="
                                             this.$store.getters.AllError
-                                                .password
-                                        "
-                                        style="color: red"
-                                    >
+                                                .password"
+                                        style="color: red">
                                         {{
                                             this.$store.getters.AllError
                                                 .password[0]
@@ -102,6 +100,11 @@
                                     </button>
                                 </div>
                             </form>
+                            <h6 class="mt-3 ">
+
+                               <router-link :to="{name : 'forgotPassword'}">forget password ?</router-link>
+
+                            </h6>
                         </div>
                     </div>
                 </div>

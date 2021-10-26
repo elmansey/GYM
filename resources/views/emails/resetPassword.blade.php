@@ -1,10 +1,12 @@
 @component('mail::message')
-# Introduction
+# chenge your password
 
-The body of your message.
 
-@component('mail::button', ['url' => ''])
-Button Text
+<p>geexar team</p>
+
+
+@component('mail::button', ['url' => 'http://localhost:3000/resetPassword/'.$email.'/'.$token])
+reset password
 @endcomponent
 
 Thanks,<br>

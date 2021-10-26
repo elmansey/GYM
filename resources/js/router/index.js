@@ -22,7 +22,7 @@ const routes = [
     {
         path: '/login',
         name: 'login',
-        component: require('@/pages/authentication/Login').default
+        component: require('@/pages/authentication/login').default
     },
 
     {
@@ -40,7 +40,7 @@ const routes = [
     },
 
     {
-        path: '/resetPassword',
+        path: '/resetPassword/:email/:token',
         name: 'resetPassword',
         component: require('@/pages/authentication/resetPassword').default
     },

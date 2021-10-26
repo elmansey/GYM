@@ -123,39 +123,7 @@ class AuthController extends Controller
 
 
 
-    public function  resetPassword(Request $request)
-    {
 
-        $validator = validator::make($request->all(),[
-            'email' => 'required|email'
-        ]);
-
-        if($validator->fails()){
-
-            return response()->json(['success' => false , 'message' => $validator->errors()]);
-
-        }
-
-
-        $email = $request->input('email');
-
-        $verfaiy = User::where('email','=',$email)->first();
-
-
-        if(!$verfaiy){
-
-            return response()->json(['success' => false , 'status'=> '400','message' => $validator->errors()]);
-
-        }else{
-
-            mail::to($email)->send(new resetPassword);
-            return response()->json(['success' => true,'message' => 'sending mail successfully','email' => $email],200);
-        }
-
-
-
-
-    }
 
 
 

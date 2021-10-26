@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\auth\AuthController;
+use App\Http\Controllers\API\auth\resetPasswordController;
 use App\Http\Controllers\API\user\RoleController;
 use App\Http\Controllers\API\user\UserController;
 use App\Http\Controllers\API\staff\staffController;
@@ -34,11 +35,14 @@ use App\Http\Controllers\API\ClassSchedule\ClassScheduleController;
 
     /// global route
     Route::post('/login', [AuthController::class, 'login']);
-    Route::post('resetPassword', [AuthController::class, 'resetPassword']);
     Route::get('memberships', [MembershipsController::class, 'index']);
     Route::get('groups', [GroupsController::class, 'index']);
     Route::get('getClassToSelect',[ClassScheduleController::class, 'getClassToSelect']);
     Route::post('addMember',[membersController::class,'store']);
+
+    Route::post('forgetPassword', [resetPasswordController::class, 'forgetPassword']);
+    Route::post('resetPassword', [resetPasswordController::class, 'resetPassword']);
+
 
 
 // auth route
