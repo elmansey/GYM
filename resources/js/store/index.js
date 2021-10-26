@@ -19,7 +19,8 @@ export const store = new Vuex.Store({
         menu,
         auth,
         role,
-        admin
+        admin,
+        namespaced: true
 
     }
 });

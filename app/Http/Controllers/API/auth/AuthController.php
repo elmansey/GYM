@@ -13,6 +13,7 @@ use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\PermissionResource;
 use App\Http\Resources\UserToRoleResource;
+use App\Models\User;
 
 class AuthController extends Controller
 {
@@ -134,12 +135,25 @@ class AuthController extends Controller
             return response()->json(['success' => false , 'message' => $validator->errors()]);
 
         }
+
+
         $email = $request->input('email');
 
-        mail::to($email)->send(new resetPassword);
+        $verfaiy = User::where('email','=',$email)->first();
 
 
-        return response()->json(['success' => true,'message' => 'sending mail successfully'],200);
+        if(!$verfaiy){
+
+            return response()->json(['success' => false , 'status'=> '400','message' => $validator->errors()]);
+
+        }else{
+
+            mail::to($email)->send(new resetPassword);
+            return response()->json(['success' => true,'message' => 'sending mail successfully','email' => $email],200);
+        }
+
+
+
 
     }
 

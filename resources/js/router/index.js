@@ -34,6 +34,12 @@ const routes = [
 
 
     {
+        path: '/forgotPassword',
+        name: 'forgotPassword',
+        component: require('@/pages/authentication/forgotPassword').default
+    },
+
+    {
         path: '/resetPassword',
         name: 'resetPassword',
         component: require('@/pages/authentication/resetPassword').default

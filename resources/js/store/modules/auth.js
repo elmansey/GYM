@@ -3,11 +3,13 @@ import router from '@/router/index'
 
 //to save
 const state = {
+
     isAuth: false,
     user: null,
     errors: '',
     token: localStorage.getItem('token'),
     authUserRole: null,
+    EmailResetPassword: ''
 
 }
 
@@ -32,6 +34,9 @@ const getters = {
 
     authUserRole(state) {
         return state.authUserRole
+    },
+    EmailResetPassword(state) {
+        return state.EmailResetPassword
     },
 
 
@@ -109,6 +114,10 @@ const mutations = {
 
         state.authUserRole = payload
     },
+    EmailResetPassword(state, payload) {
+
+        state.EmailResetPassword = payload
+    },
 
 
 
@@ -119,6 +128,10 @@ const mutations = {
 
 // do conection with api and call mutations
 const actions = {
+
+    emailToReset({ commit }, payload) {
+        commit('EmailResetPassword', payload)
+    },
 
     loginUser({
         commit
@@ -212,9 +225,6 @@ const actions = {
 
 
     },
-
-
-
 
 
 }

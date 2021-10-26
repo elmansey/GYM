@@ -1,62 +1,16 @@
 <template>
-	<div>
-		<div class="page-wrapper">
-      <div class="container-fluid p-0">
-        <div class="row">
-          <div class="col-12">
-            <div class="login-card">
-              <div>
-                <div>
-					<!-- <a class="logo">
-                        <img
-                        class="img-fluid for-light"
-                        src=""
-                        alt="looginpage"
-                        />
-                        <img
-                        class="img-fluid for-dark"
-                        src=""
-                        alt="looginpage"
-                        />
-                  </a> -->
-				</div>
-                <div class="login-main login-form-card">
-                      <div class="enterEmail"  v-if="emailForm">
-                              <h4 >  FORGET PASSWORD </h4>
-                            <p>  enter your email and we will send you instructions  on how to reset password  </p>
-                            <form @submit.prevent="submitEmailResetForm">
-                                <div class="form-group">
-                                    <label class="col-form-label">email</label>
-                                    <input :class="['form-control', ( click1 &&  !$v.user.data.email.required || !$v.user.data.email.email ||  error.email)  ? 'is-invalid' : '']" type="email" name="email"  v-model="user.data.email" >
-                                    <b-form-invalid-feedback style="color:red" v-if="( click1 && !$v.user.data.email.required )" > the  email  faild   is required</b-form-invalid-feedback>
-                                    <b-form-invalid-feedback style="color:red" v-if="(  click1 &&!$v.user.data.email.email )" > the  email  must be valid email </b-form-invalid-feedback>
-                                </div>
-                                  <button  class="btn btn-primary pull btn-sm" >send code to verify</button>
+    <div>
 
-                            </form>
+      <div class="page-wrapper">
+        <div class="container-fluid p-0">
+            <div class="row">
+            <div class="col-12">
+                <div class="login-card">
+                  <div>
+                    <div class="login-main login-form-card">
+                        <div  >
 
-                      </div>
-
-                     <div class="enterYourVerifyCode" v-if="codeForm">
-                              <h4 >  ENTER YOUR VERIFY CODE </h4>
-                                  <p>  </p>
-                            <form @submit.prevent="submitcodeVerifyForm">
-                                <div class="form-group">
-
-                                    <label class="col-form-label">verify code </label>
-                                    <input :class="['form-control', ( click2 &&  !$v.user.code.verifyCode.required  ||  error.code)  ? 'is-invalid' : '']"  name="code"  v-model="user.code.verifyCode" >
-                                    <b-form-invalid-feedback style="color:red" v-if="( click2 && !$v.user.code.verifyCode.required )" > the  verify code   faild   is required</b-form-invalid-feedback>
-
-                                </div>
-
-                                <button type="submit" class="btn btn-primary pull btn-sm" >verify</button>
-
-                            </form>
-
-
-                      </div>
-
-                    <div class="NewPasswordForm" v-if="NewPasswordForm" >
+                              <div class="NewPasswordForm"  >
                               <h4 >  ENTER YOUR NEW PASSWORD </h4>
                                   <p>  </p>
                             <form @submit.prevent="submitNewPasswordForm">
@@ -82,18 +36,22 @@
 
                             </form>
 
+                        </div>
 
-                      </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
-        </div>
-      </div>
+       </div>
     </div>
-	</div>
+  </div>
+</div>
+
+    </div>
 </template>
+
 <script>
+
 import {
      required,
      email,
@@ -103,146 +61,45 @@ import {
      } from 'vuelidate/lib/validators'
 
      import axios from 'axios'
+import { mapActions } from 'vuex'
 
 export default {
 
     data(){
-      return{
-        user:{
+        return{
 
-            data:{ email:''},
+            user:{
+                newPassword:{
+                    password:'',
+                    confirm_password:''
+                }
+            },
 
-            code:{  verifyCode:'' },
-
-            newPassword:{ password:'',  confirm_password:'',}
-
-
-         },
-
-        error:'',
-
-
-        emailForm:true,
-        codeForm:false,
-        NewPasswordForm:false,
-
-
-        enterYourEmailSubmit:false,
-        enterYourVerifyCodeSubmit:false,
-        NewPasswordSubmit:false,
-
-        click1:false,
-        click2:false,
-        click3:false,
-
-
-      }
+            click3:false,
+            error:''
+        }
     },
 
     validations:{
         user:{
-            data:{
-                email:{
-                    required,
-                    email,
-                }
-            },
-
-            code:{
-                verifyCode:{
-                    required,
-                }
-            },
-
             newPassword:{
+              password:{
+                  required:required,
+                  maxLength:maxLength(25),
+                  minLength:minLength(6),
+              },
 
-                password:{
-                    required,
-                    maxLength:maxLength(30),
-                    minLength:minLength(6),
-                },
-
-                confirm_password:{
-                   sameAsPassword:sameAs("password"),
-                },
-            }
+              confirm_password:{
+                  sameAsPassword:sameAs("password")
+              }
+            },
         }
     },
 
-
-
-    methods:{
-        submitEmailResetForm(){
-
-            this.$v.user.$touch()
-
-            if(!this.$v.user.data.$invalid){
-
-                    //axios here
-                    axios.post('resetPassword',this.user.data)
-                    .then(res => {
-
-                        if(res.data.success){
-
-                            this.click1 = true
-                            this.emailForm = false
-                            this.codeForm = true
-
-                        }
-                        if(res.data.success == false){
-                            this.error = res.data.message
-                        }
-                    })
-                    .catch(err  =>  {
-
-                    })
-
-
-
-            }else{
-
-                this.click1 = true
-
-            }
-
-        },
-        submitcodeVerifyForm(){
-
-            this.$v.user.$touch()
-            if(!this.$v.user.code.$invalid){
-
-                    //axios here
-                this.click2 = true
-                 this.codeForm = false
-                this.NewPasswordForm = true
-
-
-
-            }else{
-
-                this.click2 = true
-               this.codeForm = true
-
-            }
-
-        },
+    methods: {
         submitNewPasswordForm(){
-
-                 this.$v.user.$touch()
-            if(!this.$v.user.newPassword.$invalid){
-
-                    //axios here
-                this.click3 = true
-
-            }else{
-
-                this.click3 = true
-
-
-            }
 
         }
     }
-
 }
 </script>
