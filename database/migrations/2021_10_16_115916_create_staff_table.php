@@ -20,10 +20,12 @@ class CreateStaffTable extends Migration
             $table->string('middleName');
             $table->string('lastName');
             $table->string('phone');
-            $table->string('email')->nullable();
+            $table->string('email')->nullable()->unique();
+            $table->string('userName')->nullable();
+            $table->string('password')->nullable();
             $table->string('avatar')->nullable();
-            $table->string('jop');
-            $table->string('notes')->nullable();
+            $table->foreignId('role_id')->references('id')->on('roles')->cascadeOnDelete();
+            $table->text('notes')->nullable();
             $table->timestamps();
         });
     }

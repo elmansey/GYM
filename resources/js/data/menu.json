@@ -1,183 +1,202 @@
 {
-  "data": [
+    "data": [
 
 
-      {
-          "title": "Dashboard",
-          "permission": "dashboard",
-          "icon": "home",
-          "type": "link",
-          "badgeType": "primary",
-          "active": false,
-          "path": "/dashboard"
+        {
+            "title": "Dashboard",
+            "permission": "dashboard",
+            "icon": "home",
+            "type": "link",
+            "badgeType": "primary",
+            "active": false,
+            "path": "/dashboard"
 
 
-      },
-      {
-          "title": "Registration member",
-          "icon": "user-plus",
-          "type": "sub",
-          "badgeType": "primary",
-          "active": false,
-          "permission": "show-Registration-member",
-          "children": [
+        },
+        {
+            "title": "Registration member",
+            "icon": "user-plus",
+            "type": "sub",
+            "badgeType": "primary",
+            "active": false,
+            "permission": "show-Registration-member",
+            "children": [
 
-              {
-                  "path": "/dashboard/membersList",
-                  "title": "members list",
-                  "type": "link",
-                  "permission": "show-Registration-member-list"
-              },
-              {
-                  "path": "/dashboard/addMember",
-                  "title": "add new member",
-                  "type": "link",
-                  "permission": "add-member-in-gym"
-              }
-          ]
-      },
+                {
+                    "path": "/dashboard/membersList",
+                    "title": "members list",
+                    "type": "link",
+                    "permission": "show-Registration-member-list"
+                },
+                {
+                    "path": "/dashboard/addMember",
+                    "title": "add new member",
+                    "type": "link",
+                    "permission": "add-member-in-gym"
+                }
+            ]
+        },
 
-      {
-          "title": "class schedule",
-          "icon": "calendar",
-          "type": "sub",
-          "badgeType": "primary",
-          "active": false,
-          "permission": "show-class-schedule-all",
-          "children": [
+        {
+            "title": "class schedule",
+            "icon": "calendar",
+            "type": "sub",
+            "badgeType": "primary",
+            "active": false,
+            "permission": "show-class-schedule-all",
+            "children": [
 
-              {
-                  "path": "/dashboard/classList",
-                  "title": "class list",
-                  "type": "link",
-                  "permission": "show-class_schedule-list"
+                {
+                    "path": "/dashboard/classList",
+                    "title": "class list",
+                    "type": "link",
+                    "permission": "show-class_schedule-list"
 
-              },
+                },
 
-              {
-                  "path": "/dashboard/ClassSchedule",
-                  "title": "class schedule",
-                  "icon": "calendar",
-                  "type": "link",
-                  "permission": "show-class_schedule"
+                {
+                    "path": "/dashboard/ClassSchedule",
+                    "title": "class schedule",
+                    "icon": "calendar",
+                    "type": "link",
+                    "permission": "show-class_schedule"
 
-              },
+                },
 
-              {
-                  "path": "/dashboard/addClassSchedule",
-                  "title": "add in class schedule ",
-                  "type": "link",
-                  "permission": "add-membership"
+                {
+                    "path": "/dashboard/addClassSchedule",
+                    "title": "add in class schedule ",
+                    "type": "link",
+                    "permission": "add-membership"
 
-              }
-          ]
-      },
+                }
+            ]
+        },
 
-      {
-          "title": "Memberships type",
-          "icon": "layers",
-          "type": "sub",
-          "badgeType": "primary",
-          "active": false,
-          "permission": "show-memberships",
-          "children": [
+        {
+            "title": "Memberships type",
+            "icon": "layers",
+            "type": "sub",
+            "badgeType": "primary",
+            "active": false,
+            "permission": "show-memberships",
+            "children": [
 
-              {
-                  "path": "/dashboard/memberships",
-                  "title": "memberships list",
-                  "type": "link",
-                  "permission": "show-memberships-list"
+                {
+                    "path": "/dashboard/memberships",
+                    "title": "memberships list",
+                    "type": "link",
+                    "permission": "show-memberships-list"
 
-              },
+                },
 
-              {
-                  "path": "/dashboard/addMembership",
-                  "title": "add new Membership",
-                  "type": "link",
-                  "permission": "add-membership"
+                {
+                    "path": "/dashboard/addMembership",
+                    "title": "add new Membership",
+                    "type": "link",
+                    "permission": "add-membership"
 
-              }
-          ]
-      },
-      {
-          "title": "Groups",
-          "icon": "bookmark",
-          "type": "sub",
-          "badgeType": "primary",
-          "active": false,
-          "permission": "show-groups",
-          "children": [
+                }
+            ]
+        },
+        {
+            "title": "Groups",
+            "icon": "bookmark",
+            "type": "sub",
+            "badgeType": "primary",
+            "active": false,
+            "permission": "show-groups",
+            "children": [
 
-              {
-                  "path": "/dashboard/groups",
-                  "title": "groups list",
-                  "type": "link",
-                  "permission": "show-groups-list"
+                {
+                    "path": "/dashboard/groups",
+                    "title": "groups list",
+                    "type": "link",
+                    "permission": "show-groups-list"
 
-              },
-              {
-                  "path": "/dashboard/addGroup",
-                  "title": "add group",
-                  "type": "link",
-                  "permission": "add-group"
+                },
+                {
+                    "path": "/dashboard/addGroup",
+                    "title": "add group",
+                    "type": "link",
+                    "permission": "add-group"
 
-              }
+                }
 
-          ]
-      },
+            ]
+        },
 
-      {
-          "title": "Work Team",
-          "icon": "briefcase",
-          "type": "sub",
-          "badgeType": "primary",
-          "active": false,
-          "permission": "show-team",
-          "children": [
+        {
+            "title": "Work Team",
+            "icon": "briefcase",
+            "type": "sub",
+            "badgeType": "primary",
+            "active": false,
+            "permission": "show-team",
+            "children": [
 
-              {
-                  "path": "/dashboard/adminsList",
-                  "title": "work team list",
-                  "type": "link",
-                  "permission": "show-team-member-list"
-              },
-              {
-                  "path": "/dashboard/addAdmin",
-                  "title": "add person ",
-                  "type": "link",
-                  "permission": "add-member-in-team"
-              }
+                {
+                    "path": "/dashboard/adminsList",
+                    "title": "work team list",
+                    "type": "link",
+                    "permission": "show-team-member-list"
+                },
+                {
+                    "path": "/dashboard/addAdmin",
+                    "title": "add person ",
+                    "type": "link",
+                    "permission": "add-member-in-team"
+                },
+                {
+                    "path": "/dashboard/staffList",
+                    "title": "staff list",
+                    "type": "link",
+                    "permission": "show-staff-list"
+                },
+                {
+                    "path": "/dashboard/addPersonInStaff",
+                    "title": "add person in staff",
+                    "type": "link",
+                    "permission": "add-person-in-staff"
+                }
 
-          ]
-      },
-
-
-
-      {
-          "title": "Permissions",
-          "icon": "user-check",
-          "type": "sub",
-          "badgeType": "primary",
-          "permission": "show-roles",
-          "active": false,
-          "children": [
-
-              { "path": "/dashboard/permissions",
-                  "title": "team permissions",
-                  "type": "link",
-                  "permission": "show-roles-list"
-
-              },
-
-              { "path": "/dashboard/addRole",
-                  "title": "add role",
-                  "type": "link",
-                  "permission": "add-role"
-
-              }
-          ]
-      }
+            ]
+        },
 
 
-  ]
+
+        {
+            "title": "Permissions",
+            "icon": "user-check",
+            "type": "sub",
+            "badgeType": "primary",
+            "permission": "show-roles",
+            "active": false,
+            "children": [
+
+                {
+                    "path": "/dashboard/permissions",
+                    "title": "team permissions",
+                    "type": "link",
+                    "permission": "show-roles-list"
+
+                },
+
+                {
+                    "path": "/dashboard/addRole",
+                    "title": "add role",
+                    "type": "link",
+                    "permission": "add-role"
+
+                }
+            ]
+        }
+
+
+
+
+
+
+
+    ]
 }

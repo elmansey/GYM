@@ -29,8 +29,18 @@ class UserController extends Controller
 
     public function create()
     {
-        $roles = Role::all();
-        return response()->json(['success'=>true ,'roles'=> RolesResource::collection($roles)] ,200);
+         $roles = Role::all();
+        $roleIgnore =  [];
+
+         foreach($roles as $k => $v){
+
+            if($v['name'] != 'staff'){
+                $roleIgnore[] = $v;
+            }
+
+         }
+
+        return response()->json(['success'=>true ,'roles'=> RolesResource::collection($roleIgnore)] ,200);
     }
 
 
@@ -43,7 +53,7 @@ class UserController extends Controller
         $validator = validator::make($request->all(), [
             'name' => 'required',
             'user_name' => 'required',
-            'email' => 'required|email|unique:users,email',
+            'email' => 'required|email|unique:users,email|unique:staff,email',
             'phone' => 'required',
             'password' => 'required|same:confirm_password',
             'confirm_password' => 'required',

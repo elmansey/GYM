@@ -34,7 +34,6 @@ class PermissionTableSeeder extends Seeder
             'add-membership',
             'edit-membership',
             'delete-membership',
-            'show-staff',
             'show-staff-list',
             'add-person-in-staff',
             'edit-person-in-staff',
@@ -54,7 +53,9 @@ class PermissionTableSeeder extends Seeder
             'show-Registration-member',
             'show-Registration-member-list',
             'add-member-in-gym',
-            'delete-By-Select-Multi-Class'
+            'show-setting',
+
+
 
 
         ];

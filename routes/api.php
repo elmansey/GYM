@@ -3,12 +3,12 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\auth\AuthController;
-use App\Http\Controllers\API\auth\resetPasswordController;
 use App\Http\Controllers\API\user\RoleController;
 use App\Http\Controllers\API\user\UserController;
 use App\Http\Controllers\API\staff\staffController;
 use App\Http\Controllers\API\Groups\GroupsController;
 use App\Http\Controllers\API\members\membersController;
+use App\Http\Controllers\API\auth\resetPasswordController;
 use App\Http\Controllers\API\Memberships\MembershipsController;
 use App\Http\Controllers\API\ClassSchedule\ClassScheduleController;
 
@@ -110,6 +110,7 @@ use App\Http\Controllers\API\ClassSchedule\ClassScheduleController;
         Route::get('getItemFromStaffById/{id}', [staffController::class, 'getItemFromStaffById']);
         Route::post('updateInStaff/{id}', [staffController::class, 'update']);
         Route::get('deleteItemInStaff/{id}', [staffController::class, 'destroy']);
+        Route::get('getStaffRole', [staffController::class, 'getStaffRole']);
 
 
 

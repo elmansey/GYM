@@ -79,6 +79,28 @@ const routes = [
                 component: require('@/pages/members/add_new_member').default,
 
             },
+            {
+
+                path: 'staffList',
+                name: 'staffList',
+                component: require('@/pages/staff/staffList').default,
+
+            },
+            {
+
+                path: 'addPersonInStaff',
+                name: 'addPersonInStaff',
+                component: require('@/pages/staff/staff_option').default,
+
+            },
+
+            {
+
+                path: 'editPersonInStaff/:staffPersonId',
+                name: 'editPersonInStaff',
+                component: require('@/pages/staff/staff_option').default,
+
+            },
 
 
             {
