@@ -87,9 +87,12 @@ const mutations = {
         state.isAuth = false
         state.user = ''
         state.token = ''
+        state.authUserRole = null
         router.push({
             name: 'login'
         })
+
+
     },
 
 
@@ -105,6 +108,7 @@ const mutations = {
         state.isAuth = false;
         state.token = null;
         state.user = null;
+        state.authUserRole = [];
     },
 
     authUserRole(state, payload) {
@@ -183,6 +187,7 @@ const actions = {
         await axios.post('logout')
             .then(res => {
 
+                commit('authUserRole', [])
                 commit('logOut')
 
             }).catch(err => {
@@ -211,6 +216,7 @@ const actions = {
         } catch (err) {
 
             commit('USER_INFO_FAILD')
+            commit('authUserRole', [])
         }
 
 

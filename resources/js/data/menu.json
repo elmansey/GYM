@@ -143,7 +143,7 @@
                 },
                 {
                     "path": "/dashboard/addAdmin",
-                    "title": "add person ",
+                    "title": "add admin in team  ",
                     "type": "link",
                     "permission": "add-member-in-team"
                 },

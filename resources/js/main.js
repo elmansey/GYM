@@ -81,7 +81,11 @@ Vue.mixin({
         // can:(permission) => store.getters.authUserRole[].includes(permission) ? true : false,
         can: function(permission) {
             var perm = store.getters.authUserRole
-            var len = perm.length
+            if (perm != null) {
+
+                var len = perm.length
+
+            }
             let FinalPer = []
 
 

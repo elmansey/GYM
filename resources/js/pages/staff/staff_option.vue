@@ -204,7 +204,7 @@ export default {
                     'password':'',
                     'confirm_Password':'',
                 },
-                'avatar':'',
+                'profile_picture':'',
                 'role':{id: 1, name: "staff"},
                 'notes':''
             },
@@ -252,6 +252,8 @@ export default {
             axios.get(`getItemFromStaffById/${this.$route.params.staffPersonId}`)
             .then(res => {
 
+                console.log(res);
+
                 if(res.data.success){
                       this.staffData.firstName       = res.data.staff.firstName
                         this.staffData.middleName     = res.data.staff.middleName
@@ -262,6 +264,8 @@ export default {
                         this.staffData.loginData.userName     = res.data.staff.userName
                         this.staffData.notes     = res.data.staff.notes
                         this.isLoading = true
+
+                        this.allowLogin = (res.data.staff.email)
                 }
 
                 if(res.data.status == 404){
@@ -330,7 +334,7 @@ export default {
                     },
                     'password':{
                             requiredIf:requiredIf( function(){
-                            return this.allowLogin
+                            return this.allowLogin  && this.edit == false
                         }),
                            maxLength:maxLength(25),
                           minLength:minLength(6)
@@ -338,7 +342,7 @@ export default {
                     },
                     'confirm_Password':{
                             requiredIf:requiredIf( function(){
-                            return this.allowLogin
+                            return this.allowLogin && this.edit == false
                         }),
                     },
                 },
@@ -372,8 +376,8 @@ export default {
                     formData.append('email',this.staffData.loginData.email)
                     formData.append('password',this.staffData.loginData.password)
                     formData.append('confirm_Password',this.staffData.loginData.confirm_Password)
-                    formData.append('avatar',this.staffData.avatar)
-                    formData.append('role_id',JSON.stringify(this.staffData.role))
+                    formData.append('profile_picture',this.staffData.profile_picture)
+                    formData.append('role',JSON.stringify(this.staffData.role))
                     formData.append('notes',this.staffData.notes)
 
 
@@ -401,7 +405,7 @@ export default {
                                     this.staffData.loginData.userName = ''
                                     this.staffData.loginData.password = ''
                                     this.staffData.loginData.confirm_Password = ''
-                                    this.staffData.avatar   = ''
+                                    this.staffData.profile_picture   = ''
                                     this.staffData.role = {id: 1, name: "staff"},
                                     this.staffData.notes = ''
 
@@ -423,6 +427,7 @@ export default {
                             console.log(err)
                         })
                 }
+
                 if(this.edit){
 
                     let formData = new FormData();
@@ -435,8 +440,8 @@ export default {
                     formData.append('email',this.staffData.loginData.email)
                     formData.append('password',this.staffData.loginData.password)
                     formData.append('confirm_Password',this.staffData.loginData.confirm_Password)
-                    formData.append('avatar',this.staffData.avatar)
-                    formData.append('role_id',JSON.stringify(this.staffData.role))
+                    formData.append('profile_picture',this.staffData.profile_picture)
+                    formData.append('role',JSON.stringify(this.staffData.role))
                     formData.append('notes',this.staffData.notes)
 
 
@@ -448,7 +453,7 @@ export default {
                         }
                     }
 
-                    axios.post('addInStaff',formData,config)
+                    axios.post(`updateInStaff/${this.$route.params.staffPersonId}`,formData,config)
                         .then(res => {
 
                             if(res.data.success == true){
@@ -464,15 +469,15 @@ export default {
                                     this.staffData.loginData.userName = ''
                                     this.staffData.loginData.password = ''
                                     this.staffData.loginData.confirm_Password = ''
-                                    this.staffData.avatar   = ''
+                                    this.staffData.profile_picture   = ''
                                     this.staffData.role = {id: 1, name: "staff"},
                                     this.staffData.notes = ''
+                                    this.$router.push({name : 'staffList'})
 
-                                // Toast.fire({
-                                //     icon: 'success',
-                                //     title: 'person added successfully'
-                                // })
-                                // this.$router.push('adminsList')
+                                Toast.fire({
+                                    icon: 'success',
+                                    title: 'staff person updated  successfully'
+                                   })
                                 console.log(res.data)
 
                             }else if(res.data.success == false) {
@@ -488,61 +493,23 @@ export default {
             }
 
 
-            if(this.edit){
 
-
-                let formData = new FormData();
-
-
-
-
-                let config = {
-                    headers:{
-                        "Content-Type":"multipart/form-data; charset=utf-8 ; boundary="+ Math.random().toString().substr(2),
-                    }
-                }
-
-                // axios.post(`userUpdate/${this.$route.params.adminId}`,formData,config)
-                //     .then(res => {
-
-                //         if(res.data.success == true){
-
-                //             this.$store.dispatch('userInfo')
-
-                //             Toast.fire({
-                //                 icon: 'success',
-                //                 title: 'admin updated successfully'
-                //             })
-                //             this.$router.push({name:'adminsList'})
-
-                //         }else if(res.data.success == false) {
-
-                //             this.error = res.data.message
-                //         }
-
-                //     })
-                //     .catch(err => {
-                //         console.log(err)
-                //     })
-
-
-            }
 
         },
 
         handleFileAdded(file) {
 
             console.log(file);
-            if (this.staffData.avatar.length < 1) {
-                this.staffData.avatar = file;
+            if (this.staffData.profile_picture.length < 1) {
+                this.staffData.profile_picture = file;
             }
 
         },
         removed(files){
 
-            if(files.name == this.staffData.avatar.name){
+            if(files.name == this.staffData.profile_picture.name){
 
-                this.staffData.file = []
+                this.staffData.profile_picture = []
             }
         },
 
@@ -600,7 +567,7 @@ export default {
                     this.staffData.userName   = '',
                     this.staffData.password   = '',
                     this.staffData.confirmPassword   = '',
-                    this.staffData.avatar   = '',
+                    this.staffData.profile_picture   = '',
                     this.staffData.jop   = '',
                     this.staffData.notes   = ''
 

@@ -16,8 +16,8 @@ class CreateDefaultAdminSeeder extends Seeder
         DB::table('users')->delete();
 
 
-        $role = Role::create(['name' => 'owner']);
-        $permissions = Permission::pluck('id','id')->all();
+        $role = Role::create([ 'guard_name' => 'admin', 'name'=> 'owner'  ]);
+        $permissions = Permission::where(['guard_name' => 'admin'])->pluck('id','id')->all();
         $role->syncPermissions($permissions);
 
 
@@ -35,7 +35,7 @@ class CreateDefaultAdminSeeder extends Seeder
 
         ]);
 
-        $user->assignRole([$role->id]);
+        $user->assignRole($role->name);
 
     }
 }

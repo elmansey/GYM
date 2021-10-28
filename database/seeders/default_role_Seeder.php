@@ -15,8 +15,8 @@ class default_role_Seeder extends Seeder
      */
     public function run()
     {
-        $role = Role::create(['name' => 'staff']);
-        $permissions = Permission::where('name','dashboard')->pluck('id','id');
+         $role = Role::create([ 'guard_name' => 'staff', 'name'=> 'staff'  ]);
+        $permissions = Permission::where(['guard_name' =>'staff','name' => 'dashboard'])->pluck('id','id')->all();
         $role->syncPermissions($permissions);
     }
 }

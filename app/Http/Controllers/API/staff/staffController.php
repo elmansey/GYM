@@ -9,6 +9,7 @@ use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\RolesResource;
 use App\Http\Resources\staffResource;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\VarDumper\VarDumper;
 
@@ -23,13 +24,14 @@ class staffController extends Controller
 
     public function store(Request $request){
 
+
         $validator = validator::make($request->all(), [
 
             'firstName'        => 'required',
             'middleName'        => 'required',
             'lastName'        => 'required',
             'phone'        => 'required',
-            'role_id'        => 'required',
+            'role'        => 'required',
 
 
         ]);
@@ -47,6 +49,7 @@ class staffController extends Controller
                     return response()->json(['success' => false, 'message' => ['confirm_Password' => 'the confirm password failde must same password failde']]);
                 }
         }
+
         $input  = $request->all();
 
         if($input['password']){
@@ -54,37 +57,26 @@ class staffController extends Controller
             $input['password'] = bcrypt($input['password']);
 
         }
-        $role = json_decode($input['role_id'],true);
-        $input['role_id'] = $role['id'];
 
-        $fileName = '';
-        try{
 
-            DB::beginTransaction();
-            if($request->file('avatar')){
+            if($request->file('profile_picture')){
 
-                $file = $request->file('avatar');
+                $file = $request->file('profile_picture');
                 $extension = $file->extension();
 
                 $fileName = md5(time().now().rand(1,10)).'.'.$extension;
 
                 $file->move(public_path('profile_pictures'),$fileName);
 
-
             }
-            DB::commit();
 
-        }catch(\Exception $e){
 
-            DB::rollBack();
-
-       }
-
-       $input['avatar'] = $fileName;
+        $input['profile_picture'] = $fileName;
 
         $staff = staff::create($input);
 
-        $staff->assignRole(json_decode($request->role_id,true));
+       $input['role'] = json_decode($input['role'],true);
+        $staff->assignRole($input['role']['name']);
 
 
         return  response()->json(['success' => true,'message' => 'staff add successfully']);
@@ -95,6 +87,7 @@ class staffController extends Controller
     public function getItemFromStaffById($id){
 
         $staffPerson = staff::find($id);
+
 
 
         if($staffPerson){
@@ -109,16 +102,123 @@ class staffController extends Controller
 
     }
 
-
-
-
-
-
-
     public function getStaffRole(){
 
-        $role = Role::where('name','=','staff')->get();
+        $role = Role::where('guard_name','=','staff')->get();
         return response()->json(['success'=>true ,'staffRole'=>  RolesResource::collection($role)] ,200);
 
     }
+
+
+
+    public function update(Request $request, $id)
+    {
+
+        // return $request;
+        $validator = validator::make($request->all(), [
+
+            'firstName'        => 'required',
+            'middleName'        => 'required',
+            'lastName'        => 'required',
+            'phone'        => 'required',
+            'role'        => 'required',
+
+
+        ]);
+
+
+
+        if($validator->fails()){
+            return response()->json(['success' => false, 'message' => $validator->errors()]);
+        }
+
+
+        if(isset($request->password) && isset($request->confirm_Password)){
+
+            if($request->password != $request->confirm_Password){
+
+                return response()->json(['success' => false, 'message' => ['confirm_Password' => 'the confirm password failde must same password failde']]);
+            }
+        }
+
+
+        $input  = $request->all();
+
+        if(!empty($input['password'])){
+
+            $input['password'] = bcrypt($input['password']);
+
+        }else{
+
+        $input =  Arr::except($input,array('password'));
+        }
+
+
+
+        $fileName = '';
+
+
+
+            if($request->file('profile_picture')){
+
+                $file = $request->file('profile_picture');
+                $extension = $file->extension();
+
+                $fileName = md5(time().now().rand(1,10)).'.'.$extension;
+
+                $file->move(public_path('profile_pictures'),$fileName);
+                $input['profile_picture'] = $fileName;
+
+            }else{
+
+                $input = Arr::except($input,array('profile_picture'));
+            }
+
+
+
+       $staff = staff::find($id);
+        $staff->update($input);
+
+        DB::table('model_has_roles')->where([['model_id','=',$id],['model_type','=','APP\Models\staff']])->delete();
+
+        $roleDetails = json_decode($request->role,true) ;
+        $role = [];
+
+        foreach ($roleDetails  as $k => $v){
+
+            $role[] = $v['name'];
+
+        }
+        $staff->assignRole($role);
+
+
+        return  response()->json(['success' => true,'message' => 'staff person updated successfully']);
+
+
+
+
+
+    }
+
+
+    public function destroy($id)
+    {
+
+        $oldImg = staff::where('id','=',$id)->pluck('profile_picture');
+
+        $path =  public_path('profile_pictures\\'.$oldImg[0]);
+
+        if($oldImg[0]){
+            if(file_exists($path)){
+
+                unlink($path);
+            }
+        }
+
+
+        $staff = staff::find($id);
+        $staff->delete();
+        return response()->json(['success' => true, 'message' => 'deleted successfully']);
+    }
+
 }

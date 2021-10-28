@@ -28,7 +28,7 @@
                                         <th></th>
                                         <th sortKey="name">name</th>
                                         <th sortKey="name" >TotalGroupMembers</th>
-                                        <th sortKey="options">options</th>
+                                        <th sortKey="options" v-if="can('edit-group') || can('delete-group')">options</th>
                                         </thead>
 
                                         <tbody slot="body" slot-scope="{ displayData }">
@@ -36,7 +36,7 @@
                                             <td></td>
                                             <td>{{row.name}}</td>
                                             <td>{{row.TotalGroupMembers}}</td>
-                                            <td>
+                                            <td  v-if="can('edit-group') || can('delete-group')">
                                                 <div>
                                                     <b-button-group class="btn-container ">
 
@@ -44,12 +44,13 @@
                                                        squared
                                                         variant="outline-primary"
                                                         class="btn-sm btn-child"
+                                                        v-if="can('edit-group')"
+
                                                     >
                                                         <router-link
 
                                                             :to="{name : 'updateGroup',params : {groupId : row.id}}"
 
-                                                            v-if="can('edit-group')"
 
                                                         >
                                                             Edit

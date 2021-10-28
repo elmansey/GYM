@@ -16,7 +16,7 @@ class PermissionTableSeeder extends Seeder
     public function run()
     {
 
-        $permissions = [
+        $AdminPermissions = [
             'dashboard',
             'show-roles',
             'show-roles-list',
@@ -60,8 +60,55 @@ class PermissionTableSeeder extends Seeder
 
         ];
 
-        foreach ($permissions as $permission) {
-            Permission::create(['name' => $permission]);
+
+        $staffPermissions = [
+
+            'dashboard',
+            'show-roles',
+            'show-roles-list',
+            'add-role',
+            'edit-role',
+            'delete-role',
+            'show-role-details',
+            'show-team',
+            'show-team-member-list',
+            'add-member-in-team',
+            'edit-member-from-team',
+            'delete-member-from-team',
+            'show-memberships',
+            'show-memberships-list',
+            'add-membership',
+            'edit-membership',
+            'delete-membership',
+            'show-staff-list',
+            'add-person-in-staff',
+            'edit-person-in-staff',
+            'delete-person-in-staff',
+            'show-groups',
+            'show-groups-list',
+            'add-group',
+            'edit-group',
+            'delete-group',
+            'show-class-schedule-all',
+            'show-class_schedule-list',
+            'show-class_schedule',
+            'add-class-schedule',
+            'edit-class-schedule',
+            'edit-class-schedule-in-classSchedule',
+            'delete-class-schedule',
+            'show-Registration-member',
+            'show-Registration-member-list',
+            'add-member-in-gym',
+            'show-setting',
+
+        ];
+
+        foreach ($AdminPermissions as $adminPermission) {
+            Permission::create([ 'guard_name' => 'admin', 'name'=> $adminPermission ]);
+        }
+
+        foreach ($staffPermissions as $staffPermission) {
+            Permission::create([ 'guard_name' => 'staff', 'name'=> $staffPermission ]);
         }
     }
 }

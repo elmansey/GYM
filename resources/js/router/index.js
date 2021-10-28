@@ -343,7 +343,11 @@ router.beforeEach(async(to, from, next) => {
     function checker(permi) {
 
         var perm = store.getters.authUserRole
-        var len = perm.length
+        if (perm != null) {
+
+            var len = perm.length
+
+        }
         FinalPer = []
 
 

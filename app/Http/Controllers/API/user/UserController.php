@@ -29,18 +29,10 @@ class UserController extends Controller
 
     public function create()
     {
-         $roles = Role::all();
-        $roleIgnore =  [];
+         $roles = Role::where('guard_name','=','admin')->get();
 
-         foreach($roles as $k => $v){
 
-            if($v['name'] != 'staff'){
-                $roleIgnore[] = $v;
-            }
-
-         }
-
-        return response()->json(['success'=>true ,'roles'=> RolesResource::collection($roleIgnore)] ,200);
+        return response()->json(['success'=>true ,'roles'=> RolesResource::collection($roles)] ,200);
     }
 
 
@@ -203,7 +195,7 @@ class UserController extends Controller
         $user = User::find($id);
         $user->update($input);
 
-        DB::table('model_has_roles')->where('model_id',$id)->delete();
+        DB::table('model_has_roles')->where([['model_id','=',$id],['model_type','=','APP\Models\User']])->delete();
 
         $role = [];
 

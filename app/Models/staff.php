@@ -3,25 +3,25 @@
 namespace App\Models;
 
 use Illuminate\Support\Str;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Database\Eloquent\Model;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class staff extends  Authenticatable implements JWTSubject
 {
-    use HasFactory ,  HasRoles;
+    use HasFactory ,HasApiTokens, HasFactory,  HasRoles;
     protected $table = 'staff';
-    protected $guard_name = 'api';
+    protected $guard_name = 'staff';
     protected $fillable = [
         'firstName',
         'middleName',
         'lastName'	,
         'phone'	,
         'email',
-        'avatar',
-        'role_id'	,
+        'profile_picture',
         'notes',
         'userName',
         'password'

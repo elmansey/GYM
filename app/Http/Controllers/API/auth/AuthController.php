@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\API\auth;
 
+use App\Models\User;
 use http\Env\Response;
 use App\Mail\resetPassword;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Resources\RolesResource;
 use App\Http\Resources\UsersResource;
@@ -13,13 +15,14 @@ use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\PermissionResource;
 use App\Http\Resources\UserToRoleResource;
-use App\Models\User;
 
 class AuthController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['JWTchecker'])->except(['login','resetPassword']);
+        // $this->middleware(['JWTchecker'])->except(['login','resetPassword']);
+        $this->middleware(['auth:admin,staff'])->except(['login','resetPassword']);
+
     }
 
 
@@ -43,12 +46,17 @@ class AuthController extends Controller
 
 
 
-                if (!$token = auth()->guard()->attempt($request->only(['email', 'password']))) {
+                if ($token = Auth::guard('admin')->attempt($request->only(['email', 'password']))) {
+                    // return 'admin';
+                    return Response()->json(['success' => true, 'data' => $this->adminCreateNewToken($token)]);
 
+                } else if($token = Auth::guard('staff')->attempt($request->only(['email', 'password']))) {
+                        // return 'saff';
+                    return Response()->json(['success' => true, 'data' => $this->staffCreateNewToken($token)]);
+
+
+                }else{
                     return response()->json(['success' => false, 'message' => 'Unauthorized', 'status' => '401']);
-                } else {
-
-                    return Response()->json(['success' => true, 'data' => $this->CreateNewToken($token)]);
                 }
         }
     }
@@ -57,37 +65,75 @@ class AuthController extends Controller
 
     public function info(Request $request)
     {
-
-        try {
-                $stillValid = auth()->guard()->check();
-
+        if (auth('admin')->check()){
+            $user = Auth::guard('admin')->user()->roles;
 
 
-        } catch (\Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
+            $roles = RolesResource::collection($user);
+
+            $permission = Permission::all();
+
+
+            $role = [];
+
+
+            $roleAndPermission = [];
+
+            for ($i = 0 ; $i < count($roles) ; $i++) {
+                $role[] = $roles[$i];
+            }
+
+            foreach ($role as $kay => $val){
+                // return $val['id'];
+                $roleAndPermission[] = ['id' => $val->id, 'role' => $val->name, 'permission' => PermissionResource::collection(Permission::join('role_has_permissions', 'role_has_permissions.permission_id', '=', 'permissions.id')
+                ->where('role_has_permissions.role_id','=', $val->id)->get())];
+            }
+
+
+
+            return response()->json(['success' => true, 'data' =>  new UserToRoleResource(Auth::guard('admin')->user()), 'roleAndPermission' => $roleAndPermission], 200);
+
+        }
+
+
+      if(auth('staff')->check()){
+
+            $user = Auth::guard('staff')->user()->roles;
+
+
+            $roles = RolesResource::collection($user);
+
+            $permission = Permission::all();
+
+
+            $role = [];
+
+
+            $roleAndPermission = [];
+
+            for ($i = 0 ; $i < count($roles) ; $i++) {
+                $role[] = $roles[$i];
+            }
+
+            foreach ($role as $kay => $val){
+                // return $val['id'];
+                $roleAndPermission[] = ['id' => $val->id, 'role' => $val->name, 'permission' => PermissionResource::collection(Permission::join('role_has_permissions', 'role_has_permissions.permission_id', '=', 'permissions.id')
+                ->where('role_has_permissions.role_id','=', $val->id)->get())];
+            }
+
+
+
+            return response()->json(['success' => true, 'data' =>  Auth::guard('staff')->user(), 'roleAndPermission' => $roleAndPermission], 200);
+        }else{
             auth()->refresh();
         }
 
 
 
-        $user = auth()->user();
-
-        $roles = RolesResource::collection($user['roles']);
-
-        $permission = Permission::all();
-
-
-        $role = [];
 
 
 
-        foreach ($roles as $k => $v) {
 
-            $roleAndPermission[] = ['id' => $v->id, 'role' => $v->name, 'permission' => PermissionResource::collection(Permission::join('role_has_permissions', 'role_has_permissions.permission_id', '=', 'permissions.id')
-                ->where('role_has_permissions.role_id', $v->id)->get())];
-        }
-
-
-        return response()->json(['success' => true, 'data' =>  new UserToRoleResource(auth()->user()), 'roleAndPermission' => $roleAndPermission], 200);
     }
 
 
@@ -109,14 +155,26 @@ class AuthController extends Controller
 
 
 
-    public function CreateNewToken($token)
+    public function adminCreateNewToken($token)
     {
 
         return ([
             'access_token' => $token,
             'token_type'   => 'bearer',
-            'expires_in'   => auth()->guard()->factory()->getTTL() * 10080,
-            'user'         =>  auth()->guard()->user()
+            'expires_in'   => Auth::guard('admin')->factory()->getTTL() * 10080,
+            'user'         =>  Auth::guard('admin')->user()
+
+        ]);
+    }
+
+    public function staffCreateNewToken($token)
+    {
+
+        return ([
+            'access_token' => $token,
+            'token_type'   => 'bearer',
+            'expires_in'   => Auth::guard('staff')->factory()->getTTL() * 10080,
+            'user'         =>  Auth::guard('staff')->user()
 
         ]);
     }

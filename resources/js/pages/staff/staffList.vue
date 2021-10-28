@@ -5,7 +5,7 @@
 
     <div v-if="isLoadig">
 
-        <Breadcrumbs main="Dashboard" title="admin list" />
+        <Breadcrumbs main="Dashboard" title="staff list" />
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
@@ -45,7 +45,7 @@
                                             style="width: 40px;height: 40px;border-radius: 50%;"
 
 
-                                            :src="row.avatar ? '../../profile_pictures/'+row.avatar :
+                                            :src="row.profile_picture ? `../../profile_pictures/${row.profile_picture}` :
                                              '../../profile_pictures/DefaultProfile.jpg'"
 
 
@@ -90,7 +90,7 @@
                                                             variant="outline-danger"
 
                                                             class="btn-sm btn-child"
-                                                            @click="DeleteAdminModal(row.id,index)"
+                                                            @click="DeletestaffModal(row.id,index)"
                                                             v-if="can('delete-member-from-team')"
                                                         >
 
@@ -128,10 +128,10 @@
                                    Delete Team member
                                 </template>
                                 <div class="d-block text-center">
-                                    <h5>are you sure to delete this Admin</h5>
+                                    <h5>are you sure to delete this person from staff</h5>
                                 </div>
                                 <b-button class="mt-3"  v-b-modal.modal-sm variant="default" @click="$bvModal.hide('bv-modal-example')">Cancel</b-button>
-                                <b-button class="mt-3"  v-b-modal.modal-sm variant="danger"  @click.prevent="deleteAdmin">delete</b-button>
+                                <b-button class="mt-3"  v-b-modal.modal-sm variant="danger"  @click.prevent="deletePersonInStaff">delete</b-button>
                             </b-modal>
                         </div>
 
@@ -205,35 +205,33 @@ export default {
     methods: {
 
 
-      async EditAdmin(admin){
 
-          this.$router.push({name: 'updateAdmin', params: {admin}})
-        },
-        DeleteAdminModal(id,key){
+        DeletestaffModal(id,key){
              this.id = id
              this.key = key
            this.$bvModal.show('bv-modal-example')
-
        },
-        deleteAdmin(){
+
+        deletePersonInStaff(){
 
 
-            axios.get('userDelete/'+this.id)
+            axios.get('deleteItemInStaff/'+this.id)
             .then(res => {
 
                 if(res.data.success == true){
 
 
-                    this.admins.splice(this.key,1)
+                    this.staffPerson.splice(this.key,1)
 
                     this.id = ''
                     this.key = ''
+                    this.$bvModal.hide('bv-modal-example')
+
                     Toast.fire({
                         icon: 'success',
-                        title: 'admin deleted successfully'
+                        title: 'deleted this person from staff successfully'
                     })
 
-                    this.$bvModal.hide('bv-modal-example')
                 }
             })
             .catch(err => {
