@@ -21,9 +21,9 @@ class captainResource extends JsonResource
                 'lastName'   => $this->lastName,
                 'phone'	    =>     $this->phone,
                 'email'  	=>     $this->email,
-                'avatar'	=> $this->avatar,
-                'jop'	   =>    $this->jop,
-                'notes'   =>    $this->notes
+                'userName'	=> $this->userName,
+                'profile_picture'	   =>    $this->profile_picture,
+                'isActive'   =>    $this->isActive
         ];
     }
 }

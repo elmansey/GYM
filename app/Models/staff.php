@@ -24,7 +24,8 @@ class staff extends  Authenticatable implements JWTSubject
         'profile_picture',
         'notes',
         'userName',
-        'password'
+        'password',
+        'isActive'
     ];
 
     public function getJWTIdentifier()

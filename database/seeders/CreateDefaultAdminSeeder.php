@@ -13,15 +13,8 @@ class CreateDefaultAdminSeeder extends Seeder
 
     public function run()
     {
+
         DB::table('users')->delete();
-
-
-        $role = Role::create([ 'guard_name' => 'admin', 'name'=> 'owner'  ]);
-        $permissions = Permission::where(['guard_name' => 'admin'])->pluck('id','id')->all();
-        $role->syncPermissions($permissions);
-
-
-
 
         $user = User::create([
 
@@ -35,7 +28,7 @@ class CreateDefaultAdminSeeder extends Seeder
 
         ]);
 
-        $user->assignRole($role->name);
+        $user->assignRole(['id' => 1 , 'name' => 'admin']);
 
     }
 }

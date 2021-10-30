@@ -79,7 +79,7 @@
                                             <th></th>
                                             <th sortKey="name">ID</th>
                                             <th sortKey="name">class Name</th>
-                                            <th sortKey="name">captain Name</th>
+                                            <th sortKey="name">staff Name</th>
                                             <th sortKey="name">
                                                 starting Time
                                             </th>
@@ -127,19 +127,20 @@
                                                 <td>
                                                     <div>
                                                         <b-button-group
-                                                            class="btn-container "
+                                                           class="btn-group-pill"
+                                                           size="sm"
                                                         >
 
 
                                                     <b-button
-                                                       squared
+
                                                         variant="outline-primary"
-                                                        class="btn-sm btn-child"
+
                                                     >
                                                             <router-link
-                                                                squared
+
                                                                 variant="outline-warning"
-                                                                class="btn-sm btn-child"
+
                                                                 :to="{
                                                                     name:
                                                                         'updateClassSchedule',
@@ -153,14 +154,14 @@
                                                                         'edit-class-schedule'
                                                                     )"
                                                             >
-                                                                Edit
+                                                                edit
                                                             </router-link>
                                                     </b-button>
 
                                                             <b-button
-                                                                squared
+
                                                                 variant="outline-danger"
-                                                                class="btn-sm btn-child"
+
                                                                 @click="
                                                                     DeleteclassModal(
                                                                         row.id,
@@ -170,10 +171,8 @@
                                                                 v-if="
                                                                     can(
                                                                         'delete-class-schedule'
-                                                                    )
-                                                                "
-                                                            >
-                                                                Delete
+                                                                    )">
+                                                                delete
                                                             </b-button>
                                                         </b-button-group>
                                                     </div>

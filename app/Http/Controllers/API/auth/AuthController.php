@@ -55,6 +55,12 @@ class AuthController extends Controller
                     return Response()->json(['success' => true, 'data' => $this->staffCreateNewToken($token)]);
 
 
+                }else if($token = Auth::guard('member')->attempt($request->only(['email', 'password']))) {
+
+                    // return 'member';
+                return Response()->json(['success' => true, 'data' => $this->memberCreateNewToken($token)]);
+
+
                 }else{
                     return response()->json(['success' => false, 'message' => 'Unauthorized', 'status' => '401']);
                 }
@@ -66,8 +72,8 @@ class AuthController extends Controller
     public function info(Request $request)
     {
         if (auth('admin')->check()){
-            $user = Auth::guard('admin')->user()->roles;
 
+            $user = Auth::guard('admin')->user()->roles;
 
             $roles = RolesResource::collection($user);
 
@@ -94,9 +100,7 @@ class AuthController extends Controller
             return response()->json(['success' => true, 'data' =>  new UserToRoleResource(Auth::guard('admin')->user()), 'roleAndPermission' => $roleAndPermission], 200);
 
         }
-
-
-      if(auth('staff')->check()){
+        else if(auth('staff')->check()){
 
             $user = Auth::guard('staff')->user()->roles;
 
@@ -124,6 +128,37 @@ class AuthController extends Controller
 
 
             return response()->json(['success' => true, 'data' =>  Auth::guard('staff')->user(), 'roleAndPermission' => $roleAndPermission], 200);
+
+        }
+
+        else if(auth('member')->check()){
+
+            $user = Auth::guard('member')->user()->roles;
+
+
+            $roles = RolesResource::collection($user);
+
+            $permission = Permission::all();
+
+
+            $role = [];
+
+
+            $roleAndPermission = [];
+
+            for ($i = 0 ; $i < count($roles) ; $i++) {
+                $role[] = $roles[$i];
+            }
+
+            foreach ($role as $kay => $val){
+                // return $val['id'];
+                $roleAndPermission[] = ['id' => $val->id, 'role' => $val->name, 'permission' => PermissionResource::collection(Permission::join('role_has_permissions', 'role_has_permissions.permission_id', '=', 'permissions.id')
+                ->where('role_has_permissions.role_id','=', $val->id)->get())];
+            }
+
+
+
+            return response()->json(['success' => true, 'data' =>  Auth::guard('member')->user(), 'roleAndPermission' => $roleAndPermission], 200);
         }else{
             auth()->refresh();
         }
@@ -175,6 +210,18 @@ class AuthController extends Controller
             'token_type'   => 'bearer',
             'expires_in'   => Auth::guard('staff')->factory()->getTTL() * 10080,
             'user'         =>  Auth::guard('staff')->user()
+
+        ]);
+    }
+
+    public function memberCreateNewToken($token)
+    {
+
+        return ([
+            'access_token' => $token,
+            'token_type'   => 'bearer',
+            'expires_in'   => Auth::guard('member')->factory()->getTTL() * 10080,
+            'user'         =>  Auth::guard('member')->user()
 
         ]);
     }

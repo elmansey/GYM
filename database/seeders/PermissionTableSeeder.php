@@ -50,6 +50,7 @@ class PermissionTableSeeder extends Seeder
             'edit-class-schedule',
             'edit-class-schedule-in-classSchedule',
             'delete-class-schedule',
+            'delete-By-Select-Multi-Class',
             'show-Registration-member',
             'show-Registration-member-list',
             'add-member-in-gym',
@@ -96,11 +97,53 @@ class PermissionTableSeeder extends Seeder
             'edit-class-schedule',
             'edit-class-schedule-in-classSchedule',
             'delete-class-schedule',
+            'delete-By-Select-Multi-Class',
             'show-Registration-member',
             'show-Registration-member-list',
             'add-member-in-gym',
             'show-setting',
 
+        ];
+
+        $memberPermissions = [
+            'dashboard',
+            'show-roles',
+            'show-roles-list',
+            'add-role',
+            'edit-role',
+            'delete-role',
+            'show-role-details',
+            'show-team',
+            'show-team-member-list',
+            'add-member-in-team',
+            'edit-member-from-team',
+            'delete-member-from-team',
+            'show-memberships',
+            'show-memberships-list',
+            'add-membership',
+            'edit-membership',
+            'delete-membership',
+            'show-staff-list',
+            'add-person-in-staff',
+            'edit-person-in-staff',
+            'delete-person-in-staff',
+            'show-groups',
+            'show-groups-list',
+            'add-group',
+            'edit-group',
+            'delete-group',
+            'show-class-schedule-all',
+            'show-class_schedule-list',
+            'show-class_schedule',
+            'add-class-schedule',
+            'edit-class-schedule',
+            'edit-class-schedule-in-classSchedule',
+            'delete-class-schedule',
+            'delete-By-Select-Multi-Class',
+            'show-Registration-member',
+            'show-Registration-member-list',
+            'add-member-in-gym',
+            'show-setting',
         ];
 
         foreach ($AdminPermissions as $adminPermission) {
@@ -109,6 +152,10 @@ class PermissionTableSeeder extends Seeder
 
         foreach ($staffPermissions as $staffPermission) {
             Permission::create([ 'guard_name' => 'staff', 'name'=> $staffPermission ]);
+        }
+
+        foreach ($memberPermissions as $memberPermission) {
+            Permission::create([ 'guard_name' => 'member', 'name'=> $memberPermission ]);
         }
     }
 }

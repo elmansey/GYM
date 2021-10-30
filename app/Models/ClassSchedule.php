@@ -12,7 +12,14 @@ class ClassSchedule extends Model
 
     protected $table= 'class_schedules';
 
-    protected $fillable = [ 'className','captainName', 'days','startingTime', 'endingTime','trainingLocation'];
+    protected $fillable = [
+        'className',
+        'staffName',
+        'days',
+        'startingTime',
+         'endingTime',
+         'trainingLocation'
+        ];
 
 
 
@@ -30,7 +37,7 @@ class ClassSchedule extends Model
 
     public function captain_relation(){
 
-        return $this->belongsTo(staff::class,'captainName');
+        return $this->belongsTo(staff::class,'staffName');
 
     }
 }

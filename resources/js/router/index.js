@@ -81,6 +81,13 @@ const routes = [
             },
             {
 
+                path: 'editMember/:memberId',
+                name: 'editMember',
+                component: require('@/pages/members/add_new_member').default,
+
+            },
+            {
+
                 path: 'staffList',
                 name: 'staffList',
                 component: require('@/pages/staff/staffList').default,

@@ -40,6 +40,7 @@ use App\Http\Controllers\API\ClassSchedule\ClassScheduleController;
     Route::get('getClassToSelect',[ClassScheduleController::class, 'getClassToSelect']);
     Route::post('addMember',[membersController::class,'store']);
 
+
     Route::post('forgetPassword', [resetPasswordController::class, 'forgetPassword']);
     Route::post('resetPassword', [resetPasswordController::class, 'resetPassword']);
 
@@ -98,7 +99,7 @@ use App\Http\Controllers\API\ClassSchedule\ClassScheduleController;
         Route::get('getClassById/{id}', [ClassScheduleController::class, 'getClassById']);
         Route::post('updateClass/{id}', [ClassScheduleController::class, 'update']);
         Route::get('deleteClass/{id}', [ClassScheduleController::class, 'destroy']);
-        Route::get('getAllCaptainToCreateClass', [ClassScheduleController::class, 'getAllCaptainToCreateClass']);
+        Route::get('getAllPersonInStaffToCreateClass', [ClassScheduleController::class, 'getAllPersonInStaffToCreateClass']);
         Route::post('deleteSelectedItem', [ClassScheduleController::class, 'deleteSelectedItem']);
         Route::get('getClassInDays',[ClassScheduleController::class, 'getClassInDays']);
 
@@ -117,8 +118,9 @@ use App\Http\Controllers\API\ClassSchedule\ClassScheduleController;
 
 
 
-        //members
+        //members should auth
         Route::get('members',[membersController::class,'index']);
+        Route::get('getMemberById/{id}',[membersController::class,'getMemberById']);
 
 
 

@@ -1,6 +1,6 @@
 <template>
     <div v-if="isLoading">
-        <Breadcrumbs main="dashboard" title="registeration a new member"/>
+        <Breadcrumbs main="dashboard" :title="edit ? 'edit member':'registeration a new member'"/>
         <!-- Container-fluid starts-->
         <div class="container-fluid">
             <div class="select2-drpdwn">
@@ -277,6 +277,7 @@ export default {
                 password:'',
                 confirm_password:'',
                 profile_picture:[],
+                role:{'id':3,'name':'member'},
 
 
 
@@ -340,6 +341,32 @@ export default {
 
                     this.edit = true
 
+                    axios.get(`getMemberById/${this.$route.params.memberId}`)
+                    .then(res => {
+                        console.log(res);
+                        if(res.data.success){
+                             this.memberData.first_name     = res.data.personalInformation.first_name,
+                            this.memberData.middle_name    = res.data.personalInformation.middle_name,
+                            this.memberData.last_name      = res.data.personalInformation.last_name,
+                            this.memberData.gender         = res.data.personalInformation.gender,
+                            this.memberData.data_of_birth    = res.data.personalInformation.data_of_birth,
+                            this.memberData.address         = res.data.contentInformation.address,
+                            this.memberData.city          = res.data.contentInformation.city,
+                            this.memberData.phone_number    = res.data.contentInformation.phone_number,
+                            this.memberData.email         = res.data.loginInformation.email,
+                            this.memberData.user_name      = res.data.loginInformation.user_name,
+                            this.memberData.interested_area    = res.data.extraInformation.interested_area,
+                             this.memberData.group_id    = res.data.extraInformation.group_id,
+                            this.memberData.source    = res.data.extraInformation.source,
+                            this.memberData.membership_id    = res.data.extraInformation.membership_id,
+                            this.memberData.class_id    = res.data.extraInformation.class_id,
+                            this.memberData.start_data    = res.data.extraInformation.start_data
+                        }
+
+
+                    }).catch(err => {
+                            console.log(err.message)
+                    })
 
 
             }else{
@@ -433,6 +460,7 @@ export default {
                 formData.append('email'              , this.memberData.email)
                 formData.append('user_name'           , this.memberData.user_name)
                 formData.append('password'           , this.memberData.password)
+                formData.append('role'               , this.memberData.role)
                 formData.append('confirm_password'   , this.memberData.confirm_password)
                 formData.append('profile_picture'    , this.memberData.profile_picture)
                 formData.append('interested_area'    , this.memberData.interested_area)
@@ -474,11 +502,94 @@ export default {
 
                         this.error = []
                         this.memberData = []
-                     // this.$router.push({name:'membersList'})
-                        Toast.fire({
+                           Toast.fire({
                             icon: 'success',
                             title: 'new member added successfully'
                         })
+
+                        this.$router.push({name:'membersList'})
+
+
+
+                    }
+
+
+
+
+                    console.log(res)
+                })
+                .catch(err => {
+
+                    console.log(err)
+
+                })
+
+            }
+
+            if(this.edit == false){
+
+
+                let formData = new FormData()
+                formData.append('first_name'         , this.memberData.first_name)
+                formData.append('middle_name'        , this.memberData.middle_name)
+                formData.append('last_name'          , this.memberData.last_name)
+                formData.append('gender'             , this.memberData.gender)
+                formData.append('data_of_birth'      , this.memberData.data_of_birth)
+                formData.append('group_id'           , this.memberData.group_id)
+                formData.append('address'            , this.memberData.address)
+                formData.append('city'               , this.memberData.city)
+                formData.append('phone_number'        , this.memberData.phone_number)
+                formData.append('email'              , this.memberData.email)
+                formData.append('user_name'           , this.memberData.user_name)
+                formData.append('password'           , this.memberData.password)
+                formData.append('role'               , this.memberData.role)
+                formData.append('confirm_password'   , this.memberData.confirm_password)
+                formData.append('profile_picture'    , this.memberData.profile_picture)
+                formData.append('interested_area'    , this.memberData.interested_area)
+                formData.append('source'             , this.memberData.source)
+                formData.append('membership_id'         , this.memberData.membership_id)
+                formData.append('class_id'              , this.memberData.class_id)
+                formData.append('start_date'         , this.memberData.start_date)
+                formData.append('isActive'           , this.memberData.isActive)
+
+
+
+
+
+
+
+
+                 let config = {
+                    headers: {
+                        "Content-Type":
+                            "multipart/form-data; charset=utf-8 ; boundary=" +
+                            Math.random()
+                                .toString()
+                                .substr(2)
+                    }
+                };
+
+
+
+
+                axios.post('addMember',formData,config)
+                .then(res => {
+
+                    if(res.data.success == false){
+
+                             this.error = res.data.message
+                    }
+
+                    if(res.data.success){
+
+                        this.error = []
+                        this.memberData = []
+                           Toast.fire({
+                            icon: 'success',
+                            title: 'new member added successfully'
+                        })
+
+                        this.$router.push({name:'membersList'})
 
 
 

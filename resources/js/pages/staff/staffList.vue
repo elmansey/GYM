@@ -33,6 +33,7 @@
                                         <th sortKey="name" >email</th>
                                         <th sortKey="options">phone number</th>
                                         <th sortKey="options">roles</th>
+                                        <th sortKey="options">active</th>
                                         <th sortKey="options">actions</th>
                                         </thead>
 
@@ -66,36 +67,43 @@
 
                                             </td>
                                             <td>
-                                                <div>
-                                                    <b-button-group class="btn-container ">
+                                             <span class="badge badge-success" v-if="row.isActive">
+                                                    active
+                                            </span>
+                                             <span class="badge badge-danger" v-if="!row.isActive">
+                                                    not Active
+                                            </span>
+                                            </td>
+
+                                            <td>
+                                            <div>
+                                                 <b-button-group class="btn-group-pill" size="sm">
 
                                                     <b-button
-                                                       squared
+
                                                         variant="outline-primary"
-                                                        class="btn-sm btn-child"
                                                     >
                                                             <router-link
-                                                                squared
+
                                                                 variant="outline-warning"
-                                                                class="btn-sm btn-child"
                                                                 :to="{name: 'editPersonInStaff', params: {staffPersonId : row.id}}"
                                                                 v-if="can('edit-member-from-team')"
                                                             >
-                                                               Edit
+                                                               edit
                                                             </router-link>
 
                                                     </b-button>
-                                                        <b-button
-                                                            squared
+
+                                                    <b-button
+
                                                             variant="outline-danger"
 
-                                                            class="btn-sm btn-child"
                                                             @click="DeletestaffModal(row.id,index)"
                                                             v-if="can('delete-member-from-team')"
                                                         >
 
-                                                           Delete
-                                                        </b-button>
+                                                           delete
+                                                    </b-button>
 
 
 
@@ -103,7 +111,9 @@
 
                                                     </b-button-group>
                                                 </div>
+
                                             </td>
+
                                         </tr>
                                         </tbody>
                                     </v-table>

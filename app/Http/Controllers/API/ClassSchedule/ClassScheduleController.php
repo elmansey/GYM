@@ -28,12 +28,12 @@ class ClassScheduleController extends Controller
     public function store(Request $request)
     {
 
-        //  return $request->days ;
+
 
         $validator = validator::make($request->all(), [
 
             'className'   => 'required|unique:class_schedules',
-            'captainName'   => 'required',
+            'staffName'   => 'required',
             'days'   => 'required',
             'startingTime'   => 'required',
             'endingTime'   => 'required|after:startingTime',
@@ -60,7 +60,7 @@ class ClassScheduleController extends Controller
 
         $class = new ClassSchedule();
         $class->className = $request->className;
-        $class->captainName = $request->captainName;
+        $class->staffName = $request->staffName;
         $class->startingTime = $request->startingTime;
         $class->endingTime = $request->endingTime;
         $class->trainingLocation = $request->trainingLocation;
@@ -79,7 +79,7 @@ class ClassScheduleController extends Controller
         $validator = validator::make($request->all(), [
 
             'className'   => ['required', Rule::unique('class_schedules')->ignore($id)],
-            'captainName'   => 'required',
+            'staffName'   => 'required',
             'days'         => 'required',
             'startingTime'   => 'required',
             'endingTime'   => 'required|after:startingTime',
@@ -110,7 +110,7 @@ class ClassScheduleController extends Controller
 
         $class =  ClassSchedule::find($id);
         $class->className = $request->className;
-        $class->captainName = $request->captainName;
+        $class->staffName = $request->staffName;
         $class->startingTime = $request->startingTime;
         $class->endingTime = $request->endingTime;
         $class->trainingLocation = $request->trainingLocation;
@@ -133,13 +133,13 @@ class ClassScheduleController extends Controller
     }
 
 
-    public function getAllCaptainToCreateClass()
+    public function getAllPersonInStaffToCreateClass()
     {
 
 
-        $captain = staff::where('jop', '=', 'Captain')->get();
+        $staff = staff::all();
 
-        return  response()->json(['success' => true, 'captain' => captainResource::collection($captain)]);
+        return  response()->json(['success' => true, 'staff' => captainResource::collection($staff)]);
     }
 
 

@@ -16,7 +16,7 @@
 
                                               <div class="row">
 
-                                                  <div class="mb-2 col-md-12 col-lg-12 col-sm-12">
+                                                  <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
                                                       <div class="col-form-label"> first name</div>
 
                                                       <input name="firstName" :class="['form-control', submited && !$v.staffData.firstName.required ||  error.firstName ? 'is-invalid' : '']"  v-model="staffData.firstName"/>
@@ -53,16 +53,11 @@
 
                                                   </div>
 
-                                                  <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
-                                                      <div class="col-form-label">Choose the  Roles</div>
+                                                  <div hidden class="mb-2 col-md-6 col-lg-6 col-sm-12">
 
-                                                      <multiselect name="role" v-model="staffData.role" tag-placeholder="Add this as new tag" placeholder="Search or add a tag"
-                                                                    :class="[error.role || !$v.staffData.role.required ? 'is-invalid' : '']"     label="name" track-by="id"   @search-change="asyncFind" :options="options"  :multiple="true"   :taggable="true" @tag="addTag"  >
+                                                      <select  hidden  v-model="staffData.role">
 
-                                                      </multiselect>
-                                                      <small  style="color: red" v-if="error.role">{{ error.role[0]}}</small>
-                                                      <b-form-invalid-feedback style="color:red" v-if="( !$v.staffData.role.required)"> the role  faild is required</b-form-invalid-feedback>
-
+                                                      </select>
 
                                                   </div>
 
@@ -137,17 +132,28 @@
                                                         <b-form-invalid-feedback style="color:red" v-if="( submited && !$v.staffData.loginData.confirm_Password.requiredIf)"> the confirm  password failde is required   </b-form-invalid-feedback>
 
                                                     </div>
-
+                                                    <div class="mb-2 col-md-12 col-lg-12 col-sm-12 mt-3">
+                                                             <div class="media">
+                                                                <label class="col-form-label m-r-10">active</label>
+                                                                <div class="media-body text-right switch-lg icon-state">
+                                                                <label class="switch">
+                                                                    <input type="checkbox" checked="" v-model="staffData.loginData.isActive"><span class="switch-state"></span>
+                                                                </label>
+                                                                </div>
+                                                            </div>
                                                     </div>
 
-                                              <button type="submit" class="btn btn-primary mt-3"  v-if="!edit" >
-                                                  Save
-                                              </button>
+                                                    </div>
+                                                <div class="mb-2 col-md-12 col-lg-12 col-sm-12">
 
-                                              <button  type="submit" class="btn btn-success mt-3"   v-if="edit" >
-                                                  update
-                                              </button>
+                                                        <button type="submit" class="btn btn-primary mt-3"  v-if="!edit" >
+                                                            Save
+                                                        </button>
 
+                                                        <button  type="submit" class="btn btn-success mt-3"   v-if="edit" >
+                                                            update
+                                                        </button>
+                                                </div>
                                               </div>
 
                                           </form>
@@ -203,6 +209,8 @@ export default {
                     'userName':'',
                     'password':'',
                     'confirm_Password':'',
+                    'isActive':true,
+
                 },
                 'profile_picture':'',
                 'role':{id: 1, name: "staff"},
@@ -262,6 +270,7 @@ export default {
                         this.staffData.role           = res.data.staff.roles
                         this.staffData.loginData.email     = res.data.staff.email
                         this.staffData.loginData.userName     = res.data.staff.userName
+                        this.staffData.loginData.isActive     = res.data.staff.isActive
                         this.staffData.notes     = res.data.staff.notes
                         this.isLoading = true
 
@@ -375,6 +384,7 @@ export default {
                     formData.append('userName',this.staffData.loginData.userName)
                     formData.append('email',this.staffData.loginData.email)
                     formData.append('password',this.staffData.loginData.password)
+                    formData.append('isActive',this.staffData.loginData.isActive)
                     formData.append('confirm_Password',this.staffData.loginData.confirm_Password)
                     formData.append('profile_picture',this.staffData.profile_picture)
                     formData.append('role',JSON.stringify(this.staffData.role))
@@ -404,6 +414,7 @@ export default {
                                     this.staffData.loginData.email = ''
                                     this.staffData.loginData.userName = ''
                                     this.staffData.loginData.password = ''
+                                    this.staffData.loginData.isActive = true
                                     this.staffData.loginData.confirm_Password = ''
                                     this.staffData.profile_picture   = ''
                                     this.staffData.role = {id: 1, name: "staff"},
@@ -439,6 +450,7 @@ export default {
                     formData.append('userName',this.staffData.loginData.userName)
                     formData.append('email',this.staffData.loginData.email)
                     formData.append('password',this.staffData.loginData.password)
+                    formData.append('isActive',this.staffData.loginData.isActive)
                     formData.append('confirm_Password',this.staffData.loginData.confirm_Password)
                     formData.append('profile_picture',this.staffData.profile_picture)
                     formData.append('role',JSON.stringify(this.staffData.role))
@@ -468,6 +480,7 @@ export default {
                                     this.staffData.loginData.email = ''
                                     this.staffData.loginData.userName = ''
                                     this.staffData.loginData.password = ''
+                                    this.staffData.loginData.isActive = true
                                     this.staffData.loginData.confirm_Password = ''
                                     this.staffData.profile_picture   = ''
                                     this.staffData.role = {id: 1, name: "staff"},
@@ -563,13 +576,15 @@ export default {
                     this.staffData.middleName   = '',
                     this.staffData.lastName   = '',
                     this.staffData.phone   = '',
-                    this.staffData.email   = '',
-                    this.staffData.userName   = '',
-                    this.staffData.password   = '',
-                    this.staffData.confirmPassword   = '',
+                    this.staffData.loginData.email   = '',
+                    this.staffData.loginData.userName   = '',
+                    this.staffData.loginData.password   = '',
+                    this.staffData.loginData.password   = '',
+                    this.staffData.loginData.isActive   = true,
                     this.staffData.profile_picture   = '',
-                    this.staffData.jop   = '',
-                    this.staffData.notes   = ''
+                    this.staffData.role   = '',
+                    this.staffData.notes   = '',
+                    this.allowLogin     = false
 
 
             }

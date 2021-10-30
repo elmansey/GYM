@@ -18,7 +18,7 @@ class class_scheduleResource extends JsonResource
 
             'id'	 => $this->id ,
             'className'	 => $this->className ,
-            'captainName'	 => $this->captainName ,
+            'staffName'	 => $this->staffName ,
             'days'	 => $this->days ,
             'startingTime'	 => $this-> startingTime,
             'endingTime'	 => $this->endingTime ,

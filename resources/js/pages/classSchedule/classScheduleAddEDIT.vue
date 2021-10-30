@@ -83,35 +83,35 @@
                                             </div>
 
                                             <select
-                                                name="coachName"
-                                                v-model="data.captainName"
+                                                name="staffName"
+                                                v-model="data.staffName"
                                                 :class="[
                                                     'form-control',
-                                                    error.captainName
+                                                    error.staffName
                                                         ? 'is-invalid'
                                                         : ''
                                                 ]"
                                             >
                                                 <option
                                                     v-for="(item,
-                                                    index) in captain"
+                                                    index) in staff"
                                                     :key="index"
                                                     :value="id(item.id)"
                                                 >
                                                     {{
                                                         item.firstName +
-                                                            " " +
+                                                            " "+
                                                             item.middleName +
-                                                            " " +
+                                                            " "+
                                                             item.lastName
                                                     }}
                                                 </option>
                                             </select>
                                             <small
                                                 style="color: red"
-                                                v-if="error.captainName"
+                                                v-if="error.staffName"
                                                 >{{
-                                                    error.captainName[0]
+                                                    error.staffName[0]
                                                 }}</small
                                             >
                                         </div>
@@ -243,7 +243,7 @@ export default {
         return {
             data: {
                 className: "",
-                captainName: "",
+                staffName: "",
                 startingTime: "",
                 endingTime: "",
                 trainingLocation: "",
@@ -259,7 +259,7 @@ export default {
                 { id: 6, name: "Thursday" },
                 { id: 7, name: "Friday" }
             ],
-            captain: [],
+            staff: [],
             error: "",
             edit: true,
             isLoading: false,
@@ -272,9 +272,9 @@ export default {
     },
     beforeCreate() {
         axios
-            .get(`getAllCaptainToCreateClass`)
+            .get(`getAllPersonInStaffToCreateClass`)
             .then(res => {
-                this.captain = res.data.captain;
+                this.staff = res.data.staff;
             })
             .catch(err => {
                 console.error(err);
@@ -291,7 +291,7 @@ export default {
                     // var startime = res.data.class.startingTime.split(' ');
                     this.edit = true;
                     this.data.className = res.data.class.className;
-                    this.data.captainName = res.data.class.captainName;
+                    this.data.staffName = res.data.class.staffName;
                     this.data.startingTime = res.data.class.startingTime;
                     this.data.endingTime = res.data.class.endingTime;
                     this.data.trainingLocation =
@@ -317,11 +317,11 @@ export default {
             if (this.edit == false) {
                 let formData = new FormData();
                 formData.append("className", this.data.className);
-                formData.append("captainName", this.data.captainName);
+                formData.append("staffName", this.data.staffName);
                 formData.append("startingTime", this.data.startingTime);
                 formData.append("endingTime", this.data.endingTime);
                 formData.append("trainingLocation", this.data.trainingLocation);
-                formData.append("days", this.data.days);
+                formData.append("days", JSON.stringify(this.data.days));
 
                 axios
                     .post("addClass", formData)
@@ -345,7 +345,7 @@ export default {
             if (this.edit) {
                 let formData = new FormData();
                 formData.append("className", this.data.className);
-                formData.append("captainName", this.data.captainName);
+                formData.append("staffName", this.data.staffName);
                 formData.append("startingTime", this.data.startingTime);
                 formData.append("endingTime", this.data.endingTime);
                 formData.append("trainingLocation", this.data.trainingLocation);
@@ -405,7 +405,7 @@ export default {
                 this.isLoading = true;
                 this.edit = false;
                 this.data.className = "";
-                this.data.captainName = "";
+                this.data.staffName = "";
                 this.data.startingTime = "";
                 this.data.endingTime = "";
                 this.data.trainingLocation = "";

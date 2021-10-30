@@ -25,6 +25,7 @@ class staffController extends Controller
     public function store(Request $request){
 
 
+
         $validator = validator::make($request->all(), [
 
             'firstName'        => 'required',
@@ -67,12 +68,13 @@ class staffController extends Controller
                 $fileName = md5(time().now().rand(1,10)).'.'.$extension;
 
                 $file->move(public_path('profile_pictures'),$fileName);
+                $input['profile_picture'] = $fileName;
+
 
             }
 
 
-        $input['profile_picture'] = $fileName;
-
+        $input['isActive'] = $input['isActive'] == 'true' || true ? true : false;
         $staff = staff::create($input);
 
        $input['role'] = json_decode($input['role'],true);
@@ -114,8 +116,8 @@ class staffController extends Controller
     public function update(Request $request, $id)
     {
 
-        // return $request;
-        $validator = validator::make($request->all(), [
+
+         $validator = validator::make($request->all(), [
 
             'firstName'        => 'required',
             'middleName'        => 'required',
@@ -175,6 +177,7 @@ class staffController extends Controller
             }
 
 
+        $input['isActive'] = $input['isActive'] == 'true' || true ? true : false;
 
        $staff = staff::find($id);
         $staff->update($input);

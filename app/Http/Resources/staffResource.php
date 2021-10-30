@@ -25,6 +25,7 @@ class staffResource extends JsonResource
             'email' => $this->email,
             'profile_picture' => $this->profile_picture,
             'roles'	 => $this->roles,
+            'isActive'	 => $this->isActive,
             'notes' => $this->notes
         ];
     }

@@ -25,6 +25,7 @@ class CreateStaffTable extends Migration
             $table->string('password')->nullable();
             $table->string('profile_picture')->nullable();
             $table->text('notes')->nullable();
+            $table->boolean('isActive');
             $table->timestamps();
         });
     }

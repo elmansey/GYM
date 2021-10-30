@@ -5,7 +5,7 @@
 
     <div v-if="isLoadig">
 
-        <Breadcrumbs main="Dashboard" title="admin list" />
+        <Breadcrumbs main="Dashboard" title="members list" />
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
@@ -16,7 +16,7 @@
 
                                 <div class="table-responsive vue-smart">
                                     <v-table
-                                        :data="admins"
+                                        :data="members"
                                         class="table"
                                         :currentPage.sync="filter.currentPage"
                                         :pageSize="5"
@@ -25,18 +25,18 @@
                                     >
                                         <thead slot="head">
 
-                                        <th></th>
+                                        <th>ID</th>
                                         <th sortKey="name">Profile Picture</th>
-                                        <th sortKey="name">name</th>
+                                        <th sortKey="name">Personal_uuid</th>
+                                        <th sortKey="name">user name</th>
                                         <th sortKey="name" >email</th>
-                                        <th sortKey="options">phone number</th>
-                                        <th sortKey="options">roles</th>
+                                        <th sortKey="name" >active</th>
                                         <th sortKey="options">actions</th>
                                         </thead>
 
                                         <tbody slot="body" slot-scope="{ displayData }">
                                         <tr v-for="(row, index) in displayData" :key="index">
-                                            <td></td>
+                                            <td>{{++index}}</td>
 
 
                                             <td><img
@@ -44,55 +44,46 @@
 
 
                                             :src="row.profile_picture ? '../../profile_pictures/'+row.profile_picture :
-                                             '../../profile_pictures/DefaultProfile.jpg'"
-
-
-                                              />
+                                             '../../profile_pictures/DefaultProfile.jpg'"/>
                                               </td>
 
 
-
-                                            <td>{{ row.name}}</td>
+                                            <td>{{ row.personal_table_relation.Personal_uuid}}</td>
+                                            <td>{{ row.personal_table_relation.first_name }} {{ row.personal_table_relation.last_name  }}</td>
                                             <td>{{ row.email}}</td>
-                                            <td>{{ row.phone}}</td>
-                                            <td >
-                                                <span class="badge badge-success" v-for="(v,k) in row.role">
-                                                    {{v.name}}
+                                            <td>
+                                                <span class="badge badge-success" v-if="row.isActive">
+                                                        active
                                                 </span>
-
+                                                <span class="badge badge-danger" v-if="!row.isActive">
+                                                        not Active
+                                                </span>
                                             </td>
                                             <td>
                                                 <div>
-                                                    <b-button-group class="btn-container ">
+                                                    <b-button-group class="btn-group-pill" size="sm">
 
-
+                                                         <b-button
+                                                          variant="outline-dark"
+                                                          >
                                                             <router-link
-                                                                squared
-                                                                variant="outline-warning"
-                                                                class="btn-sm btn-child"
-                                                                :to="{name: 'updateAdmin', params: {adminId : row.id}}"
+                                                                :to="{name: 'editMember', params: {memberId : row.member_id}}"
                                                                 v-if="can('edit-member-from-team')"
                                                             >
-                                                               Edit
+                                                               edit
                                                             </router-link>
-
+                                                        </b-button>
 
                                                         <b-button
-                                                            squared
+
                                                             variant="outline-danger"
 
-                                                            class="btn-sm btn-child"
                                                             @click="DeleteAdminModal(row.id,index)"
                                                             v-if="can('delete-member-from-team')"
                                                         >
 
-                                                           Delete
+                                                           delete
                                                         </b-button>
-
-
-
-
-
                                                     </b-button-group>
                                                 </div>
                                             </td>
@@ -171,6 +162,22 @@ export default {
     beforeMount() {
 
 
+        axios.get('members')
+        .then(res => {
+
+            if(res.data.success == true){
+
+                this.members = res.data.members
+                this.isLoadig = true
+
+            }
+
+
+        })
+        .catch(err => {
+
+
+        })
 
     },
     created() {
