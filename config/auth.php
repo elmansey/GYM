@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\members_login_information;
+
 return [
 
     /*

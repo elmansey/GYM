@@ -352,6 +352,7 @@ export default {
                         confirm_password:'',
                         profile_picture:[],
                         isActive:true,
+                       role:{'id':3,'name':'member'},
 
                    },
 
@@ -549,6 +550,7 @@ export default {
                 formData.append('city'               , this.memberData.contactData.city)
                 formData.append('phone_number'       , this.memberData.contactData.phone_number)
                 formData.append('email'              , this.memberData.loginData.email)
+                formData.append('role'               , JSON.stringify(this.memberData.loginData.role))
                 formData.append('user_name'          , this.memberData.loginData.user_name)
                 formData.append('password'           , this.memberData.loginData.password)
                 formData.append('confirm_password'   , this.memberData.loginData.confirm_password)
@@ -582,7 +584,7 @@ export default {
                     if(res.data.success == false){
 
                              this.error = res.data.message
-                             console.log(this.$refs.wizard)
+                             this.$refs.wizard.prevTab()
                     }
 
                     if(res.data.success){
@@ -590,7 +592,7 @@ export default {
                         this.error = []
                         Toast.fire({
                             icon: 'success',
-                            title: 'registeration success  login into profile now'
+                            title: 'registeration success login into profile now'
                         })
 
                     }
@@ -603,6 +605,10 @@ export default {
 
                 })
 
+        },
+
+        goBack() {
+        this.$refs.formWiz.prevTab(true)
         },
 
 

@@ -21,7 +21,7 @@ class AuthController extends Controller
     public function __construct()
     {
         // $this->middleware(['JWTchecker'])->except(['login','resetPassword']);
-        $this->middleware(['auth:admin,staff'])->except(['login','resetPassword']);
+        $this->middleware(['auth:admin,staff,member'])->except(['login','resetPassword']);
 
     }
 
@@ -29,6 +29,8 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
+
+
 
         $validator = validator::make($request->all(), [
 
@@ -41,7 +43,7 @@ class AuthController extends Controller
         if ($validator->fails()) {
 
             return response()->json(['success' => false, 'message' => $validator->errors(), 'status' => '400']);
-        } else {
+        }
 
 
 
@@ -64,7 +66,7 @@ class AuthController extends Controller
                 }else{
                     return response()->json(['success' => false, 'message' => 'Unauthorized', 'status' => '401']);
                 }
-        }
+
     }
 
 

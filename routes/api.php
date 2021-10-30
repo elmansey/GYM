@@ -121,6 +121,8 @@ use App\Http\Controllers\API\ClassSchedule\ClassScheduleController;
         //members should auth
         Route::get('members',[membersController::class,'index']);
         Route::get('getMemberById/{id}',[membersController::class,'getMemberById']);
+        Route::post('updateMember/{id}',[membersController::class,'update']);
+        Route::get('deleteMember/{id}',[membersController::class,'destroy']);
 
 
 

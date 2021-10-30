@@ -111,10 +111,10 @@
                                    Delete Team member
                                 </template>
                                 <div class="d-block text-center">
-                                    <h5>are you sure to delete this Admin</h5>
+                                    <h5>are you sure to delete this member</h5>
                                 </div>
                                 <b-button class="mt-3"  v-b-modal.modal-sm variant="default" @click="$bvModal.hide('bv-modal-example')">Cancel</b-button>
-                                <b-button class="mt-3"  v-b-modal.modal-sm variant="danger"  @click.prevent="">delete</b-button>
+                                <b-button class="mt-3"  v-b-modal.modal-sm variant="danger"  @click.prevent="deletemember">delete</b-button>
                             </b-modal>
                         </div>
 
@@ -151,7 +151,7 @@ export default {
                 totalPages: 0,
             },
             id:'',
-            key:'',
+            keyes:'',
             isLoadig:false,
 
 
@@ -191,17 +191,29 @@ export default {
 
         DeleteAdminModal(id,key){
              this.id = id
-             this.key = key
+             this.keyes = key
            this.$bvModal.show('bv-modal-example')
 
        },
-        deleteAdmin(){
+        deletemember(){
 
 
-            axios.get('/'+this.id)
+            axios.get(`deleteMember/${this.id}`)
             .then(res => {
 
+                if(res.data.success){
 
+                    this.members.splice(this.key,1)
+
+                    this.id = ''
+                    this.keyes = ''
+                    this.$bvModal.hide('bv-modal-example')
+
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'member deleted successfully'
+                    })
+                }
             })
             .catch(err => {
 

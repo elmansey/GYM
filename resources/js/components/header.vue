@@ -168,10 +168,11 @@
               alt=""
             />
             <div class="media-body">
-              <span>{{ this.$store.getters.USER.name }}</span>
+              <span>{{ this.$store.getters.authUserRole[0].role }}</span>
               <p class="mb-0 font-roboto">
                   {{this.$store.getters.USER.email}} <i class="middle fa fa-angle-down"></i>
               </p>
+
             </div>
           </div>
           <ul class="profile-dropdown onhover-show-div">
@@ -273,6 +274,9 @@ export default {
     }),
       user(){
           this.userName = this.$store.getters.USER.name
+      },
+      role(){
+          this.userName = this.$store.getters.USER.roles.name
       }
 
 

@@ -190,7 +190,7 @@
                                         <div class="mb-2 col-md-4 col-lg-4 col-sm-12">
                                             <div class="col-form-label">   start data  </div>
 
-                                            <input name="" type="date"    :class="['form-control',error.start_date? 'is-invalid' : '']"  v-model="memberData.start_date" />
+                                            <input name="" type="date"    :class="['form-control',error.start_date? 'is-invalid' : '']"  v-model="memberData.start_data" />
                                              <small style="color: red" v-if="error.start_date">{{ error.start_date[0] }}</small >
                                         </div>
 
@@ -285,7 +285,7 @@ export default {
                 source:'',
                 membership_id:'',
                 class_id:'',
-                start_date:'',
+                start_data:'',
                 isActive:true
 
 
@@ -293,6 +293,7 @@ export default {
 
 
             },
+
             isLoading:false,
 
             classes: [],
@@ -343,13 +344,13 @@ export default {
 
                     axios.get(`getMemberById/${this.$route.params.memberId}`)
                     .then(res => {
-                        console.log(res);
+
                         if(res.data.success){
                              this.memberData.first_name     = res.data.personalInformation.first_name,
                             this.memberData.middle_name    = res.data.personalInformation.middle_name,
                             this.memberData.last_name      = res.data.personalInformation.last_name,
                             this.memberData.gender         = res.data.personalInformation.gender,
-                            this.memberData.data_of_birth    = res.data.personalInformation.data_of_birth,
+                            this.memberData.data_of_birth    = res.data.personalInformation.date_of_birth,
                             this.memberData.address         = res.data.contentInformation.address,
                             this.memberData.city          = res.data.contentInformation.city,
                             this.memberData.phone_number    = res.data.contentInformation.phone_number,
@@ -360,11 +361,15 @@ export default {
                             this.memberData.source    = res.data.extraInformation.source,
                             this.memberData.membership_id    = res.data.extraInformation.membership_id,
                             this.memberData.class_id    = res.data.extraInformation.class_id,
-                            this.memberData.start_data    = res.data.extraInformation.start_data
+                            this.memberData.start_data    = res.data.extraInformation.start_date
+
+                            this.isLoading = true
+
                         }
 
 
                     }).catch(err => {
+
                             console.log(err.message)
                     })
 
@@ -372,6 +377,8 @@ export default {
             }else{
 
                 this.edit = false
+                this.isLoading = true
+
             }
 
 
@@ -460,14 +467,14 @@ export default {
                 formData.append('email'              , this.memberData.email)
                 formData.append('user_name'           , this.memberData.user_name)
                 formData.append('password'           , this.memberData.password)
-                formData.append('role'               , this.memberData.role)
+                formData.append('role'               , JSON.stringify(this.memberData.role))
                 formData.append('confirm_password'   , this.memberData.confirm_password)
                 formData.append('profile_picture'    , this.memberData.profile_picture)
                 formData.append('interested_area'    , this.memberData.interested_area)
                 formData.append('source'             , this.memberData.source)
                 formData.append('membership_id'         , this.memberData.membership_id)
                 formData.append('class_id'              , this.memberData.class_id)
-                formData.append('start_date'         , this.memberData.start_date)
+                formData.append('start_date'         , this.memberData.start_data)
                 formData.append('isActive'           , this.memberData.isActive)
 
 
@@ -526,7 +533,7 @@ export default {
 
             }
 
-            if(this.edit == false){
+            if(this.edit){
 
 
                 let formData = new FormData()
@@ -542,14 +549,14 @@ export default {
                 formData.append('email'              , this.memberData.email)
                 formData.append('user_name'           , this.memberData.user_name)
                 formData.append('password'           , this.memberData.password)
-                formData.append('role'               , this.memberData.role)
+                formData.append('role'               , JSON.stringify(this.memberData.role))
                 formData.append('confirm_password'   , this.memberData.confirm_password)
                 formData.append('profile_picture'    , this.memberData.profile_picture)
                 formData.append('interested_area'    , this.memberData.interested_area)
                 formData.append('source'             , this.memberData.source)
                 formData.append('membership_id'         , this.memberData.membership_id)
                 formData.append('class_id'              , this.memberData.class_id)
-                formData.append('start_date'         , this.memberData.start_date)
+                formData.append('start_date'         , this.memberData.start_data)
                 formData.append('isActive'           , this.memberData.isActive)
 
 
@@ -572,7 +579,7 @@ export default {
 
 
 
-                axios.post('addMember',formData,config)
+                axios.post(`updateMember/${this.$route.params.memberId}`,formData,config)
                 .then(res => {
 
                     if(res.data.success == false){
@@ -586,7 +593,7 @@ export default {
                         this.memberData = []
                            Toast.fire({
                             icon: 'success',
-                            title: 'new member added successfully'
+                            title: 'member updated successfully'
                         })
 
                         this.$router.push({name:'membersList'})
@@ -641,6 +648,7 @@ export default {
                 this.memberData.class_id    = '',
                 this.memberData.start_data    = '',
                 this.memberData.isActive    = true
+                this.isLoading = true
 
 
             }

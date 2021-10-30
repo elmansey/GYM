@@ -16,6 +16,7 @@
                             <form @submit.prevent="submitNewPasswordForm">
                                 <input type="hidden"   v-model="user.newPassword.email"/>
                                 <input type="hidden"   v-model="user.newPassword.token"/>
+                                <input type="hidden"   v-model="user.newPassword.guard"/>
                                     <div class="form-group">
 
                                         <label class="col-form-label"> password </label>
@@ -76,6 +77,7 @@ export default {
                     password:'',
                     confirm_password:'',
                      token:'',
+                     guard:'',
                      email:''
                 }
             },
@@ -105,6 +107,7 @@ export default {
 
       this.user.newPassword.email =   this.$route.params.email
       this.user.newPassword.token =   this.$route.params.token
+      this.user.newPassword.guard =   this.$route.params.guard
 
     },
     methods: {
@@ -114,6 +117,7 @@ export default {
 
             formData.append('token',this.user.newPassword.token)
             formData.append('email',this.user.newPassword.email)
+            formData.append('guard',this.user.newPassword.guard)
             formData.append('password',this.user.newPassword.password)
             formData.append('confirm_password',this.user.newPassword.confirm_password)
 

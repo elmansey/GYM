@@ -4,30 +4,25 @@ namespace App\Models;
 
 use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
-use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\Model;
-use Tymon\JWTAuth\Contracts\JWTSubject;
-
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-
-class members_personal_information extends Authenticatable implements JWTSubject
+class members_personal_information extends Model
 {
-    use HasFactory,HasApiTokens, HasFactory,  HasRoles;
+    use HasFactory;
 
     protected $table = 'members_personal_informations';
-    protected $guard_name = 'member';
-
-    public function getJWTIdentifier()
-    {
-        return $this->getKey();
-    }
+    protected $fillable = [
 
 
-   public function getJWTCustomClaims()
-    {
-        return [];
-    }
+        'first_name',
+        'middle_name',
+        'last_name',
+        'gender',
+        'date_of_birth',
+    ];
+
+
+
 
     protected static function boot()
     {

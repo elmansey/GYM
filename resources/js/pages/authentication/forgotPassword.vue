@@ -30,7 +30,7 @@
                                     <input :class="['form-control', ( click1 &&  !$v.user.data.email.required || !$v.user.data.email.email  || error.email)  ? 'is-invalid' : '']" type="email" name="email"  v-model="user.data.email" >
                                     <b-form-invalid-feedback style="color:red" v-if="( click1 && !$v.user.data.email.required )" > the  email  faild   is required</b-form-invalid-feedback>
                                     <b-form-invalid-feedback style="color:red" v-if="(  click1 &&!$v.user.data.email.email )" > the  email  must be valid email </b-form-invalid-feedback>
-                                    <b-form-invalid-feedback style="color:red" v-if="error.email" > {{ error.email[0] }}  </b-form-invalid-feedback>
+                                    <b-form-invalid-feedback style="color:red" v-if="error.email" > {{ error.email }}  </b-form-invalid-feedback>
                                 </div>
                                   <button  class="btn btn-primary pull btn-sm" >reset password</button>
 
@@ -117,6 +117,7 @@ export default {
                             });
 
                             this.user.data.email = ''
+                            this.error.email = ''
                             this.click1 = false
 
 
@@ -124,6 +125,10 @@ export default {
                         }
                         if(res.data.success == false){
                             this.error = res.data.message
+                        }
+
+                        if(res.data.status == 404){
+                            this.error   = res.data.message
                         }
                     })
                     .catch(err  =>  {

@@ -118,7 +118,6 @@ export default {
     data() {
         return {
             user: {
-                guard:'admin_api',
                 email: "",
                 password: ""
             }
