@@ -126,7 +126,7 @@ export default {
     },
     beforeCreate() {
         axios
-            .get("createRole")
+            .get(`createRole/${this.$route.params.roleId}`)
             .then(res => {
                 this.options = res.data.permission;
                 this.isLoading = true;

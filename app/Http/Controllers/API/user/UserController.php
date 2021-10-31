@@ -26,6 +26,12 @@ class UserController extends Controller
         return response()->json(['success'=>true ,'admins'=> UsersResource::collection($data)] ,200);
     }
 
+    public function getUserToChatIgnoreMe($email)
+    {
+        $data = User::where('email','!=',$email)->get();
+        return response()->json(['success'=>true ,'admins'=> UsersResource::collection($data)] ,200);
+    }
+
 
     public function create()
     {

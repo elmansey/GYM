@@ -21,11 +21,11 @@ class default_role_Seeder extends Seeder
         $role->syncPermissions($permissions);
 
          $role = Role::create([ 'guard_name' => 'staff', 'name'=> 'staff'  ]);
-        $permissions = Permission::where(['guard_name' =>'staff','name' => 'dashboard'])->pluck('id','id')->all();
+        $permissions = Permission::where(['guard_name' =>'staff'])->pluck('id','id')->all();
         $role->syncPermissions($permissions);
 
          $role = Role::create([ 'guard_name' => 'member', 'name'=> 'member'  ]);
-        $permissions = Permission::where(['guard_name' =>'member','name' => 'dashboard'])->pluck('id','id')->all();
+        $permissions = Permission::where(['guard_name' =>'member'])->pluck('id','id')->all();
         $role->syncPermissions($permissions);
     }
 }

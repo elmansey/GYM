@@ -66,6 +66,29 @@ const routes = [
 
             },
             {
+                path: 'TeamChat',
+                name: 'TeamChat',
+                component: require('@/pages/chat/TeamChat').default,
+                meta: {
+
+                    permission: 'show-team-chat'
+
+                },
+
+
+            },
+            {
+                path: 'classChat',
+                name: 'classChat',
+                component: require('@/pages/chat/classChat').default,
+                meta: {
+
+                    permission: 'show-class-chat'
+
+                },
+
+            },
+            {
 
                 path: 'membersList',
                 name: 'membersList',

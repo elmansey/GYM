@@ -9,6 +9,7 @@ use App\Http\Controllers\API\staff\staffController;
 use App\Http\Controllers\API\Groups\GroupsController;
 use App\Http\Controllers\API\members\membersController;
 use App\Http\Controllers\API\auth\resetPasswordController;
+use App\Http\Controllers\API\chat\teamChatController;
 use App\Http\Controllers\API\Memberships\MembershipsController;
 use App\Http\Controllers\API\ClassSchedule\ClassScheduleController;
 
@@ -60,6 +61,7 @@ use App\Http\Controllers\API\ClassSchedule\ClassScheduleController;
 
         //user
         Route::get('users', [UserController::class, 'index'])->name('users');
+        Route::get('getUserToChatIgnoreMe/{email}', [UserController::class, 'getUserToChatIgnoreMe'])->name('getUserToChatIgnoreMe');
         Route::post('adminAdd', [UserController::class, 'store'])->name('adminAdd');
         Route::get('createUser', [UserController::class, 'create'])->name('createUser');
         Route::post('userUpdate/{id}', [UserController::class, 'update'])->name('userUpdate');
@@ -69,7 +71,7 @@ use App\Http\Controllers\API\ClassSchedule\ClassScheduleController;
 
         //role
         Route::get('roles', [RoleController::class, 'index'])->name('roles');
-        Route::get('createRole', [RoleController::class, 'create'])->name('create');
+        Route::get('createRole/{id}', [RoleController::class, 'create'])->name('create');
         Route::post('roleAdd', [RoleController::class, 'store'])->name('roleAdd');
         Route::post('roleUpdate', [RoleController::class, 'update'])->name('roleUpdate');
         Route::get('roleDelete/{id}', [RoleController::class, 'destroy'])->name('roleDelete');
@@ -107,6 +109,7 @@ use App\Http\Controllers\API\ClassSchedule\ClassScheduleController;
 
         //staff
         Route::get('staff', [staffController::class, 'index']);
+        Route::get('getStaffToChatIgnoreMe/{email}', [staffController::class, 'getStaffToChatIgnoreMe']);
         Route::post('addInStaff', [staffController::class, 'store']);
         Route::get('getItemFromStaffById/{id}', [staffController::class, 'getItemFromStaffById']);
         Route::post('updateInStaff/{id}', [staffController::class, 'update']);
@@ -123,6 +126,13 @@ use App\Http\Controllers\API\ClassSchedule\ClassScheduleController;
         Route::get('getMemberById/{id}',[membersController::class,'getMemberById']);
         Route::post('updateMember/{id}',[membersController::class,'update']);
         Route::get('deleteMember/{id}',[membersController::class,'destroy']);
+
+
+
+
+        // chat
+        Route::post('addMessageInTeamChat',[teamChatController::class,'store']);
+        Route::post('getOldMessageInChat',[teamChatController::class,'getOldMessageInChat']);
 
 
 

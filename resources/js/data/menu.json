@@ -36,6 +36,29 @@
                 }
             ]
         },
+        {
+            "title": "chat",
+            "icon": "message-circle",
+            "type": "sub",
+            "badgeType": "primary",
+            "active": false,
+            "permission": "show-chat-rooms",
+            "children": [
+
+                {
+                    "path": "/dashboard/TeamChat",
+                    "title": "chatting with team",
+                    "type": "link",
+                    "permission": "show-team-chat"
+                },
+                {
+                    "path": "/dashboard/classChat",
+                    "title": "my class chat",
+                    "type": "link",
+                    "permission": "show-class-chat"
+                }
+            ]
+        },
 
         {
             "title": "class schedule",

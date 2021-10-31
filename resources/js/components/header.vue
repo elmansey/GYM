@@ -168,7 +168,9 @@
               alt=""
             />
             <div class="media-body">
-              <span>{{ this.$store.getters.authUserRole[0].role }}</span>
+              <span>{{
+                  this.$store.getters.authUserRole[0].role ? this.$store.getters.authUserRole[0].role : ''
+                  }}</span>
               <p class="mb-0 font-roboto">
                   {{this.$store.getters.USER.email}} <i class="middle fa fa-angle-down"></i>
               </p>

@@ -22,6 +22,13 @@ class staffController extends Controller
         return response()->json(['success' => true, 'staff' => staffResource::collection($staff)],200);
     }
 
+    public function getStaffToChatIgnoreMe($email){
+
+        $staff = staff::where('email','!=',$email)->get();
+
+        return response()->json(['success' => true, 'staff' => staffResource::collection($staff)],200);
+    }
+
     public function store(Request $request){
 
 
