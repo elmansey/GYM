@@ -157,11 +157,11 @@
             <div v-if="chatting" class="col col-lg-6 col-xl-8 call-chat-body">
                 <div class="card">
                     <div class="card-body p-0">
-                        <div   class="row chat-box">
+                        <div   class="row chat-box" >
                             <!-- Chat right side start-->
-                            <div class="col pr-0 chat-right-aside" >
+                            <div class="col pr-0 chat-right-aside"  >
                             <!-- chat start-->
-                            <div class="chat">
+                            <div class="chat" >
                                 <!-- chat-header start-->
                                 <div class="chat-header clearfix">
                                 <img
@@ -172,7 +172,7 @@
 
                                 <div class="about">
                                     <div class="name" style="margin-top:20px !important;">
-                                        <!-- {{ reseverInfo.name ? reseverInfo.name : reseverInfo.firstName }} -->
+                                        {{ reseverInfo.name ? reseverInfo.name : reseverInfo.firstName }}
 
                                     <!--<span class="font-primary f-12">Typing...</span>-->
                                     </div>
@@ -181,44 +181,49 @@
 
                                 </div>
                                 <!-- chat-header end-->
-                                <div class="chat-history chat-msg-box ">
+                                <div class="chat-msg-box " ref="lastMessage"   >
                                 <ul>
                                     <li>
                                     <div class="message"  style="width: 100%;" >
-                                        <!-- <img
-                                        :class="['rounded-circle', 'float-left', 'chat-user-img' ,'img-30']"
-                                        alt=""
 
-                                        :src=" senderInfo.profile_picture   ? '../../profile_pictures/'+senderInfo.profile_picture :  '../../profile_pictures/DefaultProfile.jpg'"
-                                        />
-                                        <img
-                                        :class="['rounded-circle', 'float-right', 'chat-user-img' ,'img-30']"
-                                        alt=""
 
-                                        :src="  reseverInfo.profile_picture   ? '../../profile_pictures/'+reseverInfo.profile_picture :  '../../profile_pictures/DefaultProfile.jpg'"
-                                        /> -->
-                                                       <img
-                                                            :class="['rounded-circle', 'chat-user-img' ,'img-30']"
-                                                            alt=""
-                                                            :src="  senderInfo.Personal_uuid  == $store.getters.USER.Personal_uuid
-                                                              ? '../../profile_pictures/'+senderInfo.profile_picture :
+                                                    <div
 
-                                                               '../../profile_pictures/DefaultProfile.jpg'"
-                                                        />
-
-                                                <div
-
-                                                    v-for="(message , index) in oldMessage"
-                                                    :key="index"
-                                                    :class="['message-data' ,message.from == $store.getters.USER.Personal_uuid ? 'text-left float-left bg-dark  block' : 'text-right ,bg-light float-right block']"
-                                                    style="padding:12px 4px;border-radius:10px;width:45%;box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px ;word-wrap: break-word!important;overflow-wrap: anywhere;  clear: both; display: table;"
+                                                        v-for="(message , index) in oldMessage"
+                                                        :key="index"
+                                                        :class="['message-data' ,message.from == $store.getters.USER.Personal_uuid ? 'text-left float-left bg-dark  block' : 'text-right ,bg-light float-right block']"
+                                                        style="padding:5px 7px;border-radius:20px 20px 0px 20px;width:40%;box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px ;word-wrap: break-word!important;overflow-wrap: anywhere;  clear: both; display: table;"
                                                     >
 
+                                                    <div class="row">
+
+
+
+                                                        <img
+                                                        :class="['rounded-circle', 'float-left', 'chat-user-img' ]"
+                                                        alt=""
+                                                        v-if="message.from == $store.getters.USER.Personal_uuid"
+                                                        :src=" senderInfo.profile_picture   ? '../../profile_pictures/'+senderInfo.profile_picture :  '../../profile_pictures/DefaultProfile.jpg'"
+                                                         style="width:20px;height: 20px;"
+                                                        />
+                                                        <img
+                                                        :class="['rounded-circle', 'float-right', 'chat-user-img']"
+                                                        alt=""
+                                                        v-if="message.from != $store.getters.USER.Personal_uuid"
+                                                        :src="  reseverInfo.profile_picture   ? '../../profile_pictures/'+reseverInfo.profile_picture :  '../../profile_pictures/DefaultProfile.jpg'"
+                                                        style="width:20px;height: 20px;"
+                                                        />
 
 
 
 
-                                                    {{  message.message }}
+                                                            {{  message.message }}
+
+                                                        </div>
+
+
+
+
 
                                                     <!-- <span class="message-data-time">
 
@@ -242,7 +247,6 @@
 
                                                     <input
                                                         class="input-txt-bx"
-                                                        id="message-to-send"
                                                         v-model="chatInfo.message"
                                                         style="border:none;!important;width:100%;padding: 0px;!important;margin:auto"
                                                         type="text"
@@ -352,12 +356,24 @@ export default {
             this.oldMessage = res.data.messages
             this.senderInfo = res.data.from
             this.reseverInfo = res.data.to
+           this.scrollChatToLastMessage()
             this.chatting = true
 
         })
         .catch(err => {
             console.error(err);
         })
+    },
+
+
+
+    scrollChatToLastMessage(){
+        setTimeout(() => {
+
+           this.$refs.lastMessage.scrollTop =  this.$refs.lastMessage.scrollHeight -  this.$refs.lastMessage.clientHeight
+
+        },50)
+
     },
 
     handelSubmitFormMessage(){
@@ -371,7 +387,12 @@ export default {
 
         axios.post('addMessageInTeamChat',formData)
         .then(res => {
-            console.log(res)
+
+            if(res.data.success){
+                this.chatInfo.message = ''
+                this.oldMessage.push(res.data.message)
+                this.scrollChatToLastMessage()
+            }
         })
         .catch(err => {
             console.error(err);
@@ -382,10 +403,13 @@ export default {
     }
 
 
-
-
-
   },
+
+  watch: {
+
+
+
+  }
 };
 </script>
 

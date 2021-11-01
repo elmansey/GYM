@@ -6,6 +6,9 @@ import router from './router'
 import {
     store
 } from './store';
+
+import './bootstrap' // pusher and laravel echo
+
 import Breadcrumbs from './components/bread_crumbs'
 import SmartTable from "vuejs-smart-table";
 import {
@@ -62,6 +65,11 @@ window.Toast = Toast
 
 
 
+
+Echo.channel('message_chat')
+    .listen('NewMessage', (e) => {
+        console.log(e);
+    });
 
 
 

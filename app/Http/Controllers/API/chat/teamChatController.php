@@ -4,12 +4,13 @@ namespace App\Http\Controllers\API\chat;
 
 use App\Models\User;
 use App\Models\staff;
+use App\Events\NewMessage;
 use Illuminate\Http\Request;
 use App\Models\teamChatMessage;
 use App\Http\Controllers\Controller;
-use Illuminate\support\facades\Validator;
 use App\Http\Resources\staffResource;
 use App\Http\Resources\UsersResource;
+use Illuminate\support\facades\Validator;
 
 class teamChatController extends Controller
 {
@@ -42,6 +43,7 @@ class teamChatController extends Controller
 
 
     }
+
     public function store(Request $request){
 
         $validator = validator::make($request->all(), [
@@ -51,15 +53,24 @@ class teamChatController extends Controller
         ]);
 
 
+
         if($validator->fails()){
             return response()->json(['success' => false, 'message' => $validator->errors()]);
         }
 
 
+
         $input  = $request->all();
         $message = teamChatMessage::create($input);
 
+        $to = staff::where('Personal_uuid','=',$message->to)->first() ?
+         staff::where('Personal_uuid','=',$message->to)->first() :
+         User::where('Personal_uuid','=',$message->to)->first() ;
 
+
+        broadcast(new NewMessage($to,$message));
+
+       return response()->json(['success' => true , 'message' => $message],200);
 
 
 
