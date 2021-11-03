@@ -18,6 +18,7 @@ class CreateTeamChatMessageTable extends Migration
             $table->string('from');
             $table->string('to');
             $table->text('message');
+            $table->string('time');
             $table->timestamps();
         });
     }

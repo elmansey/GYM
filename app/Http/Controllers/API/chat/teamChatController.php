@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\API\chat;
 
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\staff;
 use App\Events\NewMessage;
 use Illuminate\Http\Request;
+use Faker\Provider\UserAgent;
+use App\Http\Resources\message;
 use App\Models\teamChatMessage;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\staffResource;
@@ -17,13 +20,13 @@ class teamChatController extends Controller
 
     public function getOldMessageInChat(Request $request){
 
-        $messages = teamChatMessage::where('from','=',$request->from)
-        ->where('to' ,'=' , $request->to)
+        $messages = teamChatMessage::where('to','=',$request->to)
+        ->Where('from' ,'=' , $request->from)
         ->orWhere('to' ,'=' , $request->from)
         ->Where('from' ,'=', $request->to)
         ->get();
 
-
+            // return $messages;
 
         $to = staff::where('Personal_uuid','=',$request->to)->first() ?
         staff::where('Personal_uuid','=',$request->to)->first() :
@@ -37,7 +40,7 @@ class teamChatController extends Controller
 
 
 
-        return response()->json(['success' => true , 'messages' =>$messages , 'to' => $to , 'from' => $from]);
+        return response()->json(['success' => true , 'messages' => message::collection($messages ), 'to' => $to , 'from' => $from]);
 
 
 
@@ -61,16 +64,18 @@ class teamChatController extends Controller
 
 
         $input  = $request->all();
+
+        $input['time'] = Carbon::now()->toDateTimeString();
         $message = teamChatMessage::create($input);
 
         $to = staff::where('Personal_uuid','=',$message->to)->first() ?
-         staff::where('Personal_uuid','=',$message->to)->first() :
-         User::where('Personal_uuid','=',$message->to)->first() ;
+        staff::where('Personal_uuid','=',$message->to)->first():
+         User::where('Personal_uuid','=',$message->to)->first();
 
+        // // return $to;
+        broadcast(new NewMessage($to,$message))->toOthers();
 
-        broadcast(new NewMessage($to,$message));
-
-       return response()->json(['success' => true , 'message' => $message],200);
+       return response()->json(['success' => true , 'message' =>new message($message),'to' => $to],200);
 
 
 

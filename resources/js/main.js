@@ -66,10 +66,7 @@ window.Toast = Toast
 
 
 
-Echo.channel('message_chat')
-    .listen('NewMessage', (e) => {
-        console.log(e);
-    });
+
 
 
 

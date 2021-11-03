@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+
 use Illuminate\Support\Str;
+use App\Models\teamChatMessage;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\Model;
@@ -53,6 +55,12 @@ class staff extends  Authenticatable implements JWTSubject
 
         });
 
+    }
+
+
+    public  function teamMessages(){
+
+        return $this->hasMany(teamChatMessage::class);
     }
 
 }

@@ -9,5 +9,5 @@ class teamChatMessage extends Model
 {
     use HasFactory;
     public $table = 'team_chat_message';
-    protected $fillable = ['from','to','message'];
+    protected $fillable = ['from','to','message','time'];
 }

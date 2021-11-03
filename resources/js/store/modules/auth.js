@@ -5,10 +5,10 @@ import router from '@/router/index'
 const state = {
 
     isAuth: false,
-    user: null,
+    user: [],
     errors: '',
     token: localStorage.getItem('token'),
-    authUserRole: null,
+    authUserRole: [],
 
 }
 
@@ -85,9 +85,9 @@ const mutations = {
     logOut(state) {
         localStorage.removeItem('token')
         state.isAuth = false
-        state.user = ''
+        state.user = []
         state.token = ''
-        state.authUserRole = null
+        state.authUserRole = []
         router.push({
             name: 'login'
         })

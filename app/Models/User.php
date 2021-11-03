@@ -82,4 +82,10 @@ class User extends Authenticatable implements JWTSubject
 
     }
 
+    public  function teamMessages(){
+
+        return $this->hasMany(teamChatMessage::class);
+    }
+
+
 }
