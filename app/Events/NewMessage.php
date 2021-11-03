@@ -20,22 +20,27 @@ class NewMessage implements ShouldBroadcast
     public $user;
 
 
-    public function __construct( $user,$message)
+    public function __construct( $user, $message )
     {
-        $this->$message = $message;
-         $this->$user = $user;
+        $this->message = $message;
+         $this->user = $user;
+
     }
 
 
 
     public function broadcastOn()
     {
-        return new PrivateChannel('chat_message.'.$this->$user->Personal_uuid);
+        return new PrivateChannel('chat_message.'.$this->user->Personal_uuid); // recever uu id
     }
 
     public function broadcastWith(){
 
         return ['message' => $this->message];
+    }
+    public function broadcastAs(){
+
+        return 'chatting_team';
     }
 
 

@@ -39,10 +39,16 @@ window.Echo = new Echo({
     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
     forceTLS: true,
     encrypted: true,
+    wsPort: 6001,
+    disableStats: true,
+    host: window.location.hostname + ':8000',
+    enabledTransports: ["ws", "wss", 'xhr_streaming'],
+    authEndpoint: "/api/broadcasting/auth",
     auth: {
         headers: {
             Authorization: 'Bearer' + localStorage.getItem('token'),
             'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+
         }
     }
 });

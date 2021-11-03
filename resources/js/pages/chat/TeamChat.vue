@@ -319,8 +319,6 @@
 </template>
 <script>
 import axios from "axios";
-// import StaffList from '../staff/staffList.vue';
-
 export default {
   name: "Chat",
   data() {
@@ -347,14 +345,7 @@ export default {
     };
   },
 
-    mounted(){
 
-        Echo.private(`chat_message${this.chatInfo.from}`)
-            .listen('NewMessage', (e) => {
-                console.log(e)
-            })
-
-    },
   beforeMount(){
 
       axios.get(`getStaffToChatIgnoreMe/${this.$store.getters.USER.email}`)
@@ -379,11 +370,15 @@ export default {
 
       this.chatInfo.from = this.$store.getters.USER.Personal_uuid
   },
-//   components: {StaffList},
+//   mounted() {
 
-  mounted() {
+//       window.Echo.private(`chat_message.${this.chatInfo.to}`)
+//         .listen('.chatting_team', (e) => {
+//             console.log(e);
+//         });
+//   },
 
-  },
+
 
   methods: {
 
@@ -403,6 +398,7 @@ export default {
             this.reseverInfo = res.data.to
            this.scrollChatToLastMessage()
               this.chatting = true
+
 
         })
         .catch(err => {
@@ -436,11 +432,12 @@ export default {
             if(res.data.success){
                 this.chatInfo.message = ''
                 this.oldMessage.push(res.data.message)
-                // Echo.private(`chat_message.${res.data.to}`)
-                // .listen('NewMessage', (e) => {
-                //     console.log(e);
-                // });
                 this.scrollChatToLastMessage()
+                    Echo.private(`chat_message.${this.chatInfo.to}`)
+                    .listen('.chatting_team', (e) => {
+                        console.log('ffffffffffffffffffff');
+                    });
+
             }
         })
         .catch(err => {
@@ -449,10 +446,10 @@ export default {
 
 
 
-    }
-
-
+    },
   },
+
+
 
   watch: {
 

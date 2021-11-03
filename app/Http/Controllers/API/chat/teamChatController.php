@@ -18,6 +18,13 @@ use Illuminate\support\facades\Validator;
 class teamChatController extends Controller
 {
 
+
+    public function __construct(){
+
+        $this->middleware(['auth:admin,staff']);
+    }
+
+
     public function getOldMessageInChat(Request $request){
 
         $messages = teamChatMessage::where('to','=',$request->to)
@@ -72,7 +79,7 @@ class teamChatController extends Controller
         staff::where('Personal_uuid','=',$message->to)->first():
          User::where('Personal_uuid','=',$message->to)->first();
 
-        // // return $to;
+        // return $to fire event;
         broadcast(new NewMessage($to,$message))->toOthers();
 
        return response()->json(['success' => true , 'message' =>new message($message),'to' => $to],200);

@@ -35,7 +35,7 @@ use App\Http\Controllers\API\ClassSchedule\ClassScheduleController;
 
 
     /// global route
-    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/login', [AuthController::class, 'login'])->name('login');
     Route::get('memberships', [MembershipsController::class, 'index']);
     Route::get('groups', [GroupsController::class, 'index']);
     Route::get('getClassToSelect',[ClassScheduleController::class, 'getClassToSelect']);
@@ -48,7 +48,7 @@ use App\Http\Controllers\API\ClassSchedule\ClassScheduleController;
 
 
 // auth route
-     Route::group(['middleware' => ['JWTchecker',]], function () {
+     Route::group(['middleware' => ['auth:admin,staff,member',]], function () {
 
         Route::get('info', [AuthController::class, 'info'])->name('info');
         Route::post('logout', [AuthController::class, 'logout'])->name('logout');

@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\User;
+use App\Models\staff;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Broadcast;
 
 /*
@@ -17,7 +20,11 @@ use Illuminate\Support\Facades\Broadcast;
 //     return (int) $user->id === (int) $id;
 // });
 
-Broadcast::channel('chat_message.{uuid}', function ($user, $uuid) {
-    return $user->Personal_uuid ===  $uuid;
-});
 
+
+Broadcast::channel('chat_message.{Personal_uuid}', function ($user, $Personal_uuid) {
+
+    return (string) $user->Personal_uuid === (string) $Personal_uuid;
+
+
+},['guards' => ['auth:admin','auth:staff']]);
