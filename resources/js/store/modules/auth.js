@@ -72,7 +72,7 @@ const mutations = {
 
     SET_USER(state, user) {
         state.user = user
-        window.Echo.connector.pusher.config.auth.headers['Authorization'] = `Bearer ${state.token}`;
+        Echo.connector.pusher.config.auth.headers['Authorization'] = `Bearer ${state.token}`;
 
     },
 

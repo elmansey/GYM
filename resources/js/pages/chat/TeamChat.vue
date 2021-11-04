@@ -370,17 +370,28 @@ export default {
 
       this.chatInfo.from = this.$store.getters.USER.Personal_uuid
   },
+
   mounted() {
 
-       Echo.private(`chat_message.${this.chatInfo.to}`)
-            .listen(".chatting_team", (e) => {
-                // this.oldMessage.push(e);
-                console.log(e.message)
-                console.log('jjjjjjjjjj')
-            });
+        Echo.connector.options.auth.headers['Authorization'] = `Bearer ${this.$store.state.token}`;
+
+        window.Echo.private('GYM_database_chat_message.'+this.chatInfo.to)
+            .listen('NewMessage', (e) => {
+
+                if(e.message.to == this.$store.getters.USER.Personal_uuid){
+
+                        this.oldMessage.push({
+                            'to' : e.message.to,
+                            'from' : e.message.from,
+                            'message' : e.message.message,
+                            'time' : Array(e.message.time)
+                        });
+                        console.log(e)
+                }
+                console.log(e)
+        })
 
   },
-
 
 
   methods: {
@@ -436,7 +447,6 @@ export default {
                 this.chatInfo.message = ''
                 this.oldMessage.push(res.data.message)
                 this.scrollChatToLastMessage()
-
             }
         })
         .catch(err => {
@@ -446,6 +456,7 @@ export default {
 
 
     },
+
   },
 
 

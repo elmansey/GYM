@@ -79,8 +79,12 @@ class teamChatController extends Controller
         staff::where('Personal_uuid','=',$message->to)->first():
          User::where('Personal_uuid','=',$message->to)->first();
 
+    
+
         // return $to fire event;
         broadcast(new NewMessage($to,$message))->toOthers();
+        // event(new NewMessage($to,$message));
+        // event(new NewMessage($message));
 
        return response()->json(['success' => true , 'message' =>new message($message),'to' => $to],200);
 

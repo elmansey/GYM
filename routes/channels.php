@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Broadcast;
 
 Broadcast::channel('chat_message.{Personal_uuid}', function ($user, $Personal_uuid) {
 
-    return (string) $user->Personal_uuid === (string) $Personal_uuid;
+    // return (string) $user->Personal_uuid === (string) $Personal_uuid;
+    return true ;
 
-
-},['guards' => ['auth:admin','auth:staff']]);
+},['guards' => ['admin','staff']]);

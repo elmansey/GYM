@@ -29,6 +29,22 @@ class NewMessage implements ShouldBroadcast
 
 
 
+    // public function __construct(  $message )
+    // {
+    //     $this->message = $message;
+
+
+    // }
+
+    // public function broadcastOn()
+    // {
+    //     return new Channel('chat');
+    // }
+
+
+
+
+
     public function broadcastOn()
     {
         return new PrivateChannel('chat_message.'.$this->user->Personal_uuid); // recever uu id
@@ -38,10 +54,10 @@ class NewMessage implements ShouldBroadcast
 
         return ['message' => $this->message];
     }
-    public function broadcastAs(){
+    // public function broadcastAs(){
 
-        return 'chatting_team';
-    }
+    //     return 'chatting_team';
+    // }
 
 
 
