@@ -40,9 +40,10 @@ window.Echo = new Echo({
     forceTLS: true,
     encrypted: true,
     wsPort: 6001,
+    wssPort: 6001,
     disableStats: true,
     host: window.location.hostname + ':8000',
-    enabledTransports: ["ws", "wss", 'xhr_streaming'],
+    enabledTransports: ["ws", "wss"],
     authEndpoint: "/api/broadcasting/auth",
     auth: {
         headers: {

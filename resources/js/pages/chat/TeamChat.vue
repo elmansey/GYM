@@ -370,13 +370,16 @@ export default {
 
       this.chatInfo.from = this.$store.getters.USER.Personal_uuid
   },
-//   mounted() {
+  mounted() {
 
-//       window.Echo.private(`chat_message.${this.chatInfo.to}`)
-//         .listen('.chatting_team', (e) => {
-//             console.log(e);
-//         });
-//   },
+       Echo.private(`chat_message.${this.chatInfo.to}`)
+            .listen(".chatting_team", (e) => {
+                // this.oldMessage.push(e);
+                console.log(e.message)
+                console.log('jjjjjjjjjj')
+            });
+
+  },
 
 
 
@@ -433,10 +436,6 @@ export default {
                 this.chatInfo.message = ''
                 this.oldMessage.push(res.data.message)
                 this.scrollChatToLastMessage()
-                    Echo.private(`chat_message.${this.chatInfo.to}`)
-                    .listen('.chatting_team', (e) => {
-                        console.log('ffffffffffffffffffff');
-                    });
 
             }
         })

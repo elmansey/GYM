@@ -133,6 +133,9 @@ const routes = [
             },
 
 
+
+
+
             {
 
                 path: 'updateMember/:memberId',
@@ -150,6 +153,10 @@ const routes = [
                 component: require('@/pages/members/add_new_member').default,
 
             },
+
+
+
+
 
             {
                 path: 'addMembership',
