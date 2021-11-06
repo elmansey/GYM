@@ -373,7 +373,7 @@ export default {
 
   mounted() {
 
-
+      this.fire()
 
   },
 
@@ -443,29 +443,38 @@ export default {
     },
 
     fire(){
-        // window.Echo.connector.options.auth.headers['Authorization'] = `Bearer ${this.$store.state.token}`;
-        // window.Echo.connector.pusher.config.auth.headers.Authorization = `Bearer ${this.$store.state.token}`;
+
+        console.log('after')
+
+        window.Echo.private(`chat.${this.chatInfo.to}`).listen('NewMessage', (e) => {
+                 console.log('dffgfhbthfgl;dlf')
+                console.log(e);
+            });
+
+        console.log('before')
 
 
-        Echo.private(`chat.${this.chatInfo.to}`)
-            .listen('NewMessage', function(e) {
 
-                console.log('lllllllllllllllllllllllllll')
-                  console.log(e)
-                // if(e.message.to == this.$store.getters.USER.Personal_uuid){
 
-                //         this.oldMessage.push({
-                //             'to' : e.message.to,
-                //             'from' : e.message.from,
-                //             'message' : e.message.message,
-                //             'time' : Array(e.message.time)
-                //         });
-                //         console.log(e)
-                //         console.log('lllllllllllllllllllllllllll')
-                // }
-                // console.log(e)
-                //   console.log('lllllllllllllllllllllllllll')
-        })
+
+        // Echo.private(`chat.${this.chatInfo.to}`).listen('NewMessage', (e) => {
+
+        //         console.log('lllllllllllllllllllllllllll')
+        //           console.log(e)
+        //         // if(e.message.to == this.$store.getters.USER.Personal_uuid){
+
+        //         //         this.oldMessage.push({
+        //         //             'to' : e.message.to,
+        //         //             'from' : e.message.from,
+        //         //             'message' : e.message.message,
+        //         //             'time' : Array(e.message.time)
+        //         //         });
+        //         //         console.log(e)
+        //         //         console.log('lllllllllllllllllllllllllll')
+        //         // }
+        //         // console.log(e)
+        //         //   console.log('lllllllllllllllllllllllllll')
+        // })
     }
 
   },

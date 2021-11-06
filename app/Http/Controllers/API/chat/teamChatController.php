@@ -83,7 +83,6 @@ class teamChatController extends Controller
 
         // return $to fire event;
         broadcast(new NewMessage($to,$message))->toOthers();
-        // event(new NewMessage($to,$message));
         // event(new NewMessage($message));
 
        return response()->json(['success' => true , 'message' =>new message($message),'to' => $to],200);

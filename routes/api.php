@@ -1,15 +1,16 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\auth\AuthController;
 use App\Http\Controllers\API\user\RoleController;
 use App\Http\Controllers\API\user\UserController;
 use App\Http\Controllers\API\staff\staffController;
+use App\Http\Controllers\API\chat\teamChatController;
 use App\Http\Controllers\API\Groups\GroupsController;
 use App\Http\Controllers\API\members\membersController;
 use App\Http\Controllers\API\auth\resetPasswordController;
-use App\Http\Controllers\API\chat\teamChatController;
 use App\Http\Controllers\API\Memberships\MembershipsController;
 use App\Http\Controllers\API\ClassSchedule\ClassScheduleController;
 
@@ -34,6 +35,10 @@ use App\Http\Controllers\API\ClassSchedule\ClassScheduleController;
 
 
 
+
+
+
+
     /// global route
     Route::post('/login', [AuthController::class, 'login'])->name('login');
     Route::get('memberships', [MembershipsController::class, 'index']);
@@ -49,6 +54,10 @@ use App\Http\Controllers\API\ClassSchedule\ClassScheduleController;
 
 // auth route
      Route::group(['middleware' => ['auth:admin,staff,member',]], function () {
+
+
+
+
 
         Route::get('info', [AuthController::class, 'info'])->name('info');
         Route::post('logout', [AuthController::class, 'logout'])->name('logout');

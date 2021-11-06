@@ -1,7 +1,6 @@
 <?php
 
 use App\Models\User;
-use App\Models\staff;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Broadcast;
 
@@ -22,9 +21,9 @@ use Illuminate\Support\Facades\Broadcast;
 
 
 
-Broadcast::channel('chat.*', function ( $user, $Personal_uuid) {
+Broadcast::channel('chat.{Personal_uuid}', function (  $user ,  $Personal_uuid) {
 
-    return (string) $user->Personal_uuid === (string) $Personal_uuid;
+    // return (string) $user->Personal_uuid === (string) $Personal_uuid;
     return true ;
 
 },['guards' => ['admin','staff']]);

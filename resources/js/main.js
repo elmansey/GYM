@@ -1,3 +1,4 @@
+import './bootstrap'
 import Vue from 'vue'
 import App from './App.vue'
 import BootstrapVue from 'bootstrap-vue'
@@ -7,8 +8,9 @@ import {
     store
 } from './store';
 
-import './bootstrap'
-import './setting/pusherLaravelEcho' // pusher and laravel echo
+
+
+// import './setting/pusherLaravelEcho' // pusher and laravel echo
 
 import Breadcrumbs from './components/bread_crumbs'
 import SmartTable from "vuejs-smart-table";
@@ -39,6 +41,7 @@ Vue.component('apexchart', VueApexCharts)
 Vue.use(FunctionalCalendar, {
     dayNames: ['M', 'T', 'W', 'T', 'F', 'S', 'S']
 });
+
 
 
 
