@@ -373,23 +373,7 @@ export default {
 
   mounted() {
 
-        Echo.connector.options.auth.headers['Authorization'] = `Bearer ${this.$store.state.token}`;
 
-        window.Echo.private('GYM_database_chat_message.'+this.chatInfo.to)
-            .listen('NewMessage', (e) => {
-
-                if(e.message.to == this.$store.getters.USER.Personal_uuid){
-
-                        this.oldMessage.push({
-                            'to' : e.message.to,
-                            'from' : e.message.from,
-                            'message' : e.message.message,
-                            'time' : Array(e.message.time)
-                        });
-                        console.log(e)
-                }
-                console.log(e)
-        })
 
   },
 
@@ -447,6 +431,7 @@ export default {
                 this.chatInfo.message = ''
                 this.oldMessage.push(res.data.message)
                 this.scrollChatToLastMessage()
+                this.fire()
             }
         })
         .catch(err => {
@@ -456,6 +441,32 @@ export default {
 
 
     },
+
+    fire(){
+        // window.Echo.connector.options.auth.headers['Authorization'] = `Bearer ${this.$store.state.token}`;
+        // window.Echo.connector.pusher.config.auth.headers.Authorization = `Bearer ${this.$store.state.token}`;
+
+
+        Echo.private(`chat.${this.chatInfo.to}`)
+            .listen('NewMessage', function(e) {
+
+                console.log('lllllllllllllllllllllllllll')
+                  console.log(e)
+                // if(e.message.to == this.$store.getters.USER.Personal_uuid){
+
+                //         this.oldMessage.push({
+                //             'to' : e.message.to,
+                //             'from' : e.message.from,
+                //             'message' : e.message.message,
+                //             'time' : Array(e.message.time)
+                //         });
+                //         console.log(e)
+                //         console.log('lllllllllllllllllllllllllll')
+                // }
+                // console.log(e)
+                //   console.log('lllllllllllllllllllllllllll')
+        })
+    }
 
   },
 

@@ -79,7 +79,7 @@ class teamChatController extends Controller
         staff::where('Personal_uuid','=',$message->to)->first():
          User::where('Personal_uuid','=',$message->to)->first();
 
-    
+
 
         // return $to fire event;
         broadcast(new NewMessage($to,$message))->toOthers();
