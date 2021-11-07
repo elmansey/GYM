@@ -11,11 +11,11 @@
         <div class="col call-chat-body" >
           <div class="card">
             <div class="card-body p-0">
-              <div class="row chat-box">
+              <div class="row chat-box" >
                 <!-- Chat right side start-->
-                <div class="col pr-0 chat-right-aside">
+                <div class="col pr-0 chat-right-aside" >
                   <!-- chat start-->
-                  <div class="chat mb-0 pb-0"  >
+                  <div class="chat mb-0 pb-0" >
                     <!-- chat-header start-->
                     <div class="chat-header clearfix">
                           <img
@@ -28,8 +28,9 @@
                         <div class="name">
                             <div class="name" style="margin-top:20px !important;" v-if="chatting">
                                 {{ reseverInfo.name ? reseverInfo.name : reseverInfo.firstName }}
+                                <br />
 
-                            <!--<span class="font-primary f-12">Typing...</span>-->
+                            <span class="font-primary f-12" v-if="typeStatus" >Typing...</span>
                             </div>
                         </div>
                         <div class="status digits">
@@ -49,19 +50,21 @@
                       </ul>
                     </div>
                     <!-- chat-header end-->
-                    <div class="chat-history chat-msg-box custom-scrollbar"  ref="lastMessage">
+                    <div class="chat-history chat-msg-box custom-scrollbar"  ref="lastMessage" style=" height: 400px!important;">
                       <ul>
                         <li
 
                         >
                           <div
                             class="message "
-                            style="width:100%;">
+                            style="width:100%;"
+
+                            >
 
                                 <div
                                 v-for="(message , index) in oldMessage"
                                         :key="index"
-                                        :class="[message.from == $store.getters.USER.Personal_uuid ? ' float-left block '  : ' float-right block ']"
+                                        :class="[message.from == $store.getters.USER.id ? ' float-left block '  : ' float-right block ']"
                                         style="clear: both ; "
                                 >
                                     <div class="card d-inline-block mb-3 float-right"  style="background-color:#F3F1F5;border-radius:15px">
@@ -69,14 +72,14 @@
                                         <div class="card-body "  >
                                                 <div class="d-flex flex-row pb-1">
 
-                                                    <img   v-if="message.from == $store.getters.USER.Personal_uuid" alt=""
+                                                    <img   v-if="message.from == $store.getters.USER.id" alt=""
                                                     :src=" senderInfo.profile_picture   ? '../../profile_pictures/'+senderInfo.profile_picture :  '../../profile_pictures/DefaultProfile.jpg'"
                                                     class="img-thumbnail  border-0 rounded-circle  mr-3  list-thumbnail align-self-center "
                                                     style="width:40px;hight:40px"
                                                     >
 
 
-                                                    <img  v-if="message.from != $store.getters.USER.Personal_uuid"
+                                                    <img  v-if="message.from != $store.getters.USER.id"
                                                     alt=""
                                                     :src="  reseverInfo.profile_picture   ? '../../profile_pictures/'+reseverInfo.profile_picture :  '../../profile_pictures/DefaultProfile.jpg'"
                                                     class="img-thumbnail  border-0 rounded-circle  mr-3  list-thumbnail align-self-center "
@@ -89,11 +92,11 @@
                                                                 <p class="mb-0 truncate list-item-heading">
 
 
-                                                                    <span v-if="message.from == $store.getters.USER.Personal_uuid" >
-                                                                        {{ senderInfo.name ? senderInfo.name : senderInfo.firstName  }}
+                                                                    <span v-if="message.from == $store.getters.USER.id" >
+                                                                        {{  senderInfo.name   }}
                                                                     </span>
-                                                                    <span v-if="message.from != $store.getters.USER.Personal_uuid" >
-                                                                        {{ reseverInfo.name ? reseverInfo.name : reseverInfo.firstName  }}
+                                                                    <span v-if="message.from != $store.getters.USER.id" >
+                                                                        {{ reseverInfo.name   }}
                                                                     </span>
 
                                                                 </p>
@@ -131,6 +134,7 @@
                                             <div class="col-xl-12 d-flex" style="height: 100%!important;padding: 0px;!important;margin:0px">
 
                                                      <input
+                                                        @keydown="typing"
                                                         class="input-txt-bx"
                                                         v-model="chatInfo.message"
                                                         style="border:none;!important;width:100%;padding: 15px;!important;margin:auto"
@@ -153,7 +157,9 @@
                     <!-- chat end-->
                     <!-- Chat right side ends-->
                   </div>
+
                 </div>
+
                 <div
                   class="col pl-0 chat-menu custom-scrollbar"
                   :class="{ show: chatmenutoogle }"
@@ -166,26 +172,26 @@
                         <ul class="list digits">
                           <li
                             class="clearfix mb-3 border-bottom pb-3 "
-                            v-for="(admin,key) in AlladminTeamToChat"
+                            v-for="(teamPerson,key) in AllTeamToChat"
                             :key="key"
                             style="cursor: pointer; padding: 12px;!important;margin:0px!important"
                           >
                             <img
                               class="rounded-circle user-image"
-                            :src=" admin.profile_picture   ? '../../profile_pictures/'+admin.profile_picture :  '../../profile_pictures/DefaultProfile.jpg'"
+                            :src=" teamPerson.profile_picture   ? '../../profile_pictures/'+teamPerson.profile_picture :  '../../profile_pictures/DefaultProfile.jpg'"
                              alt=""
-                             @click.prevent="getOldMessageInChat(admin.Personal_uuid)"
+                             @click.prevent="getOldMessageInChat(teamPerson.id)"
                             />
                             <div class="about">
                              <div class="name"
-                                @click.prevent="getOldMessageInChat(admin.Personal_uuid)"
+                                @click.prevent="getOldMessageInChat(teamPerson.id)"
 
-                                >{{ admin.name }}
+                                >{{ teamPerson.name }}
 
                             </div>
                               <div class="status"  style="display: flex;">
                                  <i class="fa fa-briefcase" style="margin: 6px;"></i>
-                                  <p> {{  admin.role[0].name }}</p>
+                                  <p> {{  teamPerson.role[0].name }}</p>
 
                               </div>
                             </div>
@@ -193,36 +199,7 @@
 
                         </ul>
 
-                        <ul class="list digits">
-                          <li
-                            class="clearfix mb-3 border-bottom pb-3"
-                            v-for="(staff,index) in AllstaffTeamToChat"
-                            :key="index"
-                            style="cursor: pointer; padding: 12px;!important;margin:0px!important"
-                          >
-                            <img
-                              class="rounded-circle user-image"
-                             :src=" staff.profile_picture   ? '../../profile_pictures/'+staff.profile_picture :  '../../profile_pictures/DefaultProfile.jpg'"
-                             alt=""
-                             @click.prevent="getOldMessageInChat(staff.Personal_uuid)"
 
-                            />
-                            <div class="about">
-                               <h6 class="name"
-                                    @click.prevent="getOldMessageInChat(staff.Personal_uuid)"
-                                    >{{ staff.firstName }}
-                              </h6>
-                              <div class="status" style="display: flex;">
-
-                                     <i class="fa fa-briefcase" style="margin: 6px;"> </i>
-                                     <p> {{  staff.roles[0].name }}</p>
-
-                              </div>
-                            </div>
-                          </li>
-
-
-                        </ul>
                       </div>
                      <div
                         v-else
@@ -329,8 +306,7 @@ export default {
       chatmenutoogle: false,
 
 
-      AllstaffTeamToChat:[],
-      AlladminTeamToChat:[],
+      AllTeamToChat:[],
       chatting:false,
       isloading:false,
 
@@ -341,25 +317,19 @@ export default {
       },
       senderInfo:[],
       reseverInfo:[],
-      oldMessage:[]
+      oldMessage:[],
+      typeStatus:false
     };
   },
 
 
   beforeMount(){
 
-      axios.get(`getStaffToChatIgnoreMe/${this.$store.getters.USER.email}`)
-      .then(res => {
-          this.AllstaffTeamToChat = res.data.staff
-          this.isloading = true
-      })
-      .catch(err => {
-          console.error(err);
-      })
+
 
       axios.get(`getUserToChatIgnoreMe/${this.$store.getters.USER.email}`)
       .then(res => {
-          this.AlladminTeamToChat = res.data.admins
+          this.AllTeamToChat = res.data.admins
           this.isloading = true
 
       })
@@ -368,21 +338,51 @@ export default {
       })
 
 
-      this.chatInfo.from = this.$store.getters.USER.Personal_uuid
+      this.chatInfo.from = this.$store.getters.USER.id
   },
 
   mounted() {
 
-      this.fire()
+        Echo.private(`team_chat.${this.chatInfo.from}`).listen('NewMessage', (e) => {
+
+                if(e.message.to == this.$store.getters.USER.id && this.chatting){
+
+                        this.oldMessage.push({
+                            'to' : e.message.to,
+                            'from' : e.message.from,
+                            'message' : e.message.message,
+                            'time' : Array(e.message.time)
+                        });
+                        this.scrollChatToLastMessage()
+
+                }
+
+
+        })
+
 
   },
 
+  watch: {
+
+
+
+        },
 
   methods: {
 
-    getOldMessageInChat(Personal_uuid){
+       typing(){
 
-         this.chatInfo.to  =   Personal_uuid
+        Echo.private(`team_chat.${this.chatInfo.from}`)
+            .whisper('typing', {
+                name: this.chatInfo.message
+            })
+
+    },
+
+    getOldMessageInChat(id){
+
+         this.chatInfo.to  =   id
 
          let formData = new FormData();
          formData.append("from", this.chatInfo.from)
@@ -431,7 +431,7 @@ export default {
                 this.chatInfo.message = ''
                 this.oldMessage.push(res.data.message)
                 this.scrollChatToLastMessage()
-                this.fire()
+
             }
         })
         .catch(err => {
@@ -442,56 +442,28 @@ export default {
 
     },
 
-    fire(){
-
-        console.log('after')
-
-        window.Echo.private(`chat.${this.chatInfo.to}`).listen('NewMessage', (e) => {
-                 console.log('dffgfhbthfgl;dlf')
-                console.log(e);
-            });
-
-        console.log('before')
 
 
 
-
-
-        // Echo.private(`chat.${this.chatInfo.to}`).listen('NewMessage', (e) => {
-
-        //         console.log('lllllllllllllllllllllllllll')
-        //           console.log(e)
-        //         // if(e.message.to == this.$store.getters.USER.Personal_uuid){
-
-        //         //         this.oldMessage.push({
-        //         //             'to' : e.message.to,
-        //         //             'from' : e.message.from,
-        //         //             'message' : e.message.message,
-        //         //             'time' : Array(e.message.time)
-        //         //         });
-        //         //         console.log(e)
-        //         //         console.log('lllllllllllllllllllllllllll')
-        //         // }
-        //         // console.log(e)
-        //         //   console.log('lllllllllllllllllllllllllll')
-        // })
-    }
 
   },
 
 
 
-  watch: {
 
 
-
-  }
 };
 </script>
 <style scoped>
+
 ::-webkit-scrollbar {
     width: 0px;
     background: transparent; /* make scrollbar transparent  hiden but still scrllo*/
-}
+};
+
+
+
+
+
 </style>
 

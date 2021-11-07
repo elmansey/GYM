@@ -99,11 +99,7 @@
                                                     :value="id(item.id)"
                                                 >
                                                     {{
-                                                        item.firstName +
-                                                            " "+
-                                                            item.middleName +
-                                                            " "+
-                                                            item.lastName
+                                                        item.name
                                                     }}
                                                 </option>
                                             </select>

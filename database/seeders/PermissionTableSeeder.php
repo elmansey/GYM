@@ -56,7 +56,8 @@ class PermissionTableSeeder extends Seeder
             'add-member-in-gym',
             'show-setting',
             'show-chat-rooms',
-            'show-team-chat'
+            'show-team-chat',
+            'show-class-chat'
 
 
 

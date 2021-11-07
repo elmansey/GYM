@@ -16,12 +16,11 @@ class captainResource extends JsonResource
     {
         return [
                 'id'	=>     $this->id,
-                'firstName'	 => $this->firstName,
-                'middleName' => $this->middleName,
-                'lastName'   => $this->lastName,
+                'Personal_uuid'	=>     $this->Personal_uuid,
+                'name'	=>     $this->name,
                 'phone'	    =>     $this->phone,
                 'email'  	=>     $this->email,
-                'userName'	=> $this->userName,
+                'user_name'	=> $this->user_name,
                 'profile_picture'	   =>    $this->profile_picture,
                 'isActive'   =>    $this->isActive
         ];

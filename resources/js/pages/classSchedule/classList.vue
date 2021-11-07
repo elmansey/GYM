@@ -112,10 +112,7 @@
                                                 <td>
                                                     {{
                                                         row.captain_relation
-                                                            .firstName +
-                                                            " " +
-                                                            row.captain_relation
-                                                                .lastName
+                                                            .name
                                                     }}
                                                 </td>
                                                 <td>{{ row.startingTime }}</td>

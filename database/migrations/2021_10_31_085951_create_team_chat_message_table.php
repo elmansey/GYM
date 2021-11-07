@@ -15,8 +15,8 @@ class CreateTeamChatMessageTable extends Migration
     {
         Schema::create('team_chat_message', function (Blueprint $table) {
             $table->id();
-            $table->string('from');
-            $table->string('to');
+            $table->foreignId('from')->references('id')->on('users')->cascadeOnDelete();
+            $table->foreignId('to')->references('id')->on('users')->cascadeOnDelete();
             $table->text('message');
             $table->string('time');
             $table->timestamps();

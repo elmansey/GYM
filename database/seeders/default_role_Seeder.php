@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
@@ -21,11 +22,11 @@ class default_role_Seeder extends Seeder
         $role->syncPermissions($permissions);
 
          $role = Role::create([ 'name'=> 'staff'  ]);
-        $permissions = Permission::where(['name'=>[ 'dashboard','show-chat-rooms','show-class-chat']])->pluck('id','id')->all();
+        $permissions = DB::table('permissions')->whereIn('id',[ 1,39,40,41])->pluck('id','id')->all();
         $role->syncPermissions($permissions);
 
          $role = Role::create([ 'name'=> 'member'  ]);
-        $permissions = Permission::where(['name'=>[ 'dashboard','show-chat-rooms','show-class-chat']])->pluck('id','id')->all();
+        $permissions = DB::table('permissions')->whereIn('id',[ 1,39,41])->pluck('id','id')->all();
         $role->syncPermissions($permissions);
 
     }

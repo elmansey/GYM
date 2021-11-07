@@ -23,12 +23,7 @@ class staffController extends Controller
         return response()->json(['success' => true, 'staff' => staffResource::collection($staff)],200);
     }
 
-    public function getStaffToChatIgnoreMe($email){
 
-        $staff = User::where('email','!=',$email)->get();
-
-        return response()->json(['success' => true, 'staff' => staffResource::collection($staff)],200);
-    }
 
     public function store(Request $request){
 
@@ -186,7 +181,7 @@ class staffController extends Controller
        $staff = User::find($id);
         $staff->update($input);
 
-        DB::table('model_has_roles')->where(['model_id','=',$id])->delete();
+        DB::table('model_has_roles')->where('model_id','=',$id)->delete();
 
         $roleDetails = json_decode($request->role,true) ;
         $role = [];

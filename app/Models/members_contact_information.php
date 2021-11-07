@@ -15,6 +15,5 @@ class members_contact_information extends Model
         'member_id',
         'address',
         'city',
-        'phone_number',
     ];
 }

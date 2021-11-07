@@ -34,29 +34,13 @@
                                                 <label class="col-form-label pt-0">Your Name</label>
                                                 <div class="form-row">
                                                     <div class="col-12 m">
-                                                        <input :class="['form-control', (step1  &&  !$v.memberData.personalData.first_name.required || step1 && !$v.memberData.personalData.first_name.maxLength || !$v.memberData.personalData.first_name.minLength || error.first_name) ? 'is-invalid' : '']" type="text" required="" placeholder="First name" v-model="memberData.personalData.first_name">
-                                                        <b-form-invalid-feedback style="color:red" v-if="(step1 && !$v.memberData.personalData.first_name.required)" > the first name faild is required</b-form-invalid-feedback>
-                                                        <b-form-invalid-feedback style="color:red" v-if="(!$v.memberData.personalData.first_name.maxLength )" > the max Length character in first name  is {{ $v.memberData.personalData.first_name.$params.maxLength.max }} </b-form-invalid-feedback>
-                                                        <b-form-invalid-feedback style="color:red" v-if="(!$v.memberData.personalData.first_name.minLength )" > the min Length character in first name  is  {{ $v.memberData.personalData.first_name.$params.minLength.min }} </b-form-invalid-feedback>
-                                                        <b-form-invalid-feedback style="color:red" v-if="error.first_name" >   {{ error.first_name[0] }} </b-form-invalid-feedback>
+                                                        <input :class="['form-control', (step1  &&  !$v.memberData.personalData.name.required || step1 && !$v.memberData.personalData.name.maxLength || !$v.memberData.personalData.name.minLength || error.name) ? 'is-invalid' : '']" type="text" required="" placeholder=" name" v-model="memberData.personalData.name">
+                                                        <b-form-invalid-feedback style="color:red" v-if="(step1 && !$v.memberData.personalData.name.required)" > the first name faild is required</b-form-invalid-feedback>
+                                                        <b-form-invalid-feedback style="color:red" v-if="(!$v.memberData.personalData.name.maxLength )" > the max Length character in first name  is {{ $v.memberData.personalData.name.$params.maxLength.max }} </b-form-invalid-feedback>
+                                                        <b-form-invalid-feedback style="color:red" v-if="(!$v.memberData.personalData.name.minLength )" > the min Length character in first name  is  {{ $v.memberData.personalData.name.$params.minLength.min }} </b-form-invalid-feedback>
+                                                        <b-form-invalid-feedback style="color:red" v-if="error.name" >   {{ error.name[0] }} </b-form-invalid-feedback>
                                                     </div>
-                                                    <div class="col-12  mt-4">
 
-                                                        <input :class="['form-control', (step1  &&  !$v.memberData.personalData.middle_name.required || step1 && !$v.memberData.personalData.middle_name.maxLength || !$v.memberData.personalData.middle_name.minLength || error.middle_name) ? 'is-invalid' : '']" type="text" required="" placeholder="middle name" v-model="memberData.personalData.middle_name">
-                                                        <b-form-invalid-feedback style="color:red" v-if="(step1 && !$v.memberData.personalData.middle_name.required)" > the middle name faild is required</b-form-invalid-feedback>
-                                                        <b-form-invalid-feedback style="color:red" v-if="(!$v.memberData.personalData.middle_name.maxLength )" > the max Length character in middle name  is {{ $v.memberData.personalData.middle_name.$params.maxLength.max }} </b-form-invalid-feedback>
-                                                        <b-form-invalid-feedback style="color:red" v-if="(!$v.memberData.personalData.middle_name.minLength )" > the min Length character in middle name  is  {{ $v.memberData.personalData.middle_name.$params.minLength.min }} </b-form-invalid-feedback>
-                                                        <b-form-invalid-feedback style="color:red" v-if="error.middle_name" >   {{ error.middle_name[0] }} </b-form-invalid-feedback>
-
-                                                    </div>
-                                                    <div class="col-12 mt-4" >
-                                                        <input :class="['form-control', (step1  &&  !$v.memberData.personalData.last_name.required || step1 && !$v.memberData.personalData.last_name.maxLength || !$v.memberData.personalData.last_name.minLength || error.last_name) ? 'is-invalid' : '']" type="text" required="" placeholder="Last name" v-model="memberData.personalData.last_name">
-                                                        <b-form-invalid-feedback style="color:red" v-if="(step1 && !$v.memberData.personalData.last_name.required)" > the last name faild is required</b-form-invalid-feedback>
-                                                        <b-form-invalid-feedback style="color:red" v-if="(!$v.memberData.personalData.last_name.maxLength )" > the max Length character in last name  is {{ $v.memberData.personalData.last_name.$params.maxLength.max }} </b-form-invalid-feedback>
-                                                        <b-form-invalid-feedback style="color:red" v-if="(!$v.memberData.personalData.last_name.minLength )" > the min Length character in last name  is  {{ $v.memberData.personalData.last_name.$params.minLength.min }} </b-form-invalid-feedback>
-                                                        <b-form-invalid-feedback style="color:red" v-if="error.last_name" >   {{ error.last_name[0] }} </b-form-invalid-feedback>
-
-                                                    </div>
                                                 </div>
                                             </div>
 
@@ -124,9 +108,9 @@
                                                 <div class="mb-2 col-md-12 col-lg-12 col-sm-12">
                                                     <div class="col-form-label"> phone number  </div>
 
-                                                    <input name="phone" :class="['form-control', (step2  &&  !$v.memberData.contactData.phone_number.required || error.phone_number) ? 'is-invalid' : '']" v-model="memberData.contactData.phone_number" placeholder="phone number"/>
-                                                  <b-form-invalid-feedback style="color: red" v-if="error.phone_number">{{ error.phone_number[0] }}</b-form-invalid-feedback >
-                                                   <b-form-invalid-feedback style="color:red" v-if="(step2 && !$v.memberData.contactData.phone_number.required)" > the  phone number faild is required</b-form-invalid-feedback>
+                                                    <input name="phone" :class="['form-control', (step2  &&  !$v.memberData.contactData.phone.required || error.phone) ? 'is-invalid' : '']" v-model="memberData.contactData.phone" placeholder="phone number"/>
+                                                  <b-form-invalid-feedback style="color: red" v-if="error.phone">{{ error.phone[0] }}</b-form-invalid-feedback >
+                                                   <b-form-invalid-feedback style="color:red" v-if="(step2 && !$v.memberData.contactData.phone.required)" > the  phone number faild is required</b-form-invalid-feedback>
                                                 </div>
 
 
@@ -327,9 +311,7 @@ export default {
 
                     personalData:{
 
-                         first_name:'',
-                        middle_name:'',
-                        last_name:'',
+                         name:'',
                         gender:'male',
                         data_of_birth:'',
 
@@ -339,7 +321,7 @@ export default {
 
                         address:'',
                         city:'',
-                        phone_number:'',
+                        phone:'',
                         email:'',
 
                     },
@@ -400,17 +382,7 @@ export default {
 
             personalData:{
 
-                    first_name:{
-                        required,
-                        maxLength:maxLength(25),
-                        minLength:minLength(3)
-                    },
-                    middle_name:{
-                        required,
-                        maxLength:maxLength(25),
-                        minLength:minLength(3)
-                    },
-                    last_name:{
+                    name:{
                         required,
                         maxLength:maxLength(25),
                         minLength:minLength(3)
@@ -433,7 +405,7 @@ export default {
                         city:{
                             required,
                         },
-                        phone_number:{
+                        phone:{
                             required,
                         },
 
@@ -540,15 +512,13 @@ export default {
 
 
                 let formData = new FormData()
-                formData.append('first_name'         , this.memberData.personalData.first_name)
-                formData.append('middle_name'        , this.memberData.personalData.middle_name)
-                formData.append('last_name'          , this.memberData.personalData.last_name)
+                formData.append('name'         , this.memberData.personalData.name)
                 formData.append('gender'             , this.memberData.personalData.gender)
                 formData.append('data_of_birth'      , this.memberData.personalData.data_of_birth)
                 formData.append('group_id'           , this.memberData.extraData.group_id)
                 formData.append('address'            , this.memberData.contactData.address)
                 formData.append('city'               , this.memberData.contactData.city)
-                formData.append('phone_number'       , this.memberData.contactData.phone_number)
+                formData.append('phone'       , this.memberData.contactData.phone)
                 formData.append('email'              , this.memberData.loginData.email)
                 formData.append('role'               , JSON.stringify(this.memberData.loginData.role))
                 formData.append('user_name'          , this.memberData.loginData.user_name)

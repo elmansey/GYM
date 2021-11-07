@@ -33,7 +33,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 import Echo from 'laravel-echo';
 window.Pusher = require('pusher-js');
-window.Pusher.logToConsole = true;
+// window.Pusher.logToConsole = true;
 
 
 window.Echo = new Echo({
@@ -42,6 +42,7 @@ window.Echo = new Echo({
     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
     forceTLS: true,
     encrypted: true,
+    authEndpoint: "http://localhost:8000/api/broadcasting/auth",
     auth: {
         headers: {
 
@@ -51,7 +52,8 @@ window.Echo = new Echo({
         }
 
     },
-    authEndpoint: '/api/broadcasting/auth'
 
 
 });
+window.Echo.connector.pusher.config.auth.headers['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
+window.Echo.connector.options.auth.headers['Authorization'] = `Bearer ${localStorage.getItem('token')}`;

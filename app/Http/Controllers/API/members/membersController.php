@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\members_contact_information;
 use phpDocumentor\Reflection\Types\Boolean;
 use App\Models\members_personal_information;
+use App\Models\User;
 use Illuminate\Validation\Rule;
 
 class membersController extends Controller
@@ -19,10 +20,11 @@ class membersController extends Controller
 
     public function index(){
 
-        $members_login_information    = members_login_information::with('personalTableRelation')->get();
+        $members   = User::role('member')->get();
 
 
-        return response()->json(['success' => true , 'members' => $members_login_information],200);
+
+        return response()->json(['success' => true , 'members' => $members],200);
     }
 
 
@@ -33,9 +35,7 @@ class membersController extends Controller
                 $validator = validator::make($request->all(),[
 
 
-                    'first_name'          => 'required',
-                    'middle_name'         => 'required',
-                    'last_name'           => 'required',
+                    'name'          => 'required',
                     'gender'              => 'required',
                     'data_of_birth'       => 'required',
                     'group_id'            => 'required',
@@ -47,8 +47,8 @@ class membersController extends Controller
                     'start_date'	      => 'required',
                     'address'	          => 'required',
                     'city'                => 'required',
-                    'phone_number'        => 'required',
-                    'email'	              => 'required|email|unique:users,email|unique:staff,email|unique:members_login_informations,email'
+                    'phone'        => 'required',
+                    'email'	              => 'required|email|unique:users,email'
 
 
                 ]);
@@ -86,18 +86,38 @@ class membersController extends Controller
                $request->role     = json_decode($request->role,true);
 
 
+
+                //login data
+                $LoginInformation                   = new  User();
+                $LoginInformation->name        = $request->input('name');
+                $LoginInformation->user_name        = $request->input('user_name');
+                $LoginInformation->password         = bcrypt($request->input('password'));
+                $LoginInformation->profile_picture  = $fileName;
+                $LoginInformation->isActive         = $request->input('isActive') == 'true' ? true : false;
+                $LoginInformation->email            = $request->input('email');
+                $LoginInformation->phone     = $request->input('phone');
+
+                $LoginInformation->save();
+
+                $role  = $request->role;
+                $LoginInformation->assignRole($role);
+
+
+
+                $MemberId = $LoginInformation->id;
+
+
+
                   // personal data
                 $PersonalInformation                   = new  members_personal_information();
-                $PersonalInformation->first_name       = $request->input('first_name');
-                $PersonalInformation->middle_name      = $request->input('middle_name');
-                $PersonalInformation->last_name        = $request->input('last_name');
+                $PersonalInformation->name             = $request->input('name');
+                $PersonalInformation->member_id        = $MemberId;
                 $PersonalInformation->gender           = $request->input('gender');
                 $PersonalInformation->date_of_birth    = $request->input('data_of_birth');
                 $PersonalInformation->save();
 
 
 
-                $MemberId = $PersonalInformation->id;
 
 
                 // contact data
@@ -105,7 +125,6 @@ class membersController extends Controller
                 $ContactInformation->member_id        = $MemberId;
                 $ContactInformation->address          = $request->input('address');
                 $ContactInformation->city             = $request->input('city');
-                $ContactInformation->phone_number     = $request->input('phone_number');
                 $ContactInformation->save();
 
 
@@ -122,18 +141,6 @@ class membersController extends Controller
 
 
 
-                //login data
-                $LoginInformation                   = new  members_login_information();
-                $LoginInformation->member_id        = $MemberId;
-                $LoginInformation->user_name        = $request->input('user_name');
-                $LoginInformation->password         = bcrypt($request->input('password'));
-                $LoginInformation->profile_picture  = $fileName;
-                $LoginInformation->isActive         = $request->input('isActive') == 'true' ? true : false;
-                $LoginInformation->email            = $request->input('email');
-                $LoginInformation->save();
-
-                $role  = $request->role;
-                $LoginInformation->assignRole($role);
 
 
 
@@ -157,8 +164,8 @@ class membersController extends Controller
 
     public function getMemberById($id){
 
-        $personalInformation   = members_personal_information::where('id','=',$id)->first();
-        $loginInformation      = members_login_information::where('member_id','=',$id)->first();
+        $personalInformation   = members_personal_information::where('member_id','=',$id)->first();
+        $loginInformation      = User::where('id','=',$id)->first();
         $contentInformation    = members_contact_information::where('member_id','=',$id)->first();
         $extraInformation      = members_extra_information::where('member_id','=',$id)->first();
 
@@ -190,21 +197,19 @@ class membersController extends Controller
         $validator = validator::make($request->all(),[
 
 
-            'first_name'          => 'required',
-            'middle_name'         => 'required',
-            'last_name'           => 'required',
+            'name'          => 'required',
             'gender'              => 'required',
             'data_of_birth'       => 'required',
             'group_id'            => 'required',
             'class_id'            => 'required',
-            'user_name'           =>  ['required',Rule::unique('members_login_informations')->ignore($id)],
+            'user_name'           =>  ['required',Rule::unique('users')->ignore($id)],
             'confirm_password'    => Rule::requiredIf($required),
             'membership_id'	      => 'required',
             'start_date'	      => 'required',
             'address'	          => 'required',
             'city'                => 'required',
-            'phone_number'        => 'required',
-            'email'	              => 'required|email|unique:users,email|unique:staff,email|unique:members_login_informations,email,'.$id,
+            'phone'               => 'required',
+            'email'	              => ['required',Rule::unique('users')->ignore($id)],
             'role'                 => 'required'
 
         ]);
@@ -261,9 +266,7 @@ class membersController extends Controller
       $PersonalInformation              = members_personal_information::where('id','=',$id);
       $PersonalInformation ->update([
 
-        'first_name'   => $input['first_name'],
-        'middle_name'   => $input['middle_name'],
-        'last_name'   => $input['last_name'],
+        'name'   => $input['name'],
         'gender'   => $input['gender'],
         'date_of_birth'   => $input['data_of_birth'],
       ]);
@@ -273,7 +276,6 @@ class membersController extends Controller
       $ContactInformation->update([
         'address' => $input['address'],
         'city' => $input['city'],
-        'phone_number' => $input['phone_number'],
       ]);
 
 
@@ -295,11 +297,12 @@ class membersController extends Controller
 
 
       $input['isActive'] =  $input['isActive'] == 'true' ? true : false;
+
       //login data
-      $LoginInformation                   = members_login_information::where('member_id','=',$id)->first();
+      $LoginInformation                   = User::where('id','=',$id)->first();
       $LoginInformation->update($input);
 
-      DB::table('model_has_roles')->where([['model_id','=',$id],['model_type','=','APP\Models\members_login_information']])->delete();
+      DB::table('model_has_roles')->where('model_id','=',$id)->delete();
 
 
 
@@ -322,7 +325,7 @@ class membersController extends Controller
 
     public function destroy($id){
 
-        $oldImg = members_login_information::where('member_id','=',$id)->pluck('profile_picture');
+        $oldImg = User::where('id','=',$id)->pluck('profile_picture');
 
         $path =  public_path('profile_pictures\\'.$oldImg[0]);
 
@@ -333,7 +336,7 @@ class membersController extends Controller
             }
         }
 
-        $member = members_personal_information::find($id);
+        $member = User::find($id);
         $member->delete();
 
         return response()->json(['success' => true,'message' => 'member delete successfully']);

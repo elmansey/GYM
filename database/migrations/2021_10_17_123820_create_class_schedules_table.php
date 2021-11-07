@@ -16,7 +16,7 @@ class CreateClassSchedulesTable extends Migration
         Schema::create('class_schedules', function (Blueprint $table) {
             $table->id();
             $table->string('className');
-            $table->foreignId('staffName')->references('id')->on('staff')->cascadeOnDelete();
+            $table->foreignId('staffName')->references('id')->on('users')->cascadeOnDelete();
             $table->string('days');
             $table->string('startingTime');
             $table->string('endingTime');

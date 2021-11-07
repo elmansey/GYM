@@ -89,6 +89,17 @@
                                                   <small style="color: red" v-if="error.profile_picture">{{ error.profile_picture[0]}}</small>
                                               </div>
 
+                                                  <div class="mb-2 col-md-12 col-lg-12 col-sm-12 mt-3">
+                                                             <div class="media">
+                                                                <label class="col-form-label m-r-10">active</label>
+                                                                <div class="media-body text-right switch-lg icon-state">
+                                                                <label class="switch">
+                                                                    <input type="checkbox" checked=""   v-model="adminData.isActive"><span class="switch-state"></span>
+                                                                </label>
+                                                                </div>
+                                                            </div>
+                                                    </div>
+
                                               <button type="submit" class="btn btn-primary mt-3"  v-if="!edit" >
                                                   Save
                                               </button>
@@ -141,7 +152,8 @@ export default {
                 password:'',
                 confirm_password:'',
                 roles: [],
-                file:[]
+                file:[],
+                isActive: ''
             },
             isLoading:false,
 
@@ -207,6 +219,7 @@ export default {
                      this.adminData.user_name  = res.data.data.user_name,
                      this.adminData.email  = res.data.data.email,
                      this.adminData.phone  = res.data.data.phone,
+                     this.adminData.isActive  = res.data.data.isActive,
                   this.adminData.roles = res.data.role
                  this.isLoading = true
 
@@ -240,6 +253,7 @@ export default {
                 formData.append('confirm_password',this.adminData.confirm_password);
                 formData.append('role', JSON.stringify(this.adminData.roles));
                 formData.append('profile_picture',this.adminData.file);
+                formData.append('isActive',this.adminData.isActive);
 
 
 
@@ -288,6 +302,7 @@ export default {
                 formData.append('confirm_password',this.adminData.confirm_password);
                 formData.append('role', JSON.stringify(this.adminData.roles));
                 formData.append('profile_picture',this.adminData.file);
+                formData.append('isActive',this.adminData.isActive);
 
 
 
@@ -394,6 +409,7 @@ export default {
                     this.adminData.confirm_password  =  ''
                     this.adminData.roles  =   []
                    this.adminData.file  =   []
+                   this.adminData.isActive  =   ''
             }
 
         }

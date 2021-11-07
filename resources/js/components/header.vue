@@ -169,10 +169,11 @@
             />
             <div class="media-body">
               <span>  {{this.$store.getters.USER.name }} </span>
-              <p class="mb-0 font-roboto">
+              <p class="mb-0 font-roboto" v-for="(role,index) in this.$store.getters.authUserRole" :key="index">
 
                   {{
-                  this.$store.getters.authUserRole[0].role ? this.$store.getters.authUserRole[0].role : ''
+
+                      role.role
                   }}
                   <i class="middle fa fa-angle-down"></i>
               </p>

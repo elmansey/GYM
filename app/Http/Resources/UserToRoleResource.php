@@ -21,7 +21,8 @@ class UserToRoleResource extends JsonResource
             'email' => $this->email,
             'phone' => $this->phone,
             'profile_picture' => $this->profile_picture,
-            'Personal_uuid' => $this->Personal_uuid
+            'Personal_uuid' => $this->Personal_uuid,
+            'isActive' => $this->isActive
             ];
     }
 }

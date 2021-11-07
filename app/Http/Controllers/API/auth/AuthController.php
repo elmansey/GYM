@@ -52,6 +52,8 @@ class AuthController extends Controller
                     // return 'admin';
                     return Response()->json(['success' => true, 'data' => $this->CreateNewToken($token)]);
 
+                }else{
+                    return response()->json(['success' => false, 'message' => 'Unauthorized', 'status' => '401']);
                 }
     }
 

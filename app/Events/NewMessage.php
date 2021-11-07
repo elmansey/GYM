@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Models\User;
 use App\Models\staff;
 use App\Models\teamChatMessage;
 use Illuminate\Broadcasting\Channel;
@@ -20,7 +21,7 @@ class NewMessage implements ShouldBroadcast
     public $user;
 
 
-    public function __construct( $user, $message )
+    public function __construct(User $user, $message )
     {
         $this->message = $message;
          $this->user = $user;
@@ -30,7 +31,7 @@ class NewMessage implements ShouldBroadcast
 
     public function broadcastOn()
     {
-        return new PrivateChannel('chat.'.$this->user->Personal_uuid); // recever uu id
+        return new PrivateChannel('team_chat.'.$this->user->id); // recever uu id
     }
 
 

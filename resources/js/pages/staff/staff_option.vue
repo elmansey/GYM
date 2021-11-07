@@ -91,18 +91,22 @@
                                                         <small style="color: red" v-if="error.user_name">{{ error.user_name[0]}}</small>
                                                         <b-form-invalid-feedback style="color:red" v-if="( !$v.staffData.loginData.user_name.required)"> the user name failde is required   </b-form-invalid-feedback>
                                                     </div>
-                                                    <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
+                                                 <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
                                                       <div class="col-form-label"> password</div>
 
-                                                        <input name="password" type="password"  :class="['form-control' ,   error.password ? 'is-invalid' : '']"  v-model="staffData.loginData.password"/>
+                                                        <input name="password" type="password" :class="['form-control' , submited && !$v.staffData.loginData.password.requiredIf || !$v.staffData.loginData.password.maxLength || !$v.staffData.loginData.password.minLength || error.password ? 'is-invalid' : '']"  v-model="staffData.loginData.password"/>
                                                         <small style="color: red" v-if="error.password">{{ error.password[0]}}</small>
-\\
+                                                        <b-form-invalid-feedback style="color:red" v-if="( !$v.staffData.loginData.password.requiredIf)"> the  password failde is required   </b-form-invalid-feedback>
+                                                        <b-form-invalid-feedback style="color:red" v-if="( !$v.staffData.loginData.password.maxLength)"> the max character allow is {{  $v.staffData.loginData.password.$params.maxLength.max }}   </b-form-invalid-feedback>
+                                                        <b-form-invalid-feedback style="color:red" v-if="( !$v.staffData.loginData.password.minLength)">  the min character allow is {{  $v.staffData.loginData.password.$params.minLength.min }}    </b-form-invalid-feedback>
+
                                                     </div>
                                                     <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
                                                       <div class="col-form-label"> confirm password</div>
 
-                                                        <input name="password" type="password"  :class="['form-control',    !$v.staffData.loginData.confirm_Password.requiredIf ||  error.confirm_Password ? 'is-invalid' : '']"  v-model="staffData.loginData.confirm_Password"/>
+                                                        <input name="password" type="password" :class="['form-control', submited &&   !$v.staffData.loginData.confirm_Password.requiredIf ||  error.confirm_Password ? 'is-invalid' : '']"  v-model="staffData.loginData.confirm_Password"/>
                                                         <small style="color: red" v-if="error.confirm_Password">{{ error.confirm_Password}}</small>
+                                                        <b-form-invalid-feedback style="color:red" v-if="( submited && !$v.staffData.loginData.confirm_Password.requiredIf)"> the confirm  password failde is required   </b-form-invalid-feedback>
 
                                                     </div>
                                                     <div class="mb-2 col-md-12 col-lg-12 col-sm-12 mt-3">
@@ -301,11 +305,18 @@ export default {
                             required:required,
 
                     },
-                    'password':{
-
+                     'password':{
+                            requiredIf:requiredIf( function(){
+                            return   this.edit == false
+                        }),
                            maxLength:maxLength(25),
                           minLength:minLength(6)
 
+                    },
+                    'confirm_Password':{
+                            requiredIf:requiredIf( function(){
+                            return  this.edit == false
+                        }),
                     },
 
                 },

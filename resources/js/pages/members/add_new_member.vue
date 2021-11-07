@@ -18,27 +18,15 @@
 
 
 <!--                                            <div  class="mb-2 col-md-12 col-lg-12 col-sm-12">personal information</div><br/>-->
-                                            <div class="mb-2 col-md-6 col-lg-4 col-sm-12">
-                                                <div class="col-form-label">first name</div>
+                                            <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
+                                                <div class="col-form-label"> name</div>
 
-                                                <input name="name" :class="['form-control',error.first_name? 'is-invalid' : '']" v-model="memberData.first_name"  />
-                                             <small style="color: red" v-if="error.first_name">{{ error.first_name[0] }}</small >
+                                                <input name="name" :class="['form-control',error.name? 'is-invalid' : '']" v-model="memberData.name"  />
+                                             <small style="color: red" v-if="error.name">{{ error.name[0] }}</small >
                                             </div>
 
-                                            <div class="mb-2 col-md-6 col-lg-4 col-sm-12">
-                                                <div class="col-form-label">middle name</div>
 
-                                                <input name="name" :class="['form-control',error.middle_name? 'is-invalid' : '']" v-model="memberData.middle_name" />
-                                             <small style="color: red" v-if="error.middle_name">{{ error.middle_name[0] }}</small >
-                                            </div>
-                                            <div class="mb-2 col-md-6 col-lg-4 col-sm-12">
-                                                <div class="col-form-label">last name</div>
-
-                                                <input name="name" :class="['form-control',error.last_name? 'is-invalid' : '']" v-model="memberData.last_name"  />
-                                             <small style="color: red" v-if="error.last_name">{{ error.last_name[0] }}</small >
-                                            </div>
-
-                                            <div class="mb-2 col-md-6 col-lg-4 col-sm-12">
+                                            <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
                                                 <div class="col-form-label"> Gender</div>
 
                                                 <select name="gender"   :class="['form-control',error.gender? 'is-invalid' : '']"  v-model="memberData.gender" >
@@ -48,7 +36,7 @@
                                              <small style="color: red" v-if="error.gender">{{ error.gender[0] }}</small >
                                             </div>
 
-                                            <div class="mb-2 col-md-6 col-lg-4 col-sm-12">
+                                            <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
                                                 <div class="col-form-label"> Date of birth </div>
 
                                                 <input name="phone" type="date"  :class="['form-control',error.data_of_birth? 'is-invalid' : '']"  v-model="memberData.data_of_birth"/>
@@ -56,7 +44,7 @@
                                             </div>
 
 
-                                            <div class="mb-2 col-md-6 col-lg-4 col-sm-12">
+                                            <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
                                                 <div class="col-form-label"> Group</div>
 
                                                 <select name="group" :class="['form-control',error.group_id? 'is-invalid' : '']" v-model="memberData.group_id"  >
@@ -89,8 +77,8 @@
                                         <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
                                             <div class="col-form-label"> phone number  </div>
 
-                                            <input name="phone" :class="['form-control',error.phone_number? 'is-invalid' : '']" v-model="memberData.phone_number"/>
-                                             <small style="color: red" v-if="error.phone_number">{{ error.phone_number[0] }}</small >
+                                            <input name="phone" :class="['form-control',error.phone? 'is-invalid' : '']" v-model="memberData.phone"/>
+                                             <small style="color: red" v-if="error.phone">{{ error.phone[0] }}</small >
                                         </div>
 
                                         <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
@@ -256,9 +244,7 @@ export default {
         return{
             memberData:{
 
-                first_name:'',
-                middle_name:'',
-                last_name:'',
+                name:'',
                 gender:'male',
                 data_of_birth:'',
                 group_id:'',
@@ -269,7 +255,7 @@ export default {
 
                 address:'',
                 city:'',
-                phone_number:'',
+                phone:'',
                 email:'',
 
 
@@ -286,7 +272,7 @@ export default {
                 membership_id:'',
                 class_id:'',
                 start_data:'',
-                isActive:true
+                isActive:''
 
 
 
@@ -346,14 +332,12 @@ export default {
                     .then(res => {
 
                         if(res.data.success){
-                             this.memberData.first_name     = res.data.personalInformation.first_name,
-                            this.memberData.middle_name    = res.data.personalInformation.middle_name,
-                            this.memberData.last_name      = res.data.personalInformation.last_name,
+                             this.memberData.name     = res.data.personalInformation.name,
                             this.memberData.gender         = res.data.personalInformation.gender,
                             this.memberData.data_of_birth    = res.data.personalInformation.date_of_birth,
                             this.memberData.address         = res.data.contentInformation.address,
                             this.memberData.city          = res.data.contentInformation.city,
-                            this.memberData.phone_number    = res.data.contentInformation.phone_number,
+                            this.memberData.phone       = res.data.loginInformation.phone,
                             this.memberData.email         = res.data.loginInformation.email,
                             this.memberData.user_name      = res.data.loginInformation.user_name,
                             this.memberData.interested_area    = res.data.extraInformation.interested_area,
@@ -362,6 +346,7 @@ export default {
                             this.memberData.membership_id    = res.data.extraInformation.membership_id,
                             this.memberData.class_id    = res.data.extraInformation.class_id,
                             this.memberData.start_data    = res.data.extraInformation.start_date
+                            this.memberData.isActive    = res.data.loginInformation.isActive
 
                             this.isLoading = true
 
@@ -455,16 +440,14 @@ export default {
 
 
                 let formData = new FormData()
-                formData.append('first_name'         , this.memberData.first_name)
-                formData.append('middle_name'        , this.memberData.middle_name)
-                formData.append('last_name'          , this.memberData.last_name)
+                formData.append('name'         , this.memberData.name)
                 formData.append('gender'             , this.memberData.gender)
                 formData.append('data_of_birth'      , this.memberData.data_of_birth)
                 formData.append('group_id'           , this.memberData.group_id)
                 formData.append('address'            , this.memberData.address)
                 formData.append('city'               , this.memberData.city)
-                formData.append('phone_number'        , this.memberData.phone_number)
-                formData.append('email'              , this.memberData.email)
+                formData.append('phone'            , this.memberData.phone)
+                formData.append('email'               , this.memberData.email)
                 formData.append('user_name'           , this.memberData.user_name)
                 formData.append('password'           , this.memberData.password)
                 formData.append('role'               , JSON.stringify(this.memberData.role))
@@ -537,15 +520,13 @@ export default {
 
 
                 let formData = new FormData()
-                formData.append('first_name'         , this.memberData.first_name)
-                formData.append('middle_name'        , this.memberData.middle_name)
-                formData.append('last_name'          , this.memberData.last_name)
+                formData.append('name'         , this.memberData.name)
                 formData.append('gender'             , this.memberData.gender)
                 formData.append('data_of_birth'      , this.memberData.data_of_birth)
                 formData.append('group_id'           , this.memberData.group_id)
                 formData.append('address'            , this.memberData.address)
                 formData.append('city'               , this.memberData.city)
-                formData.append('phone_number'        , this.memberData.phone_number)
+                formData.append('phone'             , this.memberData.phone)
                 formData.append('email'              , this.memberData.email)
                 formData.append('user_name'           , this.memberData.user_name)
                 formData.append('password'           , this.memberData.password)
@@ -628,9 +609,7 @@ export default {
         $route(to,from){
             if(to.name == 'addMember'){
                 this.edit = false
-                this.memberData.first_name    = '',
-                this.memberData.middle_name    = '',
-                this.memberData.last_name    = '',
+                this.memberData.name    = '',
                 this.memberData.gender    = '',
                 this.memberData.data_of_birth    = '',
                 this.memberData.group_id    = '',

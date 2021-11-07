@@ -15,7 +15,7 @@ class CreateMembersExtraInformationsTable extends Migration
     {
         Schema::create('members_extra_informations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('member_id')->references('id')->on('members_personal_informations')->cascadeOnDelete();
+            $table->foreignId('member_id')->references('id')->on('users')->cascadeOnDelete();
             $table->text('interested_area')->nullable();
             $table->string('source')->nullable();
             $table->foreignId('membership_id')->references('id')->on('memberships')->cascadeOnDelete();

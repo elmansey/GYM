@@ -3,15 +3,16 @@
 namespace App\Http\Controllers\API\ClassSchedule;
 
 use Carbon\Carbon;
+use App\Models\User;
 use App\Models\staff;
 use Illuminate\Http\Request;
 use App\Models\ClassSchedule;
+use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\captainResource;
 use Illuminate\support\facades\Validator;
-use App\Http\Resources\class_scheduleResource;
 use App\Http\Resources\classSceduleResource;
-use Illuminate\Validation\Rule;
+use App\Http\Resources\class_scheduleResource;
 
 class ClassScheduleController extends Controller
 {
@@ -136,10 +137,10 @@ class ClassScheduleController extends Controller
     public function getAllPersonInStaffToCreateClass()
     {
 
+        $staff = User::role('staff')->get();
 
-        $staff = staff::all();
 
-        return  response()->json(['success' => true, 'staff' => captainResource::collection($staff)]);
+        return  response()->json(['success' => true, 'staff' =>  captainResource::collection($staff)]);
     }
 
 

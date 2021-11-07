@@ -28,8 +28,9 @@
                                         <th>ID</th>
                                         <th sortKey="name">Profile Picture</th>
                                         <th sortKey="name">Personal_uuid</th>
-                                        <th sortKey="name">user name</th>
+                                        <th sortKey="name"> name</th>
                                         <th sortKey="name" >email</th>
+                                        <th sortKey="name" >user name</th>
                                         <th sortKey="name" >active</th>
                                         <th sortKey="options">actions</th>
                                         </thead>
@@ -48,9 +49,10 @@
                                               </td>
 
 
-                                            <td>{{ row.personal_table_relation.Personal_uuid}}</td>
-                                            <td>{{ row.personal_table_relation.first_name }} {{ row.personal_table_relation.last_name  }}</td>
+                                            <td>{{ row.Personal_uuid}}</td>
+                                            <td>{{ row.name }} </td>
                                             <td>{{ row.email}}</td>
+                                            <td>{{ row.user_name}}</td>
                                             <td>
                                                 <span class="badge badge-success" v-if="row.isActive">
                                                         active
@@ -67,7 +69,7 @@
                                                           variant="outline-dark"
                                                           >
                                                             <router-link
-                                                                :to="{name: 'editMember', params: {memberId : row.member_id}}"
+                                                                :to="{name: 'editMember', params: {memberId : row.id}}"
                                                                 v-if="can('edit-member-from-team')"
                                                             >
                                                                edit

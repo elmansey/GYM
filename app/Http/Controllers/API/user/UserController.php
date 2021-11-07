@@ -28,14 +28,14 @@ class UserController extends Controller
 
     public function getUserToChatIgnoreMe($email)
     {
-        $data = User::where('email','!=',$email)->get();
+        $data = User::role(['staff','admin'])->where('email','!=',$email)->get();
         return response()->json(['success'=>true ,'admins'=> UsersResource::collection($data)] ,200);
     }
 
 
     public function create()
     {
-         $roles = Role::where('guard_name','=','admin')->get();
+         $roles = Role::all();
 
 
         return response()->json(['success'=>true ,'roles'=> RolesResource::collection($roles)] ,200);
@@ -56,6 +56,7 @@ class UserController extends Controller
             'password' => 'required|same:confirm_password',
             'confirm_password' => 'required',
             'role' => 'required',
+            'isActive' => 'required',
 
         ]);
 
@@ -94,6 +95,7 @@ class UserController extends Controller
             $input = $request->all();
             $input['password']  = bcrypt($input['password']);
             $input['profile_picture'] = $input['profile_picture'] ? $fileName : null;
+            $input['isActive'] =  $input['isActive'] == 'true' ? true : false;
 
         $user =  User::create($input);
 
@@ -147,6 +149,7 @@ class UserController extends Controller
             'password' => 'same:confirm_password',
             'confirm_password' => Rule::requiredIf($required),
              'role' => 'required',
+             'isActive' => 'required'
 
         ]);
 
@@ -197,7 +200,7 @@ class UserController extends Controller
 
             $input = Arr::except($input,array('password'));
         }
-
+        $input['isActive'] =  $input['isActive'] == 'true' ? true : false;
         $user = User::find($id);
         $user->update($input);
 

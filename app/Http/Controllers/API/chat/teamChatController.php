@@ -35,14 +35,10 @@ class teamChatController extends Controller
 
             // return $messages;
 
-        $to = staff::where('Personal_uuid','=',$request->to)->first() ?
-        staff::where('Personal_uuid','=',$request->to)->first() :
-        $to = User::where('Personal_uuid','=',$request->to)->first();
+        $to = User::where('id','=',$request->to)->first() ;
 
+        $from = User::where('id','=',$request->from)->first();
 
-        $from = User::where('Personal_uuid','=',$request->from)->first() ?
-        User::where('Personal_uuid','=',$request->from)->first() :
-        $from = staff::where('Personal_uuid','=',$request->from)->first();
 
 
 
@@ -75,15 +71,14 @@ class teamChatController extends Controller
         $input['time'] = Carbon::now()->toDateTimeString();
         $message = teamChatMessage::create($input);
 
-        $to = staff::where('Personal_uuid','=',$message->to)->first() ?
-        staff::where('Personal_uuid','=',$message->to)->first():
-         User::where('Personal_uuid','=',$message->to)->first();
+        $to = User::where('id','=',$message->to)->first() ;
+
 
 
 
         // return $to fire event;
         broadcast(new NewMessage($to,$message))->toOthers();
-        // event(new NewMessage($message));
+        // event(new NewMessage($to,$message));
 
        return response()->json(['success' => true , 'message' =>new message($message),'to' => $to],200);
 

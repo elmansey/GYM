@@ -14,35 +14,12 @@ class members_personal_information extends Model
     protected $fillable = [
 
 
-        'first_name',
-        'middle_name',
-        'last_name',
+        'name',
         'gender',
         'date_of_birth',
     ];
 
 
 
-
-    protected static function boot()
-    {
-
-        parent::boot();
-
-
-        static::creating(function($model){
-
-            if(empty($model->Personal_uuid)){
-                $model->Personal_uuid = Str::uuid();
-            }
-
-        });
-
-
-
-
-
-
-    }
 
 }

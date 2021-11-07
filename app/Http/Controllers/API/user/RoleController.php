@@ -42,18 +42,9 @@ class RoleController extends Controller
     {
 
 
-        if($id == 1){
-            $permission = Permission::where('guard_name','=','admin')->get();
-        }else if($id == 2){
-            $permission = Permission::where('guard_name','=','staff')->get();
-        }else if ($id == 3){
 
-            $permission = Permission::where('guard_name','=','member')->get();
+            $permission = Permission::all();
 
-        }else{
-            $permission = Permission::where('guard_name','=','admin')->get();
-
-        }
 
         return response()->json(['success' => true, 'permission' => PermissionResource::collection($permission)], 200);
     }
