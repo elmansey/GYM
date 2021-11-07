@@ -64,30 +64,9 @@ class PermissionTableSeeder extends Seeder
         ];
 
 
-        $staffPermissions = [
-            'dashboard',
-            'show-chat-rooms',
-            'show-team-chat',
-            'show-class-chat'
-
-        ];
-
-        $memberPermissions = [
-            'dashboard',
-            'show-chat-rooms',
-            'show-class-chat'
-        ];
-
         foreach ($AdminPermissions as $adminPermission) {
-            Permission::create([ 'guard_name' => 'admin', 'name'=> $adminPermission ]);
+            Permission::create([  'name'=> $adminPermission ]);
         }
 
-        foreach ($staffPermissions as $staffPermission) {
-            Permission::create([ 'guard_name' => 'staff', 'name'=> $staffPermission ]);
-        }
-
-        foreach ($memberPermissions as $memberPermission) {
-            Permission::create([ 'guard_name' => 'member', 'name'=> $memberPermission ]);
-        }
     }
 }

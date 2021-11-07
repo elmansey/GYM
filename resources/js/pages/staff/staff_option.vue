@@ -17,31 +17,14 @@
                                               <div class="row">
 
                                                   <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
-                                                      <div class="col-form-label"> first name</div>
+                                                      <div class="col-form-label">  name</div>
 
-                                                      <input name="firstName" :class="['form-control', submited && !$v.staffData.firstName.required ||  error.firstName ? 'is-invalid' : '']"  v-model="staffData.firstName"/>
-                                                      <small style="color: red" v-if="error.firstName">{{ error.firstName[0]}}</small>
-                                                     <b-form-invalid-feedback style="color:red" v-if="( submited && !$v.staffData.firstName.required)"> the first name faild is required</b-form-invalid-feedback>
-
-                                                  </div>
-
-                                                  <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
-                                                      <div class="col-form-label">middle name</div>
-
-                                                      <input name="name" :class="['form-control', submited && !$v.staffData.middleName.required ||   error.middleName ? 'is-invalid' : '']"  v-model="staffData.middleName"/>
-                                                      <small style="color: red" v-if="error.middleName">{{ error.middleName[0]}}</small>
-                                                    <b-form-invalid-feedback style="color:red" v-if="( submited && !$v.staffData.middleName.required)"> the middle name faild is required</b-form-invalid-feedback>
+                                                      <input name="name" :class="['form-control', submited && !$v.staffData.name.required ||  error.name ? 'is-invalid' : '']"  v-model="staffData.name"/>
+                                                      <small style="color: red" v-if="error.name">{{ error.name[0]}}</small>
+                                                     <b-form-invalid-feedback style="color:red" v-if="( submited && !$v.staffData.name.required)"> the first name faild is required</b-form-invalid-feedback>
 
                                                   </div>
 
-                                                  <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
-                                                      <div class="col-form-label">last name</div>
-
-                                                      <input name="name" :class="['form-control', submited &&  !$v.staffData.lastName.required ||   error.lastName ? 'is-invalid' : '']"  v-model="staffData.lastName"/>
-                                                      <small style="color: red" v-if="error.lastName">{{ error.lastName[0]}}</small>
-                                                    <b-form-invalid-feedback style="color:red" v-if="( submited && !$v.staffData.lastName.required)"> the last name faild is required</b-form-invalid-feedback>
-
-                                                  </div>
 
 
                                                   <div class="mb-2 col-md-6 co1l-lg-6 col-sm-12">
@@ -61,13 +44,7 @@
 
                                                   </div>
 
-                                                     <div class="mb-2 col-md-12 col-lg-12 col-sm-12">
-                                                      <div class="col-form-label"> notes</div>
 
-                                                      <textarea name="phone" :class="['form-control',  error.notes ? 'is-invalid' : '']" v-model="staffData.notes"></textarea>
-                                                      <small style="color: red" v-if="error.notes">{{ error.notes[0]}}</small>
-
-                                                  </div>
 
                                               <div class="mb-2 col-md-12 col-lg-12 col-sm-12">
                                                   <div class="col-form-label"> Upload profile picture</div>
@@ -90,46 +67,42 @@
                                               </div>
 
 
-                                                <div class="mb-2 col-md-12 col-lg-12 col-sm-12">
+                                                <!-- <div class="mb-2 col-md-12 col-lg-12 col-sm-12">
                                                         <input  type="checkbox" v-model="allowLogin"/>
                                                         <span class="col-form-label">alow login</span>
 
-                                                  </div>
+                                                  </div> -->
 
-                                                    <div class="login data row" v-if="allowLogin">
+                                                    <div class="login data row" >
 
                                                     <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
                                                       <div class="col-form-label"> email</div>
 
-                                                        <input name="email" type="email" :class="['form-control',error.email || submited && !$v.staffData.loginData.email.requiredIf ? 'is-invalid' : '']"  v-model="staffData.loginData.email"/>
+                                                        <input name="email" type="email" :class="['form-control',error.email || submited && !$v.staffData.loginData.email.required ? 'is-invalid' : '']"  v-model="staffData.loginData.email"/>
                                                         <small style="color: red" v-if="error.email">{{ error.email[0]}}</small>
-                                                        <b-form-invalid-feedback style="color:red" v-if="( !$v.staffData.loginData.email.requiredIf)"> the email faild is required</b-form-invalid-feedback>
+                                                        <b-form-invalid-feedback style="color:red" v-if="( !$v.staffData.loginData.email.required)"> the email faild is required</b-form-invalid-feedback>
                                                         <b-form-invalid-feedback style="color:red" v-if="( !$v.staffData.loginData.email.email)"> the email  must vaild email </b-form-invalid-feedback>
 
                                                     </div>
                                                     <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
                                                       <div class="col-form-label"> user name</div>
 
-                                                        <input name="userName" type="text" :class="['form-control', submited && !$v.staffData.loginData.userName.requiredIf || error.userName ? 'is-invalid' : '']"  v-model="staffData.loginData.userName"/>
-                                                        <small style="color: red" v-if="error.userName">{{ error.userName[0]}}</small>
-                                                        <b-form-invalid-feedback style="color:red" v-if="( !$v.staffData.loginData.userName.requiredIf)"> the user name failde is required   </b-form-invalid-feedback>
+                                                        <input name="user_name" type="text" :class="['form-control', submited && !$v.staffData.loginData.user_name.required || error.user_name ? 'is-invalid' : '']"  v-model="staffData.loginData.user_name"/>
+                                                        <small style="color: red" v-if="error.user_name">{{ error.user_name[0]}}</small>
+                                                        <b-form-invalid-feedback style="color:red" v-if="( !$v.staffData.loginData.user_name.required)"> the user name failde is required   </b-form-invalid-feedback>
                                                     </div>
                                                     <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
                                                       <div class="col-form-label"> password</div>
 
-                                                        <input name="password" type="password" :class="['form-control' , submited && !$v.staffData.loginData.password.requiredIf || !$v.staffData.loginData.password.maxLength || !$v.staffData.loginData.password.minLength || error.password ? 'is-invalid' : '']"  v-model="staffData.loginData.password"/>
+                                                        <input name="password" type="password"  :class="['form-control' ,   error.password ? 'is-invalid' : '']"  v-model="staffData.loginData.password"/>
                                                         <small style="color: red" v-if="error.password">{{ error.password[0]}}</small>
-                                                        <b-form-invalid-feedback style="color:red" v-if="( !$v.staffData.loginData.password.requiredIf)"> the  password failde is required   </b-form-invalid-feedback>
-                                                        <b-form-invalid-feedback style="color:red" v-if="( !$v.staffData.loginData.password.maxLength)"> the max character allow is {{  $v.staffData.loginData.password.$params.maxLength.max }}   </b-form-invalid-feedback>
-                                                        <b-form-invalid-feedback style="color:red" v-if="( !$v.staffData.loginData.password.minLength)">  the min character allow is {{  $v.staffData.loginData.password.$params.minLength.min }}    </b-form-invalid-feedback>
-
+\\
                                                     </div>
                                                     <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
                                                       <div class="col-form-label"> confirm password</div>
 
-                                                        <input name="password" type="password" :class="['form-control', submited &&   !$v.staffData.loginData.confirm_Password.requiredIf ||  error.confirm_Password ? 'is-invalid' : '']"  v-model="staffData.loginData.confirm_Password"/>
+                                                        <input name="password" type="password"  :class="['form-control',    !$v.staffData.loginData.confirm_Password.requiredIf ||  error.confirm_Password ? 'is-invalid' : '']"  v-model="staffData.loginData.confirm_Password"/>
                                                         <small style="color: red" v-if="error.confirm_Password">{{ error.confirm_Password}}</small>
-                                                        <b-form-invalid-feedback style="color:red" v-if="( submited && !$v.staffData.loginData.confirm_Password.requiredIf)"> the confirm  password failde is required   </b-form-invalid-feedback>
 
                                                     </div>
                                                     <div class="mb-2 col-md-12 col-lg-12 col-sm-12 mt-3">
@@ -137,7 +110,7 @@
                                                                 <label class="col-form-label m-r-10">active</label>
                                                                 <div class="media-body text-right switch-lg icon-state">
                                                                 <label class="switch">
-                                                                    <input type="checkbox" checked="" v-model="staffData.loginData.isActive"><span class="switch-state"></span>
+                                                                    <input type="checkbox" checked=""   v-model="staffData.loginData.isActive"><span class="switch-state"></span>
                                                                 </label>
                                                                 </div>
                                                             </div>
@@ -200,13 +173,11 @@ export default {
     data(){
         return{
             staffData:{
-                'firstName':'',
-                'middleName':'',
-                'lastName':'',
+                'name':'',
                 'phone':'',
                 loginData:{
                     'email':'',
-                    'userName':'',
+                    'user_name':'',
                     'password':'',
                     'confirm_Password':'',
                     'isActive':true,
@@ -214,7 +185,6 @@ export default {
                 },
                 'profile_picture':'',
                 'role':{id: 1, name: "staff"},
-                'notes':''
             },
             isLoading:false,
             allowLogin:false,
@@ -263,18 +233,15 @@ export default {
                 console.log(res);
 
                 if(res.data.success){
-                      this.staffData.firstName       = res.data.staff.firstName
-                        this.staffData.middleName     = res.data.staff.middleName
-                        this.staffData.lastName     = res.data.staff.lastName
+                      this.staffData.name       = res.data.staff.name
                         this.staffData.phone         = res.data.staff.phone
                         this.staffData.role           = res.data.staff.roles
                         this.staffData.loginData.email     = res.data.staff.email
-                        this.staffData.loginData.userName     = res.data.staff.userName
+                        this.staffData.loginData.user_name     = res.data.staff.user_name
                         this.staffData.loginData.isActive     = res.data.staff.isActive
-                        this.staffData.notes     = res.data.staff.notes
                         this.isLoading = true
 
-                        this.allowLogin = (res.data.staff.email)
+                        // this.allowLogin = (res.data.staff.email)
                 }
 
                 if(res.data.status == 404){
@@ -316,44 +283,31 @@ export default {
     validations:{
 
         staffData:{
-                'firstName':{
+                'name':{
                     required:required,
                 },
-                'middleName':{
-                    required:required,
-                },
-                'lastName':{
-                    required:required,
-                },
+
                 'phone':{
                     required:required,
                 },
 
                 loginData:{
                     'email':{
-                        requiredIf:requiredIf( function(){
-                            return this.allowLogin
-                        }),
+                            required:required,
+
                         email,
                     },
-                    'userName':{
-                            requiredIf:requiredIf( function(){
-                            return this.allowLogin
-                        }),
+                    'user_name':{
+                            required:required,
+
                     },
                     'password':{
-                            requiredIf:requiredIf( function(){
-                            return this.allowLogin  && this.edit == false
-                        }),
+
                            maxLength:maxLength(25),
                           minLength:minLength(6)
 
                     },
-                    'confirm_Password':{
-                            requiredIf:requiredIf( function(){
-                            return this.allowLogin && this.edit == false
-                        }),
-                    },
+
                 },
                 'role':{
                     required:required,
@@ -377,18 +331,15 @@ export default {
 
                     let formData = new FormData();
 
-                    formData.append('firstName',this.staffData.firstName)
-                    formData.append('middleName',this.staffData.middleName)
-                    formData.append('lastName',this.staffData.lastName)
+                    formData.append('name',this.staffData.name)
                     formData.append('phone',this.staffData.phone)
-                    formData.append('userName',this.staffData.loginData.userName)
+                    formData.append('user_name',this.staffData.loginData.user_name)
                     formData.append('email',this.staffData.loginData.email)
                     formData.append('password',this.staffData.loginData.password)
                     formData.append('isActive',this.staffData.loginData.isActive)
                     formData.append('confirm_Password',this.staffData.loginData.confirm_Password)
                     formData.append('profile_picture',this.staffData.profile_picture)
                     formData.append('role',JSON.stringify(this.staffData.role))
-                    formData.append('notes',this.staffData.notes)
 
 
 
@@ -406,19 +357,16 @@ export default {
                                 this.error = ''
                                 this.submited = false
 
-                                   this.staffData.firstName  = ''
-                                    this.staffData.middleName = ''
-                                    this.staffData.lastName = ''
+                                   this.staffData.name  = ''
                                     this.staffData.phone = ''
 
                                     this.staffData.loginData.email = ''
-                                    this.staffData.loginData.userName = ''
+                                    this.staffData.loginData.user_name = ''
                                     this.staffData.loginData.password = ''
                                     this.staffData.loginData.isActive = true
                                     this.staffData.loginData.confirm_Password = ''
                                     this.staffData.profile_picture   = ''
                                     this.staffData.role = {id: 1, name: "staff"},
-                                    this.staffData.notes = ''
 
                                 this.$router.push('staffList')
                                 Toast.fire({
@@ -443,18 +391,16 @@ export default {
 
                     let formData = new FormData();
 
-                    formData.append('firstName',this.staffData.firstName)
-                    formData.append('middleName',this.staffData.middleName)
-                    formData.append('lastName',this.staffData.lastName)
+
+                    formData.append('name',this.staffData.name)
                     formData.append('phone',this.staffData.phone)
-                    formData.append('userName',this.staffData.loginData.userName)
+                    formData.append('user_name',this.staffData.loginData.user_name)
                     formData.append('email',this.staffData.loginData.email)
                     formData.append('password',this.staffData.loginData.password)
                     formData.append('isActive',this.staffData.loginData.isActive)
                     formData.append('confirm_Password',this.staffData.loginData.confirm_Password)
                     formData.append('profile_picture',this.staffData.profile_picture)
                     formData.append('role',JSON.stringify(this.staffData.role))
-                    formData.append('notes',this.staffData.notes)
 
 
 
@@ -472,19 +418,17 @@ export default {
                                 this.error = ''
                                 this.submited = false
 
-                                   this.staffData.firstName  = ''
-                                    this.staffData.middleName = ''
-                                    this.staffData.lastName = ''
+
+                                    this.staffData.name = ''
                                     this.staffData.phone = ''
 
                                     this.staffData.loginData.email = ''
-                                    this.staffData.loginData.userName = ''
+                                    this.staffData.loginData.user_name = ''
                                     this.staffData.loginData.password = ''
                                     this.staffData.loginData.isActive = true
                                     this.staffData.loginData.confirm_Password = ''
                                     this.staffData.profile_picture   = ''
                                     this.staffData.role = {id: 1, name: "staff"},
-                                    this.staffData.notes = ''
                                     this.$router.push({name : 'staffList'})
 
                                 Toast.fire({
@@ -572,18 +516,15 @@ export default {
 
             if(to.name == 'addPersonInStaff'){
                     this.edit = false
-                    this.staffData.firstName   = '',
-                    this.staffData.middleName   = '',
-                    this.staffData.lastName   = '',
+                    this.staffData.name   = '',
                     this.staffData.phone   = '',
                     this.staffData.loginData.email   = '',
-                    this.staffData.loginData.userName   = '',
+                    this.staffData.loginData.user_name   = '',
                     this.staffData.loginData.password   = '',
                     this.staffData.loginData.password   = '',
                     this.staffData.loginData.isActive   = true,
                     this.staffData.profile_picture   = '',
                     this.staffData.role   = '',
-                    this.staffData.notes   = '',
                     this.allowLogin     = false
 
 

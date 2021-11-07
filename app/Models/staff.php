@@ -16,16 +16,12 @@ class staff extends  Authenticatable implements JWTSubject
 {
     use HasFactory ,HasApiTokens, HasFactory,  HasRoles;
     protected $table = 'staff';
-    protected $guard_name = 'staff';
     protected $fillable = [
-        'firstName',
-        'middleName',
-        'lastName'	,
+        'name',
         'phone'	,
         'email',
         'profile_picture',
-        'notes',
-        'userName',
+        'user_name',
         'password',
         'isActive'
     ];

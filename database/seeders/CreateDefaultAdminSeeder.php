@@ -24,11 +24,11 @@ class CreateDefaultAdminSeeder extends Seeder
 
         DB::table('users')->delete();
 
-        $user = User::create([
+        $admin = User::create([
 
 
             'name' => 'test',
-            'user_name' => 'user test',
+            'user_name' => 'test admin',
             'email' => 'admin_default@gmail.com',
             'password' => bcrypt(123456),
             'phone' => '01019535581' ,
@@ -36,34 +36,27 @@ class CreateDefaultAdminSeeder extends Seeder
 
         ]);
 
-        $user->assignRole(['id' => 1 , 'name' => 'admin']);
+        $admin->assignRole(['id' => 1 , 'name' => 'admin']);
+
+        $staff = User::create([
+
+
+            'name' => 'test staff',
+            'user_name' => 'user test',
+            'email' => 'staff_default@gmail.com',
+            'password' => bcrypt(123456),
+            'phone' => '01019535581' ,
+
+
+        ]);
+
+        $staff->assignRole(['id' => 2 , 'name' => 'staff']);
 
 
         #############################################
 
 
 
-        DB::table('staff')->delete();
-
-        $staff = staff::create([
-
-
-
-
-            'firstName'  => 'ahmad',
-            'middleName'  => 'mohamed',
-            'lastName'  => 'elmansey',
-            'phone'  => '0102763801',
-            'email'  => 'staff_default@gmail.com',
-            'userName'  => 'ahmad2020',
-            'password'  => bcrypt(123456),
-            'isActive'  => true,
-
-
-
-        ]);
-
-        $staff->assignRole(['id' => 2 , 'name' => 'staff']);
 
         #####################################################
 

@@ -56,8 +56,8 @@
 
 
                                             <td>{{ row.Personal_uuid}}</td>
-                                            <td>{{ row.firstName  }} {{ row.middleName }} {{ row.lastName  }}</td>
-                                            <td>{{ row.userName}}</td>
+                                            <td>{{ row.name  }} </td>
+                                            <td>{{ row.user_name}}</td>
                                             <td>{{ row.email}}</td>
                                             <td>{{ row.phone}}</td>
                                             <td >

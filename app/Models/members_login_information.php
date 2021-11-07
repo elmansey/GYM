@@ -14,7 +14,6 @@ class members_login_information extends Authenticatable implements JWTSubject
     use HasFactory ,HasApiTokens, HasFactory,  HasRoles;
 
     protected $table = 'members_login_informations';
-    protected $guard_name = 'member';
     protected $fillable = [
             'member_id' ,
         	'user_name' ,

@@ -13,17 +13,15 @@ class resetPassword extends Mailable
 
    public $token;
    public $email;
-   public $guard;
 
-    public function __construct($token,$email,$guard)
+    public function __construct($token,$email)
     {
        $this->token = $token;
        $this->email = $email;
-       $this->guard = $guard;
     }
 
     public function build()
     {
-        return $this->markdown('emails.resetPassword')->with(['token' => $this->token,'email' => $this->email,'guard' => $this->guard]);
+        return $this->markdown('emails.resetPassword')->with(['token' => $this->token,'email' => $this->email]);
     }
 }

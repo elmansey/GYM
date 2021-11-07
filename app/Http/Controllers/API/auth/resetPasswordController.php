@@ -38,48 +38,38 @@ class resetPasswordController extends Controller
 
 
         $user = User::where('email','=',$request->email)->get();
-        $staff = staff::where('email','=',$request->email)->get();
-        $member = members_login_information::where('email','=',$request->email)->get();
+
 
         if(count($user) > 0){
 
-            $guard_name = 'admin';
+            $token = Str::random(64);
 
-        }else if(count($staff) > 0){
+            DB::table('password_resets')->insert([
 
-            $guard_name = 'staff';
+                'email' => $request->email,
+                'token' => $token,
+                'created_at' => Carbon::now()
 
-        }else if (count($member) > 0){
+              ]);
 
-            $guard_name = 'member';
+
+
+                mail::to($request->email)->send(new resetPassword($token,$request->email));
+                // Mail::send(new resetPassword,['token',$token],function($message) use ($request){
+
+                //         $message->to($request->email);
+                //         $message->subject('reset password');
+
+                // });
+
+                return response()->json(['success' => true,'message' => 'sending mail successfully'],200);
+
 
         }else{
             return response()->json(['success' => false , 'status' => 404 ,'message' => ['email'=> 'the email is not valid']]);
         }
 
 
-        $token = Str::random(64);
-
-        DB::table('password_resets')->insert([
-
-            'email' => $request->email,
-            'token' => $token,
-            'guard' => $guard_name ,
-            'created_at' => Carbon::now()
-
-          ]);
-
-
-
-            mail::to($request->email)->send(new resetPassword($token,$request->email,$guard_name));
-            // Mail::send(new resetPassword,['token',$token],function($message) use ($request){
-
-            //         $message->to($request->email);
-            //         $message->subject('reset password');
-
-            // });
-
-            return response()->json(['success' => true,'message' => 'sending mail successfully'],200);
 
     }
 
@@ -92,7 +82,6 @@ class resetPasswordController extends Controller
 
             'email'    => ['required','email'],
             'token'    => 'required',
-            'guard'    => 'required',
             'password'    => 'required|min:6',
             'confirm_password'    => 'required|same:password'
 
@@ -104,9 +93,8 @@ class resetPasswordController extends Controller
         }
 
 
-        if($request->guard == 'admin'){
             $updatePassword = DB::table('password_resets')
-            ->where(['email'=> $request->email ,'token' => $request->token,'guard' => $request->guard])->first();
+            ->where(['email'=> $request->email ,'token' => $request->token])->first();
 
 
             if(!$updatePassword){
@@ -127,58 +115,8 @@ class resetPasswordController extends Controller
 
 
 
-        }elseif($request->guard == 'staff'){
-
-            $updatePassword = DB::table('password_resets')
-            ->where(['email'=> $request->email ,'token' => $request->token,'guard' => $request->guard])->first();
-
-            if(!$updatePassword){
-
-                return response()->json(['success' => false , 'status' => 404]);
-            }
-
-            $request['password'] = bcrypt($request['password']);
-
-            $staff = staff::where('email','=',$request->email)->first();
-
-            $staff->password = $request['password'];
-            $staff->update();
-
-
-            DB::table('password_resets')->where('email' ,'=', $request->email)->delete();
-            return response()->json(['success' => true , 'message' => 'password reset successfully']);
-
-
-
-
-
-        }else if ($request->guard == 'member'){
-
-            $updatePassword = DB::table('password_resets')
-            ->where(['email'=> $request->email ,'token' => $request->token,'guard' => $request->guard])->first();
-
-
-            if(!$updatePassword){
-
-                return response()->json(['success' => false , 'status' => 404]);
-            }
-
-            $request['password'] = $request['password'];
-
-            $member = members_login_information::where('email','=',$request->email)->first();
-
-            $member->password = bcrypt($request['password']);
-            $member->update();
-
-
-            DB::table('password_resets')->where('email' ,'=', $request->email)->delete();
-            return response()->json(['success' => true , 'message' => 'password reset successfully']);
-
         }
 
-
-
-    }
 
 
 }

@@ -53,7 +53,7 @@ use App\Http\Controllers\API\ClassSchedule\ClassScheduleController;
 
 
 // auth route
-     Route::group(['middleware' => ['auth:admin,staff,member',]], function () {
+     Route::group(['middleware' => ['auth:api',]], function () {
 
 
 

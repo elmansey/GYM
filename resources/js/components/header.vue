@@ -168,7 +168,7 @@
               alt=""
             />
             <div class="media-body">
-              <span>  {{this.$store.getters.USER.name ? this.$store.getters.USER.name : this.$store.getters.USER.firstName }} </span>
+              <span>  {{this.$store.getters.USER.name }} </span>
               <p class="mb-0 font-roboto">
 
                   {{

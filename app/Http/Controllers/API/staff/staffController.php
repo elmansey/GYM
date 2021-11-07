@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\API\staff;
 
+use App\Models\User;
 use App\Models\staff;
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\RolesResource;
 use App\Http\Resources\staffResource;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\VarDumper\VarDumper;
 
@@ -17,14 +18,14 @@ class staffController extends Controller
 {
     public function index(){
 
-        $staff = staff::all();
+        $staff = User::role('staff')->get();
 
         return response()->json(['success' => true, 'staff' => staffResource::collection($staff)],200);
     }
 
     public function getStaffToChatIgnoreMe($email){
 
-        $staff = staff::where('email','!=',$email)->get();
+        $staff = User::where('email','!=',$email)->get();
 
         return response()->json(['success' => true, 'staff' => staffResource::collection($staff)],200);
     }
@@ -35,9 +36,7 @@ class staffController extends Controller
 
         $validator = validator::make($request->all(), [
 
-            'firstName'        => 'required',
-            'middleName'        => 'required',
-            'lastName'        => 'required',
+            'name'        => 'required',
             'phone'        => 'required',
             'role'        => 'required',
 
@@ -82,7 +81,7 @@ class staffController extends Controller
 
 
         $input['isActive'] = $input['isActive'] == 'true' || true ? true : false;
-        $staff = staff::create($input);
+        $staff = User::create($input);
 
        $input['role'] = json_decode($input['role'],true);
         $staff->assignRole($input['role']['name']);
@@ -95,7 +94,7 @@ class staffController extends Controller
 
     public function getItemFromStaffById($id){
 
-        $staffPerson = staff::find($id);
+        $staffPerson = User::find($id);
 
 
 
@@ -113,7 +112,7 @@ class staffController extends Controller
 
     public function getStaffRole(){
 
-        $role = Role::where('guard_name','=','staff')->get();
+        $role = Role::all();
         return response()->json(['success'=>true ,'staffRole'=>  RolesResource::collection($role)] ,200);
 
     }
@@ -126,9 +125,7 @@ class staffController extends Controller
 
          $validator = validator::make($request->all(), [
 
-            'firstName'        => 'required',
-            'middleName'        => 'required',
-            'lastName'        => 'required',
+            'name'        => 'required',
             'phone'        => 'required',
             'role'        => 'required',
 
@@ -186,10 +183,10 @@ class staffController extends Controller
 
         $input['isActive'] = $input['isActive'] == 'true' || true ? true : false;
 
-       $staff = staff::find($id);
+       $staff = User::find($id);
         $staff->update($input);
 
-        DB::table('model_has_roles')->where([['model_id','=',$id],['model_type','=','APP\Models\staff']])->delete();
+        DB::table('model_has_roles')->where(['model_id','=',$id])->delete();
 
         $roleDetails = json_decode($request->role,true) ;
         $role = [];
@@ -214,7 +211,7 @@ class staffController extends Controller
     public function destroy($id)
     {
 
-        $oldImg = staff::where('id','=',$id)->pluck('profile_picture');
+        $oldImg = User::where('id','=',$id)->pluck('profile_picture');
 
         $path =  public_path('profile_pictures\\'.$oldImg[0]);
 
@@ -226,7 +223,7 @@ class staffController extends Controller
         }
 
 
-        $staff = staff::find($id);
+        $staff = User::find($id);
         $staff->delete();
         return response()->json(['success' => true, 'message' => 'deleted successfully']);
     }
