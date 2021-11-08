@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\Broadcast;
 
 Broadcast::channel('team_chat.{id}', function (  $user , $id) {
 
-    return (int) $user->id === (int) $id;
+    // return (int) $user->id === (int) $id;
     return true ;
 
 });

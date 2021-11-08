@@ -30,7 +30,7 @@
                                 {{ reseverInfo.name ? reseverInfo.name : reseverInfo.firstName }}
                                 <br />
 
-                            <span class="font-primary f-12" v-if="typeStatus" >Typing...</span>
+                            <!-- <span class="font-primary f-12" >Typing...</span> -->
                             </div>
                         </div>
                         <div class="status digits">
@@ -134,7 +134,7 @@
                                             <div class="col-xl-12 d-flex" style="height: 100%!important;padding: 0px;!important;margin:0px">
 
                                                      <input
-                                                        @keydown="typing"
+                                                     @keydown="typing"
                                                         class="input-txt-bx"
                                                         v-model="chatInfo.message"
                                                         style="border:none;!important;width:100%;padding: 15px;!important;margin:auto"
@@ -341,44 +341,27 @@ export default {
       this.chatInfo.from = this.$store.getters.USER.id
   },
 
-  mounted() {
-
-        Echo.private(`team_chat.${this.chatInfo.from}`).listen('NewMessage', (e) => {
-
-                if(e.message.to == this.$store.getters.USER.id && this.chatting){
-
-                        this.oldMessage.push({
-                            'to' : e.message.to,
-                            'from' : e.message.from,
-                            'message' : e.message.message,
-                            'time' : Array(e.message.time)
-                        });
-                        this.scrollChatToLastMessage()
-
-                }
 
 
-        })
-
-
-  },
-
-  watch: {
+ watch: {
 
 
 
-        },
+ },
 
   methods: {
 
-       typing(){
+
+  typing(){
 
         Echo.private(`team_chat.${this.chatInfo.from}`)
             .whisper('typing', {
+
                 name: this.chatInfo.message
-            })
+        })
 
     },
+
 
     getOldMessageInChat(id){
 
@@ -443,6 +426,31 @@ export default {
     },
 
 
+
+
+
+  },
+
+    created() {
+
+        Echo.private(`team_chat.${this.chatInfo.from}`).listen('NewMessage', (e) => {
+
+                if(e.message.to == this.$store.getters.USER.id && this.chatting){
+
+                        this.oldMessage.push({
+                            'to' : e.message.to,
+                            'from' : e.message.from,
+                            'message' : e.message.message,
+                            'time' : Array(e.message.time)
+                        });
+                        this.scrollChatToLastMessage()
+
+                }
+
+
+        }) .listenForWhisper('typing', (e) => {
+        console.log(e.name);
+    });
 
 
 
