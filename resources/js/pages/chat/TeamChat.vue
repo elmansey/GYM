@@ -18,6 +18,8 @@
                   <div class="chat mb-0 pb-0" >
                     <!-- chat-header start-->
                     <div class="chat-header clearfix">
+
+
                           <img
                                 class="rounded-circle"
                                 :src=" reseverInfo.profile_picture   ? '../../profile_pictures/'+reseverInfo.profile_picture :  '../../profile_pictures/DefaultProfile.jpg'"
@@ -25,17 +27,23 @@
                               v-if="chatting"
                          />
                       <div class="about">
-                        <div class="name">
-                            <div class="name" style="margin-top:20px !important;" v-if="chatting">
-                                {{ reseverInfo.name ? reseverInfo.name : reseverInfo.firstName }}
+
+                            <div class="name"  v-if="chatting">
+                                <div class="status digits">
+                                        <div  v-if="IsOnline(reseverInfo.id)">
+
+                                        <i class="fa fa-circle text-success" style="font-size:8px"> </i>
+                                        <span style="margin-left: 0px!important;font-size:13px" class="text-success">online</span>
+                                        </div>
+                                </div>
+                                {{ reseverInfo.name }}
                                 <br />
 
-                            <!-- <span class="font-primary f-12" >Typing...</span> -->
+                            <p class="font-primary f-12" v-if="typeStatus" >{{ typeStatus}} ....</p>
                             </div>
-                        </div>
-                        <div class="status digits">
 
-                        </div>
+
+
                       </div>
                       <ul
                         class="list-inline float-left float-sm-right chat-menu-icons"
@@ -194,6 +202,12 @@
                                   <p> {{  teamPerson.role[0].name }}</p>
 
                               </div>
+                              <div  v-if="IsOnline(teamPerson.id)">
+
+                                   <i class="fa fa-circle text-success" style="font-size:8px"> </i>
+                                   <span style="margin-left: 0px!important;font-size:13px" class="text-success">online</span>
+                              </div>
+
                             </div>
                           </li>
 
@@ -318,7 +332,9 @@ export default {
       senderInfo:[],
       reseverInfo:[],
       oldMessage:[],
-      typeStatus:false
+      typeStatus:'',
+      selected:'',
+      OnlinePerson:[]
     };
   },
 
@@ -342,30 +358,133 @@ export default {
   },
 
 
+    mounted() {
 
- watch: {
+        Echo.private(`team_chat.${this.chatInfo.from}`).listen('NewMessage', (e) => {
+
+                if(e.message.to == this.$store.getters.USER.id && this.chatting){
+
+                        this.oldMessage.push({
+                            'to' : e.message.to,
+                            'from' : e.message.from,
+                            'message' : e.message.message,
+                            'time' : Array(e.message.time)
+                        });
+                        this.scrollChatToLastMessage()
+                        this.readMessage()
+
+                }
+
+
+        })
+
+        Echo.private('typingEvent')
+           .listenForWhisper('typing', (e) => {
+
+
+                     if(e.resever == this.$store.getters.USER.id && this.selected == e.sender){
+                         this.typeStatus = 'typing'
+
+                            setTimeout(()=>{
+
+                                this.typeStatus =''
+
+                            },3000);
+                     }
+
+
+       });
+
+
+      Echo.join('liveUserStatus')
+        .here((users) => {
+                this.OnlinePerson = users
+        })
+        .joining((user) => {
+            this.OnlinePerson.push(user)
+        })
+        .leaving((user) => {
+
+            var AllOnline =  this.OnlinePerson.map((item ,index) => {
+
+               return item['id']
+
+           })
+            var index =   AllOnline.findIndex(x => x.id === user.id)
+
+           this.OnlinePerson.splice(index,1)
+
+        })
+        .error((error) => {
+            console.error(error);
+        });
 
 
 
- },
+        this.readMessage
+
+
+
+
+  },
+
+
+
 
   methods: {
 
 
+
+      readMessage(){
+
+            var resever = this.selected
+            let formData = new FormData()
+            formData.append("resever",resever)
+
+
+            axios.post('setReadingMessage',formData)
+            .then(res => {
+
+                console.log(res)
+            }).catch(err => {
+
+            })
+
+
+      },
+
+    IsOnline(id){
+
+           var res =  this.OnlinePerson.map((item ,index) => {
+
+               return item['id']
+
+           })
+           return res.includes(id)
+    },
+
+
   typing(){
 
-        Echo.private(`team_chat.${this.chatInfo.from}`)
+        Echo.private('typingEvent')
             .whisper('typing', {
 
-                name: this.chatInfo.message
+                 resever : this.selected,
+                 sender : this.$store.getters.USER.id,
+                message: this.chatInfo.message
         })
 
     },
 
 
+
+
     getOldMessageInChat(id){
 
          this.chatInfo.to  =   id
+         this.selected  =   id
+
+         this.readMessage()
 
          let formData = new FormData();
          formData.append("from", this.chatInfo.from)
@@ -431,34 +550,14 @@ export default {
 
   },
 
-    created() {
-
-        Echo.private(`team_chat.${this.chatInfo.from}`).listen('NewMessage', (e) => {
-
-                if(e.message.to == this.$store.getters.USER.id && this.chatting){
-
-                        this.oldMessage.push({
-                            'to' : e.message.to,
-                            'from' : e.message.from,
-                            'message' : e.message.message,
-                            'time' : Array(e.message.time)
-                        });
-                        this.scrollChatToLastMessage()
-
-                }
-
-
-        }) .listenForWhisper('typing', (e) => {
-        console.log(e.name);
-    });
 
 
 
-  },
-
-
-
-
+    watch:{
+        show(){
+            this.readMessage()
+        }
+    }
 
 };
 </script>

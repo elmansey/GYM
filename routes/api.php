@@ -142,6 +142,7 @@ use App\Http\Controllers\API\ClassSchedule\ClassScheduleController;
         // chat
         Route::post('addMessageInTeamChat',[teamChatController::class,'store']);
         Route::post('getOldMessageInChat',[teamChatController::class,'getOldMessageInChat']);
+        Route::post('setReadingMessage',[teamChatController::class,'setReadingMessage']);
 
 
 

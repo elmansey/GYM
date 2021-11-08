@@ -68,7 +68,8 @@ class teamChatController extends Controller
 
         $input  = $request->all();
 
-        $input['time'] = Carbon::now()->toDateTimeString();
+
+        $input['send_at'] = Carbon::now()->toDateTimeString();
         $message = teamChatMessage::create($input);
 
         $to = User::where('id','=',$message->to)->first() ;
@@ -81,6 +82,55 @@ class teamChatController extends Controller
         // event(new NewMessage($to,$message));
 
        return response()->json(['success' => true , 'message' =>new message($message),'to' => $to],200);
+
+
+
+
+    }
+
+
+    public function setReadingMessage (Request $request){
+
+        $validator = validator::make($request->all(), [
+            'resever' => 'required',
+        ]);
+
+
+        if($validator->fails()){
+
+            return response()->json(['success' => false, 'message' => $validator->errors()]);
+        }
+
+        $input = $request->all();
+
+
+        //هات الرسايل المسجل دخول يكون قيها المستقبل
+        $unReadMessage = teamChatMessage::where('to' ,'=',auth()->user()->id )
+        ->where('from','=',$input['resever'])
+        ->Where('read','=',false)->get();
+
+            foreach($unReadMessage as $k => $v){
+
+
+                if($v['to'] == auth()->user()->id){
+
+                    $makeMessageRead = teamChatMessage::find($v['id']);
+                    $makeMessageRead->update([
+                        'read' => true,
+                        'reading_at' => Carbon::now()->toDateTimeString(),
+
+                    ]);
+
+                }
+
+             }
+
+             if($makeMessageRead){
+
+                return response()->json(['success' => true , 'messages' =>'readed']);
+
+             }
+
 
 
 

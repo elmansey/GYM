@@ -18,8 +18,10 @@ class CreateTeamChatMessageTable extends Migration
             $table->foreignId('from')->references('id')->on('users')->cascadeOnDelete();
             $table->foreignId('to')->references('id')->on('users')->cascadeOnDelete();
             $table->text('message');
-            $table->string('time');
-            $table->timestamps();
+            $table->boolean('read')->default(false);
+            $table->string('send_at');
+            $table->string('reading_at');
+
         });
     }
 
