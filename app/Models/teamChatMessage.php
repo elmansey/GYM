@@ -10,12 +10,7 @@ class teamChatMessage extends Model
 {
     use HasFactory;
     public $table = 'team_chat_message';
-    protected $fillable = ['from','to','message','time','reading_at','send_at'];
+    protected $fillable = ['from','to','message','time','read','reading_at','send_at'];
     public $timestamps = false;
 
-    // protected $dispatchesEvents = [
-
-    //     'NewMessage' => NewMessage::class,
-
-    // ];
 }

@@ -20,7 +20,7 @@ class CreateTeamChatMessageTable extends Migration
             $table->text('message');
             $table->boolean('read')->default(false);
             $table->string('send_at');
-            $table->string('reading_at');
+            $table->string('reading_at')->nullable();
 
         });
     }

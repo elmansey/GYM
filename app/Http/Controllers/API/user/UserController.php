@@ -28,7 +28,24 @@ class UserController extends Controller
 
     public function getUserToChatIgnoreMe($email)
     {
-        $data = User::role(['staff','admin'])->where('email','!=',$email)->get();
+
+        $data = User::role(['staff','admin'])
+        ->where('email','!=',$email)
+        ->with('messageTeamRelationTo',function($query){
+
+            $query->where('to', '=', auth()->user()->id)
+            ->where('read','=',false);
+
+        })
+        ->get()
+        ->sortBy('messageTeamRelationTo.send_at');
+
+
+
+
+
+
+
         return response()->json(['success'=>true ,'admins'=> UsersResource::collection($data)] ,200);
     }
 

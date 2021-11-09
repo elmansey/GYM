@@ -21,7 +21,7 @@ class message extends JsonResource
         'from'  => $this->from,
         'to'  => $this->to,
         'message'  => $this->message,
-        'time'  => explode(' ',$this->time)
+        'send_at'  => explode(' ',$this->send_at)
         ];
     }
 }

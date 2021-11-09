@@ -108,7 +108,7 @@ class teamChatController extends Controller
         $unReadMessage = teamChatMessage::where('to' ,'=',auth()->user()->id )
         ->where('from','=',$input['resever'])
         ->Where('read','=',false)->get();
-
+            $makeMessageRead = '';
             foreach($unReadMessage as $k => $v){
 
 
@@ -136,4 +136,6 @@ class teamChatController extends Controller
 
 
     }
+
+
 }

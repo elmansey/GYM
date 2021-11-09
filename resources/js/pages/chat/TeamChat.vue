@@ -119,7 +119,7 @@
                                                 </div>
 
                                             <div class=" pt-1 pr-2 r-0 float-left">
-                                                <span v-for="(time,index) in message.time" :key="index" class="text-extra-small text-muted  m-3" style="font-size:9px!important;">
+                                                <span v-for="(time,index) in message.send_at" :key="index" class="text-extra-small text-muted  m-3" style="font-size:9px!important;">
                                                     {{ time  }}
                                                 </span>
                                             </div>
@@ -171,9 +171,11 @@
                 <div
                   class="col pl-0 chat-menu custom-scrollbar"
                   :class="{ show: chatmenutoogle }"
+
                 >
                   <b-tabs
-                    nav-class="tabbed-card border-tab border-tab-primary custom-scrollbar"
+                    nav-class="tabbed-card border-tab border-tab-primary custom-scrollbar mb-0"
+
                   >
                     <b-tab title="team" active style="margin:5px!important;padding:0px!important;">
                       <div class="people-list"  v-if="isloading">
@@ -182,7 +184,7 @@
                             class="clearfix mb-3 border-bottom pb-3 "
                             v-for="(teamPerson,key) in AllTeamToChat"
                             :key="key"
-                            style="cursor: pointer; padding: 12px;!important;margin:0px!important"
+                            style="cursor: pointer; padding: 12px;!important;margin:0px!important;position: relative;"
                           >
                             <img
                               class="rounded-circle user-image"
@@ -190,14 +192,19 @@
                              alt=""
                              @click.prevent="getOldMessageInChat(teamPerson.id)"
                             />
-                            <div class="about">
+                            <span v-if="teamPerson.messageTeamRelationTo.length > 0" class="badge bg-success" style="    position: absolute;top: 52px;left: 270px;padding: 5px 10px;border-radius: 50%;color: white;">
+                                {{ teamPerson.messageTeamRelationTo.length }}
+                            </span>
+
+                            <div class="about" >
                              <div class="name"
+
                                 @click.prevent="getOldMessageInChat(teamPerson.id)"
 
                                 >{{ teamPerson.name }}
 
                             </div>
-                              <div class="status"  style="display: flex;">
+                              <div class="status"  style="display: flex;margin-top:0px;!important">
                                  <i class="fa fa-briefcase" style="margin: 6px;"></i>
                                   <p> {{  teamPerson.role[0].name }}</p>
 
@@ -343,16 +350,7 @@ export default {
 
 
 
-      axios.get(`getUserToChatIgnoreMe/${this.$store.getters.USER.email}`)
-      .then(res => {
-          this.AllTeamToChat = res.data.admins
-          this.isloading = true
-
-      })
-      .catch(err => {
-          console.error(err);
-      })
-
+     this.getALLteamToChat()
 
       this.chatInfo.from = this.$store.getters.USER.id
   },
@@ -362,18 +360,18 @@ export default {
 
         Echo.private(`team_chat.${this.chatInfo.from}`).listen('NewMessage', (e) => {
 
-                if(e.message.to == this.$store.getters.USER.id && this.chatting){
+                if(e.message.to == this.$store.getters.USER.id && this.chatting &&  e.message.from == this.selected){
 
                         this.oldMessage.push({
                             'to' : e.message.to,
                             'from' : e.message.from,
                             'message' : e.message.message,
-                            'time' : Array(e.message.time)
+                            'send_at' : Array(e.message.send_at)
                         });
                         this.scrollChatToLastMessage()
                         this.readMessage()
-
                 }
+                 this.getALLteamToChat()
 
 
         })
@@ -422,6 +420,7 @@ export default {
 
 
         this.readMessage
+         this.getALLteamToChat()
 
 
 
@@ -450,6 +449,21 @@ export default {
 
             })
 
+
+      },
+
+    getALLteamToChat(){
+
+    axios.get(`getUserToChatIgnoreMe/${this.$store.getters.USER.email}`)
+      .then(res => {
+          console.log(res)
+        //   this.AllTeamToChat = res.data.admins
+        //   this.isloading = true
+
+      })
+      .catch(err => {
+          console.error(err);
+      })
 
       },
 
@@ -498,6 +512,7 @@ export default {
             this.reseverInfo = res.data.to
            this.scrollChatToLastMessage()
               this.chatting = true
+              this.getALLteamToChat()
 
 
         })
