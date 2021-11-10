@@ -77,17 +77,7 @@ const routes = [
 
 
             },
-            {
-                path: 'classChat',
-                name: 'classChat',
-                component: require('@/pages/chat/classChat').default,
-                meta: {
 
-                    permission: 'show-class-chat'
-
-                },
-
-            },
             {
 
                 path: 'membersList',

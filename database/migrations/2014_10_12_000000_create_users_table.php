@@ -24,6 +24,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('profile_picture')->nullable();
             $table->boolean('isActive')->default(true);
+            $table->string('qr_code')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

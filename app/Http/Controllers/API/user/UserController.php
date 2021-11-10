@@ -17,11 +17,13 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class UserController extends Controller
 {
     public function index(Request $request)
     {
+
         $data = User::all();
         return response()->json(['success'=>true ,'admins'=> UsersResource::collection($data)] ,200);
     }
@@ -74,11 +76,13 @@ class UserController extends Controller
 
 
 
+
         if($validator->fails()){
 
             return response()->json(['success'=>false,'message'=>$validator->errors()],200);
 
         }
+
 
 
         try{
@@ -109,6 +113,8 @@ class UserController extends Controller
             $input['profile_picture'] = $input['profile_picture'] ? $fileName : null;
             $input['isActive'] =  $input['isActive'] == 'true' ? true : false;
 
+
+
         $user =  User::create($input);
 
         $role = [];
@@ -122,6 +128,20 @@ class UserController extends Controller
 
 
         $user->assignRole($role); // بيحطها في جدول الرول
+
+        $dataQR = [
+            'name' => $user['name'],
+            'email' => $user['email'],
+            'Personal_uuid' =>  $user['Personal_uuid'],
+            'profile_picture' =>  $user['profile_picture']
+        ];
+
+        $QRName = md5($user['Personal_uuid']) . '.png';
+
+        $qr =  QrCode::formate('png')->generate($dataQR,public_path('profile_QR/' . $QRName));
+
+        $user =  User::find($user->id);
+        $user->update(['qr_code' => $QRName]);
 
         return response()->json(['success'=>true,'message'=>'User created successfully','user'=>new UsersResource($user)],200);
 

@@ -27,13 +27,8 @@
                     "title": "chatting with team",
                     "type": "link",
                     "permission": "show-team-chat"
-                },
-                {
-                    "path": "/dashboard/classChat",
-                    "title": "my class chat",
-                    "type": "link",
-                    "permission": "show-class-chat"
                 }
+
             ]
         },
 

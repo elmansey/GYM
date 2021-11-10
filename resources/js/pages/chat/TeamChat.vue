@@ -237,37 +237,7 @@
 
 
                     </b-tab>
-                    <b-tab class="material-border" title="group">
-                      <div>
-                        <li
-                            class="clearfix mb-3 border-bottom pb-3 "
-                            style="cursor: pointer; padding: 12px;!important;margin:0px!important;position: relative;"
-                          >
-                            <img
-                              class="rounded-circle user-image"
-                            :src="'../../profile_pictures/group.png'"
-                             alt=""
-                            />
 
-
-                            <div class="about" >
-                                    <div class="name">
-
-                                    </div>
-                                    <div class="status"  style="display: flex;margin-top:0px;!important">
-                                        <p> team</p>
-
-                                    </div>
-                                    <div>
-
-                                        <i class="fa fa-circle text-success" style="font-size:8px"> </i>
-                                        <span style="margin-left: 0px!important;font-size:13px" class="text-success">6</span>
-                                    </div>
-
-                            </div>
-                          </li>
-                      </div>
-                    </b-tab>
                   </b-tabs>
                 </div>
               </div>

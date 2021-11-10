@@ -57,7 +57,7 @@ class PermissionTableSeeder extends Seeder
             'show-setting',
             'show-chat-rooms',
             'show-team-chat',
-            'show-class-chat'
+
 
 
 
