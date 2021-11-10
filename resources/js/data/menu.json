@@ -14,29 +14,6 @@
 
         },
         {
-            "title": "Registration member",
-            "icon": "user-plus",
-            "type": "sub",
-            "badgeType": "primary",
-            "active": false,
-            "permission": "show-Registration-member",
-            "children": [
-
-                {
-                    "path": "/dashboard/membersList",
-                    "title": "members list",
-                    "type": "link",
-                    "permission": "show-Registration-member-list"
-                },
-                {
-                    "path": "/dashboard/addMember",
-                    "title": "add new member",
-                    "type": "link",
-                    "permission": "add-member-in-gym"
-                }
-            ]
-        },
-        {
             "title": "chat",
             "icon": "message-circle",
             "type": "sub",
@@ -56,6 +33,30 @@
                     "title": "my class chat",
                     "type": "link",
                     "permission": "show-class-chat"
+                }
+            ]
+        },
+
+        {
+            "title": "Registration member",
+            "icon": "user-plus",
+            "type": "sub",
+            "badgeType": "primary",
+            "active": false,
+            "permission": "show-Registration-member",
+            "children": [
+
+                {
+                    "path": "/dashboard/membersList",
+                    "title": "members list",
+                    "type": "link",
+                    "permission": "show-Registration-member-list"
+                },
+                {
+                    "path": "/dashboard/addMember",
+                    "title": "add new member",
+                    "type": "link",
+                    "permission": "add-member-in-gym"
                 }
             ]
         },

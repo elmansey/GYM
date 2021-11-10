@@ -37,12 +37,7 @@ class UserController extends Controller
             ->where('read','=',false);
 
         })
-        ->get()
-        ->sortBy('messageTeamRelationTo.send_at');
-
-
-
-
+        ->get();
 
 
 
