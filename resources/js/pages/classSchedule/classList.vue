@@ -87,7 +87,12 @@
                                             <th sortKey="name">
                                                 training Location
                                             </th>
-                                            <th sortKey="options">options</th>
+                                            <th sortKey="options"    v-if="
+                                                                    can(
+                                                                        'edit-class-schedule' ||
+                                                                        'delete-class-schedule'
+                                                                    )"
+                                                            >>options</th>
                                         </thead>
 
                                         <tbody
@@ -132,6 +137,11 @@
                                                     <b-button
 
                                                         variant="outline-primary"
+                                                               v-if="
+                                                                    can(
+                                                                        'edit-class-schedule'
+                                                                    )"
+                                                            >
 
                                                     >
                                                             <router-link

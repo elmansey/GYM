@@ -29,7 +29,7 @@
                                         <th sortKey="name">name</th>
                                         <th sortKey="name" >Membership Period</th>
                                         <th sortKey="name" >Membership price</th>
-                                        <th sortKey="options">options</th>
+                                        <th sortKey="options" v-if="can('edit-membership' || 'delete-membership')">options</th>
                                         </thead>
 
                                         <tbody slot="body" slot-scope="{ displayData }">
@@ -47,6 +47,7 @@
                                                        squared
                                                         variant="outline-primary"
                                                         class="btn-sm btn-child"
+                                                        v-if="can('edit-membership')"
                                                     >
                                                         <router-link
                                                             squared

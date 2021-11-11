@@ -14,7 +14,7 @@ use phpDocumentor\Reflection\Types\Boolean;
 use App\Models\members_personal_information;
 use App\Models\User;
 use Illuminate\Validation\Rule;
-
+use QRCode;
 class membersController extends Controller
 {
 
@@ -101,6 +101,12 @@ class membersController extends Controller
 
                 $role  = $request->role;
                 $LoginInformation->assignRole($role);
+
+                $dataQR =  $LoginInformation['Personal_uuid'];
+                $QRName = 'profile_QR/'.md5($LoginInformation['Personal_uuid']) . '.png';
+                $qr =  QRCode::text($dataQR)->setOutfile(public_path($QRName))->png();
+                $update = User::find($LoginInformation->id);
+                $update->update(['qr_code' =>  $QRName]);
 
 
 

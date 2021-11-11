@@ -15,7 +15,7 @@ use App\Models\members_extra_information;
 use App\Models\members_login_information;
 use App\Models\members_contact_information;
 use App\Models\members_personal_information;
-
+use QRCode;
 class CreateDefaultAdminSeeder extends Seeder
 {
 
@@ -38,6 +38,15 @@ class CreateDefaultAdminSeeder extends Seeder
 
         $admin->assignRole(['id' => 1 , 'name' => 'admin']);
 
+
+        $dataQR =  $admin['Personal_uuid'];
+        $QRName = 'profile_QR/'.md5($admin['Personal_uuid']) . '.png';
+        $qr =  QRCode::text($dataQR)->setOutfile(public_path($QRName))->png();
+        $update = User::find($admin->id);
+        $update->update(['qr_code' =>  $QRName]);
+
+
+
         $staff = User::create([
 
 
@@ -52,7 +61,11 @@ class CreateDefaultAdminSeeder extends Seeder
 
         $staff->assignRole(['id' => 2 , 'name' => 'staff']);
 
-
+        $dataQR =  $staff['Personal_uuid'];
+        $QRName = 'profile_QR/'.md5($staff['Personal_uuid']) . '.png';
+        $qr =  QRCode::text($dataQR)->setOutfile(public_path($QRName))->png();
+        $update = User::find($staff->id);
+        $update->update(['qr_code' =>  $QRName]);
         #############################################
 
 

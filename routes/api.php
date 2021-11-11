@@ -76,6 +76,7 @@ use App\Http\Controllers\API\ClassSchedule\ClassScheduleController;
         Route::post('userUpdate/{id}', [UserController::class, 'update'])->name('userUpdate');
         Route::get('userDelete/{id}', [UserController::class, 'destroy'])->name('userDelete');
         Route::get('getUserById/{id}', [UserController::class, 'getUserById'])->name('getUserById');
+        Route::post('updateProfileInfo/{id}', [UserController::class, 'updateProfileInfo'])->name('updateProfileInfo');
 
 
         //role

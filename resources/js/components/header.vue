@@ -182,26 +182,42 @@
           </div>
           <ul class="profile-dropdown onhover-show-div">
             <li>
-              <a href="#"
-                ><feather type="user"></feather><span>Account </span></a
-              >
+                <router-link
+                :to="{name : 'profile'}"
+                >
+
+                    <feather type="user"></feather><span>Account </span>
+                </router-link>
+
+
             </li>
-            <li>
-              <a href="#"><feather type="mail"></feather><span>Inbox</span></a>
+
+            <li
+
+            v-if="can('show-team-chat')"
+            >
+                <router-link
+                :to="{name : 'TeamChat'}"
+                >
+
+                    <feather type="message-circle"></feather><span>chat </span>
+                </router-link>
+
             </li>
-            <li>
-              <a href="#"
-                ><feather type="file-text"></feather><span>Taskboard</span></a
-              >
+
+            <li >
+
+
+                    <feather type="coffee"></feather>
+                    <span>History </span>
             </li>
+
+
+
+
+
             <li>
-              <a href="#"
-                ><feather type="settings"></feather><span>Settings</span></a
-              >
-            </li>
-            <li>
-              <a><feather type="log-in"></feather><span  @click.prevent="Logout" >Log out</span></a
-              >
+              <a><feather type="log-in"></feather><span  @click.prevent="Logout" >Log out</span></a>
             </li>
           </ul>
         </li>

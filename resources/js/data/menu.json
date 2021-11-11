@@ -209,6 +209,123 @@
 
                 }
             ]
+        },
+
+
+
+
+        {
+            "title": "attendance",
+            "icon": "clipboard",
+            "type": "sub",
+            "badgeType": "primary",
+            "permission": "show-attendance",
+            "active": false,
+            "children": [
+
+                {
+                    "path": "/dashboard",
+                    "title": "attendance table",
+                    "permission": "show-attendance-table",
+                    "type": "link"
+
+
+                }
+
+            ]
+        },
+        {
+            "title": "products",
+            "icon": "box",
+            "type": "sub",
+            "badgeType": "primary",
+            "permission": "show-products",
+            "active": false,
+            "children": [
+
+                {
+                    "path": "/dashboard/products",
+                    "title": "products",
+                    "type": "link",
+                    "permission": "show-products"
+
+
+
+                },
+                {
+                    "path": "/dashboard/addProduct",
+                    "title": "add product in store",
+                    "type": "link",
+                    "permission": "add-products-in-store"
+
+
+
+                }
+
+            ]
+        },
+        {
+            "title": "store",
+            "icon": "layout",
+            "type": "sub",
+            "badgeType": "primary",
+            "permission": "show-store-details",
+            "active": false,
+            "children": [
+
+                {
+                    "path": "/dashboard/store_sales",
+                    "title": "store sales",
+                    "type": "link",
+                    "permission": "show-store-details"
+
+
+
+                }
+
+            ]
+        },
+        {
+            "title": "reports",
+            "icon": "trending-up",
+            "type": "sub",
+            "badgeType": "primary",
+            "permission": "show-reports",
+            "active": false,
+            "children": [
+
+                {
+                    "path": "/dashboard",
+                    "title": "reports",
+                    "type": "link",
+                    "permission": "show-reports"
+
+
+
+                }
+
+            ]
+        },
+        {
+            "title": "setting",
+            "icon": "settings",
+            "type": "sub",
+            "badgeType": "primary",
+            "permission": "show-setting",
+            "active": false,
+            "children": [
+
+                {
+                    "path": "/dashboard",
+                    "title": "setting",
+                    "type": "link",
+                    "permission": "show-setting"
+
+
+
+                }
+
+            ]
         }
 
 

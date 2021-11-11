@@ -80,11 +80,20 @@ const routes = [
 
             {
 
+                path: 'profile',
+                name: 'profile',
+                component: require('@/pages/details/profile').default,
+
+            },
+
+            {
+
                 path: 'membersList',
                 name: 'membersList',
                 component: require('@/pages/members/membersList').default,
 
             },
+
             {
 
                 path: 'addMember',
@@ -143,6 +152,56 @@ const routes = [
                 component: require('@/pages/members/add_new_member').default,
 
             },
+
+
+            {
+
+                path: 'store_sales',
+                name: 'store_sales',
+                component: require('@/pages/store/store_sales').default,
+
+            },
+
+            {
+
+                path: 'product_store',
+                name: 'product_store',
+                component: require('@/pages/store/product_store').default,
+
+            },
+
+            {
+
+                path: 'products',
+                name: 'products',
+                component: require('@/pages/products/products').default,
+
+            },
+            {
+
+                path: 'addProduct',
+                name: 'addProduct',
+                component: require('@/pages/products/addProduct').default,
+                meta: {
+
+                    permission: 'add-products-in-store'
+
+                },
+
+
+
+            },
+
+
+
+
+
+
+
+
+
+
+
 
 
 

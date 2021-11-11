@@ -65,7 +65,7 @@ class UserController extends Controller
         $validator = validator::make($request->all(), [
             'name' => 'required',
             'user_name' => 'required',
-            'email' => 'required|email|unique:users,email|unique:staff,email',
+            'email' => 'required|email|unique:users,email',
             'phone' => 'required',
             'password' => 'required|same:confirm_password',
             'confirm_password' => 'required',
@@ -115,14 +115,7 @@ class UserController extends Controller
 
 
 
-        $dataQR =  $input['email'];
 
-
-        $QRName = 'profile_QR/'.md5($input['email']) . '.png';
-
-         $qr =  QRCode::text($dataQR)->setOutfile($QRName)->png();
-
-        $input['qr_code'] = $QRName;
         $user =  User::create($input);
 
         $role = [];
@@ -136,6 +129,12 @@ class UserController extends Controller
 
 
         $user->assignRole($role); // بيحطها في جدول الرول
+
+        $dataQR =  $user['Personal_uuid'];
+        $QRName = 'profile_QR/'.md5($user['Personal_uuid']) . '.png';
+        $qr =  QRCode::text($dataQR)->setOutfile(public_path($QRName))->png();
+        $update = User::find($user->id);
+        $update->update(['qr_code' =>  $QRName]);
 
 
 
@@ -172,7 +171,7 @@ class UserController extends Controller
             $validator = validator::make($request->all(), [
             'name'     => 'required',
             'user_name' => 'required',
-            'email'    => 'required','email|unique:users,email|unique:staff,email|unique:members_login_informations,email,'.$id,
+            'email'    => 'required','email|unique:users,'.$id,
             'phone' => 'required',
             'password' => 'same:confirm_password',
             'confirm_password' => Rule::requiredIf($required),
@@ -260,6 +259,84 @@ class UserController extends Controller
         return response()->json(['success'=>true, 'data'=>  new UserToRoleResource($user),'role'=>RolesResource::collection($roles)],200);
 
 
+
+
+    }
+
+    public function updateProfileInfo(Request $request,$id){
+
+        $input = $request->all();
+
+
+
+            $validator = validator::make($request->all(), [
+            'name'     => 'required',
+            'user_name' => 'required',
+            'email'    => 'required','email|unique:users,'.$id,
+            'phone' => 'required',
+
+        ]);
+
+
+
+        if($validator->fails()){
+
+            return response()->json(['success'=>false,'message'=>$validator->errors()],200);
+
+        }
+
+        if(isset($input['password']) && isset($input['confirm_Password'])){
+
+            if($input['password'] != $input['confirm_Password']){
+
+                return response()->json(['success' => false, 'message' => ['confirm_Password' => 'the confirm password felid must same password felid']]);
+            }
+        }
+
+
+
+                if($request->file('profile_picture')){
+
+                    $oldImg = User::where('id','=',$id)->pluck('profile_picture');
+
+                    $path =  public_path('profile_pictures\\'.$oldImg[0]);
+                    if($oldImg[0]){
+                        if(file_exists($path)){
+
+                            unlink($path);
+                        }
+                    }
+
+
+                    $file = $request->file('profile_picture');
+                    $extension = $file->extension();
+
+                    $fileName = md5(time().now().rand(1,10)).'.'.$extension;
+
+                    $file->move(public_path('profile_pictures'),$fileName);
+
+                    $input['profile_picture'] = $input['profile_picture'] ? $fileName : null;
+
+                }else{
+                   $input =  Arr::except($input,array('profile_picture'));
+                }
+
+
+
+
+        if(!empty($input['password'])){
+
+            $input['password'] = bcrypt($input['password']);
+
+        }else{
+
+            $input = Arr::except($input,array('password'));
+        }
+
+        $user = User::find($id);
+        $user->update($input);
+
+        return response()->json(['success'=>true ,'message'=> 'updated successfully'] ,200);
 
 
     }

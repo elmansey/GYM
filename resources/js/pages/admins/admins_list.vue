@@ -27,6 +27,7 @@
 
                                         <th></th>
                                         <th sortKey="name">Profile Picture</th>
+                                        <th sortKey="name"> QR</th>
                                         <th sortKey="name">Personal uuid</th>
                                         <th sortKey="name">name</th>
                                         <th sortKey="name">user name</th>
@@ -53,14 +54,14 @@
                                               </td>
 
 
-
+                                            <td><img style="width:45px;height: 45px" :src="'../../'+row.qr_code" /> </td>
                                             <td>{{ row.Personal_uuid}}</td>
                                             <td>{{ row.name}}</td>
                                             <td>{{ row.user_name}}</td>
                                             <td>{{ row.email}}</td>
                                             <td>{{ row.phone}}</td>
                                             <td >
-                                                <span class="badge badge-success" v-for="(v,k) in row.role">
+                                                <span class="badge badge-success" v-for="(v,k) in row.role" :key="k">
                                                     {{v.name}}
                                                 </span>
 

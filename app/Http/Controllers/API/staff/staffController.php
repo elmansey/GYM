@@ -13,7 +13,7 @@ use App\Http\Resources\RolesResource;
 use App\Http\Resources\staffResource;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\VarDumper\VarDumper;
-
+use QRCode;
 class staffController extends Controller
 {
     public function index(){
@@ -81,6 +81,11 @@ class staffController extends Controller
        $input['role'] = json_decode($input['role'],true);
         $staff->assignRole($input['role']['name']);
 
+        $dataQR =  $staff['Personal_uuid'];
+        $QRName = 'profile_QR/'.md5($staff['Personal_uuid']) . '.png';
+        $qr =  QRCode::text($dataQR)->setOutfile(public_path($QRName))->png();
+        $update = User::find($staff->id);
+        $update->update(['qr_code' =>  $QRName]);
 
         return  response()->json(['success' => true,'message' => 'staff add successfully']);
 

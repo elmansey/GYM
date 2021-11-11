@@ -57,6 +57,12 @@ class PermissionTableSeeder extends Seeder
             'show-setting',
             'show-chat-rooms',
             'show-team-chat',
+            'show-attendance',
+            'show-attendance-table',
+            'show-reports',
+            'show-products',
+            'add-products-in-store',
+            'show-store-details',
 
 
 
