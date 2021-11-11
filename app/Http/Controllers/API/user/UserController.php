@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
-use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use QRCode;
 
 class UserController extends Controller
 {
@@ -115,6 +115,14 @@ class UserController extends Controller
 
 
 
+        $dataQR =  $input['email'];
+
+
+        $QRName = 'profile_QR/'.md5($input['email']) . '.png';
+
+         $qr =  QRCode::text($dataQR)->setOutfile($QRName)->png();
+
+        $input['qr_code'] = $QRName;
         $user =  User::create($input);
 
         $role = [];
@@ -129,19 +137,7 @@ class UserController extends Controller
 
         $user->assignRole($role); // بيحطها في جدول الرول
 
-        $dataQR = [
-            'name' => $user['name'],
-            'email' => $user['email'],
-            'Personal_uuid' =>  $user['Personal_uuid'],
-            'profile_picture' =>  $user['profile_picture']
-        ];
 
-        $QRName = md5($user['Personal_uuid']) . '.png';
-
-        $qr =  QrCode::formate('png')->generate($dataQR,public_path('profile_QR/' . $QRName));
-
-        $user =  User::find($user->id);
-        $user->update(['qr_code' => $QRName]);
 
         return response()->json(['success'=>true,'message'=>'User created successfully','user'=>new UsersResource($user)],200);
 
