@@ -135,23 +135,7 @@ const routes = [
 
 
 
-            {
 
-                path: 'updateMember/:memberId',
-                name: 'updateMember',
-                component: require('@/pages/members/add_new_member').default,
-
-            },
-
-
-
-            {
-
-                path: 'updateMember',
-                name: 'updateMember',
-                component: require('@/pages/members/add_new_member').default,
-
-            },
 
 
             {
@@ -185,6 +169,20 @@ const routes = [
                 meta: {
 
                     permission: 'add-products-in-store'
+
+                },
+
+
+
+            },
+            {
+
+                path: 'updateProduct/:productId',
+                name: 'updateProduct',
+                component: require('@/pages/products/addProduct').default,
+                meta: {
+
+                    permission: 'edit-product'
 
                 },
 

@@ -62,6 +62,8 @@ class PermissionTableSeeder extends Seeder
             'show-reports',
             'show-products',
             'add-products-in-store',
+            'edit-product',
+            'delete-product',
             'show-store-details',
 
 

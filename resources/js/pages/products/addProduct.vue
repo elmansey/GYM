@@ -13,7 +13,7 @@
                             <div class="card-body">
 
 
-                                <form @submit.prevent="" id="form">
+                                <form @submit.prevent="handelSubmitProductForm" id="form">
 
                                     <div class="row">
                                         <div class="mb-2 col-md-6 col-lg-4 col-sm-12">
@@ -31,8 +31,8 @@
                                         <div class="mb-2 col-md-6 col-lg-4 col-sm-12">
                                             <div class="col-form-label">Product Quantity</div>
 
-                                            <input name="product_quantity" type="number"  v-model="product_info.product_quantity" :class="['form-control',error.product_quantity ? 'is-invalid' : '']"  placeholder="product Quantity"/>
-                                            <small style="color: red"  v-if="error.name">{{error.product_quantity[0]}}</small>
+                                            <input name="product_quantity" type="number"  v-model="product_info.product_quantity" :class="['form-control',error.Product_Quantity ? 'is-invalid' : '']"  placeholder="product Quantity"/>
+                                            <small style="color: red"  v-if="error.Product_Quantity">{{error.Product_Quantity[0]}}</small>
                                         </div>
 
                                              <div class="mb-2 col-md-12 col-lg-12 col-sm-12">
@@ -44,7 +44,7 @@
                                                           ref="myVueDropzone"
                                                           id="singledropzone"
                                                           :options="singledropzoneOptions"
-                                                          :class="['dropzone digits',error.password ? 'is-invalid' : '']"
+                                                          :class="['dropzone digits',error.product_img ? 'is-invalid' : '']"
                                                           @vdropzone-file-added="handleFileAdded"
                                                           @vdropzone-removed-file="removed"
 
@@ -118,7 +118,7 @@ export default {
                     product_quantity:'',
                     Production_Date:'',
                     Expiry_date:'',
-                    img:[]
+                    product_img:[]
                 },
 
                singledropzoneOptions:{
@@ -135,7 +135,7 @@ export default {
             },
 
             error:'',
-            edit:false,
+            edit:true,
             isLoading : true
 
 
@@ -151,6 +151,31 @@ export default {
 
     beforeMount() {
 
+        if(this.$route.params.productId){
+
+            this.edit = true
+
+            axios.get(`getProductById/${this.$route.params.productId}`)
+            .then(res => {
+
+               if(res.data.success){
+
+                     this.product_info.product_name = res.data.product.product_name ,
+                     this.product_info.product_price  =  res.data.product.product_price,
+                     this.product_info.product_quantity  =  res.data.product.Product_Quantity,
+                     this.product_info.Production_Date  =  res.data.product.Production_Date,
+                     this.product_info.Expiry_date  =  res.data.product.Expiry_date
+
+               }
+
+            })
+            .catch(err => {
+                console.error(err);
+            })
+
+        }else{
+            this.edit = false
+        }
 
 
     },
@@ -163,19 +188,117 @@ export default {
 
     methods: {
 
+
+
+        handelSubmitProductForm(){
+
+
+            if(this.edit == false){
+
+                      let formData = new FormData();
+
+
+                        formData.append('product_name' , this.product_info.product_name)
+                        formData.append('product_price' , this.product_info.product_price)
+                        formData.append('Product_Quantity' , this.product_info.product_quantity)
+                        formData.append('Production_Date' , this.product_info.Production_Date)
+                        formData.append('Expiry_date' , this.product_info.Expiry_date)
+                        formData.append('product_img' , this.product_info.product_img)
+
+
+                        let config = {
+                            headers:{
+                                "Content-Type":"multipart/form-data; charset=utf-8; boundary="
+                                + Math.random().toString().substr(2),
+                            }
+                        }
+
+
+                        axios.post('add_product',formData,config)
+                        .then(res => {
+
+                            if(res.data.success){
+                                this.error = ''
+                                this.product_info = {
+                                product_name:'',
+                                product_price:'',
+                                product_quantity:'',
+                                Production_Date:'',
+                                Expiry_date:'',
+                                product_img:[]
+                            },
+                                Toast.fire({
+                                    icon: 'success',
+                                    title: 'product  added successfully'
+                                })
+                                this.$router.push({name : 'products'})
+
+                            }else if(res.data.success == false){
+
+                                this.error = res.data.message
+                            }
+                        })
+                        .catch(err => {
+                            console.error(err);
+                        })
+            }else if(this.edit){
+
+                    let formData = new FormData();
+
+                    formData.append('product_name' , this.product_info.product_name)
+                    formData.append('product_price' , this.product_info.product_price)
+                    formData.append('Product_Quantity' , this.product_info.product_quantity)
+                    formData.append('Production_Date' , this.product_info.Production_Date)
+                    formData.append('Expiry_date' , this.product_info.Expiry_date)
+                    formData.append('product_img' , this.product_info.product_img)
+
+
+                    let config = {
+                        headers:{
+                            "Content-Type":"multipart/form-data; charset=utf-8; boundary="
+                            + Math.random().toString().substr(2),
+                        }
+                    }
+
+
+                    axios.post(`edit_product/${this.$route.params.productId}`,formData,config)
+                    .then(res => {
+
+                        if(res.data.success){
+                            this.error = ''
+                            Toast.fire({
+                                icon: 'success',
+                                title: 'product  updated successfully'
+                            })
+                                this.$router.push({name : 'products'})
+
+                        }else if(res.data.success == false){
+
+                            this.error = res.data.message
+                        }
+                    })
+                    .catch(err => {
+                        console.error(err);
+                    })
+
+            }
+
+
+        },
+
         handleFileAdded(file) {
 
             console.log(file);
-            if (this.product_info.img.length < 1) {
-                this.product_info.img = file;
+            if (this.product_info.product_img.length < 1) {
+                this.product_info.product_img = file;
             }
 
         },
         removed(files){
 
-            if(files.name == this.product_info.img.name){
+            if(files.name == this.product_info.product_img.name){
 
-                this.product_info.img = []
+                this.product_info.product_img = []
             }
         },
 
@@ -184,7 +307,20 @@ export default {
     },
     watch:{
 
+        $route(to,from){
 
+            if(to.name == 'addProduct'){
+                this.edit =false
+                 this.product_info = {
+                    product_name:'',
+                    product_price:'',
+                    product_quantity:'',
+                    Production_Date:'',
+                    Expiry_date:'',
+                    product_img:[]
+                }
+            }
+        }
 
     }
 }

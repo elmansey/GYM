@@ -13,6 +13,7 @@ use App\Http\Controllers\API\members\membersController;
 use App\Http\Controllers\API\auth\resetPasswordController;
 use App\Http\Controllers\API\Memberships\MembershipsController;
 use App\Http\Controllers\API\ClassSchedule\ClassScheduleController;
+use App\Http\Controllers\API\products\productController;
 
 /*
 |--------------------------------------------------------------------------
@@ -146,6 +147,15 @@ use App\Http\Controllers\API\ClassSchedule\ClassScheduleController;
         Route::post('setReadingMessage',[teamChatController::class,'setReadingMessage']);
 
 
+
+
+        //products
+
+        Route::get('products',[productController::class,'index']);
+        Route::post('add_product',[productController::class,'store']);
+        Route::get('getProductById/{id}',[productController::class,'getProductById']);
+        Route::post('edit_product/{id}',[productController::class,'update']);
+        Route::get('deleteProduct/{id}',[productController::class,'destroy']);
 
     });
 
