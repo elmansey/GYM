@@ -10,10 +10,11 @@ use App\Http\Controllers\API\staff\staffController;
 use App\Http\Controllers\API\chat\teamChatController;
 use App\Http\Controllers\API\Groups\GroupsController;
 use App\Http\Controllers\API\members\membersController;
+use App\Http\Controllers\API\products\productController;
 use App\Http\Controllers\API\auth\resetPasswordController;
 use App\Http\Controllers\API\Memberships\MembershipsController;
 use App\Http\Controllers\API\ClassSchedule\ClassScheduleController;
-use App\Http\Controllers\API\products\productController;
+use App\Http\Controllers\API\product_invoice\product_invoiceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -156,6 +157,13 @@ use App\Http\Controllers\API\products\productController;
         Route::get('getProductById/{id}',[productController::class,'getProductById']);
         Route::post('edit_product/{id}',[productController::class,'update']);
         Route::get('deleteProduct/{id}',[productController::class,'destroy']);
+
+
+
+        Route::post('add_product_invoice',[product_invoiceController::class,'store']);
+
+
+
 
     });
 
