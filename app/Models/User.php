@@ -32,7 +32,8 @@ class User extends Authenticatable implements JWTSubject
         'profile_picture',
         'user_name',
         'isActive',
-        'qr_code'
+        'qr_code',
+        'RF_code'
 
     ];
 

@@ -72,6 +72,8 @@ use App\Http\Controllers\API\product_invoice\product_invoiceController;
 
         //user
         Route::get('users', [UserController::class, 'index'])->name('users');
+        Route::get('allUsers', [UserController::class, 'allUsers'])->name('allUsers');
+        Route::get('searchInUsersByRFcode/{RF_code}', [UserController::class, 'searchInUsersByRFcode'])->name('searchInUsersByRFcode');
         Route::get('getUserToChatIgnoreMe/{email}', [UserController::class, 'getUserToChatIgnoreMe'])->name('getUserToChatIgnoreMe');
         Route::post('adminAdd', [UserController::class, 'store'])->name('adminAdd');
         Route::get('createUser', [UserController::class, 'create'])->name('createUser');

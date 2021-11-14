@@ -50,7 +50,7 @@
                                     </div>
                                 </div>
                             </div>
-                                <div class="card-body faq-body">
+                                <div class="card-body faq-body" style="height:500px;overflow: scroll;">
 
 
                                     <div class="col-lg-12 col-sm-12">
@@ -60,14 +60,17 @@
                                                                 <thead>
                                                                     <tr>
                                                                          <th>Product</th>
+                                                                         <th>Unit price</th>
                                                                          <th>Quantity</th>
                                                                          <th>Total</th>
+                                                                         <th></th>
                                                                     </tr>
 
                                                                 </thead>
                                                                 <tbody>
                                                                     <tr v-for="(item,index) in itemTake" :key="index">
                                                                         <td style="font-size:14px">{{  item.product_name }}</td>
+                                                                         <td style="font-size:14px">{{    (item.product_price / item.product_quantity) }}</td>
                                                                          <td >
                                                                             <div style="text-align:center">
                                                                                 <feather   type="chevron-left" @click.prevent="decrease(item)"  v-if=" item.product_quantity > 1" style="width: 13px;" ></feather>
@@ -79,6 +82,11 @@
 
                                                                         </td>
                                                                         <td style="font-size:14px">{{  item.product_price }}</td>
+                                                                        <td @click.prevent="removeItem(item,index)">
+                                                                            <a href="javascript:void(0)" >
+                                                                                <feather type="x-circle"></feather>
+                                                                            </a>
+                                                                        </td>
                                                                     </tr>
 
                                                                 </tbody>
@@ -114,7 +122,7 @@
 
                                             </div>
                                               <div>
-                                                <button  @click.prevent="handelSaveInvoice" class="btn btn-primary" >save</button>
+                                                <button :disabled="CheckDiseble"  @click.prevent="handelSaveInvoice" class="btn btn-primary" >save</button>
                                             </div>
                                         </div>
 
@@ -127,12 +135,12 @@
                             <div class="card-header faq-header">
 
                             </div>
-                                <div class="card-body faq-body" >
-                                            <div  class="row" style="height: 367px;overflow: scroll;">
-                                                <div class="col-xl-6 col-md-6" v-for="(item,index) in products" :key="index">
-                                                    <div class="prooduct-details-box">
-                                                    <div class="media">
-                                                        <img  @click.prevent="takeItem(item)" class="align-self-center img-fluid img-60" :src="'../../product_img/'+item.product_img" alt="#" />
+                                <div class="card-body faq-body"  style="height:500px;overflow: scroll;" >
+                                            <div  class="row" >
+                                                <div class="col-xl-6 col-md-6" style="height:85px"  v-for="(item,index) in products" :key="index" >
+                                                    <div class="prooduct-details-box"   >
+                                                    <div class="media" style="height: 80px">
+                                                        <img  @click.prevent="takeItem(item)" class="align-self-center  " style="width: 60px!important; height: 60px;margin-left: 18px;" :src="'../../product_img/'+item.product_img" alt="#" />
                                                         <div class="media-body ml-3">
                                                         <div @click.prevent="takeItem(item)" class="product-name">
                                                             <h6><a href="#">{{ item.product_name }}</a></h6>
@@ -140,8 +148,7 @@
                                                         <div class="price d-flex">
                                                             <div @click.prevent="takeItem(item)" class="text-muted mr-2">Price</div>{{ item.product_price }}
                                                         </div>
-                                                        <div class="avaiabilty">
-                                                        </div>
+
                                                         </div>
                                                     </div>
                                                     </div>
@@ -151,36 +158,31 @@
 
 
 
-                                    <b-modal   hide-footer>
+                                    <b-modal id="bv-modal-example" hide-header hide-footer>
                                         <template #modal-title>
 
                                         </template>
                                     <div class="d-block text-center" >
 
-                                        <div class="invoice">
+                                        <div class="invoice" id="invoice">
                                                 <div>
                                                 <div>
                                                     <div class="row">
                                                     <div class="col-sm-6">
                                                         <div class="media">
-                                                        <div class="media-left">
-                                                            <img
-                                                            class="media-object img-60"
-                                                            src=""
-                                                            alt
-                                                            />
-                                                        </div>
+
                                                         <div class="media-body m-l-20">
-                                                            <h4 class="media-heading">GYM</h4>
+                                                            <h4 class="media-heading">GYM <BR /> MASTER</h4>
 
                                                         </div>
+
                                                         </div>
                                                         <!-- End Info-->
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <div class="text-md-right">
                                                         <h4>Invoice number </h4>
-                                                         <span class="digits counter">{{ InvoiceAfterAdd.invoice_number}}</span>
+                                                         <P class="digits counter">{{ InvoiceAfterAdd.invoice_number}}</P>
                                                         <p>
 
 
@@ -208,12 +210,19 @@
                                                             <h6 class="p-2 mb-0">product name </h6>
 
                                                             </td>
+
+                                                            <td>
+
+                                                                <h6>Unit price</h6>
+
+                                                            </td>
                                                             <td class="Hours">
                                                             <h6 class="p-2 mb-0">product price</h6>
                                                             </td>
                                                             <td class="Rate">
                                                             <h6 class="p-2 mb-0">product quantity</h6>
                                                             </td>
+
 
                                                         </tr>
                                                         </thead>
@@ -224,11 +233,15 @@
 
                                                             </td>
                                                             <td class="Hours">
+                                                                 <h6 class="p-2 mb-0">{{ (item.product_price / item.product_quantity) }}</h6>
+                                                            </td>
+                                                            <td class="Hours">
                                                             <h6 class="p-2 mb-0">{{ item.product_price }}</h6>
                                                             </td>
                                                             <td class="Rate">
                                                             <h6 class="p-2 mb-0">{{ item.product_quantity }}</h6>
                                                             </td>
+
 
                                                         </tr>
 
@@ -261,8 +274,8 @@
                                                 </div>
                                         </div>
                                     </div>
-                                        <b-button class="mt-3 printPageButton"    v-b-modal.modal-sm variant="default" @click="$bvModal.hide('bv-modal-example')">Cancel</b-button>
-                                        <b-button class="mt-3 printPageButton"    v-b-modal.modal-sm variant="primary"  @click.prevent="printWindow">print</b-button>
+                                        <b-button class="mt-3 " id="printPageButton"   v-b-modal.modal-sm variant="default" @click="$bvModal.hide('bv-modal-example')">Cancel</b-button>
+                                        <b-button class="mt-3 "   id="printPageButton2" v-b-modal.modal-sm variant="primary"  @click.prevent="printWindow">print</b-button>
                                     </b-modal>
                                 </div>
                         </div>
@@ -294,6 +307,8 @@ import axios from 'axios'
 
           },
 
+          CheckDiseble:true,
+
           InvoiceAfterAdd:[]
 
       }
@@ -323,6 +338,7 @@ import axios from 'axios'
         var invoice_number = 'G'+ Date.now();
         this.product_invoice.invoice_number =  invoice_number
 
+        this.CheckDiseble = (this.itemTake.length < 1)
 
     },
     computed: {
@@ -330,10 +346,27 @@ import axios from 'axios'
     },
     methods:{
 
+        removeItem(item,index){
+
+            let ProductTotal = item.product_price
+            this.itemTake.splice(index,1)
+
+            this.total = this.total - ProductTotal
+            this.CheckDiseble = (this.itemTake.length < 1)
+
+
+        },
+
         printWindow() {
 
-            var InvoiceContent = document.getElementById('bv-modal-example').innerHTML
-            window.print();
+            var mywindow = window.open('', 'PRINT', 'height=400,width=600')
+            mywindow.document.write(document.getElementById('invoice').innerHTML);
+            mywindow.document.close();
+            mywindow.print();
+            this.InvoiceAfterAdd = []
+            this.$bvModal.hide('bv-modal-example')
+
+
         },
 
 
@@ -352,8 +385,22 @@ import axios from 'axios'
 
                 axios.post('add_product_invoice',formData)
                 .then(res => {
+
                     this.InvoiceAfterAdd = res.data.product_invoice
                     this.$bvModal.show('bv-modal-example')
+                     this.itemTake = []
+                     this.total = ''
+                    this.product_invoice = {
+                        saler:'',
+                        invoice_number:''
+                    }
+
+                    this.product_invoice.saler = this.$store.getters.USER.id
+                    var invoice_number = 'G'+ Date.now();
+                    this.product_invoice.invoice_number =  invoice_number
+                    this.CheckDiseble = (this.itemTake.length < 1)
+
+
 
                 }).catch(err => {
 
@@ -422,6 +469,7 @@ import axios from 'axios'
                 let index =  res.indexOf(item.product_name)
 
 
+
                     // console.log(index)
 
                 if(index > -1 ){
@@ -441,7 +489,7 @@ import axios from 'axios'
 
                 }
 
-
+                this.CheckDiseble = (this.itemTake.length < 1)
                  let total  = this.itemTake.map((element,index) => {return Number(element.product_price) })
 
                 let sum = 0;
@@ -453,17 +501,31 @@ import axios from 'axios'
 
 
             }
+  },
+
+  watch: {
+
+       disable() {
+
+            this.CheckDiseble = (this.itemTake.length < 1)
+       }
   }
+
   }
 </script>
 
-<style scoped>
+<style >
 
 
 @media print {
-  .printPageButton {
-    display: none;
+  #printPageButton {
+    display: none!important;
   }
+
+  #printPageButton2 {
+    display: none!important;
+  }
+
 
 }
 ::-webkit-scrollbar {

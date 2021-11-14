@@ -20,6 +20,7 @@ class UsersResource extends JsonResource
             'profile_picture'=> $this->profile_picture,
             'Personal_uuid' => $this->Personal_uuid,
             'qr_code' => $this->qr_code,
+            'RF_code' => $this->RF_code,
             'messageTeamRelationTo' => $this->messageTeamRelationTo
 
 

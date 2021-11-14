@@ -92,7 +92,7 @@
                                                                         'edit-class-schedule' ||
                                                                         'delete-class-schedule'
                                                                     )"
-                                                            >>options</th>
+                                                        >options</th>
                                         </thead>
 
                                         <tbody
@@ -143,7 +143,7 @@
                                                                     )"
                                                             >
 
-                                                    >
+
                                                             <router-link
 
                                                                 variant="outline-warning"
@@ -159,8 +159,7 @@
                                                                 v-if="
                                                                     can(
                                                                         'edit-class-schedule'
-                                                                    )"
-                                                            >
+                                                                    )">
                                                                 edit
                                                             </router-link>
                                                     </b-button>

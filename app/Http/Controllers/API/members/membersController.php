@@ -89,13 +89,14 @@ class membersController extends Controller
 
                 //login data
                 $LoginInformation                   = new  User();
-                $LoginInformation->name        = $request->input('name');
+                $LoginInformation->name             = $request->input('name');
                 $LoginInformation->user_name        = $request->input('user_name');
                 $LoginInformation->password         = bcrypt($request->input('password'));
                 $LoginInformation->profile_picture  = $fileName;
-                $LoginInformation->isActive         = $request->input('isActive') == 'true' ? true : false;
+                $LoginInformation->isActive         =  $request->input('isActive') == 'true' || true || 1 || '1'? true : false;
                 $LoginInformation->email            = $request->input('email');
-                $LoginInformation->phone     = $request->input('phone');
+                $LoginInformation->phone            = $request->input('phone');
+                $LoginInformation->RF_code          = $request->input('RF_code');
 
                 $LoginInformation->save();
 
@@ -302,7 +303,7 @@ class membersController extends Controller
 
 
 
-      $input['isActive'] =  $input['isActive'] == 'true' ? true : false;
+      $input['isActive'] =  $input['isActive'] == 'true' || true || 1 || '1'? true : false;
 
       //login data
       $LoginInformation                   = User::where('id','=',$id)->first();

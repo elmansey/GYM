@@ -65,13 +65,8 @@
                                                 <div>
                                                     <b-button-group class="btn-group-pill" size="sm">
 
-                                                         <b-button
-                                                          variant="outline-dark"
-                                                          >
-                                                            <router-link
-                                                                :to="{name: 'editMember', params: {memberId : row.id}}"
-                                                                v-if="can('edit-member-from-team')"
-                                                            >
+                                                         <b-button variant="outline-dark">
+                                                            <router-link  :to="{name: 'editMember', params: {memberId : row.id}}"  v-if="can('edit-member-from-team')">
                                                                edit
                                                             </router-link>
                                                         </b-button>

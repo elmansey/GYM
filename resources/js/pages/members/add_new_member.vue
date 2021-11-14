@@ -92,7 +92,7 @@
 
 <!--                                        <div  class="mb-2 col-md-12 col-lg-12 col-sm-12">login information</div><br/>-->
 
-                                        <div class="mb-2 col-md-6 col-lg-4 col-sm-12">
+                                        <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
                                             <div class="col-form-label">  user name  </div>
 
                                             <input name="" :class="['form-control',error.user_name? 'is-invalid' : '']"  v-model="memberData.user_name"  />
@@ -101,18 +101,25 @@
 
 
 
-                                        <div class="mb-2 col-md-6 col-lg-4 col-sm-12">
+                                        <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
                                             <div class="col-form-label">  password  </div>
 
                                             <input name="" :class="['form-control',error.password? 'is-invalid' : '']"  v-model="memberData.password" />
                                              <small style="color: red" v-if="error.password">{{ error.password[0] }}</small >
                                         </div>
 
-                                        <div class="mb-2 col-md-6 col-lg-4 col-sm-12">
+                                        <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
                                             <div class="col-form-label"> Confirm password  </div>
 
                                             <input name="" :class="['form-control',error.confirm_password? 'is-invalid' : '']" v-model="memberData.confirm_password"  />
                                              <small style="color: red" v-if="error.confirm_password">{{ error.confirm_password[0] }}</small >
+                                        </div>
+
+                                        <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
+                                            <div class="col-form-label"> RF code  </div>
+
+                                            <input name="" :class="['form-control',error.RF_code ? 'is-invalid' : '']" v-model="memberData.RF_code"  />
+                                             <small style="color: red" v-if="error.RF_code">{{ error.RF_code[0] }}</small >
                                         </div>
 
                                         <div class="mb-2 col-md-12 col-lg-12 col-sm-12">
@@ -264,7 +271,7 @@ export default {
                 confirm_password:'',
                 profile_picture:[],
                 role:{'id':3,'name':'member'},
-
+                RF_code:'',
 
 
                 interested_area:'',
@@ -272,7 +279,7 @@ export default {
                 membership_id:'',
                 class_id:'',
                 start_data:'',
-                isActive:''
+                isActive:true
 
 
 
@@ -347,6 +354,7 @@ export default {
                             this.memberData.class_id    = res.data.extraInformation.class_id,
                             this.memberData.start_data    = res.data.extraInformation.start_date
                             this.memberData.isActive    = res.data.loginInformation.isActive
+                            this.memberData.RF_code    = res.data.loginInformation.RF_code
 
                             this.isLoading = true
 
@@ -459,6 +467,7 @@ export default {
                 formData.append('class_id'              , this.memberData.class_id)
                 formData.append('start_date'         , this.memberData.start_data)
                 formData.append('isActive'           , this.memberData.isActive)
+                formData.append('RF_code'           , this.memberData.RF_code)
 
 
 
@@ -539,6 +548,7 @@ export default {
                 formData.append('class_id'              , this.memberData.class_id)
                 formData.append('start_date'         , this.memberData.start_data)
                 formData.append('isActive'           , this.memberData.isActive)
+                formData.append('RF_code'           , this.memberData.RF_code)
 
 
 
@@ -627,6 +637,7 @@ export default {
                 this.memberData.class_id    = '',
                 this.memberData.start_data    = '',
                 this.memberData.isActive    = true
+                this.memberData.RF_code    = ''
                 this.isLoading = true
 
 

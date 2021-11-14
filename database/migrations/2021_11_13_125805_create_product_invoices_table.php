@@ -15,9 +15,9 @@ class CreateProductInvoicesTable extends Migration
     {
         Schema::create('product_invoices', function (Blueprint $table) {
             $table->id();
-            $table->string('invoice_number');
+            $table->string('invoice_number')->unique();
             $table->foreignId('seller')->references('id')->on('users')->cascadeOnDelete();
-            $table->string('invoice_details');
+            $table->json('invoice_details');
             $table->integer('invoice_total');
             $table->softDeletes();
             $table->string('date');

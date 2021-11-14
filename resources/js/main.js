@@ -10,6 +10,22 @@ import {
 
 
 
+
+
+
+
+
+
+// firebase
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+
+
+
+
+
+
+
 // import './setting/pusherLaravelEcho' // pusher and laravel echo
 
 import Breadcrumbs from './components/bread_crumbs'
@@ -70,6 +86,24 @@ window.Toast = Toast
 
 
 
+
+
+
+
+
+const firebaseConfig = {
+    apiKey: "AIzaSyBaIQZblT9_y0jzKbWhqfVLDZs1mFZqrHU",
+    authDomain: "gymnotification-9bd6f.firebaseapp.com",
+    projectId: "gymnotification-9bd6f",
+    storageBucket: "gymnotification-9bd6f.appspot.com",
+    messagingSenderId: "795536904948",
+    appId: "1:795536904948:web:d2b8998605acb5d131c4a1",
+    measurementId: "G-D7Q7DJ566V"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 
 
 

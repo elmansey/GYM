@@ -25,11 +25,11 @@ const routes = [
         component: require('@/pages/authentication/login').default
     },
 
-    {
-        path: '/register',
-        name: 'register',
-        component: require('@/pages/authentication/register').default
-    },
+    // {
+    //     path: '/register',
+    //     name: 'register',
+    //     component: require('@/pages/authentication/register').default
+    // },
 
 
 
@@ -153,6 +153,28 @@ const routes = [
                 component: require('@/pages/store/product_store').default,
 
             },
+
+
+
+            {
+
+                path: 'attendance',
+                name: 'attendance',
+                component: require('@/pages/attendance/attendance').default,
+
+            },
+
+            {
+
+                path: 'tackAttendance',
+                name: 'tackAttendance',
+                component: require('@/pages/attendance/take_attendance').default,
+
+            },
+
+
+
+
 
             {
 

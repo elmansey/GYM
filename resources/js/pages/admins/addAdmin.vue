@@ -16,11 +16,18 @@
 
                                               <div class="row">
 
-                                                  <div class="mb-2 col-md-12 col-lg-12 col-sm-12">
+                                                  <div class="mb-2 col-md-12 col-lg-6 col-sm-12">
                                                       <div class="col-form-label">name</div>
 
                                                       <input name="name" :class="['form-control',error.name ? 'is-invalid' : '']"  v-model="adminData.name"/>
                                                       <small style="color: red" v-if="error.name">{{ error.name[0]}}</small>
+                                                  </div>
+
+                                                  <div class="mb-2 col-md-12 col-lg-6 col-sm-12">
+                                                      <div class="col-form-label">RF code</div>
+
+                                                      <input name="name" :class="['form-control',error.RF_code ? 'is-invalid' : '']"  v-model="adminData.RF_code"/>
+                                                      <small style="color: red" v-if="error.RF_code">{{ error.RF_code[0]}}</small>
                                                   </div>
 
                                                   <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
@@ -153,7 +160,8 @@ export default {
                 confirm_password:'',
                 roles: [],
                 file:[],
-                isActive: ''
+                isActive: true,
+                RF_code:''
             },
             isLoading:false,
 
@@ -219,9 +227,10 @@ export default {
                      this.adminData.user_name  = res.data.data.user_name,
                      this.adminData.email  = res.data.data.email,
                      this.adminData.phone  = res.data.data.phone,
+                     this.adminData.RF_code  = res.data.data.RF_code,
                      this.adminData.isActive  = res.data.data.isActive,
-                  this.adminData.roles = res.data.role
-                 this.isLoading = true
+                    this.adminData.roles = res.data.role
+                    this.isLoading = true
 
             })
             .catch(err => {
@@ -254,6 +263,7 @@ export default {
                 formData.append('role', JSON.stringify(this.adminData.roles));
                 formData.append('profile_picture',this.adminData.file);
                 formData.append('isActive',this.adminData.isActive);
+                formData.append('RF_code',this.adminData.RF_code);
 
 
 
@@ -303,6 +313,7 @@ export default {
                 formData.append('role', JSON.stringify(this.adminData.roles));
                 formData.append('profile_picture',this.adminData.file);
                 formData.append('isActive',this.adminData.isActive);
+                formData.append('RF_code',this.adminData.RF_code);
 
 
 
@@ -409,7 +420,8 @@ export default {
                     this.adminData.confirm_password  =  ''
                     this.adminData.roles  =   []
                    this.adminData.file  =   []
-                   this.adminData.isActive  =   ''
+                   this.adminData.isActive  =  true
+                   this.adminData.RF_code  =   ''
             }
 
         }

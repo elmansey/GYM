@@ -21,11 +21,19 @@ use QRCode;
 
 class UserController extends Controller
 {
+
     public function index(Request $request)
     {
 
-        $data = User::all();
+        $data = User::role('admin')->get();
         return response()->json(['success'=>true ,'admins'=> UsersResource::collection($data)] ,200);
+    }
+
+    public function allUsers()
+    {
+
+        $data = User::all();
+        return response()->json(['success'=>true ,'users'=> $data] ,200);
     }
 
     public function getUserToChatIgnoreMe($email)
@@ -46,6 +54,12 @@ class UserController extends Controller
         return response()->json(['success'=>true ,'admins'=> UsersResource::collection($data)] ,200);
     }
 
+    public function searchInUsersByRFcode($RF_code){
+
+        $users = User::where('RF_code','LIKE','%'.$RF_code.'%')->get();
+
+        return response()->json(['success'=>true ,'users'=> $users],200);
+    }
 
     public function create()
     {
@@ -58,6 +72,8 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
+
+
 
         $request['role'] = json_decode($request['role'],true);
 
@@ -111,7 +127,7 @@ class UserController extends Controller
             $input = $request->all();
             $input['password']  = bcrypt($input['password']);
             $input['profile_picture'] = $input['profile_picture'] ? $fileName : null;
-            $input['isActive'] =  $input['isActive'] == 'true' ? true : false;
+            $input['isActive'] =  $input['isActive'] == 'true' || true || 1 || '1'? true : false;
 
 
 
@@ -147,9 +163,6 @@ class UserController extends Controller
         $user = User::find($id);
         return response()->json(['success'=>true ,'user'=> $user] ,200);
     }
-
-
-
 
     public function update(Request $request,$id)
     {
@@ -227,7 +240,7 @@ class UserController extends Controller
 
             $input = Arr::except($input,array('password'));
         }
-        $input['isActive'] =  $input['isActive'] == 'true' ? true : false;
+        $input['isActive'] =  $input['isActive'] == 'true' || true || 1 || '1'? true : false;
         $user = User::find($id);
         $user->update($input);
 
@@ -246,8 +259,6 @@ class UserController extends Controller
     }
 
 
-
-
     public function getUserById($id){
 
         $user = User::find($id);
@@ -262,6 +273,7 @@ class UserController extends Controller
 
 
     }
+
 
     public function updateProfileInfo(Request $request,$id){
 
@@ -340,8 +352,6 @@ class UserController extends Controller
 
 
     }
-
-
 
     public function destroy($id)
     {

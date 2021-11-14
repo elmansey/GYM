@@ -224,7 +224,7 @@
             "children": [
 
                 {
-                    "path": "/dashboard",
+                    "path": "/dashboard/attendance",
                     "title": "attendance table",
                     "permission": "show-attendance-table",
                     "type": "link"
