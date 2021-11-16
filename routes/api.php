@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\attendancce\attendanceController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -165,6 +166,11 @@ use App\Http\Controllers\API\product_invoice\product_invoiceController;
         Route::post('add_product_invoice',[product_invoiceController::class,'store']);
 
 
+
+        //attendance
+
+        Route::post('saveAttendance',[attendanceController::class,'store']);
+        Route::get('attendance',[attendanceController::class,'index']);
 
 
     });

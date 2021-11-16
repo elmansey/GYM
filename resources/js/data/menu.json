@@ -230,6 +230,14 @@
                     "type": "link"
 
 
+                },
+                {
+                    "path": "/dashboard/tackAttendance",
+                    "title": "take attendance",
+                    "permission": "take-attendance",
+                    "type": "link"
+
+
                 }
 
             ]

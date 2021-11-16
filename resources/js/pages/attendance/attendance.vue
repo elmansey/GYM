@@ -5,7 +5,7 @@
 
     <div v-if="isLoadig">
 
-        <Breadcrumbs main="Dashboard" title="attendance" />
+        <Breadcrumbs main="Dashboard" title="attendance table" />
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
@@ -25,17 +25,20 @@
                                     >
                                         <thead slot="head">
 
-                                        <th></th>
-                                        <th sortKey="name"></th>
-                                        <th sortKey="name" ></th>
-                                        <th sortKey="options" ></th>
+                                            <th>ID</th>
+                                            <td>name</td>
+                                            <td>attendance date</td>
+                                            <td>attendance time</td>
+                                            <td> status</td>
                                         </thead>
 
                                         <tbody slot="body" slot-scope="{ displayData }">
                                         <tr v-for="(row, index) in displayData" :key="index">
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            <td>{{ ++index}}</td>
+                                            <td>{{ row.userRelation.name }}</td>
+                                            <td>{{  row.date }} </td>
+                                            <td>{{ row.time }} </td>
+                                            <td> <feather type="check-circle"></feather></td>
 
                                         </tr>
                                         </tbody>
@@ -98,17 +101,30 @@ import axios from "axios";
 export default {
     data() {
         return {
-            attendance:'',
-            isLoadig:true,
-               filter: {
+            attendance:[],
+
+            filter: {
                 currentPage: 1,
                 totalPages: 0,
             },
 
 
+            isLoadig:true
+
+
         };
     },
     beforeMount() {
+
+
+
+        axios.get('attendance')
+        .then(res => {
+            this.attendance = res.data.attendance
+        })
+        .catch(err => {
+            console.error(err);
+        })
 
 
     },
@@ -117,6 +133,7 @@ export default {
 
     },
     methods: {
+
 
 
 
