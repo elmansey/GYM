@@ -17,7 +17,8 @@ class CreateAttendanceTable extends Migration
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->string('date');
-            $table->string('time');
+            $table->string('come_time');
+            $table->string('leave_time')->nullable();
             $table->boolean('status')->default(true);
             $table->timestamps();
         });

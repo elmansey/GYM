@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\API\chat;
 
-use Carbon\Carbon;
+'Africa/Cairo'
 use App\Models\User;
 use App\Models\staff;
 use App\Events\NewMessage;
@@ -69,7 +69,7 @@ class teamChatController extends Controller
         $input  = $request->all();
 
 
-        $input['send_at'] = Carbon::now()->toDateTimeString();
+        $input['send_at'] = Carbon::now('Africa/Cairo')->toDateTimeString();
         $message = teamChatMessage::create($input);
 
         $to = User::where('id','=',$message->to)->first() ;
@@ -117,7 +117,7 @@ class teamChatController extends Controller
                     $makeMessageRead = teamChatMessage::find($v['id']);
                     $makeMessageRead->update([
                         'read' => true,
-                        'reading_at' => Carbon::now()->toDateTimeString(),
+                        'reading_at' => Carbon::now('Africa/Cairo')->toDateTimeString(),
 
                     ]);
 

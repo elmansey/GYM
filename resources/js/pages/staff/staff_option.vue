@@ -84,6 +84,14 @@
                                                         <b-form-invalid-feedback style="color:red" v-if="( !$v.staffData.loginData.email.email)"> the email  must vaild email </b-form-invalid-feedback>
 
                                                     </div>
+
+                                                  <div class="mb-2 col-md-12 col-lg-6 col-sm-12">
+                                                      <div class="col-form-label">RF code</div>
+
+                                                      <input name="name" :class="['form-control',error.RF_code ? 'is-invalid' : '']"  v-model="staffData.loginData.RF_code"/>
+                                                      <small style="color: red" v-if="error.RF_code">{{ error.RF_code[0]}}</small>
+                                                  </div>
+
                                                     <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
                                                       <div class="col-form-label"> user name</div>
 
@@ -185,6 +193,7 @@ export default {
                     'password':'',
                     'confirm_Password':'',
                     'isActive':true,
+                    RF_code:''
 
                 },
                 'profile_picture':'',
@@ -243,6 +252,7 @@ export default {
                         this.staffData.loginData.email     = res.data.staff.email
                         this.staffData.loginData.user_name     = res.data.staff.user_name
                         this.staffData.loginData.isActive     = res.data.staff.isActive
+                        this.staffData.loginData.RF_code     = res.data.staff.RF_code
                         this.isLoading = true
 
                         // this.allowLogin = (res.data.staff.email)
@@ -348,6 +358,7 @@ export default {
                     formData.append('email',this.staffData.loginData.email)
                     formData.append('password',this.staffData.loginData.password)
                     formData.append('isActive',this.staffData.loginData.isActive)
+                    formData.append('RF_code',this.staffData.loginData.RF_code)
                     formData.append('confirm_Password',this.staffData.loginData.confirm_Password)
                     formData.append('profile_picture',this.staffData.profile_picture)
                     formData.append('role',JSON.stringify(this.staffData.role))
@@ -375,6 +386,7 @@ export default {
                                     this.staffData.loginData.user_name = ''
                                     this.staffData.loginData.password = ''
                                     this.staffData.loginData.isActive = true
+                                    this.staffData.loginData.RF_code = ''
                                     this.staffData.loginData.confirm_Password = ''
                                     this.staffData.profile_picture   = ''
                                     this.staffData.role = {id: 1, name: "staff"},
@@ -409,6 +421,7 @@ export default {
                     formData.append('email',this.staffData.loginData.email)
                     formData.append('password',this.staffData.loginData.password)
                     formData.append('isActive',this.staffData.loginData.isActive)
+                    formData.append('RF_code',this.staffData.loginData.RF_code)
                     formData.append('confirm_Password',this.staffData.loginData.confirm_Password)
                     formData.append('profile_picture',this.staffData.profile_picture)
                     formData.append('role',JSON.stringify(this.staffData.role))
@@ -437,6 +450,7 @@ export default {
                                     this.staffData.loginData.user_name = ''
                                     this.staffData.loginData.password = ''
                                     this.staffData.loginData.isActive = true
+                                    this.staffData.loginData.RF_code = RF_code
                                     this.staffData.loginData.confirm_Password = ''
                                     this.staffData.profile_picture   = ''
                                     this.staffData.role = {id: 1, name: "staff"},
@@ -534,6 +548,7 @@ export default {
                     this.staffData.loginData.password   = '',
                     this.staffData.loginData.password   = '',
                     this.staffData.loginData.isActive   = true,
+                    this.staffData.loginData.RF_code   = '',
                     this.staffData.profile_picture   = '',
                     this.staffData.role   = '',
                     this.allowLogin     = false

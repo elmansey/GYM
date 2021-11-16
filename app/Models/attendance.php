@@ -13,7 +13,8 @@ class attendance extends Model
     protected $fillable = [
         'user_id',
         'date',
-        'time'
+        'come_time',
+        'leave_time'
     ];
 
     public function userRelation (){

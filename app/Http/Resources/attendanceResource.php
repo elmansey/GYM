@@ -18,8 +18,10 @@ class attendanceResource extends JsonResource
         return [
             'user_id' => $this->user_id,
             'date' => $this->date,
-            'time' => $this->time,
+            'come_time' => $this->come_time,
+            'leave_time' => $this->leave_time,
             'userRelation' => $this->userRelation,
+            'status' => $this->status,
         ];
     }
 }

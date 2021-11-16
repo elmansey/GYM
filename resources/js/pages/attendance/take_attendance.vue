@@ -56,12 +56,24 @@
                             <h5>take attendance</h5>
 
                         </div>
+
                         <form  @submit.prevent="saveAttendance" class="form theme-form datepicker-responsive">
                             <div class="card-body">
 
-                                <div class="form-group form-row">
-                                    <label class="col-sm-3 col-form-label text-right">person</label>
+                                    <div class="form-group m-t-15 m-checkbox-inline mb-0 custom-radio-ml">
+										<div class="radio radio-primary d-inline-block">
+											<b-form-radio name="radio3" value="name" v-model="type">name</b-form-radio>
+										</div>
+										<div class="radio radio-primary d-inline-block">
+											<b-form-radio name="radio3" value="RF_Person_Code" v-model="type"> RF code</b-form-radio>
+										</div>
+
+									</div>
+                                <div class="form-group form-row" v-if="type == 'name'">
+                                     <label class="col-sm-3 col-form-label text-right">name</label>
                                     <div class="col-xl-5 col-sm-9">
+
+
                                           <multiselect
 
 
@@ -74,21 +86,28 @@
                                                 :options="options"
                                                 :multiple="false"
                                                 :taggable="false"
+                                                :class="[!$v.attendanceDate.name.requiredIf ? 'is-invalid' : '']"
 
                                             >
                                             </multiselect>
+                                           <small style="color:red" v-if="( submited &&  !$v.attendanceDate.name.requiredIf)"> the  name  failde is required   </small>
+
                                     </div>
+
                                 </div>
 
 
 
-                                <div class="form-group form-row">
-                                    <label class="col-sm-3 col-form-label text-right">or search by RF code</label>
+                                <div class="form-group form-row" v-if="type == 'RF_Person_Code'">
+                                    <label class="col-sm-3 col-form-label text-right"> RF code</label>
                                     <div class="col-xl-5 col-sm-9" style="height:125px;overflow:scroll">
-                                        <input  type="text" class="form-control" style="margin: 10px;width: 96%;" @keyup="searchInUsersByRFcode" v-model="attendanceDate.RF_Person_Code" placeholder="type or search by RF code"/>
+                                        <input  type="text"  :class="['form-control', submited && !$v.attendanceDate.RF_Person_Code.requiredIf  ? 'is-invalid' : '']" style="margin: 10px;width: 96%;" @keyup="searchInUsersByRFcode" v-model="attendanceDate.RF_Person_Code" placeholder="type or search by RF code"/>
+                                        <b-form-invalid-feedback style="color:red" v-if="( submited && !$v.attendanceDate.RF_Person_Code.requiredIf)"> the  RF code  failde is required   </b-form-invalid-feedback>
+
                                           <div style="width: 100%" >
                                                <p  style="width:100%;margin: 9px 15px;cursor: pointer;" v-for="(item,index) in searchData" :key="index" @click="setValue(item.RF_code)">{{ item.RF_code }} </p>
                                                <p v-if=" attendanceDate.RF_Person_Code.length > 1 && searchData.length < 1" style="width:100%;margin: 9px 15px;" > no data found like this RF code </p>
+
                                           </div>
 
 
@@ -99,7 +118,9 @@
                                 <div class="form-group form-row mb-0">
                                     <label class="col-sm-3 col-form-label text-right">date</label>
                                     <div class="col-sm-3">
-                                        <datepicker :inline="true"  format="dd-MM-yyyy" v-model="attendanceDate.date"></datepicker>
+
+                                        <datepicker     :inline="true"  format="dd-MM-yyyy" v-model="attendanceDate.date"></datepicker>
+                                        <small style="color: red"  v-if="error.date">{{ error.date[0] }}</small>
                                     </div>
                                 </div>
 
@@ -126,19 +147,29 @@
     import Datepicker from 'vuejs-datepicker';
     import Multiselect from "vue-multiselect";
     import axios from "axios";
+    import {
+
+      requiredIf,
+
+
+      } from 'vuelidate/lib/validators'
+
     export default {
         data(){
             return{
 
                 attendanceDate:{
-                    name:'',
-                    date:new Date().toLocaleDateString("en-US"),
+                    name:[],
+                    date:'',
                     RF_Person_Code:''
                 },
+                type:'RF_Person_Code',
                 show:false,
                 searchData:[],
                  options: [],
-                 responseUserData:[]
+                 responseUserData:[],
+                 error:[],
+                 submited:false
             }
         },
         beforeCreate() {
@@ -159,6 +190,14 @@
             })
 
 
+        },
+
+        beforeMount(){
+
+                var today = new Date();
+                var da = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+                this.attendanceDate.date =  da
+
 
         },
         components: {
@@ -166,7 +205,26 @@
             Multiselect,
         },
 
+     validations:{
 
+        attendanceDate:{
+             name:{
+
+                requiredIf:requiredIf( function(){
+                    return   (this.type == 'name')
+                })
+
+            },
+
+             RF_Person_Code:{
+
+                requiredIf:requiredIf( function(){
+                    return   (this.type == 'RF_Person_Code')
+                })
+
+            },
+        }
+     },
 
         methods: {
 
@@ -174,27 +232,66 @@
 
             saveAttendance(){
 
+
+                var today = new Date();
+                var da = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+                this.attendanceDate.date =  da
+
+                 this.$v.attendanceDate.$touch();
+                 this.submited = true
+
+                if(!this.$v.attendanceDate.$invalid){
+
+
+
+
+
+
                 let formData  = new FormData();
 
                 formData.append('name',JSON.stringify(this.attendanceDate.name))
                 formData.append('date',this.attendanceDate.date)
                 formData.append('RF_Person_Code',this.attendanceDate.RF_Person_Code)
+                formData.append('type',this.type)
 
                  axios.post('saveAttendance',formData)
                  .then(res => {
                     if(res.data.success){
-                         this.attendanceDate={
+                         this.attendanceDate = {
                             name:'',
-                            date:new Date(),
                             RF_Person_Code:''
                         },
-                        this.searchData = []
+
+                         this.type = 'RF_Person_Code',
+                         this.submited = false
+                         this.searchData = []
                          this.show = true
                         this.responseUserData = res.data.attendance.userRelation
+
 
                         setTimeout(() => {
                             this.show = false
                         }, 4000);
+
+
+
+                    } else if(res.data.success == false){
+
+                        this.error = res.data.message
+
+                    }
+                    else if (res.data.status == '400'){
+
+                        this.attendanceDate = {
+                            name:'',
+                            RF_Person_Code:''
+                        },
+                         this.submited = false
+                          this.searchData = []
+                         Toast.fire({
+                            icon: 'error',
+                            title: 'attendance aready taken'
+                        })
                     }
                  })
                  .catch(err => {
@@ -202,6 +299,8 @@
 
 
                  })
+                }
+
 
 
 
