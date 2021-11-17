@@ -25,7 +25,7 @@
 
                             <div class="col-md-3" style="margin-bottom: 40px;">
                                 <label>RF code</label>
-                                <input class="form-control" type="text"  placeholder="RF code"  @change="filters"  v-model="showFilter.FR_code"  />
+                                <input class="form-control" type="text"  placeholder="RF code"    v-model="RF_Filter"  />
                             </div>
 
                             <div class="col-md-3" style="margin-bottom: 40px;">
@@ -35,59 +35,117 @@
 
                            </div>
 
-                        <b-dropdown size="small" text="Action"  variant="dark" style="margin-bottom: 14px;">
-                            <b-dropdown-item><i style="font-size:15px" class="fa fa-file-excel-o"></i> export excel</b-dropdown-item>
-                            <b-dropdown-item><i style="font-size:15px" class="fa fa-print" @click.prevent="printNow"></i> Print </b-dropdown-item>
+                                 <div class="row">
+                                        <div  style="display:inline-block;margin-bottom: 10px;margin-left:50px">
+                                            <div>
+                                                <b-button-group style="height:auto;">
+                                                    <b-button size="sm"  variant="dark" style="padding: 2px 7px;">
+                                                        <div>
+                                                            <div
+                                                                style="float: left;margin-top: 8px;"
+                                                                id="checkInput"
+                                                            >
+                                                                <input
 
-                       </b-dropdown>
+                                                                    type="checkbox"
+                                                                    @click="selectAll"
+                                                                     v-model="selectedAll"
 
 
+
+                                                                />
+                                                            </div>
+
+
+                                                            <div style="float: right;">
+                                                                <b-dropdown
+
+                                                                    variant="dark"
+                                                                    size="sm"
+                                                                    right
+                                                                    id="dropdownMenuButton"
+                                                                     :disabled="emptyCheckData"
+                                                                >
+                                                                    <b-dropdown-item
+                                                                    @click="DeleteAttendanceSelectedModal"
+                                                                    >
+                                                                        <feather
+                                                                            type="trash"
+                                                                            style="width: 20px;"
+                                                                        ></feather>
+                                                                        delete
+                                                                    </b-dropdown-item>
+                                                                </b-dropdown>
+                                                            </div>
+                                                        </div>
+                                                    </b-button>
+                                                </b-button-group>
+                                            </div>
+                                            <b-tooltip
+                                                target="dropdownMenuButton"
+                                                triggers="hover"
+                                                placement="top"
+                                                >select to choose</b-tooltip
+                                            >
+                                        </div>
+
+                                     <div style="margin-left: 4px;">
+                                        <b-dropdown size="small" text="Action"  variant="dark" style="margin-bottom: 14px;">
+                                                <b-dropdown-item><i style="font-size:15px" class="fa fa-file-excel-o" @click.prevent="AttendanceExport"></i> export excel</b-dropdown-item>
+                                                <b-dropdown-item><i style="font-size:15px" class="fa fa-print" @click.prevent="printNow"></i> Print </b-dropdown-item>
+
+                                        </b-dropdown>
+                                     </div>
+
+
+
+
+                                    <b-col md="6" style="display:inline-block">
+                                        <b-form-group label-cols="2" label="Per page" class="mb-0 datatable-select">
+                                            <b-form-select v-model="perPage" :options="pageOptions"></b-form-select>
+                                        </b-form-group>
+                                    </b-col>
+
+                                 </div>
                             <div class="datatable-vue m-0">
 
 
                                 <div class="table-responsive vue-smart">
-                                    <v-table
-                                        :data="nFilter"
-                                        class="table"
+                                    <b-table
                                         id="tablePrint"
-                                        :currentPage.sync="filter.currentPage"
-                                        :pageSize="5"
-                                        @totalPagesChanged="filter.totalPages = $event"
+                                        show-empty
+                                        stacked="md"
+                                        :items="nFilter"
+                                        :fields="tablefields"
+                                        :current-page="currentPage"
+                                        :per-page="perPage"
+
 
                                     >
-                                        <thead slot="head">
+                                       <template #cell(ID)="data">
+                                            {{ data.index + 1 }}
+                                        </template>
 
-                                            <th>ID</th>
-                                            <td>name</td>
-                                            <td>RF code</td>
-                                            <td>attendance date</td>
-                                            <td>come time</td>
-                                            <td>leave time</td>
-                                            <td> status</td>
-                                        </thead>
+                                       <template #cell(status)="data">
+                                            <feather type="check-square"></feather>
+                                        </template>
 
-                                        <tbody slot="body" slot-scope="{ displayData }">
-                                        <tr v-for="(row, index) in displayData" :key="index">
-                                            <td>{{ ++index}}</td>
-                                            <td>{{ row.userRelation.name }}</td>
-                                            <td>{{ row.userRelation.RF_code }}</td>
-                                            <td>{{  row.date }} </td>
-                                            <td>{{ row.come_time }} </td>
-                                            <td>{{ row.leave_time }} </td>
-                                            <td> <feather type="check-circle"></feather></td>
+                                       <template #cell(check)="data">
+                                            <input  type="checkbox" :value="data.item.id" v-model="selected" />
+                                        </template>
 
-                                        </tr>
-                                        </tbody>
-                                    </v-table>
+
+                                    </b-table>
                                 </div>
 
-                                <div >
-                                    <smart-pagination
-
-                                        :currentPage.sync="filter.currentPage"
-                                        :totalPages="filter.totalPages"
-                                    />
-                                </div>
+                               <b-col md="6" class="my-1">
+                                    <b-pagination
+                                    v-model="currentPage"
+                                    :total-rows="totalRows"
+                                    :per-page="perPage"
+                                    class="my-0"
+                                    ></b-pagination>
+                                </b-col>
 
 
                             </div>
@@ -95,15 +153,30 @@
 
 
 
-                            <b-modal id="bv-modal-example" hide-footer>
+                             <b-modal id="bv-modal-selected" hide-footer>
                                 <template #modal-title>
-                                    Delete Role
+                                    Delete selected attendance
                                 </template>
                                 <div class="d-block text-center">
-                                    <h5>are you sure to delete this group</h5>
+                                    <h5>
+                                        are you sure to delete this selected
+                                        attendance
+                                    </h5>
                                 </div>
-                                <b-button class="mt-3"  v-b-modal.modal-sm variant="default" @click="$bvModal.hide('bv-modal-example')">Cancel</b-button>
-                                <b-button class="mt-3"  v-b-modal.modal-sm variant="danger"  >delete</b-button>
+                                <b-button
+                                    class="mt-3"
+                                    v-b-modal.modal-sm
+                                    variant="default"
+                                    @click="$bvModal.hide('bv-modal-selected')"
+                                    >Cancel</b-button
+                                >
+                                <b-button
+                                    class="mt-3"
+                                    v-b-modal.modal-sm
+                                    variant="danger"
+                                    @click="deleteSelectedAttendance"
+                                    >delete</b-button
+                                >
                             </b-modal>
 
 
@@ -135,59 +208,177 @@ import axios from "axios";
 export default {
     data() {
         return {
+
+            tablefields: [
+                'check',
+                'ID',
+                { key: 'userRelation.name', label: 'name', sortable: false, },
+                { key: 'userRelation.RF_code', label: 'RF code', sortable: false, },
+                { key: 'date', label: 'attendance', sortable: false, },
+                { key: 'come_time', label: 'come time', sortable: false, },
+                { key: 'leave_time', label: 'leave time', sortable: false, },
+                 'status'
+            ],
+            totalRows: 1,
+            currentPage: 1,
+            perPage: 10,
+            pageOptions: [5, 10, 15],
             attendance:[],
             showFilter:{
-                FR_code:'',
                 from:'',
                 to:''
             },
+            RF_Filter:'',
             nameFilter:'',
-            filter: {
-                currentPage: 1,
-                totalPages: 0,
-            },
-            isLoadig:true,
-            test:[]
+            isLoadig:false,
+            selected:[],
+            selectedAll:false,
+            emptyCheckData:true
+
         };
     },
     beforeMount() {
         axios.get('attendance')
         .then(res => {
-            this.attendance = res.data.attendance
+            this.attendance = Object.values(res.data.attendance)
+               this.totalRows = this.attendance.length
+               this.isLoadig = true
+
         })
         .catch(err => {
             console.error(err);
         })
     },
     mounted() {
+
+
+
     },
 
     computed:{
-            nFilter(){
-            return  this.attendance.filter(item => {
+
+
+
+        nFilter(){
+
+            if(this.nameFilter.length > 0){
+                    return  this.attendance.filter(item => {
+                                                    //match
+                    return item.userRelation.name.includes((this.nameFilter ).toLowerCase())
+                })
+
+            }else {
+
+                return  this.attendance.filter(item => {
                                                 //match
-                return item.userRelation.name.includes((this.nameFilter).toLowerCase())
-            })
+                    return item.userRelation.RF_code.includes((this.RF_Filter ).toLowerCase())
+                })
+            }
+
+
+
+
+
+
+
         },
+
+
     },
 
     methods: {
+
+        DeleteAttendanceSelectedModal(){
+
+            this.$bvModal.show("bv-modal-selected");
+
+        },
+
+
+         deleteSelectedAttendance() {
+            axios
+                .post("attendanceSelectedToDelete", this.selected)
+                .then(res => {
+                    if (res.data.success) {
+
+                            axios.get('attendance')
+                            .then(res => {
+                                this.attendance = Object.values(res.data.attendance)
+                                this.totalRows = this.attendance.length
+
+
+                                 this.$bvModal.hide("bv-modal-selected");
+                                this.selectedAll = false;
+                                this.selected = [];
+                                this.isLoadig = true;
+                                Toast.fire({
+                                    icon: "success",
+                                    title: "selected item  deleted successfully"
+                                });
+
+                            })
+                            .catch(err => {
+                                console.error(err);
+                            })
+
+
+
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                });
+        },
+
+         selectAll(event) {
+            if (event.target.checked == false) {
+                this.selected = [];
+                 this.emptyCheckData = true;
+            } else {
+                this.attendance.forEach(element => {
+                    this.selected.push(element.id);
+                });
+                 this.emptyCheckData = false;
+            }
+        },
+
+
         printNow(){
 
             printJS('tablePrint', 'html')
         },
 
+
+
         filters(){
+
             let formData = new FormData();
             formData.append("from",this.showFilter.from)
             formData.append("to",this.showFilter.to)
+
             axios.post('attendanceFilter',formData)
             .then(res => {
-                console.log(res)
+
+                if(res.data.success){
+                    this.attendance = Object.values(res.data.attendance)
+                    this.totalRows = this.attendance.length
+                }
+
+
             })
             .catch(err => {
                 console.error(err);
             })
+        }
+    },
+
+
+      watch: {
+        selected: function(selected) {
+
+            this.selectedAll = selected.length === Object.values(this.attendance).length;
+            this.emptyCheckData = selected.length < 1;
+            this.selectedAll = selected.length === Object.values(this.attendance).length;
         }
     }
 }

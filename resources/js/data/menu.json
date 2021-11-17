@@ -324,7 +324,7 @@
             "children": [
 
                 {
-                    "path": "/dashboard",
+                    "path": "/dashboard/setting",
                     "title": "setting",
                     "type": "link",
                     "permission": "show-setting"

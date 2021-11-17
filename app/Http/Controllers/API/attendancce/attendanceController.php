@@ -6,10 +6,12 @@ use Carbon\Carbon;
 use App\Models\User;
 use App\Models\attendance;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use App\Exports\attendanceExport;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\attendanceResource;
-use Illuminate\Validation\Rule;
+
 class attendanceController extends Controller
 {
 
@@ -64,11 +66,36 @@ class attendanceController extends Controller
 
 
 
-               $find = attendance::where('user_id','=',$user_id)->get();
+             $find = attendance::where('user_id','=',$user_id)->where('date','=',$request->date)->first();
 
-            if(count($find) < 1){
+                // return $find->count() > 0 ? 'true' : 'false';
 
-                     $date = $request->date;
+            if($find){
+
+                if( $find['come_time'] != null && $find['leave_time'] == null && $find['date'] == $request['date'] ){
+
+                    $date = $request->date;
+                    $time = Carbon::now('Africa/Cairo')->toTimeString();
+
+
+                    $saveAttendance = $find;
+                    $saveAttendance->update([
+
+                        'leave_time' => $time,
+                        'date' => $date
+                    ]);
+
+                return response()->json(['success' => true , 'attendance' => new attendanceResource($saveAttendance)],200);
+
+                }else{
+
+                    return response()->json([ 'status' => '400', 'message' => 'attendance already taken']);
+
+                }
+
+            }else{
+
+                    $date = $request->date;
                     $time = Carbon::now('Africa/Cairo')->toTimeString();
 
 
@@ -80,85 +107,49 @@ class attendanceController extends Controller
 
                     return response()->json(['success' => true , 'attendance' => new attendanceResource($saveAttendance)],200);
 
-
             }
-
-            if($find){
-
-                $saveAttendance = '';
-
-
-
-                foreach ($find as $k => $v){
-
-                    if( $v['come_time'] != null && $v['leave_time'] != null ){
-
-
-
-                        if($v['date'] != $request->date){
-
-                            $date = $request->date;
-                            $time = Carbon::now('Africa/Cairo')->toTimeString();
-
-
-                            $saveAttendance = attendance::create([
-                                'user_id' =>  $user_id,
-                                'come_time' => $time,
-                                'date' => $date
-                            ]);
-
-
-                        }else{
-
-                            return response()->json([ 'status' => '400', 'message' => 'attendance already taken']);
-                        }
-
-                    }
-
-                     if( $v['come_time'] != null && $v['leave_time'] == null && $v['date'] == $request['date'] ){
-
-                        $date = $request->date;
-                        $time = Carbon::now('Africa/Cairo')->toTimeString();
-
-
-                        $saveAttendance = attendance::where('user_id','=',$v['user_id'])->where('id','=',$v['id'])->first();
-                        $saveAttendance->update([
-
-                            'leave_time' => $time,
-                            'date' => $date
-                        ]);
-
-                    }
-                }
-
-                if($saveAttendance != ''){
-
-                    return response()->json(['success' => true , 'attendance' => new attendanceResource($saveAttendance)],200);
-
-                }
-
-
-            }
-
-
-
-
-
-
-
-
 
         }
-
-
-
     }
 
+    public function attendanceSelectedToDelete(Request $request){
+
+
+        $uniqueId =  array_unique($request->all());
+
+        $attendance = new attendance();
+        $attendance->whereIn('id', $uniqueId)->delete();
+
+
+        return response()->json(['success' => true], 200);
+
+    }
 
 
     public function attendanceFilter(Request $request){
 
 
+        if($request->from &&  !$request->to){
+
+            $attendance = attendance::where('date','=',$request->from)->get();
+
+        }
+
+        if($request->to && !$request->from){
+
+            $attendance = attendance::where('date','=',$request->to)->get();
+
+        }
+
+
+        if($request->from && $request->to){
+
+            $attendance = attendance::whereBetween('date',[$request->from,$request->to])->get();
+
+        }
+
+
+        return response()->json(['success' => true, 'attendance' => attendanceResource::collection($attendance)],200);
 
     }
 }

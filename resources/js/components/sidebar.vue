@@ -1,22 +1,36 @@
 <template>
     <div>
         <div class="logo-wrapper " style="padding: 17px;">
-            <router-link :to="{name : 'main'}">
-                <img
-                    class="img-fluid for-light"
-                    :src="require('@/assets/images/avtar/3.jpg').default"
-                      style="width: 50px;height: 50px;border-radius:50%;"
-                    alt=""
-                /><img
-                    class="img-fluid for-dark"
-                    :src="require('@/assets/images/avtar/3.jpg').default"
-                    alt=""
-                    style="width: 50px;height: 50px;border-radius:50%;"
-                />
-            </router-link>
+
+            <div class="row">
+                <div class="col-lg-4" >
+                    <router-link :to="{name : 'main'}">
+                        <img
+                            class="img-fluid for-light"
+                            :src="require('@/assets/images/avtar/3.jpg').default"
+                            style="width: 50px;height: 50px;border-radius:50%;"
+                            alt=""
+                        /><img
+                            class="img-fluid for-dark"
+                            :src="require('@/assets/images/avtar/3.jpg').default"
+                            alt=""
+                            style="width: 50px;height: 50px;border-radius:50%;"
+                        />
+                    </router-link>
+                </div>
+
+
+
+            </div>
+
+
+
+
+
             <div class="back-btn" @click="toggle_sidebar">
                 <i class="fa fa-angle-left"></i>
             </div>
+
             <div class="toggle-sidebar" @click="toggle_sidebar">
                 <feather
                     class="status_toggle middle"
@@ -24,7 +38,10 @@
                     id="sidebar-toggle"
                 ></feather>
             </div>
+
         </div>
+
+
         <div class="logo-icon-wrapper" style="padding: 17px;">
             <router-link to="/">
                 <img

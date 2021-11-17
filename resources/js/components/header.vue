@@ -68,11 +68,14 @@
       </div>
     </form>
     <div class="header-logo-wrapper">
+
       <div class="logo-wrapper">
         <router-link to="/">
           <img class="img-fluid"   :src="require('@/assets/images/logo/logo.png').default"  alt />
         </router-link>
       </div>
+
+
       <div class="toggle-sidebar" @click="toggle_sidebar">
         <feather
           class="status_toggle middle sidebar-toggle"

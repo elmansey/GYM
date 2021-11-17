@@ -172,6 +172,7 @@ use App\Http\Controllers\API\product_invoice\product_invoiceController;
         Route::post('saveAttendance',[attendanceController::class,'store']);
         Route::get('attendance',[attendanceController::class,'index']);
         Route::post('attendanceFilter',[attendanceController::class,'attendanceFilter']);
+        Route::post('attendanceSelectedToDelete',[attendanceController::class,'attendanceSelectedToDelete']);
 
 
     });

@@ -380,6 +380,31 @@ const routes = [
 
             },
 
+            {
+                path: 'setting',
+                name: 'setting',
+                component: require('@/pages/setting/setting').default,
+
+            },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         ]
     },
 
