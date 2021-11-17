@@ -359,10 +359,9 @@ import axios from 'axios'
 
         printWindow() {
 
-            var mywindow = window.open('', 'PRINT', 'height=400,width=600')
-            mywindow.document.write(document.getElementById('invoice').innerHTML);
-            mywindow.document.close();
-            mywindow.print();
+
+           printJS('invoice', 'html')
+
             this.InvoiceAfterAdd = []
             this.$bvModal.hide('bv-modal-example')
 

@@ -28,6 +28,7 @@
         "firebase": "^9.4.1",
         "knob": "^1.1.0",
         "leaflet": "^1.5.1",
+        "print-js": "^1.6.0",
         "sweetalert2": "^11.1.7",
         "tiptap": "^1.26.3",
         "v-calendar": "^2.0.2",

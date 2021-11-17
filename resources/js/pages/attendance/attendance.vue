@@ -1,6 +1,4 @@
 
-
-
 <template>
 
     <div v-if="isLoadig">
@@ -32,7 +30,7 @@
 
                             <div class="col-md-3" style="margin-bottom: 40px;">
                                 <label>name</label>
-                                <input class="form-control" type="text" placeholder="name"  @change="namesFilter"  v-model="nameFilter"  />
+                                <input class="form-control" type="text" placeholder="name"   v-model="nameFilter"  />
                             </div>
 
                            </div>
@@ -49,7 +47,7 @@
 
                                 <div class="table-responsive vue-smart">
                                     <v-table
-                                        :data="attendance"
+                                        :data="nFilter"
                                         class="table"
                                         id="tablePrint"
                                         :currentPage.sync="filter.currentPage"
@@ -132,39 +130,25 @@
 
 <script>
 import axios from "axios";
-
-
 export default {
     data() {
         return {
             attendance:[],
-
             showFilter:{
                 FR_code:'',
                 from:'',
                 to:''
-
             },
-
             nameFilter:'',
-
-
             filter: {
                 currentPage: 1,
                 totalPages: 0,
             },
-
-
             isLoadig:true,
             test:[]
-
-
         };
     },
     beforeMount() {
-
-
-
         axios.get('attendance')
         .then(res => {
             this.attendance = res.data.attendance
@@ -172,46 +156,29 @@ export default {
         .catch(err => {
             console.error(err);
         })
-
-
     },
     mounted() {
-
-
     },
+
+    computed:{
+            nFilter(){
+            return  this.attendance.filter(item => {
+                                                //match
+                return item.userRelation.name.includes((this.nameFilter).toLowerCase())
+            })
+        },
+    },
+
     methods: {
-
-
         printNow(){
 
-            var mywindow = window.open('', 'PRINT', 'height=400,width=600')
-            mywindow.document.write(document.getElementById('tablePrint').innerHTML);
-            mywindow.document.close();
-            mywindow.print();
-
-
-        },
-
-        namesFilter(){
-
-            return  this.attendance.filter(item => {
-
-                return item
-            })
-
+            printJS('tablePrint', 'html')
         },
 
         filters(){
-
-
-
             let formData = new FormData();
             formData.append("from",this.showFilter.from)
             formData.append("to",this.showFilter.to)
-
-
-
-
             axios.post('attendanceFilter',formData)
             .then(res => {
                 console.log(res)
@@ -220,12 +187,8 @@ export default {
                 console.error(err);
             })
         }
-
-
-
     }
 }
-
 </script>
 <style lang="scss">
 .btn-container {

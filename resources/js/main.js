@@ -22,7 +22,7 @@ import { getAnalytics } from "firebase/analytics";
 
 
 
-
+import print from 'print-js'
 
 
 
