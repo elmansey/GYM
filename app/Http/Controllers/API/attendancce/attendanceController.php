@@ -25,12 +25,6 @@ class attendanceController extends Controller
     public function store (Request $request){
 
 
-
-
-
-
-
-
         $validator = validator::make($request->all(), [
 
             'date' => 'required',
@@ -91,9 +85,13 @@ class attendanceController extends Controller
 
             if($find){
 
+                $saveAttendance = '';
+
+
+
                 foreach ($find as $k => $v){
 
-                    if( $v['come_time'] != null && $v['leave_time'] != null   ){
+                    if( $v['come_time'] != null && $v['leave_time'] != null ){
 
 
 
@@ -109,7 +107,6 @@ class attendanceController extends Controller
                                 'date' => $date
                             ]);
 
-                            return response()->json(['success' => true , 'attendance' => new attendanceResource($saveAttendance)],200);
 
                         }else{
 
@@ -118,7 +115,7 @@ class attendanceController extends Controller
 
                     }
 
-                     if( $v['come_time'] != null && $v['leave_time'] == null ){
+                     if( $v['come_time'] != null && $v['leave_time'] == null && $v['date'] == $request['date'] ){
 
                         $date = $request->date;
                         $time = Carbon::now('Africa/Cairo')->toTimeString();
@@ -131,16 +128,14 @@ class attendanceController extends Controller
                             'date' => $date
                         ]);
 
-                        return response()->json(['success' => true , 'attendance' => new attendanceResource($saveAttendance)],200);
-
-
                     }
                 }
 
+                if($saveAttendance != ''){
 
+                    return response()->json(['success' => true , 'attendance' => new attendanceResource($saveAttendance)],200);
 
-
-
+                }
 
 
             }

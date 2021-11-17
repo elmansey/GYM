@@ -233,7 +233,7 @@
             saveAttendance(){
 
 
-                var today = new Date();
+                var today = new Date(this.attendanceDate.date);
                 var da = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
                 this.attendanceDate.date =  da
 

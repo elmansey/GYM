@@ -32,6 +32,7 @@ class CreateDefaultAdminSeeder extends Seeder
             'email' => 'admin_default@gmail.com',
             'password' => bcrypt(123456),
             'phone' => '01019535581' ,
+            'RF_code' => '12-3456-e-1234' ,
 
 
         ]);
@@ -55,6 +56,8 @@ class CreateDefaultAdminSeeder extends Seeder
             'email' => 'staff_default@gmail.com',
             'password' => bcrypt(123456),
             'phone' => '01019535581' ,
+            'RF_code' => '33-q130-e-1234' ,
+
 
 
         ]);

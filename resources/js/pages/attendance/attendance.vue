@@ -59,6 +59,7 @@
 
                                             <th>ID</th>
                                             <td>name</td>
+                                            <td>RF code</td>
                                             <td>attendance date</td>
                                             <td>come time</td>
                                             <td>leave time</td>
@@ -69,6 +70,7 @@
                                         <tr v-for="(row, index) in displayData" :key="index">
                                             <td>{{ ++index}}</td>
                                             <td>{{ row.userRelation.name }}</td>
+                                            <td>{{ row.userRelation.RF_code }}</td>
                                             <td>{{  row.date }} </td>
                                             <td>{{ row.come_time }} </td>
                                             <td>{{ row.leave_time }} </td>
