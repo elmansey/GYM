@@ -18,6 +18,7 @@ class CreateMembershipsTable extends Migration
             $table->string('name');
             $table->string('Membership_Period');
             $table->string('Membership_price');
+            $table->boolean('Membership_private_Features')->nullable();
             $table->timestamps();
         });
     }

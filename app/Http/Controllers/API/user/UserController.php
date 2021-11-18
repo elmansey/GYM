@@ -348,7 +348,7 @@ class UserController extends Controller
         $user = User::find($id);
         $user->update($input);
 
-        return response()->json(['success'=>true ,'message'=> 'updated successfully'] ,200);
+        return response()->json(['success'=>true ,'message'=> 'updated successfully','user' => new UsersResource($user)] ,200);
 
 
     }

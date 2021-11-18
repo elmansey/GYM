@@ -192,12 +192,7 @@ export default {
 
     beforeMount() {
 
-        this.userData.name = this.$store.getters.USER.name
-        this.userData.user_name = this.$store.getters.USER.user_name
-        this.userData.email = this.$store.getters.USER.email
-        this.userData.password = this.$store.getters.USER.password
-        this.userData.phone = this.$store.getters.USER.phone
-
+       this.Info()
     },
 
      components: {
@@ -248,11 +243,14 @@ export default {
         .then(res => {
 
             if(res.data.success){
+                this.$store.dispatch('SET_USER',res.data.user)
+                 this.ProfileInfo = this.$store.getters.USER,
                     Toast.fire({
                     icon: 'success',
                     title: 'profile updated successfully'
                 })
                 this.error=[]
+
             }else if (res.data.success == false){
                 this.error = res.data.message
             }
@@ -265,7 +263,18 @@ export default {
 
 
 
-    }
+    },
+
+
+        Info(){
+            this.userData.name = this.$store.getters.USER.name
+            this.userData.user_name = this.$store.getters.USER.user_name
+            this.userData.email = this.$store.getters.USER.email
+            this.userData.password = this.$store.getters.USER.password
+            this.userData.phone = this.$store.getters.USER.phone
+            this.userData.phone = this.$store.getters.USER.phone
+
+        }
 }
 }
 </script>

@@ -3,18 +3,19 @@
         <div class="logo-wrapper " style="padding: 17px;">
 
             <div class="row">
-                <div class="col-lg-4" >
+                <div class="col-lg-5" >
                     <router-link :to="{name : 'main'}">
                         <img
                             class="img-fluid for-light"
-                            :src="require('@/assets/images/avtar/3.jpg').default"
-                            style="width: 50px;height: 50px;border-radius:50%;"
+                            :src="'../../app_setting/'+this.$store.getters.SETTINGS.logo"
+                            style="width: 75px;height: 50px;"
                             alt=""
-                        /><img
+                        />
+                        <img
                             class="img-fluid for-dark"
-                            :src="require('@/assets/images/avtar/3.jpg').default"
+                             :src="'../../app_setting/'+this.$store.getters.SETTINGS.logo"
                             alt=""
-                            style="width: 50px;height: 50px;border-radius:50%;"
+                            style="width: 75px;height: 50px;"
                         />
                     </router-link>
                 </div>
@@ -44,12 +45,16 @@
 
         <div class="logo-icon-wrapper" style="padding: 17px;">
             <router-link to="/">
+
+
                 <img
-                    class="img-fluid"
-                    :src="require('@/assets/images/avtar/3.jpg').default"
-                    style="width: 50px;height: 50px;border-radius:50%;"
-                    alt=""
-            /></router-link>
+                            class="img-fluid "
+                             :src="'../../app_setting/'+this.$store.getters.SETTINGS.logo"
+                            alt=""
+                            style="width: 75px;height: 50px;"
+                        />
+
+            </router-link>
         </div>
         <nav class="sidebar-main">
             <li

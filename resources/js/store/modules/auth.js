@@ -131,6 +131,10 @@ const mutations = {
 const actions = {
 
 
+    SET_USER({ commit }, payload) {
+        commit('SET_USER', payload)
+    },
+
 
     loginUser({
         commit

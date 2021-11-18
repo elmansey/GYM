@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\API\attendancce\attendanceController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -11,8 +10,11 @@ use App\Http\Controllers\API\staff\staffController;
 use App\Http\Controllers\API\chat\teamChatController;
 use App\Http\Controllers\API\Groups\GroupsController;
 use App\Http\Controllers\API\members\membersController;
+use App\Http\Controllers\API\setting\settingController;
 use App\Http\Controllers\API\products\productController;
 use App\Http\Controllers\API\auth\resetPasswordController;
+use App\Http\Controllers\API\statistics\statisticsController;
+use App\Http\Controllers\API\attendancce\attendanceController;
 use App\Http\Controllers\API\Memberships\MembershipsController;
 use App\Http\Controllers\API\ClassSchedule\ClassScheduleController;
 use App\Http\Controllers\API\product_invoice\product_invoiceController;
@@ -173,6 +175,19 @@ use App\Http\Controllers\API\product_invoice\product_invoiceController;
         Route::get('attendance',[attendanceController::class,'index']);
         Route::post('attendanceFilter',[attendanceController::class,'attendanceFilter']);
         Route::post('attendanceSelectedToDelete',[attendanceController::class,'attendanceSelectedToDelete']);
+
+
+
+
+
+        //setting data
+        Route::get('allSetting' , [settingController::class, 'index']);
+        Route::post('editSetting' , [settingController::class, 'update']);
+
+
+
+        //statistics
+        Route::get('statistics',[statisticsController::class,'index']);
 
 
     });

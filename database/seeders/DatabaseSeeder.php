@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Database\Factories\RoleFactory;
+use Database\Seeders\MainSettingSeeder;
 use Database\Seeders\default_role_Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -23,5 +24,6 @@ class DatabaseSeeder extends Seeder
         $this->call(CreateDefaultAdminSeeder::class);
         $this->call(membershipsDefaultSeeder::class);
         $this->call(groupsDefaultSeeder::class);
+        $this->call(MainSettingSeeder::class);
     }
 }

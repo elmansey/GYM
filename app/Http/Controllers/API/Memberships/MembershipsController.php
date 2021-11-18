@@ -35,10 +35,12 @@ class MembershipsController extends Controller
         }
 
         $membership = $request->all();
+        $membership['Membership_private_Features'] = $request['Membership_private_Features'] == 'true' || true || 1 || '1'? true : false;
+
         $membership = Memberships::create($membership);
 
 
-        return  response()->json(['success' => true, 'membership' => $membership], 200);
+        return  response()->json(['success' => true, 'membership' => MembershipsRersource::collection($membership) ], 200);
     }
 
     public function getMembershipsById($id)
@@ -65,6 +67,7 @@ class MembershipsController extends Controller
 
 
         $membership = Memberships::find($id);
+         $membership['Membership_private_Features'] = $request['Membership_private_Features'] == 'true' || true || 1 || '1'? true : false;
         $membership->update($request->all());
 
 

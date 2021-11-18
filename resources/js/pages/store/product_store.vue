@@ -172,7 +172,7 @@
                                                         <div class="media">
 
                                                         <div class="media-body m-l-20">
-                                                            <h4 class="media-heading">GYM <BR /> MASTER</h4>
+                                                            <h4 class="media-heading" style="margin-top: 45px;">{{  applecation_name }}</h4>
 
                                                         </div>
 
@@ -307,6 +307,8 @@ import axios from 'axios'
 
           },
 
+          applecation_name:this.$store.getters.SETTINGS.Gym_name,
+
           CheckDiseble:true,
 
           InvoiceAfterAdd:[]
@@ -342,6 +344,9 @@ import axios from 'axios'
 
     },
     computed: {
+
+    },
+    mounted() {
 
     },
     methods:{

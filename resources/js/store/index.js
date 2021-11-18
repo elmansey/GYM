@@ -7,6 +7,7 @@ import menu from './modules/menu'
 import auth from './modules/Auth'
 import role from './modules/role'
 import admin from './modules/admin'
+import setting from './modules/setting'
 Vue.use(Vuex);
 
 export const store = new Vuex.Store({
@@ -20,6 +21,7 @@ export const store = new Vuex.Store({
         auth,
         role,
         admin,
+        setting,
         namespaced: true
 
     }

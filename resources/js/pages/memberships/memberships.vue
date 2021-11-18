@@ -28,6 +28,7 @@
                                         <th></th>
                                         <th sortKey="name">name</th>
                                         <th sortKey="name" >Membership Period</th>
+                                        <th sortKey="name" >Membership private Features</th>
                                         <th sortKey="name" >Membership price</th>
                                         <th sortKey="options" v-if="can('edit-membership' || 'delete-membership')">options</th>
                                         </thead>
@@ -37,6 +38,8 @@
                                             <td></td>
                                             <td>{{row.name}}</td>
                                             <td>{{row.Membership_Period}}</td>
+                                            <td v-if="row.Membership_private_Features">  <i class="icofont icofont-ui-check"></i> </td>
+                                            <td v-if="!row.Membership_private_Features">  <i class="icofont icofont-ui-close"></i> </td>
                                             <td>{{row.Membership_price}}</td>
                                             <td>
                                                 <div>

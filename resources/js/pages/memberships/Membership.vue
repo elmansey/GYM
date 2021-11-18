@@ -35,6 +35,13 @@
                                             <small style="color: red"  v-if="error.Membership_price">{{error.Membership_price[0]}}</small>
                                         </div>
 
+                                        <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
+                                            <div class="col-form-label">with Membership private Features</div>
+
+                                            <input name="name" v-model="data.Membership_private_Features" type="checkbox" />
+                                            <small style="color: red"  v-if="error.Membership_private_Features">{{error.Membership_private_Features[0]}}</small>
+                                        </div>
+
 
                                     </div>
 
@@ -80,6 +87,7 @@ export default {
                 name:'',
                 Membership_Period:'',
                 Membership_price:'',
+                Membership_private_Features:false
 
             },
 
@@ -109,6 +117,7 @@ export default {
                 this.data.name  = res.data.membership.name
                 this.data.Membership_Period  = res.data.membership.Membership_Period
                 this.data.Membership_price  = res.data.membership.Membership_price
+                this.data.Membership_private_Features  = res.data.membership.Membership_private_Features
                 this.isLoading = true
             })
             .catch(err => {
@@ -121,6 +130,7 @@ export default {
             this.data.name = ''
             this.data.Membership_Period = ''
             this.data.Membership_price = ''
+            this.data.Membership_private_Features = false
             this.isLoading = true
         }
     },
@@ -128,16 +138,17 @@ export default {
 
     methods: {
 
-      async handeleFormSubmit(){
+       handeleFormSubmit(){
 
 
-            if(this.edit ){
+            if(this.edit){
 
 
                 let formData = new FormData()
-                await formData.append('name',this.data.name)
-                await formData.append('Membership_Period',this.data.Membership_Period)
-                await formData.append('Membership_price',this.data.Membership_price)
+                 formData.append('name',this.data.name)
+                 formData.append('Membership_Period',this.data.Membership_Period)
+                 formData.append('Membership_price',this.data.Membership_price)
+                 formData.append('Membership_private_Features',this.data.Membership_private_Features)
 
                 axios.post(`updateMemberships/${this.$route.params.membershipId}`,formData)
                 .then(res => {
@@ -168,9 +179,10 @@ export default {
 
 
                 let formData = new FormData()
-                await formData.append('name',this.data.name)
-                await formData.append('Membership_Period',this.data.Membership_Period)
-                await formData.append('Membership_price',this.data.Membership_price)
+                 formData.append('name',this.data.name)
+                 formData.append('Membership_Period',this.data.Membership_Period)
+                 formData.append('Membership_price',this.data.Membership_price)
+                 formData.append('Membership_private_Features',this.data.Membership_private_Features)
 
 
                 axios.post('addMemberships',formData)
@@ -211,6 +223,7 @@ export default {
                 this.data.name = ''
                 this.data.Membership_Period = ''
                 this.data.Membership_price = ''
+                this.data.Membership_private_Features = false
                 this.edit = false
             }
         }

@@ -16,7 +16,7 @@
 
 <script>
 import PulseLoader from "vue-spinner/src/PulseLoader";
-
+import axios from 'axios'
 export default {
   name: 'app',
 
@@ -40,6 +40,22 @@ export default {
       if(!this.$store.getters.authentication   && this.$store.getters.AUTH_TOKEN ){
           this.$store.dispatch('userInfo')
       }
+
+
+        axios.get('allSetting')
+        .then(res => {
+
+            if(res.data.success){
+
+                this.$store.dispatch('SETTINGS',res.data.setting.setting)
+            }
+
+
+        })
+        .catch(err => {
+            console.error(err);
+        })
+
 
     }
 }
