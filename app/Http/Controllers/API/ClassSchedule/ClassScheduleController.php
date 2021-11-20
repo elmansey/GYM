@@ -10,9 +10,11 @@ use App\Models\ClassSchedule;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\captainResource;
+use App\Models\members_extra_information;
 use Illuminate\support\facades\Validator;
 use App\Http\Resources\classSceduleResource;
 use App\Http\Resources\class_scheduleResource;
+use App\Http\Resources\class_scheduleResourceToGetCountMember;
 
 class ClassScheduleController extends Controller
 {
@@ -22,7 +24,7 @@ class ClassScheduleController extends Controller
     {
 
         $classes = ClassSchedule::with('captain_relation')->get();
-        return response()->json(['success' => true, 'classes' => $classes]);
+        return response()->json(['success' => true, 'classes' => class_scheduleResource::collection($classes)]);
     }
 
 
@@ -31,14 +33,15 @@ class ClassScheduleController extends Controller
 
 
 
+
         $validator = validator::make($request->all(), [
 
-            'className'   => 'required|unique:class_schedules',
             'staffName'   => 'required',
             'days'   => 'required',
             'startingTime'   => 'required',
             'endingTime'   => 'required|after:startingTime',
-            'trainingLocation'   => 'required'
+            'trainingLocation'   => 'required',
+            'group_id'   => 'required',
 
         ]);
 
@@ -60,17 +63,17 @@ class ClassScheduleController extends Controller
 
 
         $class = new ClassSchedule();
-        $class->className = $request->className;
         $class->staffName = $request->staffName;
-        $class->startingTime = $request->startingTime;
-        $class->endingTime = $request->endingTime;
+        $class->startingTime =  date("h:i:s", strtotime($request->startingTime));
+        $class->endingTime = date("h:i:s", strtotime($request->endingTime));
         $class->trainingLocation = $request->trainingLocation;
+        $class->group_id = $request->group_id;
         $class->days = $days;
         $class->save();
 
 
 
-        return response()->json(['success' => true, 'class' => $class]);
+        return response()->json(['success' => true, 'class' => new class_scheduleResource($class)]);
     }
 
 
@@ -79,12 +82,13 @@ class ClassScheduleController extends Controller
 
         $validator = validator::make($request->all(), [
 
-            'className'   => ['required', Rule::unique('class_schedules')->ignore($id)],
             'staffName'   => 'required',
             'days'         => 'required',
             'startingTime'   => 'required',
             'endingTime'   => 'required|after:startingTime',
-            'trainingLocation'   => 'required'
+            'trainingLocation'   => 'required',
+            'group_id'   => 'required',
+
 
         ]);
 
@@ -110,17 +114,17 @@ class ClassScheduleController extends Controller
 
 
         $class =  ClassSchedule::find($id);
-        $class->className = $request->className;
         $class->staffName = $request->staffName;
-        $class->startingTime = $request->startingTime;
-        $class->endingTime = $request->endingTime;
+        $class->startingTime = date("h:i:s", strtotime($request->startingTime));
+        $class->endingTime = date("h:i:s", strtotime($request->endingTime));
         $class->trainingLocation = $request->trainingLocation;
+        $class->group_id = $request->group_id;
         $class->days = $days;
         $class->save();
 
 
 
-        return response()->json(['success' => true, 'class' => $class]);
+        return response()->json(['success' => true, 'class' => new class_scheduleResource($class) ]);
     }
 
 
@@ -246,9 +250,21 @@ class ClassScheduleController extends Controller
 
     public function getClassToSelect(){
 
-        $classes = ClassSchedule::select('id','className')->get();
-        return  response()->json(['success'=>true,'classes'=>$classes]);
+        $classes = ClassSchedule::all();
+
+
+        foreach($classes as $k => $v){
+
+            $v['countMember'] = count( members_extra_information::where('class_id','=',$v['id'])->get());
+        }
+
+
+
+
+        return  response()->json(['success'=>true,'classes'=> class_scheduleResourceToGetCountMember::collection($classes)]);
     }
+
+
 
 
 

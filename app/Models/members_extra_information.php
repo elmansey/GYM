@@ -18,5 +18,6 @@ class members_extra_information extends Model
         'group_id' ,
         'class_id' ,
         'start_date' ,
+        'amount_paid'
     ];
 }

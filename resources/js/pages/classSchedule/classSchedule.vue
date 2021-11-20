@@ -22,13 +22,15 @@
                       <td  >
                         <span
                           class="badge badge-primary mb-1 "
-                          style="font-size: 12px; height: 30px ; flex-wrap: wrap;flex-direction: row;"
+                          style="font-size: 12px; height: 30px ;border-radius:40px; flex-wrap: wrap;flex-direction: row;"
                           v-for="(item, index) in classes.saturdayClasses"
                           :key="index"
                         >
                           {{
-                            item.className +
-                            " " +
+
+                              'group('+
+                            item.group_relation.name + ") -> "
+                              + " " +
                             "class" +
                             " " +
                             "(" +
@@ -66,14 +68,15 @@
                       <th width="50">Sunday</th>
                       <td>
                         <span
-                          class="badge badge-primary mb-1"
-                          style="font-size: 12px; height: 30px"
+                          class="badge badge-dark mb-1"
+                          style="font-size: 12px; height: 30px;border-radius:40px"
                           v-for="(item, index) in classes.sundayClasses"
                           :key="index"
                         >
                           {{
-                            item.className +
-                            " " +
+                              'group('+
+                            item.group_relation.name + ") -> "
+                              + " " +
                             "class" +
                             " " +
                             "(" +
@@ -87,7 +90,7 @@
                             size="sm"
                             style="height: 20px"
                             menu-class="dropdown-content"
-                            variant="primary"
+                            variant="dark"
                           >
                             <b-dropdown-item>
                               <router-link
@@ -112,13 +115,14 @@
                       <td>
                         <span
                           class="badge badge-primary mb-1"
-                          style="font-size: 12px; height: 30px"
+                          style="font-size: 12px; height: 30px ;border-radius:40px"
                           v-for="(item, index) in classes.mondayClasses"
                           :key="index"
                         >
                           {{
-                            item.className +
-                            " " +
+                               'group('+
+                            item.group_relation.name + ") -> "
+                              + " " +
                             "class" +
                             " " +
                             "(" +
@@ -156,14 +160,15 @@
                       <th width="50">Tuesday</th>
                       <td>
                         <span
-                          class="badge badge-primary mb-1"
-                          style="font-size: 12px; height: 30px"
+                          class="badge badge-success mb-1"
+                          style="font-size: 12px; height: 30px ;border-radius:40px"
                           v-for="(item, index) in classes.tuesdayClasses"
                           :key="index"
                         >
                           {{
-                            item.className +
-                            " " +
+                              'group('+
+                            item.group_relation.name + ") -> "
+                              + " " +
                             "class" +
                             " " +
                             "(" +
@@ -177,7 +182,7 @@
                             size="sm"
                             style="height: 20px"
                             menu-class="dropdown-content"
-                            variant="primary"
+                            variant="success"
                           >
                             <b-dropdown-item>
                               <router-link
@@ -201,14 +206,15 @@
                       <th width="50">Wednesday</th>
                       <td>
                         <span
-                          class="badge badge-primary mb-1"
-                          style="font-size: 12px; height: 30px"
+                          class="badge badge-dark mb-1"
+                          style="font-size: 12px; height: 30px ;border-radius:40px"
                           v-for="(item, index) in classes.wednesdayClasses"
                           :key="index"
                         >
                           {{
-                            item.className +
-                            " " +
+                               'group('+
+                            item.group_relation.name + ") -> "
+                              + " " +
                             "class" +
                             " " +
                             "(" +
@@ -222,7 +228,7 @@
                             size="sm"
                             style="height: 20px"
                             menu-class="dropdown-content"
-                            variant="primary"
+                            variant="dark"
                           >
                             <b-dropdown-item>
                               <router-link
@@ -247,13 +253,14 @@
                       <td>
                         <span
                           class="badge badge-primary mb-1"
-                          style="font-size: 12px; height: 30px"
+                          style="font-size: 12px; height: 30px ;border-radius:40px"
                           v-for="(item, index) in classes.thursdayClasses"
                           :key="index"
                         >
                           {{
-                            item.className +
-                            " " +
+                              'group('+
+                            item.group_relation.name + ") -> "
+                              + " " +
                             "class" +
                             " " +
                             "(" +
@@ -291,14 +298,15 @@
                       <th width="50">Friday</th>
                       <td>
                         <span
-                          class="badge badge-primary mb-1"
-                          style="font-size: 12px; height: 30px"
+                          class="badge badge-success mb-1"
+                          style="font-size: 12px; height: 30px ;border-radius:40px"
                           v-for="(item, index) in classes.fridayClasses"
                           :key="index"
                         >
                           {{
-                            item.className +
-                            " " +
+                             'group('+
+                            item.group_relation.name + ") -> "
+                              + " " +
                             "class" +
                             " " +
                             "(" +
@@ -312,7 +320,7 @@
                             size="sm"
                             style="height: 20px"
                             menu-class="dropdown-content"
-                            variant="primary"
+                            variant="success"
                           >
                             <b-dropdown-item>
                               <router-link

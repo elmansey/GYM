@@ -14,29 +14,7 @@
                             <div class="card-body">
                                 <form @submit.prevent="handelData" id="form">
                                     <div class="row">
-                                        <div
-                                            class="mb-2 col-md-6 col-lg-6 col-sm-12"
-                                        >
-                                            <div class="col-form-label">
-                                                class Name
-                                            </div>
 
-                                            <input
-                                                name="className"
-                                                v-model="data.className"
-                                                :class="[
-                                                    'form-control',
-                                                    error.className
-                                                        ? 'is-invalid'
-                                                        : ''
-                                                ]"
-                                            />
-                                            <small
-                                                style="color: red"
-                                                v-if="error.className"
-                                                >{{ error.className[0] }}</small
-                                            >
-                                        </div>
 
                                         <div
                                             class="mb-2 col-md-6 col-lg-6 col-sm-12"
@@ -75,9 +53,7 @@
                                             >
                                         </div>
 
-                                        <div
-                                            class="mb-2 col-md-6 col-lg-6 col-sm-12"
-                                        >
+                                        <div class="mb-2 col-md-6 col-lg-6 col-sm-12"  >
                                             <div class="col-form-label">
                                                 captain Name
                                             </div>
@@ -108,6 +84,40 @@
                                                 v-if="error.staffName"
                                                 >{{
                                                     error.staffName[0]
+                                                }}</small
+                                            >
+                                        </div>
+                                        <div class="mb-2 col-md-6 col-lg-6 col-sm-12"  >
+                                            <div class="col-form-label">
+                                                group
+                                            </div>
+
+                                                <select
+                                                    name="group"
+                                                    v-model="data.group_id"
+                                                    :class="[
+                                                        'form-control',
+                                                        error.group_id
+                                                            ? 'is-invalid'
+                                                            : ''
+                                                    ]"
+                                                >
+                                                <option
+                                                    v-for="(item,
+                                                    index) in groups"
+                                                    :key="index"
+                                                    :value="id(item.id)"
+                                                >
+                                                    {{
+                                                        item.name
+                                                    }}
+                                                </option>
+                                            </select>
+                                            <small
+                                                style="color: red"
+                                                v-if="error.group_id"
+                                                >{{
+                                                    error.group_id[0]
                                                 }}</small
                                             >
                                         </div>
@@ -238,12 +248,12 @@ export default {
     data() {
         return {
             data: {
-                className: "",
                 staffName: "",
                 startingTime: "",
                 endingTime: "",
                 trainingLocation: "",
-                days: ""
+                days: "",
+                group_id:''
             },
 
             options: [
@@ -256,6 +266,7 @@ export default {
                 { id: 7, name: "Friday" }
             ],
             staff: [],
+            groups:[],
             error: "",
             edit: true,
             isLoading: false,
@@ -275,6 +286,15 @@ export default {
             .catch(err => {
                 console.error(err);
             });
+
+        axios
+            .get(`groups`)
+            .then(res => {
+                this.groups = res.data.groups;
+            })
+            .catch(err => {
+                console.error(err);
+            });
     },
 
     beforeMount() {
@@ -286,13 +306,12 @@ export default {
                 .then(res => {
                     // var startime = res.data.class.startingTime.split(' ');
                     this.edit = true;
-                    this.data.className = res.data.class.className;
                     this.data.staffName = res.data.class.staffName;
                     this.data.startingTime = res.data.class.startingTime;
                     this.data.endingTime = res.data.class.endingTime;
-                    this.data.trainingLocation =
-                        res.data.class.trainingLocation;
+                    this.data.trainingLocation = res.data.class.trainingLocation;
                     this.data.days = res.data.class.days;
+                    this.data.group_id = res.data.class.group_id;
                     this.isLoading = true;
                 })
                 .catch(err => {
@@ -312,11 +331,11 @@ export default {
         handelData() {
             if (this.edit == false) {
                 let formData = new FormData();
-                formData.append("className", this.data.className);
                 formData.append("staffName", this.data.staffName);
                 formData.append("startingTime", this.data.startingTime);
                 formData.append("endingTime", this.data.endingTime);
                 formData.append("trainingLocation", this.data.trainingLocation);
+                formData.append("group_id", this.data.group_id);
                 formData.append("days", JSON.stringify(this.data.days));
 
                 axios
@@ -340,11 +359,11 @@ export default {
 
             if (this.edit) {
                 let formData = new FormData();
-                formData.append("className", this.data.className);
                 formData.append("staffName", this.data.staffName);
                 formData.append("startingTime", this.data.startingTime);
                 formData.append("endingTime", this.data.endingTime);
                 formData.append("trainingLocation", this.data.trainingLocation);
+                formData.append("group_id", this.data.group_id);
                 formData.append("days", JSON.stringify(this.data.days));
 
                 axios
@@ -405,6 +424,7 @@ export default {
                 this.data.startingTime = "";
                 this.data.endingTime = "";
                 this.data.trainingLocation = "";
+                this.data.group_id = "";
                 this.data.days = "";
             }
         }

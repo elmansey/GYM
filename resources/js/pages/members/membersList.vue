@@ -53,6 +53,7 @@
                                             <td>{{ row.name }} </td>
                                             <td>{{ row.email}}</td>
                                             <td>{{ row.user_name}}</td>
+
                                             <td>
                                                 <span class="badge badge-success" v-if="row.isActive">
                                                         active
@@ -105,7 +106,7 @@
 
                             <b-modal id="bv-modal-example" hide-footer>
                                 <template #modal-title>
-                                   Delete Team member
+                                   Delete  member
                                 </template>
                                 <div class="d-block text-center">
                                     <h5>are you sure to delete this member</h5>

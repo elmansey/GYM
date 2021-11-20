@@ -46,10 +46,7 @@ use App\Http\Controllers\API\product_invoice\product_invoiceController;
 
     /// global route
     Route::post('/login', [AuthController::class, 'login'])->name('login');
-    Route::get('memberships', [MembershipsController::class, 'index']);
-    Route::get('groups', [GroupsController::class, 'index']);
-    Route::get('getClassToSelect',[ClassScheduleController::class, 'getClassToSelect']);
-    Route::post('addMember',[membersController::class,'store']);
+
 
 
     Route::post('forgetPassword', [resetPasswordController::class, 'forgetPassword']);
@@ -96,13 +93,19 @@ use App\Http\Controllers\API\product_invoice\product_invoiceController;
 
 
         //memberships
+        Route::get('memberships', [MembershipsController::class, 'index']);
         Route::post('addMemberships', [MembershipsController::class, 'store']);
         Route::get('getMembershipsById/{id}', [MembershipsController::class, 'getMembershipsById']);
         Route::post('updateMemberships/{id}', [MembershipsController::class, 'update']);
         Route::get('deleteMemberships/{id}', [MembershipsController::class, 'destroy']);
+        Route::get('getClassToSelect',[ClassScheduleController::class, 'getClassToSelect']);
+        Route::get('IsAllowFuatureInThisMembership/{id}',[MembershipsController::class, 'IsAllowFuatureInThisMembership']);
+        Route::get('getAllClasseRelatedToThisGroup/{id}',[MembershipsController::class, 'getAllClasseRelatedToThisGroup']);
 
 
         //groups
+
+        Route::get('groups', [GroupsController::class, 'index']);
         Route::post('addGroup', [GroupsController::class, 'store']);
         Route::get('getGroupsById/{id}', [GroupsController::class, 'getGroupsById']);
         Route::post('updateGroup/{id}', [GroupsController::class, 'update']);
@@ -121,7 +124,6 @@ use App\Http\Controllers\API\product_invoice\product_invoiceController;
         Route::get('getAllPersonInStaffToCreateClass', [ClassScheduleController::class, 'getAllPersonInStaffToCreateClass']);
         Route::post('deleteSelectedItem', [ClassScheduleController::class, 'deleteSelectedItem']);
         Route::get('getClassInDays',[ClassScheduleController::class, 'getClassInDays']);
-
 
 
         //staff
@@ -143,6 +145,8 @@ use App\Http\Controllers\API\product_invoice\product_invoiceController;
         Route::get('getMemberById/{id}',[membersController::class,'getMemberById']);
         Route::post('updateMember/{id}',[membersController::class,'update']);
         Route::get('deleteMember/{id}',[membersController::class,'destroy']);
+        Route::post('addMember',[membersController::class,'store']);
+
 
 
 

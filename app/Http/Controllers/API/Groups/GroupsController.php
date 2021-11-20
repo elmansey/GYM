@@ -24,7 +24,6 @@ class GroupsController extends Controller
 
         $validator = validator::make($request->all(), [
             'name' => 'required|max:25|unique:groups,name',
-            'TotalGroupMembers' => 'required|integer'
         ]);
 
         if ($validator->fails()) {
@@ -51,7 +50,6 @@ class GroupsController extends Controller
 
         $validator = validator::make($request->all(), [
             'name' => ['required', 'max:25', Rule::unique('groups')->ignore($id)],
-            'TotalGroupMembers' => 'required|integer'
 
         ]);
 

@@ -35,12 +35,12 @@ class MembershipsController extends Controller
         }
 
         $membership = $request->all();
-        $membership['Membership_private_Features'] = $request['Membership_private_Features'] == 'true' || true || 1 || '1'? true : false;
+        $membership['Membership_private_Features'] = $request['Membership_private_Features'] == 'true' ? true : false;
 
         $membership = Memberships::create($membership);
 
 
-        return  response()->json(['success' => true, 'membership' => MembershipsRersource::collection($membership) ], 200);
+        return  response()->json(['success' => true, 'membership' =>new  MembershipsRersource($membership) ], 200);
     }
 
     public function getMembershipsById($id)
@@ -67,7 +67,7 @@ class MembershipsController extends Controller
 
 
         $membership = Memberships::find($id);
-         $membership['Membership_private_Features'] = $request['Membership_private_Features'] == 'true' || true || 1 || '1'? true : false;
+        $request['Membership_private_Features'] = $request['Membership_private_Features'] == 'true' ? true : false;
         $membership->update($request->all());
 
 
@@ -81,4 +81,19 @@ class MembershipsController extends Controller
         $membership->delete();
         return response()->json(['success' => true], 200);
     }
+
+
+    public function IsAllowFuatureInThisMembership($id){
+
+        $membership = Memberships::where('id','=',$id)->first();
+
+
+        $allow =  $membership['Membership_private_Features'] == true ? true : false ;
+
+         return response()->json(['success' => true , 'memberShip' => $membership,'allow' => $allow],200);
+
+    }
+
+
+
 }

@@ -17,7 +17,7 @@ class classSceduleResource extends JsonResource
         return [
 
             'id'=> $this->id,
-            'className' => $this->className,
+            'group_relation' => $this->group_relation,
             'startingTime' => $this->startingTime,
             'endingTime'  =>$this->endingTime
 

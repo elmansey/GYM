@@ -78,8 +78,8 @@
                                         <thead slot="head">
                                             <th></th>
                                             <th sortKey="name">ID</th>
-                                            <th sortKey="name">class Name</th>
                                             <th sortKey="name">staff Name</th>
+                                            <th sortKey="name">group Name</th>
                                             <th sortKey="name">
                                                 starting Time
                                             </th>
@@ -113,10 +113,15 @@
                                                     />
                                                 </td>
                                                 <td>{{ ++index }}</td>
-                                                <td>{{ row.className }}</td>
                                                 <td>
                                                     {{
                                                         row.captain_relation
+                                                            .name
+                                                    }}
+                                                </td>
+                                                <td>
+                                                    {{
+                                                        row.group_relation
                                                             .name
                                                     }}
                                                 </td>

@@ -15,23 +15,18 @@ class groupsDefaultSeeder extends Seeder
 
         $group  = Groups::create([
             'name'=>'Cardio',
-            'TotalGroupMembers' => 5
         ]);
         $group  = Groups::create([
             'name'=>'Bodybuilding',
-            'TotalGroupMembers' => 5
         ]);
         $group  = Groups::create([
             'name'=>'WeightLoss',
-            'TotalGroupMembers' => 5
         ]);
         $group  = Groups::create([
             'name'=>'Yoga',
-            'TotalGroupMembers' => 5
         ]);
         $group  = Groups::create([
             'name'=>'GeneralTraining',
-            'TotalGroupMembers' => 5
         ]);
 
 

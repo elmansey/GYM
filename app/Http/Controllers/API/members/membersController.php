@@ -14,6 +14,7 @@ use phpDocumentor\Reflection\Types\Boolean;
 use App\Models\members_personal_information;
 use App\Models\User;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\RequiredIf;
 use QRCode;
 class membersController extends Controller
 {
@@ -31,6 +32,7 @@ class membersController extends Controller
     public function store(Request $request){
 
 
+                $allowed = $request['Membership_choose_allow_private_Features'] == 'true'  ? true  : false;
 
                 $validator = validator::make($request->all(),[
 
@@ -38,8 +40,8 @@ class membersController extends Controller
                     'name'          => 'required',
                     'gender'              => 'required',
                     'data_of_birth'       => 'required',
-                    'group_id'            => 'required',
-                    'class_id'            => 'required',
+                    'group_id'            => Rule::RequiredIf($allowed),
+                    'class_id'            => Rule::RequiredIf($allowed),
                     'user_name'           => 'required',
                     'password'            => 'required|same:confirm_password',
                     'confirm_password'    => 'required',
@@ -48,7 +50,8 @@ class membersController extends Controller
                     'address'	          => 'required',
                     'city'                => 'required',
                     'phone'        => 'required',
-                    'email'	              => 'required|email|unique:users,email'
+                    'email'	              => 'required|email|unique:users,email',
+                    'amount_paid'            => 'required'
 
 
                 ]);
@@ -144,6 +147,7 @@ class membersController extends Controller
                 $ExtraInformation->group_id         = $request->input('group_id');
                 $ExtraInformation->class_id         = $request->input('class_id');
                 $ExtraInformation->start_date       = $request->input('start_date');
+                $ExtraInformation->amount_paid       = $request->input('amount_paid');
                 $ExtraInformation->save();
 
 
@@ -189,6 +193,8 @@ class membersController extends Controller
     public function update(Request $request, $id){
 
 
+        $allowed = $request['Membership_choose_allow_private_Features'] == 'true' ? true  : false;
+
 
         if($request['password']){
 
@@ -207,8 +213,8 @@ class membersController extends Controller
             'name'          => 'required',
             'gender'              => 'required',
             'data_of_birth'       => 'required',
-            'group_id'            => 'required',
-            'class_id'            => 'required',
+            'group_id'            => Rule::RequiredIf($allowed),
+            'class_id'            => Rule::RequiredIf($allowed),
             'user_name'           =>  ['required',Rule::unique('users')->ignore($id)],
             'confirm_password'    => Rule::requiredIf($required),
             'membership_id'	      => 'required',
@@ -217,7 +223,9 @@ class membersController extends Controller
             'city'                => 'required',
             'phone'               => 'required',
             'email'	              => ['required',Rule::unique('users')->ignore($id)],
-            'role'                 => 'required'
+            'role'                 => 'required',
+            'amount_paid'            => 'required'
+
 
         ]);
 
@@ -297,6 +305,7 @@ class membersController extends Controller
         'group_id'   => $input['group_id'],
         'class_id'   => $input['class_id'],
         'start_date'   => $input['start_date'],
+        'amount_paid'   => $input['amount_paid'],
 
       ]);
 

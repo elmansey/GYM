@@ -27,7 +27,6 @@
 
                                         <th></th>
                                         <th sortKey="name">name</th>
-                                        <th sortKey="name" >TotalGroupMembers</th>
                                         <th sortKey="options" v-if="can('edit-group') || can('delete-group')">options</th>
                                         </thead>
 
@@ -35,7 +34,6 @@
                                         <tr v-for="(row, index) in displayData" :key="index">
                                             <td></td>
                                             <td>{{row.name}}</td>
-                                            <td>{{row.TotalGroupMembers}}</td>
                                             <td  v-if="can('edit-group') || can('delete-group')">
                                                 <div>
                                                     <b-button-group class="btn-container ">
@@ -97,7 +95,7 @@
 
                             <b-modal id="bv-modal-example" hide-footer>
                                 <template #modal-title>
-                                    Delete Role
+                                    Delete group
                                 </template>
                                 <div class="d-block text-center">
                                     <h5>are you sure to delete this group</h5>

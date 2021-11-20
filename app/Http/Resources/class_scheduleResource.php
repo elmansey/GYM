@@ -17,12 +17,14 @@ class class_scheduleResource extends JsonResource
         return [
 
             'id'	 => $this->id ,
-            'className'	 => $this->className ,
             'staffName'	 => $this->staffName ,
             'days'	 => $this->days ,
             'startingTime'	 => $this-> startingTime,
             'endingTime'	 => $this->endingTime ,
             'trainingLocation' => $this-> trainingLocation,
+            'group_relation' => $this-> group_relation,
+            'captain_relation' => $this-> captain_relation,
+            'group_id' => $this->group_id,
         ];
     }
 }

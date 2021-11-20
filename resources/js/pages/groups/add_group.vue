@@ -16,19 +16,14 @@
                                 <form @submit.prevent="handeleFormSubmit" id="form">
 
                                     <div class="row">
-                                        <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
+                                        <div class="mb-2 col-md-12 col-lg-12 col-sm-12">
                                             <div class="col-form-label">Group name</div>
 
                                             <input name="name" v-model="data.name" :class="['form-control',error.name ? 'is-invalid' : '']" />
                                             <small style="color: red"  v-if="error.name">{{error.name[0]}}</small>
                                         </div>
 
-                                        <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
-                                            <div class="col-form-label">Total Group Members</div>
 
-                                            <input name="name" v-model="data.TotalGroupMembers" :class="['form-control',error.TotalGroupMembers ? 'is-invalid' : '']" />
-                                            <small style="color: red"  v-if="error.TotalGroupMembers">{{error.TotalGroupMembers[0]}}</small>
-                                        </div>
 
                                     </div>
 
@@ -72,7 +67,6 @@ export default {
 
             data:{
                 name:'',
-                TotalGroupMembers:''
             },
 
             error:'',
@@ -99,7 +93,6 @@ export default {
             axios.get(`getGroupsById/${this.$route.params.groupId}`)
                 .then(res => {
                     this.data.name  = res.data.group.name
-                    this.data.TotalGroupMembers  = res.data.group.TotalGroupMembers
                     this.isLoading = true
                 })
                 .catch(err => {
@@ -110,7 +103,6 @@ export default {
         }else{
             this.edit = false
             this.data.name = ''
-            this.data.TotalGroupMembers = ''
             this.isLoading = true
         }
     },
@@ -118,15 +110,14 @@ export default {
 
     methods: {
 
-        async handeleFormSubmit(){
+         handeleFormSubmit(){
 
 
             if(this.edit){
 
 
                 let formData = new FormData()
-                await formData.append('name',this.data.name)
-                await formData.append('TotalGroupMembers',this.data.TotalGroupMembers)
+                 formData.append('name',this.data.name)
                 axios.post(`updateGroup/${this.$route.params.groupId}`,formData)
                     .then(res => {
 
@@ -156,8 +147,7 @@ export default {
 
 
                 let formData = new FormData()
-                await formData.append('name',this.data.name)
-                await formData.append('TotalGroupMembers',this.data.TotalGroupMembers)
+                 formData.append('name',this.data.name)
                 axios.post('addGroup',formData)
                     .then(res => {
 
@@ -194,7 +184,6 @@ export default {
 
             if(to.name == 'addGroup'){
                 this.data.name = ''
-                this.data.TotalGroupMembers = ''
                 this.edit = false
             }
         }

@@ -44,16 +44,6 @@
                                             </div>
 
 
-                                            <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
-                                                <div class="col-form-label"> Group</div>
-
-                                                <select name="group" :class="['form-control',error.group_id? 'is-invalid' : '']" v-model="memberData.group_id"  >
-                                                      <option :value="item.id" v-for="(item,index) in groups"  :key="index">
-                                                        {{ item.name }}
-                                                      </option>
-                                                </select>
-                                             <small style="color: red" v-if="error.group_id">{{ error.group_id[0] }}</small >
-                                            </div>
 
 
 
@@ -122,6 +112,114 @@
                                              <small style="color: red" v-if="error.RF_code">{{ error.RF_code[0] }}</small >
                                         </div>
 
+                                        <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
+                                            <div class="col-form-label">   start data  </div>
+
+                                            <input name="" type="date"    :class="['form-control',error.start_date? 'is-invalid' : '']"  v-model="memberData.start_data" />
+                                             <small style="color: red" v-if="error.start_date">{{ error.start_date[0] }}</small >
+                                        </div>
+
+                                        <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
+                                            <div class="col-form-label">   membership  </div>
+
+                                            <select name="membership"  @change="IsAllowFuatureInThisMembership" :class="['form-control',error.membership_id? 'is-invalid' : '']"  v-model="memberData.membership_id" >
+                                                <option  :value="item.id" v-for="(item,index) in memberships"  :key="index">
+                                                        {{ item.name }}
+                                                </option>
+                                            </select>
+                                             <small style="color: red" v-if="error.membership_id">{{ error.membership_id[0] }}</small >
+                                        </div>
+
+                                         <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
+                                            <div class="col-form-label">   amount paid  </div>
+
+                                            <input name="" readonly type="text"    :class="['form-control',error.amount_paid? 'is-invalid' : '']"  v-model="memberData.amount_paid" />
+                                             <small style="color: red" v-if="error.amount_paid">{{ error.amount_paid[0] }}</small >
+                                        </div>
+
+                                             <div class="mb-2 col-md-12 col-lg-12 col-sm-12" v-if="memberData.Membership_choose_allow_private_Features">
+                                                    <div class="col-form-label"> Group</div>
+
+                                                    <select name="group" @change="getAllClasseRelatedToThisGroup" :class="['form-control',error.group_id ? 'is-invalid' : '']" v-model="memberData.group_id"  >
+                                                        <option :value="item.id" v-for="(item,index) in groups"  :key="index">
+                                                            {{ item.name }}
+                                                        </option>
+                                                    </select>
+                                                <small style="color: red" v-if="error.group_id">{{ error.group_id[0] }}</small >
+                                            </div>
+
+                                            <div class="mb-2 col-md-12 col-lg- col-sm-12" v-if="memberData.Membership_choose_allow_private_Features && afterChooseGroup">
+                                                <div class="col-form-label">   class <i class="icofont icofont-ui-calendar"></i>  </div>
+                                                    <div class="card">
+                                                        <div class="card-body">
+
+                                                            <div class="datatable-vue m-0">
+                                                                        <div class="table-responsive vue-smart">
+                                                                            <b-table
+                                                                                id="tablePrint"
+                                                                                show-empty
+                                                                                stacked="md"
+                                                                                :items="classes"
+                                                                                :fields="tablefields"
+                                                                                :current-page="currentPage"
+                                                                                :per-page="perPage"
+                                                                            >
+
+                                                                             <template #cell(ID)="data">
+                                                                                {{ data.index + 1 }}
+                                                                            </template>
+
+
+                                                                             <template #cell(days)="data">
+                                                                                    <span  style="display: block;" class="badge badge-pill badge-dark" v-if="data.item.days.length == 7">
+                                                                                        every day
+                                                                                    </span>
+
+                                                                                    <span v-else style="display: block;margin:1px" class="badge badge-pill badge-dark" v-for="(val,ke) in data.item.days" :key="ke">
+                                                                                        {{ val.name}}
+                                                                                    </span>
+                                                                            </template>
+
+                                                                             <template #cell(startingTime)="data">
+                                                                                    <td><span class="badge badge-pill badge-primary">{{ data.item.startingTime}}</span></td>
+                                                                            </template>
+                                                                             <template #cell(endingTime)="data">
+                                                                                    <td><span class="badge badge-pill badge-primary">{{ data.item.endingTime}}</span></td>
+                                                                            </template>
+
+                                                                             <template #cell(countMember)="data">
+                                                                                    <td><span class="badge badge-pill badge-dark">{{ data.item.countMember}}</span></td>
+                                                                            </template>
+
+                                                                            <template #cell(choose)="data">
+                                                                                    <div class="radio radio-primary " style="cursor: pointer;">
+                                                                                    <b-form-radio name="radio1" style="cursor: pointer;" :value="data.item.id"  v-model="memberData.class_id"></b-form-radio>
+                                                                                </div>
+                                                                            </template>
+
+                                                                        </b-table>
+                                                                    </div>
+
+                                                                    <!-- <b-col md="6" class="my-1">
+                                                                            <b-pagination
+                                                                            v-model="currentPage"
+                                                                            :total-rows="totalRows"
+                                                                            :per-page="perPage"
+                                                                            class="my-0"
+                                                                            ></b-pagination>
+                                                                    </b-col> -->
+                                                            </div>
+
+                                                         </div>
+                                                    </div>
+
+                                                <small style="color: red" v-if="error.class_id">{{ error.class_id[0] }}</small >
+                                            </div>
+
+
+
+
+
                                         <div class="mb-2 col-md-12 col-lg-12 col-sm-12">
 
                                                 <div class="col-form-label"> Upload profile picture</div>
@@ -160,38 +258,17 @@
                                              <small style="color: red" v-if="error.source">{{ error.source[0] }}</small >
                                         </div>
 
-                                        <div class="mb-2 col-md-4 col-lg-4 col-sm-12">
-                                            <div class="col-form-label">   class  </div>
-
-                                            <select name="class" :class="['form-control',error.class_id? 'is-invalid' : '']"   v-model="memberData.class_id">
-                                                  <option :value="item.id" v-for="(item,index) in classes"  :key="index">
-                                                        {{ item.className }}
-                                                </option>
-                                            </select>
-                                             <small style="color: red" v-if="error.class_id">{{ error.class_id[0] }}</small >
-                                        </div>
-
-                                       <div class="mb-2 col-md-4 col-lg-4 col-sm-12">
-                                            <div class="col-form-label">   membership  </div>
-
-                                            <select name="membership"  :class="['form-control',error.membership_id? 'is-invalid' : '']"  v-model="memberData.membership_id" >
-                                                <option :value="item.id" v-for="(item,index) in memberships"  :key="index">
-                                                        {{ item.name }}
-                                                </option>
-                                            </select>
-                                             <small style="color: red" v-if="error.membership_id">{{ error.membership_id[0] }}</small >
-                                        </div>
-
-                                        <div class="mb-2 col-md-4 col-lg-4 col-sm-12">
-                                            <div class="col-form-label">   start data  </div>
-
-                                            <input name="" type="date"    :class="['form-control',error.start_date? 'is-invalid' : '']"  v-model="memberData.start_data" />
-                                             <small style="color: red" v-if="error.start_date">{{ error.start_date[0] }}</small >
-                                        </div>
 
 
 
-                                  <div class="mb-2  mt-4 col-md-12 col-lg-12 col-sm-12">
+
+
+
+
+
+
+
+                                     <div class="mb-2  mt-4 col-md-12 col-lg-12 col-sm-12">
 
                                            <div class="media">
                                                 <label class="col-form-label m-r-10">active</label>
@@ -201,7 +278,7 @@
                                                 </label>
                                             </div>
                                         </div>
-                                        </div>
+                                    </div>
 
 
 
@@ -249,6 +326,26 @@ import axios from 'axios'
 export default {
     data(){
         return{
+
+            totalRows: 1,
+            currentPage: 1,
+            perPage: 10,
+            tablefields: [
+
+                'ID',
+                { key: 'group_relation.name', label: 'group', sortable: false, },
+                'days',
+                'startingTime',
+                'endingTime',
+                'countMember',
+                { key: 'captain_relation.name', label: 'caption name', sortable: false, },
+                 'choose',
+            ],
+
+            filter: {
+                currentPage: 1,
+                totalPages: 0,
+            },
             memberData:{
 
                 name:'',
@@ -256,6 +353,7 @@ export default {
                 data_of_birth:'',
                 group_id:'',
 
+                amount_paid:'',
 
 
 
@@ -279,13 +377,14 @@ export default {
                 membership_id:'',
                 class_id:'',
                 start_data:'',
-                isActive:true
-
-
-
-
+                isActive:true,
+                Membership_choose_allow_private_Features:false,
 
             },
+
+            afterChooseGroup:false,
+
+            Membership_choose_allow_private_Features:false,
 
             isLoading:false,
 
@@ -355,6 +454,9 @@ export default {
                             this.memberData.start_data    = res.data.extraInformation.start_date
                             this.memberData.isActive    = res.data.loginInformation.isActive
                             this.memberData.RF_code    = res.data.loginInformation.RF_code
+                            this.memberData.amount_paid    = res.data.extraInformation.amount_paid
+                            this.memberData.Membership_choose_allow_private_Features    = this.IsAllowFuatureInThisMembership()
+
 
                             this.isLoading = true
 
@@ -423,6 +525,37 @@ export default {
 
     methods: {
 
+        getAllClasseRelatedToThisGroup()
+        {
+            axios.get(`getAllClasseRelatedToThisGroup/${this.memberData.group_id}`)
+            .then(res => {
+                console.log(res)
+            })
+            .catch(err => {
+                console.error(err);
+            })
+        },
+
+        IsAllowFuatureInThisMembership(){
+
+            axios.get(`IsAllowFuatureInThisMembership/${this.memberData.membership_id}`)
+            .then(res => {
+
+
+                if(res.data.success){
+                    this.memberData.Membership_choose_allow_private_Features = res.data.allow
+                    this.memberData.amount_paid = res.data.memberShip.Membership_price
+                }
+
+
+            })
+            .catch(err => {
+                console.error(err);
+            })
+
+
+        },
+
       handleFileAdded(file) {
 
 
@@ -448,7 +581,7 @@ export default {
 
 
                 let formData = new FormData()
-                formData.append('name'         , this.memberData.name)
+                formData.append('name'               , this.memberData.name)
                 formData.append('gender'             , this.memberData.gender)
                 formData.append('data_of_birth'      , this.memberData.data_of_birth)
                 formData.append('group_id'           , this.memberData.group_id)
@@ -468,6 +601,8 @@ export default {
                 formData.append('start_date'         , this.memberData.start_data)
                 formData.append('isActive'           , this.memberData.isActive)
                 formData.append('RF_code'           , this.memberData.RF_code)
+                formData.append('amount_paid'           , this.memberData.amount_paid)
+                formData.append('Membership_choose_allow_private_Features'           , this.memberData.Membership_choose_allow_private_Features)
 
 
 
@@ -549,6 +684,9 @@ export default {
                 formData.append('start_date'         , this.memberData.start_data)
                 formData.append('isActive'           , this.memberData.isActive)
                 formData.append('RF_code'           , this.memberData.RF_code)
+                formData.append('amount_paid'           , this.memberData.amount_paid)
+                formData.append('Membership_choose_allow_private_Features'           , this.memberData.Membership_choose_allow_private_Features)
+
 
 
 
@@ -638,6 +776,7 @@ export default {
                 this.memberData.start_data    = '',
                 this.memberData.isActive    = true
                 this.memberData.RF_code    = ''
+                this.memberData.amount_paid    = ''
                 this.isLoading = true
 
 

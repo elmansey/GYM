@@ -106,10 +106,10 @@
 
                             <b-modal id="bv-modal-example" hide-footer>
                                 <template #modal-title>
-                                    Delete Role
+                                    Delete membership
                                 </template>
                                 <div class="d-block text-center">
-                                    <h5>are you sure to delete this Role</h5>
+                                    <h5>are you sure to delete this membership</h5>
                                 </div>
                                 <b-button class="mt-3"  v-b-modal.modal-sm variant="default" @click="$bvModal.hide('bv-modal-example')">Cancel</b-button>
                                 <b-button class="mt-3"  v-b-modal.modal-sm variant="danger" @click="deleteMemberShip" >delete</b-button>
