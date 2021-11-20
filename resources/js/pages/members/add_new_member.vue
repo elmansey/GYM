@@ -39,8 +39,15 @@
                                             <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
                                                 <div class="col-form-label"> Date of birth </div>
 
-                                                <input name="phone" type="date"  :class="['form-control',error.data_of_birth? 'is-invalid' : '']"  v-model="memberData.data_of_birth"/>
+                                                <input name="phone"  @change="countMemberAge" type="date"  :class="['form-control',error.data_of_birth? 'is-invalid' : '']"  v-model="memberData.data_of_birth"/>
                                              <small style="color: red" v-if="error.data_of_birth">{{ error.data_of_birth[0] }}</small >
+                                            </div>
+
+                                            <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
+                                                <div class="col-form-label"> age </div>
+
+                                                <input name="phone" readonly type="text"  :class="['form-control',error.age? 'is-invalid' : '']"  v-model="memberData.age"/>
+                                             <small style="color: red" v-if="error.age">{{ error.age[0] }}</small >
                                             </div>
 
 
@@ -71,39 +78,9 @@
                                              <small style="color: red" v-if="error.phone">{{ error.phone[0] }}</small >
                                         </div>
 
-                                        <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
-                                            <div class="col-form-label">  email  </div>
-
-                                            <input name="" :class="['form-control',error.email? 'is-invalid' : '']"  v-model="memberData.email"  />
-                                             <small style="color: red" v-if="error.email">{{ error.email[0] }}</small >
-                                        </div>
 
 
 
-<!--                                        <div  class="mb-2 col-md-12 col-lg-12 col-sm-12">login information</div><br/>-->
-
-                                        <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
-                                            <div class="col-form-label">  user name  </div>
-
-                                            <input name="" :class="['form-control',error.user_name? 'is-invalid' : '']"  v-model="memberData.user_name"  />
-                                             <small style="color: red" v-if="error.user_name">{{ error.user_name[0] }}</small >
-                                        </div>
-
-
-
-                                        <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
-                                            <div class="col-form-label">  password  </div>
-
-                                            <input name="" :class="['form-control',error.password? 'is-invalid' : '']"  v-model="memberData.password" />
-                                             <small style="color: red" v-if="error.password">{{ error.password[0] }}</small >
-                                        </div>
-
-                                        <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
-                                            <div class="col-form-label"> Confirm password  </div>
-
-                                            <input name="" :class="['form-control',error.confirm_password? 'is-invalid' : '']" v-model="memberData.confirm_password"  />
-                                             <small style="color: red" v-if="error.confirm_password">{{ error.confirm_password[0] }}</small >
-                                        </div>
 
                                         <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
                                             <div class="col-form-label"> RF code  </div>
@@ -115,8 +92,26 @@
                                         <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
                                             <div class="col-form-label">   start data  </div>
 
-                                            <input name="" type="date"    :class="['form-control',error.start_date? 'is-invalid' : '']"  v-model="memberData.start_data" />
+                                            <input name="" type="date" @change="setExpireDate"   :class="['form-control',error.start_date? 'is-invalid' : '']"  v-model="memberData.start_data" />
                                              <small style="color: red" v-if="error.start_date">{{ error.start_date[0] }}</small >
+                                        </div>
+
+
+
+
+
+                                        <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
+                                            <div class="col-form-label">   period Expiry </div>
+
+                                            <input name="" type="text"  readonly  :class="['form-control',error.period_Expiry? 'is-invalid' : '']"  v-model="memberData.period_Expiry" />
+                                             <small style="color: red" v-if="error.period_Expiry">{{ error.period_Expiry[0] }}</small >
+                                        </div>
+
+                                        <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
+                                            <div class="col-form-label">   amount paid  </div>
+
+                                            <input name="" readonly type="text"    :class="['form-control',error.amount_paid? 'is-invalid' : '']"  v-model="memberData.amount_paid" />
+                                             <small style="color: red" v-if="error.amount_paid">{{ error.amount_paid[0] }}</small >
                                         </div>
 
                                         <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
@@ -130,12 +125,25 @@
                                              <small style="color: red" v-if="error.membership_id">{{ error.membership_id[0] }}</small >
                                         </div>
 
-                                         <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
-                                            <div class="col-form-label">   amount paid  </div>
 
-                                            <input name="" readonly type="text"    :class="['form-control',error.amount_paid? 'is-invalid' : '']"  v-model="memberData.amount_paid" />
-                                             <small style="color: red" v-if="error.amount_paid">{{ error.amount_paid[0] }}</small >
+                                    <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
+                                        <div class="col-form-label">   Subscription period  </div>
+
+                                        <input name="" readonly type="text"    :class="['form-control',error.Subscription_period? 'is-invalid' : '']"  v-model="memberData.Subscription_period" />
+                                            <small style="color: red" v-if="error.Subscription_period">{{ error.Subscription_period[0] }}</small >
+                                    </div>
+
+                                    <div class="mb-2  mt-4 col-md-6 col-lg-6 col-sm-12">
+
+                                           <div class="media">
+                                                <label class="col-form-label m-r-10">Subscription status</label>
+                                                <div class="media-body text-right icon-state">
+                                                <label class="switch">
+                                                    <input type="checkbox" checked="" v-model="memberData.Subscription_status"><span class="switch-state bg-primary"></span>
+                                                </label>
+                                            </div>
                                         </div>
+                                    </div>
 
                                              <div class="mb-2 col-md-12 col-lg-12 col-sm-12" v-if="memberData.Membership_choose_allow_private_Features">
                                                     <div class="col-form-label"> Group</div>
@@ -217,32 +225,25 @@
                                             </div>
 
 
+                                               <div class="mb-2 col-md-12 col-lg-12 col-sm-12">
+                                                  <div class="col-form-label"> Upload profile picture</div>
 
 
+                                                      <vue-dropzone
+                                                          name="file"
+                                                          ref="myVueDropzone"
+                                                          id="singledropzone"
+                                                          :options="singledropzoneOptions"
+                                                          :class="['dropzone digits',error.password ? 'is-invalid' : '']"
+                                                          @vdropzone-file-added="handleFileAdded"
+                                                          @vdropzone-removed-file="removed"
 
-                                        <div class="mb-2 col-md-12 col-lg-12 col-sm-12">
-
-                                                <div class="col-form-label"> Upload profile picture</div>
-
-                                                <vue-dropzone
-                                                    name="file"
-                                                    ref="myVueDropzone"
-                                                    id="singledropzone"
-                                                    :options="singledropzoneOptions"
-                                                    class="dropzone digits"
-                                                    @vdropzone-file-added="handleFileAdded"
-                                                    @vdropzone-removed-file="removed"
-
-                                                >
-                                                </vue-dropzone>
-
-                                             <small style="color: red" v-if="error.profile_picture">{{ error.profile_picture[0] }}</small >
-                                        </div>
+                                                      >
+                                                      </vue-dropzone>
 
 
-<!--                                        <div  class="mb-2 col-md-12 col-lg-12 col-sm-12">extra information</div><br/>-->
-
-
+                                                  <small style="color: red" v-if="error.profile_picture">{{ error.profile_picture[0]}}</small>
+                                              </div>
 
                                         <div class="mb-2 col-md-12 col-lg-12 col-sm-12">
                                             <div class="col-form-label">  interested area  </div>
@@ -257,14 +258,6 @@
                                             <textarea style="width: 100%" :class="['form-control',error.source? 'is-invalid' : '']"  v-model="memberData.source"></textarea>
                                              <small style="color: red" v-if="error.source">{{ error.source[0] }}</small >
                                         </div>
-
-
-
-
-
-
-
-
 
 
 
@@ -354,22 +347,19 @@ export default {
                 group_id:'',
 
                 amount_paid:'',
-
-
+                period_Expiry:'',
+                Subscription_status:true,
+                Subscription_period:'',
+                age:'',
 
 
                 address:'',
                 city:'',
                 phone:'',
-                email:'',
 
 
-                user_name:'',
-                password:'',
-                confirm_password:'',
-                profile_picture:[],
-                role:{'id':3,'name':'member'},
                 RF_code:'',
+                profile_picture:[],
 
 
                 interested_area:'',
@@ -417,10 +407,12 @@ export default {
 
         }
     },
-    components: {
+
+     components: {
         vueDropzone: vue2Dropzone
 
     },
+
 
     beforeCreate() {
 
@@ -438,24 +430,26 @@ export default {
                     .then(res => {
 
                         if(res.data.success){
-                             this.memberData.name     = res.data.personalInformation.name,
-                            this.memberData.gender         = res.data.personalInformation.gender,
-                            this.memberData.data_of_birth    = res.data.personalInformation.date_of_birth,
-                            this.memberData.address         = res.data.contentInformation.address,
-                            this.memberData.city          = res.data.contentInformation.city,
-                            this.memberData.phone       = res.data.loginInformation.phone,
-                            this.memberData.email         = res.data.loginInformation.email,
-                            this.memberData.user_name      = res.data.loginInformation.user_name,
+                            this.memberData.name     = res.data.extraInformation.name,
+                            this.memberData.gender         = res.data.extraInformation.gender,
+                            this.memberData.data_of_birth    = res.data.extraInformation.date_of_birth,
+                            this.memberData.address         = res.data.extraInformation.address,
+                            this.memberData.city          = res.data.extraInformation.city,
+                            this.memberData.phone       = res.data.extraInformation.phone,
                             this.memberData.interested_area    = res.data.extraInformation.interested_area,
                              this.memberData.group_id    = res.data.extraInformation.group_id,
                             this.memberData.source    = res.data.extraInformation.source,
                             this.memberData.membership_id    = res.data.extraInformation.membership_id,
                             this.memberData.class_id    = res.data.extraInformation.class_id,
                             this.memberData.start_data    = res.data.extraInformation.start_date
-                            this.memberData.isActive    = res.data.loginInformation.isActive
-                            this.memberData.RF_code    = res.data.loginInformation.RF_code
+                            this.memberData.isActive    = res.data.extraInformation.isActive
+                            this.memberData.RF_code    = res.data.extraInformation.RF_code
                             this.memberData.amount_paid    = res.data.extraInformation.amount_paid
+                            this.memberData.period_Expiry    = res.data.extraInformation.period_Expiry
+                            this.memberData.Subscription_status    = res.data.extraInformation.Subscription_status
+                            this.memberData.Subscription_period    = res.data.extraInformation.Subscription_period
                             this.memberData.Membership_choose_allow_private_Features    = this.IsAllowFuatureInThisMembership()
+                            this.getAllClasseRelatedToThisGroup()
 
 
                             this.isLoading = true
@@ -525,11 +519,41 @@ export default {
 
     methods: {
 
+
+        countMemberAge(){
+
+            var birthDate = new Date(this.memberData.data_of_birth)
+
+
+
+        var today = new Date();
+        var age = today.getFullYear() - birthDate.getFullYear();
+
+        this.memberData.age = age + '  year'
+
+        },
+        setExpireDate(){
+
+             this.memberships.map((item,index) => {
+                if(item.id == this.memberData.membership_id){
+
+                    var start_date = new Date(this.memberData.start_data);
+                    var Expiry_date = new Date(start_date.setDate(start_date.getDate() + Number(item.Membership_Period)))
+                    this.memberData.period_Expiry =  Expiry_date.getFullYear()+'-'+(Expiry_date.getMonth()+1)+'-'+Expiry_date.getDate();
+                    this.memberData.Subscription_period = item.Membership_Period + "  day"
+                }
+            })
+
+        },
+
         getAllClasseRelatedToThisGroup()
         {
             axios.get(`getAllClasseRelatedToThisGroup/${this.memberData.group_id}`)
             .then(res => {
-                console.log(res)
+
+                this.classes = res.data.classes
+                this.afterChooseGroup = true
+
             })
             .catch(err => {
                 console.error(err);
@@ -537,6 +561,10 @@ export default {
         },
 
         IsAllowFuatureInThisMembership(){
+
+
+                this.setExpireDate()
+
 
             axios.get(`IsAllowFuatureInThisMembership/${this.memberData.membership_id}`)
             .then(res => {
@@ -588,12 +616,6 @@ export default {
                 formData.append('address'            , this.memberData.address)
                 formData.append('city'               , this.memberData.city)
                 formData.append('phone'            , this.memberData.phone)
-                formData.append('email'               , this.memberData.email)
-                formData.append('user_name'           , this.memberData.user_name)
-                formData.append('password'           , this.memberData.password)
-                formData.append('role'               , JSON.stringify(this.memberData.role))
-                formData.append('confirm_password'   , this.memberData.confirm_password)
-                formData.append('profile_picture'    , this.memberData.profile_picture)
                 formData.append('interested_area'    , this.memberData.interested_area)
                 formData.append('source'             , this.memberData.source)
                 formData.append('membership_id'         , this.memberData.membership_id)
@@ -601,28 +623,19 @@ export default {
                 formData.append('start_date'         , this.memberData.start_data)
                 formData.append('isActive'           , this.memberData.isActive)
                 formData.append('RF_code'           , this.memberData.RF_code)
+                formData.append('profile_picture'           , this.memberData.profile_picture)
                 formData.append('amount_paid'           , this.memberData.amount_paid)
+                formData.append('period_Expiry'           , this.memberData.period_Expiry)
+                formData.append('Subscription_status'           , this.memberData.Subscription_status)
+                formData.append('Subscription_period'           , this.memberData.Subscription_period)
                 formData.append('Membership_choose_allow_private_Features'           , this.memberData.Membership_choose_allow_private_Features)
 
 
-
-
-
-
-
-
-                 let config = {
-                    headers: {
-                        "Content-Type":
-                            "multipart/form-data; charset=utf-8 ; boundary=" +
-                            Math.random()
-                                .toString()
-                                .substr(2)
+                let config = {
+                    headers:{
+                        "Content-Type":"multipart/form-data; charset=utf-8 ; boundary="+ Math.random().toString().substr(2),
                     }
-                };
-
-
-
+                }
 
                 axios.post('addMember',formData,config)
                 .then(res => {
@@ -671,12 +684,6 @@ export default {
                 formData.append('address'            , this.memberData.address)
                 formData.append('city'               , this.memberData.city)
                 formData.append('phone'             , this.memberData.phone)
-                formData.append('email'              , this.memberData.email)
-                formData.append('user_name'           , this.memberData.user_name)
-                formData.append('password'           , this.memberData.password)
-                formData.append('role'               , JSON.stringify(this.memberData.role))
-                formData.append('confirm_password'   , this.memberData.confirm_password)
-                formData.append('profile_picture'    , this.memberData.profile_picture)
                 formData.append('interested_area'    , this.memberData.interested_area)
                 formData.append('source'             , this.memberData.source)
                 formData.append('membership_id'         , this.memberData.membership_id)
@@ -684,29 +691,20 @@ export default {
                 formData.append('start_date'         , this.memberData.start_data)
                 formData.append('isActive'           , this.memberData.isActive)
                 formData.append('RF_code'           , this.memberData.RF_code)
+                formData.append('profile_picture'           , this.memberData.profile_picture)
                 formData.append('amount_paid'           , this.memberData.amount_paid)
+                formData.append('period_Expiry'           , this.memberData.period_Expiry)
+                formData.append('Subscription_status'           , this.memberData.Subscription_status)
+                formData.append('Subscription_period'           , this.memberData.Subscription_period)
                 formData.append('Membership_choose_allow_private_Features'           , this.memberData.Membership_choose_allow_private_Features)
 
 
 
-
-
-
-
-
-
-                 let config = {
-                    headers: {
-                        "Content-Type":
-                            "multipart/form-data; charset=utf-8 ; boundary=" +
-                            Math.random()
-                                .toString()
-                                .substr(2)
+                let config = {
+                    headers:{
+                        "Content-Type":"multipart/form-data; charset=utf-8 ; boundary="+ Math.random().toString().substr(2),
                     }
-                };
-
-
-
+                }
 
                 axios.post(`updateMember/${this.$route.params.memberId}`,formData,config)
                 .then(res => {
@@ -764,11 +762,6 @@ export default {
                 this.memberData.address    = '',
                 this.memberData.city    = '',
                 this.memberData.phoneNumber    = '',
-                this.memberData.email    = '',
-                this.memberData.user_name    = '',
-                this.memberData.password    = '',
-                this.memberData.confirm_password    = '',
-                this.memberData.profile_picture    = [],
                 this.memberData.interested_area    = '',
                 this.memberData.source    = '',
                 this.memberData.membership_id    = '',
@@ -776,7 +769,11 @@ export default {
                 this.memberData.start_data    = '',
                 this.memberData.isActive    = true
                 this.memberData.RF_code    = ''
-                this.memberData.amount_paid    = ''
+                this.memberData.RF_code    = ''
+                this.memberData.period_Expiry    = ''
+                this.memberData.Subscription_status    = ''
+                this.memberData.Subscription_period    = ''
+                this.memberData.profile_picture    = ''
                 this.isLoading = true
 
 

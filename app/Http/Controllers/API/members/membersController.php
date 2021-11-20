@@ -2,29 +2,27 @@
 
 namespace App\Http\Controllers\API\members;
 
+use QRCode;
+use App\Models\User;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\members_extra_information;
 use App\Models\members_login_information;
 use Illuminate\Support\Facades\Validator;
 use App\Models\members_contact_information;
-use phpDocumentor\Reflection\Types\Boolean;
-use App\Models\members_personal_information;
-use App\Models\User;
-use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\RequiredIf;
-use QRCode;
+use phpDocumentor\Reflection\Types\Boolean;
+
+
 class membersController extends Controller
 {
 
     public function index(){
 
-        $members   = User::role('member')->get();
-
-
-
+        $members   = members_extra_information::with('groupRelation','classRelation')->get();
         return response()->json(['success' => true , 'members' => $members],200);
     }
 
@@ -42,16 +40,20 @@ class membersController extends Controller
                     'data_of_birth'       => 'required',
                     'group_id'            => Rule::RequiredIf($allowed),
                     'class_id'            => Rule::RequiredIf($allowed),
-                    'user_name'           => 'required',
-                    'password'            => 'required|same:confirm_password',
-                    'confirm_password'    => 'required',
                     'membership_id'	      => 'required',
                     'start_date'	      => 'required',
                     'address'	          => 'required',
                     'city'                => 'required',
                     'phone'        => 'required',
-                    'email'	              => 'required|email|unique:users,email',
-                    'amount_paid'            => 'required'
+                    'amount_paid'            => 'required',
+                    'period_Expiry'            => 'required',
+                    'Subscription_status'            => 'required',
+                    'Subscription_period'        => 'required',
+                    'RF_code'            => 'required',
+                    'isActive'            => 'required',
+                    'profile_picture'            => 'required',
+
+
 
 
                 ]);
@@ -64,17 +66,15 @@ class membersController extends Controller
 
                 }
 
-
+            $request['isActive'] =  $request['isActive'] == 'true' || true || 1 || '1'? true : false;
 
 
               DB::beginTransaction();
 
                try{
 
-
-
-                $fileName = null;
-                if($request->hasFile('profile_picture')){
+                $fileName = '';
+                if($request->file('profile_picture')){
 
                     $file = $request->file('profile_picture');
                     $extension = $file->extension();
@@ -82,77 +82,42 @@ class membersController extends Controller
                     $fileName = md5(time().now().rand(1,10)).'.'.$extension;
 
                     $file->move(public_path('profile_pictures'),$fileName);
+                    $request['profile_picture'] = $fileName;
 
                 }
 
 
-               $request->role     = json_decode($request->role,true);
-
-
-
-                //login data
-                $LoginInformation                   = new  User();
-                $LoginInformation->name             = $request->input('name');
-                $LoginInformation->user_name        = $request->input('user_name');
-                $LoginInformation->password         = bcrypt($request->input('password'));
-                $LoginInformation->profile_picture  = $fileName;
-                $LoginInformation->isActive         =  $request->input('isActive') == 'true' || true || 1 || '1'? true : false;
-                $LoginInformation->email            = $request->input('email');
-                $LoginInformation->phone            = $request->input('phone');
-                $LoginInformation->RF_code          = $request->input('RF_code');
-
-                $LoginInformation->save();
-
-                $role  = $request->role;
-                $LoginInformation->assignRole($role);
-
-                $dataQR =  $LoginInformation['Personal_uuid'];
-                $QRName = 'profile_QR/'.md5($LoginInformation['Personal_uuid']) . '.png';
-                $qr =  QRCode::text($dataQR)->setOutfile(public_path($QRName))->png();
-                $update = User::find($LoginInformation->id);
-                $update->update(['qr_code' =>  $QRName]);
-
-
-
-                $MemberId = $LoginInformation->id;
-
-
-
-                  // personal data
-                $PersonalInformation                   = new  members_personal_information();
-                $PersonalInformation->name             = $request->input('name');
-                $PersonalInformation->member_id        = $MemberId;
-                $PersonalInformation->gender           = $request->input('gender');
-                $PersonalInformation->date_of_birth    = $request->input('data_of_birth');
-                $PersonalInformation->save();
-
-
-
-
-
-                // contact data
-                $ContactInformation                   = new  members_contact_information();
-                $ContactInformation->member_id        = $MemberId;
-                $ContactInformation->address          = $request->input('address');
-                $ContactInformation->city             = $request->input('city');
-                $ContactInformation->save();
-
-
                 // extra data
                 $ExtraInformation                   = new  members_extra_information();
-                $ExtraInformation->member_id        = $MemberId;
                 $ExtraInformation->interested_area  = $request->input('interested_area');
                 $ExtraInformation->source           = $request->input('source');
                 $ExtraInformation->membership_id    = $request->input('membership_id');
                 $ExtraInformation->group_id         = $request->input('group_id');
                 $ExtraInformation->class_id         = $request->input('class_id');
+                $ExtraInformation->name         = $request->input('name');
                 $ExtraInformation->start_date       = $request->input('start_date');
                 $ExtraInformation->amount_paid       = $request->input('amount_paid');
+                $ExtraInformation->period_Expiry       = $request->input('period_Expiry');
+                $ExtraInformation->Subscription_status      = $request->input('Subscription_status');
+                $ExtraInformation->Subscription_period      = $request->input('Subscription_period');
+                $ExtraInformation->gender           = $request->input('gender');
+                $ExtraInformation->date_of_birth    = $request->input('data_of_birth');
+                $ExtraInformation->address          = $request->input('address');
+                $ExtraInformation->city             = $request->input('city');
+                $ExtraInformation->RF_code             = $request->input('RF_code');
+                $ExtraInformation->isActive             = $request->input('isActive');
+                $ExtraInformation->profile_picture             = $fileName ? $fileName : null ;
+                $ExtraInformation->phone             = $request->input('phone');
                 $ExtraInformation->save();
 
-
-
-
+                $id = $ExtraInformation->id;
+                $dataQR =  $ExtraInformation['Personal_uuid'];
+                $QRName = 'profile_QR/'.md5($ExtraInformation['Personal_uuid']) . '.png';
+                $qr =  QRCode::text($dataQR)->setOutfile(public_path($QRName))->png();
+                $update = members_extra_information::where('id',$id)->first();
+                $update->update(
+                    ['qr_code' =>  $QRName ]
+                );
 
 
 
@@ -175,18 +140,14 @@ class membersController extends Controller
 
     public function getMemberById($id){
 
-        $personalInformation   = members_personal_information::where('member_id','=',$id)->first();
-        $loginInformation      = User::where('id','=',$id)->first();
-        $contentInformation    = members_contact_information::where('member_id','=',$id)->first();
-        $extraInformation      = members_extra_information::where('member_id','=',$id)->first();
+
+        $extraInformation      = members_extra_information::where('id','=',$id)->first();
 
 
         return response()->json([
              'success'  => true  ,
-             'personalInformation' => $personalInformation,
-             'loginInformation'    => $loginInformation  ,
-             'contentInformation'  => $contentInformation ,
-             'extraInformation'    => $extraInformation]);
+             'extraInformation'    => $extraInformation
+            ]);
     }
 
 
@@ -215,16 +176,21 @@ class membersController extends Controller
             'data_of_birth'       => 'required',
             'group_id'            => Rule::RequiredIf($allowed),
             'class_id'            => Rule::RequiredIf($allowed),
-            'user_name'           =>  ['required',Rule::unique('users')->ignore($id)],
-            'confirm_password'    => Rule::requiredIf($required),
             'membership_id'	      => 'required',
             'start_date'	      => 'required',
             'address'	          => 'required',
             'city'                => 'required',
             'phone'               => 'required',
-            'email'	              => ['required',Rule::unique('users')->ignore($id)],
-            'role'                 => 'required',
-            'amount_paid'            => 'required'
+            'amount_paid'            => 'required',
+            'period_Expiry'            => 'required',
+            'Subscription_status'        => 'required',
+            'Subscription_period'        => 'required',
+            'isActive'   => 'required',
+            'phone'  => 'required',
+            'RF_code'            => 'required',
+            'isActive'            => 'required',
+            'profile_picture'            => 'required',
+
 
 
         ]);
@@ -246,8 +212,18 @@ class membersController extends Controller
 
 
 
-        $fileName = null;
-        if($request->hasFile('profile_picture')){
+        if($request->file('profile_picture')){
+
+            $oldImg = members_extra_information::where('id','=',$id)->pluck('profile_picture');
+
+            $path =  public_path('profile_pictures\\'.$oldImg[0]);
+            if($oldImg[0]){
+                if(file_exists($path)){
+
+                    unlink($path);
+                }
+            }
+
 
             $file = $request->file('profile_picture');
             $extension = $file->extension();
@@ -256,73 +232,18 @@ class membersController extends Controller
 
             $file->move(public_path('profile_pictures'),$fileName);
 
-            $input['profile_picture'] = $fileName;
+            $input['profile_picture'] = $input['profile_picture'] ? $fileName : null;
 
         }else{
-            $input =  Arr::except($input,array('profile_picture'));
+           $input =  Arr::except($input,array('profile_picture'));
         }
 
-
-
-        if(!empty($input['password'])){
-
-            $input['password'] = bcrypt($input['password']);
-
-        }else{
-
-        $input =  Arr::except($input,array('password'));
-        }
-
-
-
-
-
-        // personal data
-      $PersonalInformation              = members_personal_information::where('id','=',$id);
-      $PersonalInformation ->update([
-
-        'name'   => $input['name'],
-        'gender'   => $input['gender'],
-        'date_of_birth'   => $input['data_of_birth'],
-      ]);
-
-      // contact data
-      $ContactInformation       =  members_contact_information::where('member_id','=',$id)->first();
-      $ContactInformation->update([
-        'address' => $input['address'],
-        'city' => $input['city'],
-      ]);
-
-
+        $input['isActive'] =  $input['isActive'] == 'true' || true || 1 || '1'? true : false;
 
       // extra data
-      $ExtraInformation          =  members_extra_information::where('member_id','=',$id)->first();
-      $ExtraInformation->update([
+      $ExtraInformation          =  members_extra_information::where('id','=',$id)->first();
 
-        'interested_area'   => $input['interested_area'],
-        'source'   => $input['source'],
-        'membership_id'   => $input['membership_id'],
-        'group_id'   => $input['group_id'],
-        'class_id'   => $input['class_id'],
-        'start_date'   => $input['start_date'],
-        'amount_paid'   => $input['amount_paid'],
-
-      ]);
-
-
-
-
-      $input['isActive'] =  $input['isActive'] == 'true' || true || 1 || '1'? true : false;
-
-      //login data
-      $LoginInformation                   = User::where('id','=',$id)->first();
-      $LoginInformation->update($input);
-
-      DB::table('model_has_roles')->where('model_id','=',$id)->delete();
-
-
-
-      $LoginInformation->assignRole(json_decode($input['role'],true));
+      $ExtraInformation->update($input);
 
 
         DB::commit();
@@ -341,18 +262,7 @@ class membersController extends Controller
 
     public function destroy($id){
 
-        $oldImg = User::where('id','=',$id)->pluck('profile_picture');
-
-        $path =  public_path('profile_pictures\\'.$oldImg[0]);
-
-        if($oldImg[0]){
-            if(file_exists($path)){
-
-                unlink($path);
-            }
-        }
-
-        $member = User::find($id);
+        $member = members_extra_information::find($id);
         $member->delete();
 
         return response()->json(['success' => true,'message' => 'member delete successfully']);

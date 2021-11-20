@@ -14,60 +14,53 @@
                             <div class="datatable-vue m-0">
 
 
-                                <div class="table-responsive vue-smart">
-                                    <v-table
-                                        :data="members"
-                                        class="table"
-                                        :currentPage.sync="filter.currentPage"
-                                        :pageSize="5"
-                                        @totalPagesChanged="filter.totalPages = $event"
-
-                                    >
-                                        <thead slot="head">
-
-                                        <th>ID</th>
-                                        <th sortKey="name">Profile Picture</th>
-                                        <th sortKey="name">Personal_uuid</th>
-                                        <th sortKey="name"> name</th>
-                                        <th sortKey="name" >email</th>
-                                        <th sortKey="name" >user name</th>
-                                        <th sortKey="name" >active</th>
-                                        <th sortKey="options">actions</th>
-                                        </thead>
-
-                                        <tbody slot="body" slot-scope="{ displayData }">
-                                        <tr v-for="(row, index) in displayData" :key="index">
-                                            <td>{{++index}}</td>
+                                      <div  class="datatable-vue m-0">
 
 
-                                            <td><img
-                                            style="width: 40px;height: 40px;border-radius: 50%;"
+                                                <div class="table-responsive vue-smart">
+                                                    <b-table
+                                                        id="tablePrint"
+                                                        show-empty
+                                                        stacked="md"
+                                                        :items="members"
+                                                        :fields="tablefields1"
+                                                        :current-page="currentPage"
+                                                        :per-page="perPage"
+                                                    >
 
 
-                                            :src="row.profile_picture ? '../../profile_pictures/'+row.profile_picture :
-                                             '../../profile_pictures/DefaultProfile.jpg'"/>
-                                              </td>
+                                                    <template #cell(id)="data">
+                                                            {{ ++data.index }}
+                                                    </template>
+
+                                                    <template #cell(profile_picture)="data">
+                                                           <img
+                                                                style="width: 40px;height: 40px;border-radius: 50%;"
 
 
-                                            <td>{{ row.Personal_uuid}}</td>
-                                            <td>{{ row.name }} </td>
-                                            <td>{{ row.email}}</td>
-                                            <td>{{ row.user_name}}</td>
+                                                                :src="data.item.profile_picture ? '../../profile_pictures/'+data.item.profile_picture :
+                                                                '../../profile_pictures/DefaultProfile.jpg'"/>
+                                                    </template>
+                                                    <template #cell(Personal_uuid)="data">
+                                                               <router-link  v-if="can('show-member-details')" :to="{name : 'showMemberDetails', params:{memberBaseId : data.item.id}}">
+                                                                    {{ data.item.Personal_uuid}}
+                                                                </router-link>
 
-                                            <td>
-                                                <span class="badge badge-success" v-if="row.isActive">
-                                                        active
-                                                </span>
-                                                <span class="badge badge-danger" v-if="!row.isActive">
-                                                        not Active
-                                                </span>
-                                            </td>
-                                            <td>
-                                                <div>
+                                                                <div v-else>
+                                                                    {{ data.item.Personal_uuid}}
+                                                                </div>
+                                                    </template>
+                                                    <template #cell(qr_code)="data">
+
+                                                                <img :src="'../../'+ data.item.qr_code" style="width:60px;height:60px"/>
+                                                    </template>
+                                                    <template #cell(action)="data">
+
+                                                                      <div>
                                                     <b-button-group class="btn-group-pill" size="sm">
 
                                                          <b-button variant="outline-dark">
-                                                            <router-link  :to="{name: 'editMember', params: {memberId : row.id}}"  v-if="can('edit-member-from-team')">
+                                                            <router-link  :to="{name: 'editMember', params: {memberId : data.item.id}}"  v-if="can('edit-member-from-team')">
                                                                edit
                                                             </router-link>
                                                         </b-button>
@@ -76,7 +69,7 @@
 
                                                             variant="outline-danger"
 
-                                                            @click="DeleteAdminModal(row.id,index)"
+                                                            @click="DeleteAdminModal(data.item.id,data.index)"
                                                             v-if="can('delete-member-from-team')"
                                                         >
 
@@ -84,19 +77,23 @@
                                                         </b-button>
                                                     </b-button-group>
                                                 </div>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </v-table>
-                                </div>
+                                                    </template>
 
-                                <div >
-                                    <smart-pagination
 
-                                        :currentPage.sync="filter.currentPage"
-                                        :totalPages="filter.totalPages"
-                                    />
-                                </div>
+                                                </b-table>
+                                            </div>
+
+                                            <b-col md="6" class="my-1">
+                                                    <b-pagination
+                                                    v-model="currentPage"
+                                                    :total-rows="totalRows"
+                                                    :per-page="perPage"
+                                                    class="my-0"
+                                                    ></b-pagination>
+                                            </b-col>
+                                    </div>
+
+
 
 
                             </div>
@@ -143,6 +140,25 @@ import axios from "axios";
 export default {
     data() {
         return {
+
+
+            totalRows: 1,
+            currentPage: 1,
+            perPage: 5,
+            tablefields1: [
+                'id',
+                'profile_picture',
+                'Personal_uuid',
+                { key: 'name', label: 'name', sortable: false, },
+                { key: 'group_relation.name', label: 'group', sortable: false, },
+                { key: 'phone', label: 'phone', sortable: false, },
+                { key: 'phone', label: 'phone', sortable: false, },
+                'qr_code',
+                { key: 'RF_code', label: 'RF code', sortable: false, },
+                'action',
+
+
+            ],
             members: [],
             filter: {
                 currentPage: 1,
@@ -165,7 +181,11 @@ export default {
 
             if(res.data.success == true){
 
-                this.members = res.data.members
+                res.data.members.map((item,index) => {
+
+                    this.members.push(item)
+                })
+                this.totalRows = this.members.length
                 this.isLoadig = true
 
             }
@@ -206,6 +226,8 @@ export default {
                     this.id = ''
                     this.keyes = ''
                     this.$bvModal.hide('bv-modal-example')
+                    this.totalRows = this.members.length
+
 
                     Toast.fire({
                         icon: 'success',
@@ -217,7 +239,18 @@ export default {
 
             })
 
+        },
+
+
+
+    },
+
+    watch: {
+
+        memersRow:function(members){
+            this.totalRows = members.length
         }
+
     }
 }
 

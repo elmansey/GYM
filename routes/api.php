@@ -100,7 +100,6 @@ use App\Http\Controllers\API\product_invoice\product_invoiceController;
         Route::get('deleteMemberships/{id}', [MembershipsController::class, 'destroy']);
         Route::get('getClassToSelect',[ClassScheduleController::class, 'getClassToSelect']);
         Route::get('IsAllowFuatureInThisMembership/{id}',[MembershipsController::class, 'IsAllowFuatureInThisMembership']);
-        Route::get('getAllClasseRelatedToThisGroup/{id}',[MembershipsController::class, 'getAllClasseRelatedToThisGroup']);
 
 
         //groups
@@ -124,6 +123,7 @@ use App\Http\Controllers\API\product_invoice\product_invoiceController;
         Route::get('getAllPersonInStaffToCreateClass', [ClassScheduleController::class, 'getAllPersonInStaffToCreateClass']);
         Route::post('deleteSelectedItem', [ClassScheduleController::class, 'deleteSelectedItem']);
         Route::get('getClassInDays',[ClassScheduleController::class, 'getClassInDays']);
+        Route::get('getAllClasseRelatedToThisGroup/{id}',[ClassScheduleController::class, 'getAllClasseRelatedToThisGroup']);
 
 
         //staff

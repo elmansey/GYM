@@ -266,6 +266,23 @@ class ClassScheduleController extends Controller
 
 
 
+    public function getAllClasseRelatedToThisGroup($id){
+
+
+        $classes = ClassSchedule::where('group_id','=',$id)->get();
+
+
+        foreach($classes as $k => $v){
+
+            $v['countMember'] = count( members_extra_information::where('class_id','=',$v['id'])->get());
+        }
+
+
+
+
+        return  response()->json(['success'=>true,'classes'=> class_scheduleResourceToGetCountMember::collection($classes)]);
+
+    }
 
 
 }

@@ -25,9 +25,7 @@ class default_role_Seeder extends Seeder
         $permissions = DB::table('permissions')->whereIn('id',[ 1,39,40,41])->pluck('id','id')->all();
         $role->syncPermissions($permissions);
 
-         $role = Role::create([ 'name'=> 'member'  ]);
-        $permissions = DB::table('permissions')->whereIn('id',[ 1,39,41])->pluck('id','id')->all();
-        $role->syncPermissions($permissions);
+
 
     }
 }

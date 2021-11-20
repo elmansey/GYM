@@ -108,6 +108,17 @@ const routes = [
                 component: require('@/pages/members/add_new_member').default,
 
             },
+
+            {
+
+                path: 'showMemberDetails/:memberBaseId',
+                name: 'showMemberDetails',
+                component: require('@/pages/members/showMemberDetails').default,
+
+            },
+
+
+
             {
 
                 path: 'staffList',

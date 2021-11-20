@@ -37,7 +37,7 @@
                                         <tr v-for="(row, index) in displayData" :key="index">
                                             <td></td>
                                             <td>{{row.name}}</td>
-                                            <td>{{row.Membership_Period}}</td>
+                                            <td>{{row.Membership_Period +  '  days'}} </td>
                                             <td v-if="row.Membership_private_Features">  <i class="icofont icofont-ui-check"></i> </td>
                                             <td v-if="!row.Membership_private_Features">  <i class="icofont icofont-ui-close"></i> </td>
                                             <td>{{row.Membership_price}}</td>

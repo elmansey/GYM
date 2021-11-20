@@ -22,7 +22,7 @@ class membershipsDefaultSeeder extends Seeder
 
         $memberShips  = Memberships::create([
            'name'=>'golden',
-            'Membership_Period' => '1month',
+            'Membership_Period' => '30',
             'Membership_price'  => 2000,
             'Membership_private_Features' => true
 
@@ -30,7 +30,7 @@ class membershipsDefaultSeeder extends Seeder
 
         $memberShips  = Memberships::create([
             'name'=>'Normal',
-            'Membership_Period' => '1week',
+            'Membership_Period' => '30',
             'Membership_price'  =>  800,
             'Membership_private_Features' => false
 

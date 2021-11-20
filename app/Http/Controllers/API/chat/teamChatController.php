@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\API\chat;
 
-'Africa/Cairo'
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\staff;
 use App\Events\NewMessage;
