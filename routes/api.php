@@ -142,10 +142,13 @@ use App\Http\Controllers\API\product_invoice\product_invoiceController;
 
         //members should auth
         Route::get('members',[membersController::class,'index']);
+        Route::get('freezeAccountOnly',[membersController::class,'freezeAccountOnly']);
         Route::get('getMemberById/{id}',[membersController::class,'getMemberById']);
         Route::post('updateMember/{id}',[membersController::class,'update']);
         Route::get('deleteMember/{id}',[membersController::class,'destroy']);
         Route::post('addMember',[membersController::class,'store']);
+        Route::get('freezeThisAccount/{id}',[membersController::class,'freezeThisAccount']);
+        Route::get('unFreezeThisAccount/{id}',[membersController::class,'unFreezeThisAccount']);
 
 
 

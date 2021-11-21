@@ -40,7 +40,7 @@
                                                 <div class="col-form-label"> Date of birth </div>
 
                                                 <input name="phone"  @change="countMemberAge" type="date"  :class="['form-control',error.data_of_birth? 'is-invalid' : '']"  v-model="memberData.data_of_birth"/>
-                                             <small style="color: red" v-if="error.data_of_birth">{{ error.data_of_birth[0] }}</small >
+                                             <small style="color: red" v-if="error.date_of_birth">{{ error.date_of_birth[0] }}</small >
                                             </div>
 
                                             <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
@@ -450,6 +450,7 @@ export default {
                             this.memberData.Subscription_period    = res.data.extraInformation.Subscription_period
                             this.memberData.Membership_choose_allow_private_Features    = this.IsAllowFuatureInThisMembership()
                             this.getAllClasseRelatedToThisGroup()
+                            this.countMemberAge()
 
 
                             this.isLoading = true
@@ -522,10 +523,7 @@ export default {
 
         countMemberAge(){
 
-            var birthDate = new Date(this.memberData.data_of_birth)
-
-
-
+        var birthDate = new Date(this.memberData.data_of_birth)
         var today = new Date();
         var age = today.getFullYear() - birthDate.getFullYear();
 
@@ -611,7 +609,7 @@ export default {
                 let formData = new FormData()
                 formData.append('name'               , this.memberData.name)
                 formData.append('gender'             , this.memberData.gender)
-                formData.append('data_of_birth'      , this.memberData.data_of_birth)
+                formData.append('date_of_birth'      , this.memberData.data_of_birth)
                 formData.append('group_id'           , this.memberData.group_id)
                 formData.append('address'            , this.memberData.address)
                 formData.append('city'               , this.memberData.city)
@@ -648,7 +646,25 @@ export default {
                     if(res.data.success){
 
                         this.error = []
-                        this.memberData = []
+                         this.memberData.name    = '',
+                        this.memberData.gender    = '',
+                        this.memberData.data_of_birth    = '',
+                        this.memberData.group_id    = '',
+                        this.memberData.address    = '',
+                        this.memberData.city    = '',
+                        this.memberData.phoneNumber    = '',
+                        this.memberData.interested_area    = '',
+                        this.memberData.source    = '',
+                        this.memberData.membership_id    = '',
+                        this.memberData.class_id    = '',
+                        this.memberData.start_data    = '',
+                        this.memberData.isActive    = true
+                        this.memberData.RF_code    = ''
+                        this.memberData.RF_code    = ''
+                        this.memberData.period_Expiry    = ''
+                        this.memberData.Subscription_status    = ''
+                        this.memberData.Subscription_period    = ''
+                        this.memberData.profile_picture    = []
                            Toast.fire({
                             icon: 'success',
                             title: 'new member added successfully'
@@ -679,7 +695,7 @@ export default {
                 let formData = new FormData()
                 formData.append('name'         , this.memberData.name)
                 formData.append('gender'             , this.memberData.gender)
-                formData.append('data_of_birth'      , this.memberData.data_of_birth)
+                formData.append('date_of_birth'      , this.memberData.data_of_birth)
                 formData.append('group_id'           , this.memberData.group_id)
                 formData.append('address'            , this.memberData.address)
                 formData.append('city'               , this.memberData.city)
@@ -717,7 +733,25 @@ export default {
                     if(res.data.success){
 
                         this.error = []
-                        this.memberData = []
+                          this.memberData.name    = '',
+                        this.memberData.gender    = '',
+                        this.memberData.data_of_birth    = '',
+                        this.memberData.group_id    = '',
+                        this.memberData.address    = '',
+                        this.memberData.city    = '',
+                        this.memberData.phoneNumber    = '',
+                        this.memberData.interested_area    = '',
+                        this.memberData.source    = '',
+                        this.memberData.membership_id    = '',
+                        this.memberData.class_id    = '',
+                        this.memberData.start_data    = '',
+                        this.memberData.isActive    = true
+                        this.memberData.RF_code    = ''
+                        this.memberData.RF_code    = ''
+                        this.memberData.period_Expiry    = ''
+                        this.memberData.Subscription_status    = ''
+                        this.memberData.Subscription_period    = ''
+                        this.memberData.profile_picture    = []
                            Toast.fire({
                             icon: 'success',
                             title: 'member updated successfully'
@@ -773,7 +807,7 @@ export default {
                 this.memberData.period_Expiry    = ''
                 this.memberData.Subscription_status    = ''
                 this.memberData.Subscription_period    = ''
-                this.memberData.profile_picture    = ''
+                this.memberData.profile_picture    = []
                 this.isLoading = true
 
 

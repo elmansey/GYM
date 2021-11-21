@@ -35,8 +35,14 @@ class CreateMembersExtraInformationsTable extends Migration
             $table->date('date_of_birth');
             $table->string('address');
             $table->string('city');
-            $table->string('profile_picture');
+            $table->string('profile_picture')->nullable();
             $table->string('source')->nullable();
+            $table->string('Subscription_renewal')->nullable();
+            $table->string('Account_freeze')->nullable();
+            $table->string('unFreeze_in')->nullable();
+            $table->string('days_left_before_freezing')->nullable();
+            $table->string('status')->nullable();
+            $table->json('log')->nullable();
             $table->timestamps();
         });
     }

@@ -6,6 +6,11 @@
     <div v-if="isLoadig">
 
         <Breadcrumbs main="Dashboard" title="members list" />
+        <button class="btn btn-primary btn-sm" style="margin-left: 30px;margin-bottom: 15px;"><i  class="icofont icofont-snow-alt"></i>
+            <router-link style="color:#fff" :to="{name : 'freezeMemberAccountList'}">
+                    freeze list
+            </router-link>
+        </button>
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
@@ -41,43 +46,53 @@
                                                                 :src="data.item.profile_picture ? '../../profile_pictures/'+data.item.profile_picture :
                                                                 '../../profile_pictures/DefaultProfile.jpg'"/>
                                                     </template>
-                                                    <template #cell(Personal_uuid)="data">
+                                                    <template #cell(name)="data">
                                                                <router-link  v-if="can('show-member-details')" :to="{name : 'showMemberDetails', params:{memberBaseId : data.item.id}}">
-                                                                    {{ data.item.Personal_uuid}}
+                                                                    {{ data.item.name}}
                                                                 </router-link>
 
                                                                 <div v-else>
-                                                                    {{ data.item.Personal_uuid}}
+                                                                    {{ data.item.name}}
                                                                 </div>
                                                     </template>
                                                     <template #cell(qr_code)="data">
 
                                                                 <img :src="'../../'+ data.item.qr_code" style="width:60px;height:60px"/>
                                                     </template>
+
+                                                    <template #cell(status)="data">
+
+                                                                <span v-if="data.item.status" class="badge badge-pill badge-success"> {{ data.item.status }} </span>
+                                                    </template>
+
                                                     <template #cell(action)="data">
 
-                                                                      <div>
-                                                    <b-button-group class="btn-group-pill" size="sm">
 
-                                                         <b-button variant="outline-dark">
-                                                            <router-link  :to="{name: 'editMember', params: {memberId : data.item.id}}"  v-if="can('edit-member-from-team')">
-                                                               edit
-                                                            </router-link>
-                                                        </b-button>
+                                                                <b-dropdown text="" menu-class="dropdown-content" size="xs" variant="default">
+                                                                    <b-dropdown-item @click.prevent="freezeAccountHandel(data.item.id,data.index)">
+                                                                        <feather  style="width:15px" type="zap" ></feather> freeze account
 
-                                                        <b-button
+                                                                    </b-dropdown-item>
+                                                                    <b-dropdown-item >
+                                                                          <router-link  :to="{name: 'editMember', params: {memberId : data.item.id}}"  v-if="can('edit-member-from-team')">
+                                                                            <feather style="width:15px" type="edit-2"></feather> edit
+                                                                            </router-link>
+                                                                    </b-dropdown-item>
+                                                                    <b-dropdown-item
+                                                                    @click="DeleteAdminModal(data.item.id,data.index)"  v-if="can('delete-member-from-team')"
+                                                                    ><feather style="width:15px" type="trash"></feather>dalete</b-dropdown-item>
 
-                                                            variant="outline-danger"
+                                                                </b-dropdown>
 
-                                                            @click="DeleteAdminModal(data.item.id,data.index)"
-                                                            v-if="can('delete-member-from-team')"
-                                                        >
 
-                                                           delete
-                                                        </b-button>
-                                                    </b-button-group>
-                                                </div>
-                                                    </template>
+
+
+
+
+
+                                                </template>
+
+
 
 
                                                 </b-table>
@@ -106,10 +121,23 @@
                                    Delete  member
                                 </template>
                                 <div class="d-block text-center">
+
                                     <h5>are you sure to delete this member</h5>
                                 </div>
                                 <b-button class="mt-3"  v-b-modal.modal-sm variant="default" @click="$bvModal.hide('bv-modal-example')">Cancel</b-button>
                                 <b-button class="mt-3"  v-b-modal.modal-sm variant="danger"  @click.prevent="deletemember">delete</b-button>
+                            </b-modal>
+
+                            <b-modal id="freeze" hide-footer>
+                                <template #modal-title>
+                                   freeze  account
+                                </template>
+                                <div class="d-block text-center">
+
+                                    <h5> <i  class="icofont icofont-snow-alt"></i>    are you sure to freeze this account</h5>
+                                </div>
+                                <b-button class="mt-3"  v-b-modal.modal-sm variant="default" @click="$bvModal.hide('bv-modal-example')">Cancel</b-button>
+                                <b-button class="mt-3"  v-b-modal.modal-sm variant="primary"  @click.prevent="freezeAccount">freeze</b-button>
                             </b-modal>
                         </div>
 
@@ -141,21 +169,25 @@ export default {
     data() {
         return {
 
-
+            freezeAccountId:'',
+            freezeAccountIndex:'',
             totalRows: 1,
             currentPage: 1,
             perPage: 5,
             tablefields1: [
                 'id',
                 'profile_picture',
-                'Personal_uuid',
-                { key: 'name', label: 'name', sortable: false, },
-                { key: 'group_relation.name', label: 'group', sortable: false, },
+                'name',
                 { key: 'phone', label: 'phone', sortable: false, },
                 { key: 'phone', label: 'phone', sortable: false, },
+                { key: 'start_date', label: 'start date', sortable: false, },
+                { key: 'period_Expiry', label: 'period Expiry', sortable: false, },
+                { key: 'member_ships_relation.name', label: 'memberShip', sortable: false, },
                 'qr_code',
                 { key: 'RF_code', label: 'RF code', sortable: false, },
+                'status',
                 'action',
+
 
 
             ],
@@ -176,26 +208,7 @@ export default {
     beforeMount() {
 
 
-        axios.get('members')
-        .then(res => {
-
-            if(res.data.success == true){
-
-                res.data.members.map((item,index) => {
-
-                    this.members.push(item)
-                })
-                this.totalRows = this.members.length
-                this.isLoadig = true
-
-            }
-
-
-        })
-        .catch(err => {
-
-
-        })
+        this.getMmebers()
 
     },
     created() {
@@ -205,7 +218,52 @@ export default {
     },
     methods: {
 
+        freezeAccountHandel(id,key){
+            this.freezeAccountId = id
+            this.freezeAccountIndex = key
+             this.$bvModal.show('freeze')
 
+        },
+        freezeAccount(){
+
+            axios.get(`freezeThisAccount/${this.freezeAccountId}`)
+            .then(res => {
+                if(res.data.success){
+                    this.members.splice(this.freezeAccountIndex,1)
+                    this.$bvModal.hide('freeze')
+                    this.freezeAccountIndex = ''
+                    this.freezeAccountId = ''
+
+                }
+            })
+            .catch(err => {
+                console.error(err);
+            })
+
+        },
+
+        getMmebers(){
+            axios.get('members')
+                .then(res => {
+
+                    if(res.data.success == true){
+
+                        res.data.members.map((item,index) => {
+
+                            this.members.push(item)
+                        })
+                        this.totalRows = this.members.length
+                        this.isLoadig = true
+
+                    }
+
+
+                })
+                .catch(err => {
+
+
+                })
+        },
 
         DeleteAdminModal(id,key){
              this.id = id

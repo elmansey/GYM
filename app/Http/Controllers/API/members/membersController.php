@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\members;
 
 use QRCode;
+use Carbon\Carbon;
 use App\Models\User;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
@@ -22,7 +23,15 @@ class membersController extends Controller
 
     public function index(){
 
-        $members   = members_extra_information::with('groupRelation','classRelation')->get();
+        $members   = members_extra_information::with('groupRelation','classRelation','memberShipsRelation')
+        ->where('Account_freeze' ,'=', null)->get();
+        return response()->json(['success' => true , 'members' => $members],200);
+    }
+
+    public function freezeAccountOnly(){
+
+        $members   = members_extra_information::with('groupRelation','classRelation','memberShipsRelation')
+        ->where('Account_freeze' ,'!=', null)->get();
         return response()->json(['success' => true , 'members' => $members],200);
     }
 
@@ -32,12 +41,16 @@ class membersController extends Controller
 
                 $allowed = $request['Membership_choose_allow_private_Features'] == 'true'  ? true  : false;
 
+                $request['class_id'] =  json_decode($request['class_id'] );
+                $request['group_id'] =  json_decode($request['group_id'] );
+                $request['source'] =  json_decode($request['source'] );
+                $request['interested_area'] =  json_decode($request['interested_area'] );
                 $validator = validator::make($request->all(),[
 
 
                     'name'          => 'required',
                     'gender'              => 'required',
-                    'data_of_birth'       => 'required',
+                    'date_of_birth'       => 'required',
                     'group_id'            => Rule::RequiredIf($allowed),
                     'class_id'            => Rule::RequiredIf($allowed),
                     'membership_id'	      => 'required',
@@ -51,7 +64,6 @@ class membersController extends Controller
                     'Subscription_period'        => 'required',
                     'RF_code'            => 'required',
                     'isActive'            => 'required',
-                    'profile_picture'            => 'required',
 
 
 
@@ -101,7 +113,7 @@ class membersController extends Controller
                 $ExtraInformation->Subscription_status      = $request->input('Subscription_status');
                 $ExtraInformation->Subscription_period      = $request->input('Subscription_period');
                 $ExtraInformation->gender           = $request->input('gender');
-                $ExtraInformation->date_of_birth    = $request->input('data_of_birth');
+                $ExtraInformation->date_of_birth    = $request->input('date_of_birth');
                 $ExtraInformation->address          = $request->input('address');
                 $ExtraInformation->city             = $request->input('city');
                 $ExtraInformation->RF_code             = $request->input('RF_code');
@@ -141,7 +153,7 @@ class membersController extends Controller
     public function getMemberById($id){
 
 
-        $extraInformation      = members_extra_information::where('id','=',$id)->first();
+        $extraInformation      = members_extra_information::where('id','=',$id)->with('groupRelation','classRelation','memberShipsRelation')->first();
 
 
         return response()->json([
@@ -156,24 +168,19 @@ class membersController extends Controller
 
         $allowed = $request['Membership_choose_allow_private_Features'] == 'true' ? true  : false;
 
+        $request['class_id'] =  json_decode($request['class_id'] );
+        $request['group_id'] =  json_decode($request['group_id'] );
+        $request['source'] =  json_decode($request['source'] );
+        $request['interested_area'] =  json_decode($request['interested_area'] );
 
-        if($request['password']){
 
-            $required = true;
-
-
-        }else{
-
-            $required = false;
-
-        }
 
         $validator = validator::make($request->all(),[
 
 
             'name'          => 'required',
             'gender'              => 'required',
-            'data_of_birth'       => 'required',
+            'date_of_birth'       => 'required',
             'group_id'            => Rule::RequiredIf($allowed),
             'class_id'            => Rule::RequiredIf($allowed),
             'membership_id'	      => 'required',
@@ -189,7 +196,6 @@ class membersController extends Controller
             'phone'  => 'required',
             'RF_code'            => 'required',
             'isActive'            => 'required',
-            'profile_picture'            => 'required',
 
 
 
@@ -212,7 +218,7 @@ class membersController extends Controller
 
 
 
-        if($request->file('profile_picture')){
+        if($request->hasFile('profile_picture')){
 
             $oldImg = members_extra_information::where('id','=',$id)->pluck('profile_picture');
 
@@ -269,6 +275,49 @@ class membersController extends Controller
 
 
 
+    }
+
+
+    public function freezeThisAccount($id){
+
+        $member = members_extra_information::find($id);
+        $date =  Carbon::now('Africa/Cairo')->toDateString();
+        $fDate =  Carbon::now('Africa/Cairo');
+        $today =  strtotime($date);
+        $period_Expiry =  strtotime($member['period_Expiry']);
+
+        $b = $period_Expiry - $today;
+
+            // //    1 day = 24 hours
+            // //    1 hour = 60 minute
+            // //    1 minute = 60 seconds
+
+            // //     24 * 60 * 60 = 86400 seconds
+            // //     abs return postive number
+            // //     ceil return اعلي عدد صحيح
+
+           $countDaysLeft = ceil(abs($b  / 86400 )); # 86400 seconds to 1 day
+           $logs =  $member['log'];
+           $logs = collect($logs)->push([ 'key' => 'Freeze_in' , 'value' => $fDate, 'freeze_by'=> auth()->user()]);
+
+        $member->update(['log' => $logs , 'Account_freeze' => $date, 'days_left_before_freezing' => $countDaysLeft]);
+
+            return response()->json(['success' => true , 'message' , 'account freezeing succefully'],200);
+
+    }
+
+    public function unFreezeThisAccount($id){
+
+        $member = members_extra_information::find($id);
+        $date =  Carbon::now('Africa/Cairo');
+        $unFreezeDate = Carbon::now('Africa/Cairo')->toDateString();
+        $New_period_Expiry =  $date->addDays((int)$member['days_left_before_freezing']);
+        $New_period_Expiry =  $New_period_Expiry->format('Y-m-d');
+        $logs =  $member['log'];
+        $logs =collect($logs)->push(['key' => 'unFreeze_in' , 'value' => $date,'unfreeze_by'=> auth()->user()]);
+        $member->update(['log' => $logs ,'unFreeze_in' => $unFreezeDate, 'status' => 'unFreeze','Account_freeze' => null , 'period_Expiry' => $New_period_Expiry ]);
+
+        return response()->json(['success' => true , 'message' => 'unFreeze successfully'],200);
     }
 
 }

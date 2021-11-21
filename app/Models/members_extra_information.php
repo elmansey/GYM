@@ -3,8 +3,9 @@
 namespace App\Models;
 
 use App\Models\Groups;
-use App\Models\ClassSchedule;
+use App\Models\Memberships;
 use Illuminate\Support\Str;
+use App\Models\ClassSchedule;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -14,22 +15,38 @@ class members_extra_information extends Model
     protected $table = 'members_extra_informations';
     protected $fillable = [
 
-        'member_id' ,
-        'interested_area' ,
-        'source' ,
-        'membership_id' ,
-        'group_id' ,
-        'class_id' ,
-        'start_date' ,
+
+
+        'interested_area',
+        'name',
+        'qr_code',
+        'RF_code',
+        'isActive',
+        'phone',
+        'membership_id',
+        'group_id',
+        'class_id',
         'amount_paid',
         'Subscription_status',
+        'start_date',
         'period_Expiry',
         'Subscription_period',
         'gender',
-        'data_of_birth',
+        'date_of_birth',
         'address',
         'city',
-        'qr_code'
+        'profile_picture',
+        'source',
+        'Account_freeze',
+        'days_left_before_freezing',
+        'status',
+        'unFreeze_in',
+        'log'
+
+    ];
+
+    protected $casts = [
+        'log' => 'array'
     ];
 
 
@@ -57,5 +74,9 @@ class members_extra_information extends Model
 
     public function classRelation(){
         return $this->belongsTo(ClassSchedule::class,'class_id');
+    }
+
+    public function memberShipsRelation(){
+        return $this->belongsTo(Memberships::class,'membership_id');
     }
 }

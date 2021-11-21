@@ -93,6 +93,13 @@ const routes = [
                 component: require('@/pages/members/membersList').default,
 
             },
+            {
+
+                path: 'freezeMemberAccountList',
+                name: 'freezeMemberAccountList',
+                component: require('@/pages/members/freezeMemberAccountList').default,
+
+            },
 
             {
 

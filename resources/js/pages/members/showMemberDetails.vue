@@ -4,106 +4,144 @@
         <Breadcrumbs main="Dashboard" title="member details" />
         <div class="container-fluid">
             <div class="row">
-          <div class="col-sm-12">
-                  <div class="card">
-                    <div class="profile-img-style">
-                      <div class="row">
-                        <div class="col-sm-8">
-                          <div class="media">
-                            <div class="media-body align-self-center">
-                              <!-- <h5 class="mt-0 user-name">name</h5> -->
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-sm-4 align-self-center">
-                          <div class="float-sm-right"><small></small></div>
-                        </div>
-                      </div>
-                      <hr>
-                      <div class="row">
-                        <div class="col-lg-12 col-xl-4">
-                          <div id="aniimated-thumbnials-3" itemscope="">
-                            <!-- <figure class="m-0"><a href="#"><img class="img-fluid rounded" src="../../assets/images/blog/img.png"></a>
-                            </figure> -->
-                            <img   style="width:80px;height: 80px;margin:30px" :src="loginInformation.profile_picture   ? '../../profile_pictures/'+loginInformation.profile_picture :  '../../profile_pictures/DefaultProfile.jpg'" alt="" >
-                          </div>
+                <div class="col-sm-12">
+                    <div class="card">
+                        <div class="card-header" style="padding: 0px" >
+                            <img style="width:100px;height: 100px;    margin-left: 40px;margin-top: 10px;margin-bottom: 15px;"  :src="details.profile_picture ? '../../profile_pictures/'+details.profile_picture :
+                                             '../../profile_pictures/DefaultProfile.jpg'" />
                         </div>
 
-                        <div class="col-xl-11" style="margin:auto">
-                                    <div style="margin:10px" class="datatable-vue m-0">
-                                                <h3 >login information</h3>
 
-                                                <div class="table-responsive vue-smart">
-                                                    <b-table
-                                                        id="tablePrint"
-                                                        show-empty
-                                                        stacked="md"
-                                                        :items="loginInformation"
-                                                        :fields="tablefields1"
-                                                        :current-page="currentPage"
-                                                        :per-page="perPage"
-                                                    >
+                          <div class="row">
+
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="card-body">
+                                        <table class="table">
+                                            <tbody>
+                                                <tr>
+                                                <th width="50" style="font-size: 17px;font-weight">uuid</th>
+                                                    <td  >
+                                                    {{ details.Personal_uuid }}
+                                                    </td>
 
 
-                                                    <template #cell(qr_code)="data">
+                                                </tr>
+                                                <tr>
+                                                <th width="50" style="font-size: 17px;font-weight">name</th>
+                                                    <td  >
+                                                    {{ details.name }}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                <th width="50" style="font-size: 17px;font-weight">qr code</th>
+                                                    <td  >
+                                                    <img :src="'../../'+details.qr_code" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                <th width="50" style="font-size: 17px;font-weight">phone</th>
+                                                    <td  >
+                                                    {{ details.phone }}
+                                                    </td>
+                                                </tr>
+                                                <tr v-if="details.member_ships_relation">
+                                                <th width="50" style="font-size: 17px;font-weight">membership</th>
+                                                    <td  >
+                                                    {{ details.member_ships_relation.name }}
+                                                    </td>
+                                                </tr>
+                                                <tr v-if="details.class_relation">
+                                                <th width="50" style="font-size: 17px;font-weight">class</th>
+                                                    <td  >
+                                                    {{ 'from : ' + details.class_relation.startingTime + 'to: '+ details.class_relation.endingTime }}
+                                                    </td>
+                                                </tr>
+                                                <tr v-if="details.group_relation">
+                                                <th width="50" style="font-size: 17px;font-weight">group</th>
+                                                    <td  >
+                                                    {{ details.group_relation.name }}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                <th width="50" style="font-size: 17px;font-weight">Subscription period</th>
+                                                    <td  >
+                                                    {{ details.Subscription_period }}
+                                                    </td>
+                                                </tr>
 
-                                                                <img :src="'../../'+ data.item.qr_code" style="width:60px;height:60px"/>
-                                                    </template>
+                                                <tr>
+                                                <th width="50" style="font-size: 17px;font-weight">start date</th>
+                                                    <td  >
+                                                    {{ details.start_date }}
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                <th width="50" style="font-size: 17px;font-weight">period Expiry</th>
+                                                    <td  >
+                                                    {{ details.period_Expiry }}
+                                                    </td>
+                                                </tr>
 
 
-                                                </b-table>
-                                            </div>
+                                                <tr>
+                                                <th width="50" style="font-size: 17px;font-weight">gender </th>
+                                                    <td  >
+                                                    {{ details.gender }}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                <th width="50" style="font-size: 17px;font-weight">date of birth </th>
+                                                    <td  >
+                                                    {{ details.date_of_birth }}
+                                                    </td>
+                                                </tr>
 
-                                            <!-- <b-col md="6" class="my-1">
-                                                    <b-pagination
-                                                    v-model="currentPage"
-                                                    :total-rows="totalRows"
-                                                    :per-page="perPage"
-                                                    class="my-0"
-                                                    ></b-pagination>
-                                            </b-col> -->
+
+                                                <tr>
+                                                <th width="50" style="font-size: 17px;font-weight">address </th>
+                                                    <td  >
+                                                    {{ details.address }}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                <th width="50" style="font-size: 17px;font-weight">city </th>
+                                                    <td  >
+                                                    {{ details.city }}
+                                                    </td>
+                                                </tr>
+
+
+
+
+
+
+                                            </tbody>
+                                        </table>
                                     </div>
-                        </div>
-                        <div class="col-xl-11" style="margin:auto">
-                                    <div style="margin:10px" class="datatable-vue m-0">
-                                                <h3 >login information</h3>
+                                </div>
 
-                                                <div class="table-responsive vue-smart">
-                                                    <b-table
-                                                        id="tablePrint"
-                                                        show-empty
-                                                        stacked="md"
-                                                        :items="loginInformation"
-                                                        :fields="tablefields1"
-                                                        :current-page="currentPage"
-                                                        :per-page="perPage"
-                                                    >
+                                <div style="overflow:scroll" class="col-lg-6 col-md-6">
+                                    <div class="card-body">
+                                        <div >
+                                            <i  class="fa fa-link m-15" ></i>logs
+                                        </div>
+                                        <div v-for="(item,index) in details.log" :key="index">
+                                            {{ item}}
 
-
-                                                    <template #cell(qr_code)="data">
-
-                                                                <img :src="'../../'+ data.item.qr_code" style="width:60px;height:60px"/>
-                                                    </template>
-
-
-                                                </b-table>
-                                            </div>
-
-                                            <!-- <b-col md="6" class="my-1">
-                                                    <b-pagination
-                                                    v-model="currentPage"
-                                                    :total-rows="totalRows"
-                                                    :per-page="perPage"
-                                                    class="my-0"
-                                                    ></b-pagination>
-                                            </b-col> -->
+                                        </div>
                                     </div>
+                                </div>
+
+                          </div>
+
+
+
                         </div>
 
-                      </div>
+
                     </div>
-                  </div>
-                </div>
+                    </div>
             </div>
         </div>
     </div>
@@ -117,26 +155,9 @@ export default {
 
     data() {
         return {
-            totalRows: 1,
-            currentPage: 1,
-            perPage: 10,
-            tablefields1: [
-
-                { key: 'Personal_uuid', label: 'Personal uuid', sortable: false, },
-                { key: 'name', label: 'name', sortable: false, },
-                { key: 'email', label: 'email', sortable: false, },
-                { key: 'user_name', label: 'phone', sortable: false, },
-                'qr_code',
-                { key: 'RF_code', label: 'RF code', sortable: false, },
 
 
-            ],
-
-                'personalInformation':[],
-                'loginInformation':[],
-                'contentInformation':[],
-                'extraInformation':[],
-
+            details:'',
             isLoadig:true
         }
     },
@@ -151,10 +172,8 @@ export default {
 
               if(res.data.success){
 
-                    this.personalInformation  = res.data.personalInformation
-                    this.loginInformation.push(res.data.loginInformation)
-                    this.contentInformation  = res.data.contentInformation
-                    this.extraInformation  = res.data.extraInformation
+
+                    this.details  = res.data.extraInformation
 
 
 
@@ -168,3 +187,12 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent  hiden but still scrllo*/
+};
+
+</style>
