@@ -15,7 +15,7 @@ class GroupsController extends Controller
     {
 
         $groups = Groups::all();
-        return response()->json(['success' => true, 'groups' => $groups], 200);
+        return response()->json(['success' => true, 'groups' => groupsResource::collection($groups)], 200);
     }
 
     public function store(Request $request)

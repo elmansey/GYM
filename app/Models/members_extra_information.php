@@ -17,6 +17,7 @@ class members_extra_information extends Model
 
 
 
+
         'interested_area',
         'name',
         'qr_code',
@@ -25,12 +26,13 @@ class members_extra_information extends Model
         'membership_id',
         'group_id',
         'class_id',
+        'payment',
         'amount_paid',
-        'Subscription_status',
         'start_date',
         'period_Expiry',
         'Subscription_period',
         'gender',
+        'membership_price',
         'date_of_birth',
         'address',
         'city',
@@ -38,14 +40,17 @@ class members_extra_information extends Model
         'source',
         'Account_freeze',
         'days_left_before_freezing',
-        'status',
+        'source',
         'unFreeze_in',
-        'log'
+        'log',
+        'total_payment',
 
     ];
 
     protected $casts = [
-        'log' => 'array'
+        'log' => 'array',
+        'group_id' => 'array',
+        'class_id' => 'array'
     ];
 
 
@@ -67,13 +72,7 @@ class members_extra_information extends Model
     }
 
 
-    public function groupRelation(){
-        return $this->belongsTo(Groups::class,'group_id');
-    }
 
-    public function classRelation(){
-        return $this->belongsTo(ClassSchedule::class,'class_id');
-    }
 
     public function memberShipsRelation(){
         return $this->belongsTo(Memberships::class,'membership_id');

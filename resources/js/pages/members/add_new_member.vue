@@ -89,6 +89,7 @@
                                              <small style="color: red" v-if="error.RF_code">{{ error.RF_code[0] }}</small >
                                         </div>
 
+
                                         <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
                                             <div class="col-form-label">   start data  </div>
 
@@ -109,10 +110,28 @@
                                         </div>
 
 
-                                    <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
-                                        <div class="col-form-label">   Subscription period  </div>
 
-                                        <input name=""  type="number"    :class="['form-control',error.Subscription_period? 'is-invalid' : '']"  v-model="memberData.Subscription_period" />
+
+                                    <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
+                                        <div class="col-form-label">    payment pattern  </div>
+
+                                        <input name=""  readonly type="text"    :class="['form-control',error.payment? 'is-invalid' : '']"  v-model="memberData.payment" />
+                                            <small style="color: red" v-if="error.payment">{{ error.payment[0] }}</small >
+                                    </div>
+
+
+                                        <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
+                                            <div class="col-form-label">   membership price  </div>
+
+                                            <input name="" readonly type="text"    :class="['form-control',error.membership_price? 'is-invalid' : '']"  v-model="memberData.membership_price" />
+                                            <small style="color: red" v-if="error.membership_price">{{ error.membership_price[0] }}</small >
+                                        </div>
+
+
+                                    <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
+                                        <div class="col-form-label">   Subscription period {{ this.memberData.payment ?  "(" + this.memberData.payment + ")" : ''}}  </div>
+
+                                        <input name=""  type="number" @change="setExpireDate"   :class="['form-control',error.Subscription_period? 'is-invalid' : '']"  v-model="memberData.Subscription_period" />
                                             <small style="color: red" v-if="error.Subscription_period">{{ error.Subscription_period[0] }}</small >
                                     </div>
 
@@ -124,25 +143,14 @@
                                         </div>
 
                                         <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
-                                            <div class="col-form-label">   amount paid  </div>
+                                            <div class="col-form-label">    total payment </div>
 
-                                            <input name="" readonly type="text"    :class="['form-control',error.amount_paid? 'is-invalid' : '']"  v-model="memberData.amount_paid" />
-                                            <small style="color: red" v-if="error.amount_paid">{{ error.amount_paid[0] }}</small >
+                                            <input name="" type="text"  readonly  :class="['form-control',error.total_payment? 'is-invalid' : '']"  v-model="memberData.total_payment" />
+                                             <small style="color: red" v-if="error.total_payment">{{ error.total_payment[0] }}</small >
                                         </div>
 
-                                    <!-- <div class="mb-2  mt-4 col-md-6 col-lg-6 col-sm-12">
 
-                                           <div class="media">
-                                                <label class="col-form-label m-r-10">Subscription status</label>
-                                                <div class="media-body text-right icon-state">
-                                                <label class="switch">
-                                                    <input type="checkbox" checked="" v-model="memberData.Subscription_status"><span class="switch-state bg-primary"></span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div> -->
-
-                                             <div class="mb-2 col-md-12 col-lg-12 col-sm-12" v-if="memberData.Membership_choose_allow_private_Features">
+                                             <!-- <div class="mb-2 col-md-12 col-lg-12 col-sm-12" v-if="memberData.Membership_choose_allow_private_Features">
                                                     <div class="col-form-label"> Group</div>
 
                                                     <select name="group" @change="getAllClasseRelatedToThisGroup" :class="['form-control',error.group_id ? 'is-invalid' : '']" v-model="memberData.group_id"  >
@@ -151,7 +159,21 @@
                                                         </option>
                                                     </select>
                                                 <small style="color: red" v-if="error.group_id">{{ error.group_id[0] }}</small >
+                                            </div> -->
+
+                                            <div class="mb-2 col-md-12 col-lg-12 col-sm-12"  v-if="memberData.Membership_choose_allow_private_Features">
+                                                      <div class="col-form-label">groups </div>
+
+                                                      <multiselect name="group" @input="getAllClasseRelatedToThisGroup" v-model="memberData.group_id" tag-placeholder="Add this as new tag" placeholder="Search or add a tag"
+                                                                    :class="[error.group_id ? 'is-invalid' : '']"     label="name" track-by="id"    :options="groups"  :multiple="true"   :taggable="true" @tag="addTag"  >
+
+                                                      </multiselect>
+                                                     <small style="color: red" v-if="error.group_id">{{ error.group_id[0] }}</small >
+
                                             </div>
+
+
+
 
                                             <div class="mb-2 col-md-12 col-lg- col-sm-12" v-if="memberData.Membership_choose_allow_private_Features && afterChooseGroup">
                                                 <div class="col-form-label">   class <i class="icofont icofont-ui-calendar"></i>  </div>
@@ -197,8 +219,9 @@
                                                                             </template>
 
                                                                             <template #cell(choose)="data">
-                                                                                    <div class="radio radio-primary " style="cursor: pointer;">
-                                                                                    <b-form-radio name="radio1" style="cursor: pointer;" :value="data.item.id"  v-model="memberData.class_id"></b-form-radio>
+
+                                                                                <div class=" " style="cursor: pointer;">
+                                                                                    <input  type="checkbox" style="cursor: pointer;" :value="data.item.id"  v-model="memberData.class_id" />
                                                                                 </div>
                                                                             </template>
 
@@ -295,7 +318,7 @@
 <script>
 import vue2Dropzone from 'vue2-dropzone'
 import 'vue2-dropzone/dist/vue2Dropzone.min.css'
-
+import Multiselect from 'vue-multiselect'
 import axios from 'axios'
 
 export default {
@@ -326,13 +349,13 @@ export default {
                 name:'',
                 gender:'male',
                 data_of_birth:'',
-                group_id:'',
+                group_id:[],
 
-                amount_paid:'',
                 period_Expiry:'',
-                Subscription_status:true,
                 Subscription_period:'',
                 age:'',
+
+                total_payment:'',
 
 
                 address:'',
@@ -342,21 +365,20 @@ export default {
 
                 RF_code:'',
                 profile_picture:[],
-
+                payment:'',
 
                 interested_area:'',
                 source:'',
                 membership_id:'',
-                class_id:'',
+                class_id:[],
                 start_data:'',
-                isActive:true,
+                membership_price:'',
                 Membership_choose_allow_private_Features:false,
 
             },
 
             afterChooseGroup:false,
 
-            Membership_choose_allow_private_Features:false,
 
             isLoading:false,
 
@@ -391,7 +413,8 @@ export default {
     },
 
      components: {
-        vueDropzone: vue2Dropzone
+        vueDropzone: vue2Dropzone,
+        Multiselect
 
     },
 
@@ -404,6 +427,11 @@ export default {
     beforeMount() {
 
 
+            var today = new Date();
+            var da = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+            this.memberData.start_data =  da
+
+
             if(this.$route.params.memberId){
 
                     this.edit = true
@@ -412,6 +440,7 @@ export default {
                     .then(res => {
 
                         if(res.data.success){
+
                             this.memberData.name     = res.data.extraInformation.name,
                             this.memberData.gender         = res.data.extraInformation.gender,
                             this.memberData.data_of_birth    = res.data.extraInformation.date_of_birth,
@@ -424,11 +453,10 @@ export default {
                             this.memberData.membership_id    = res.data.extraInformation.membership_id,
                             this.memberData.class_id    = res.data.extraInformation.class_id,
                             this.memberData.start_data    = res.data.extraInformation.start_date
-                            this.memberData.isActive    = res.data.extraInformation.isActive
                             this.memberData.RF_code    = res.data.extraInformation.RF_code
-                            this.memberData.amount_paid    = res.data.extraInformation.amount_paid
                             this.memberData.period_Expiry    = res.data.extraInformation.period_Expiry
-                            this.memberData.Subscription_status    = res.data.extraInformation.Subscription_status
+                            this.memberData.total_payment    = res.data.extraInformation.total_payment
+                            this.memberData.membership_price    = res.data.extraInformation.membership_price
                             this.memberData.Subscription_period    = res.data.extraInformation.Subscription_period
                             this.memberData.Membership_choose_allow_private_Features    = this.IsAllowFuatureInThisMembership()
                             this.getAllClasseRelatedToThisGroup()
@@ -449,6 +477,29 @@ export default {
             }else{
 
                 this.edit = false
+                  this.edit = false
+                this.memberData.name    = '',
+                this.memberData.data_of_birth    = '',
+                this.memberData.group_id    = [],
+                this.memberData.address    = '',
+                this.memberData.city    = '',
+                this.memberData.phone   = '',
+                this.memberData.interested_area    = '',
+                this.memberData.source    = '',
+                this.memberData.membership_id    = '',
+                this.memberData.class_id    = [],
+                this.memberData.RF_code    = ''
+                this.memberData.RF_code    = ''
+                this.memberData.period_Expiry    = ''
+                this.memberData.Subscription_period    = ''
+                this.memberData.total_payment    = ''
+                this.memberData.payment    = ''
+                this.memberData.profile_picture    = []
+                this.memberData.membership_price    = ''
+                this.classes = []
+                this.memberData.age = ''
+                this.memberData.Membership_choose_allow_private_Features = false
+                this.afterChooseGroup = false
                 this.isLoading = true
 
             }
@@ -503,6 +554,19 @@ export default {
     methods: {
 
 
+        asyncFind (query) {
+            this.options = findService(query)
+        },
+
+        addTag (newTag) {
+            const tag = {
+                name: newTag,
+                code: newTag.substring(0, 2) + Math.floor((Math.random() * 10000000))
+            }
+            this.taggingOptions.push(tag)
+            this.taggingSelected.push(tag)
+        },
+
         countMemberAge(){
 
         var birthDate = new Date(this.memberData.data_of_birth)
@@ -514,21 +578,43 @@ export default {
         },
         setExpireDate(){
 
-            //  this.memberships.map((item,index) => {
-            //     if(item.id == this.memberData.membership_id){
+             this.memberships.map((item,index) => {
+                if(item.id == this.memberData.membership_id){
 
-            //         var start_date = new Date(this.memberData.start_data);
-            //         var Expiry_date = new Date(start_date.setDate(start_date.getDate() + Number(item.Membership_Period)))
-            //         this.memberData.period_Expiry =  Expiry_date.getFullYear()+'-'+(Expiry_date.getMonth()+1)+'-'+Expiry_date.getDate();
-            //         this.memberData.Subscription_period = item.Membership_Period + "  day"
-            //     }
-            // })
+                    var start_date = new Date(this.memberData.start_data);
+
+                    if(item.payment == 'Monthly'){
+                        var Period = 30
+                    }else if (item.payment == 'Weekly'){
+                         Period = 7
+                    }else if (item.payment == 'daily'){
+                         Period = 1
+                    }else if(item.payment == 'year'){
+                         Period = 365
+                    }
+
+                   if(this.memberData.Subscription_period < 1 || this.memberData.Subscription_period == 0){
+
+                       this.memberData.Subscription_period = 1
+                   }else{
+                       this.memberData.Subscription_period = this.memberData.Subscription_period
+                   }
+
+
+
+                    var Expiry_date = new Date(start_date.setDate(start_date.getDate() + Number(Number(this.memberData.Subscription_period) * Period )))
+                    this.memberData.period_Expiry =  Expiry_date.getFullYear()+'-'+(Expiry_date.getMonth()+1)+'-'+Expiry_date.getDate();
+                    this.memberData.membership_price  = item.Membership_price
+                    this.memberData.total_payment  = Number(item.Membership_price) * Number(this.memberData.Subscription_period)
+
+                }
+            })
 
         },
 
         getAllClasseRelatedToThisGroup()
         {
-            axios.get(`getAllClasseRelatedToThisGroup/${this.memberData.group_id}`)
+            axios.post('getAllClasseRelatedToThisGroup',this.memberData.group_id)
             .then(res => {
 
                 this.classes = res.data.classes
@@ -552,7 +638,7 @@ export default {
 
                 if(res.data.success){
                     this.memberData.Membership_choose_allow_private_Features = res.data.allow
-                    this.memberData.payment = res.data.memberShip.Membership_price
+                    this.memberData.payment = res.data.memberShip.payment
                 }
 
 
@@ -587,28 +673,27 @@ export default {
 
             if(this.edit == false){
 
-
                 let formData = new FormData()
                 formData.append('name'               , this.memberData.name)
                 formData.append('gender'             , this.memberData.gender)
                 formData.append('date_of_birth'      , this.memberData.data_of_birth)
-                formData.append('group_id'           , this.memberData.group_id)
+                formData.append('group_id'           , JSON.stringify(this.memberData.group_id))
                 formData.append('address'            , this.memberData.address)
                 formData.append('city'               , this.memberData.city)
                 formData.append('phone'            , this.memberData.phone)
                 formData.append('interested_area'    , this.memberData.interested_area)
                 formData.append('source'             , this.memberData.source)
                 formData.append('membership_id'         , this.memberData.membership_id)
-                formData.append('class_id'              , this.memberData.class_id)
+                formData.append('class_id'              , JSON.stringify(this.memberData.class_id))
                 formData.append('start_date'         , this.memberData.start_data)
-                formData.append('isActive'           , this.memberData.isActive)
                 formData.append('RF_code'           , this.memberData.RF_code)
                 formData.append('profile_picture'           , this.memberData.profile_picture)
-                formData.append('amount_paid'           , this.memberData.amount_paid)
                 formData.append('period_Expiry'           , this.memberData.period_Expiry)
-                formData.append('Subscription_status'           , this.memberData.Subscription_status)
                 formData.append('Subscription_period'           , this.memberData.Subscription_period)
-                formData.append('Membership_choose_allow_private_Features'           , this.memberData.Membership_choose_allow_private_Features)
+                formData.append('total_payment'           , this.memberData.total_payment)
+                formData.append('payment'           , this.memberData.payment)
+                formData.append('membership_price'           , this.memberData.membership_price)
+                formData.append('Membership_choose_allow_private_Features'      , this.memberData.Membership_choose_allow_private_Features)
 
 
                 let config = {
@@ -629,23 +714,22 @@ export default {
 
                         this.error = []
                          this.memberData.name    = '',
-                        this.memberData.gender    = '',
                         this.memberData.data_of_birth    = '',
-                        this.memberData.group_id    = '',
+                        this.memberData.group_id    = [],
                         this.memberData.address    = '',
                         this.memberData.city    = '',
-                        this.memberData.phoneNumber    = '',
+                        this.memberData.phone   = '',
                         this.memberData.interested_area    = '',
                         this.memberData.source    = '',
                         this.memberData.membership_id    = '',
-                        this.memberData.class_id    = '',
-                        this.memberData.start_data    = '',
-                        this.memberData.isActive    = true
+                        this.memberData.class_id    = [],
                         this.memberData.RF_code    = ''
                         this.memberData.RF_code    = ''
                         this.memberData.period_Expiry    = ''
-                        this.memberData.Subscription_status    = ''
                         this.memberData.Subscription_period    = ''
+                        this.memberData.total_payment = ''
+                        this.memberData.payment = ''
+                        this.memberData.membership_price = ''
                         this.memberData.profile_picture    = []
                            Toast.fire({
                             icon: 'success',
@@ -678,21 +762,21 @@ export default {
                 formData.append('name'         , this.memberData.name)
                 formData.append('gender'             , this.memberData.gender)
                 formData.append('date_of_birth'      , this.memberData.data_of_birth)
-                formData.append('group_id'           , this.memberData.group_id)
+                formData.append('group_id'           ,  JSON.stringify(this.memberData.group_id))
                 formData.append('address'            , this.memberData.address)
                 formData.append('city'               , this.memberData.city)
                 formData.append('phone'             , this.memberData.phone)
                 formData.append('interested_area'    , this.memberData.interested_area)
                 formData.append('source'             , this.memberData.source)
                 formData.append('membership_id'         , this.memberData.membership_id)
-                formData.append('class_id'              , this.memberData.class_id)
+                formData.append('class_id'              , JSON.stringify( this.memberData.class_id))
                 formData.append('start_date'         , this.memberData.start_data)
-                formData.append('isActive'           , this.memberData.isActive)
                 formData.append('RF_code'           , this.memberData.RF_code)
                 formData.append('profile_picture'           , this.memberData.profile_picture)
-                formData.append('amount_paid'           , this.memberData.amount_paid)
                 formData.append('period_Expiry'           , this.memberData.period_Expiry)
-                formData.append('Subscription_status'           , this.memberData.Subscription_status)
+                formData.append('total_payment'           , this.memberData.total_payment)
+                formData.append('payment'           , this.memberData.total_payment)
+                formData.append('membership_price'           , this.memberData.membership_price)
                 formData.append('Subscription_period'           , this.memberData.Subscription_period)
                 formData.append('Membership_choose_allow_private_Features'           , this.memberData.Membership_choose_allow_private_Features)
 
@@ -715,25 +799,28 @@ export default {
                     if(res.data.success){
 
                         this.error = []
-                          this.memberData.name    = '',
-                        this.memberData.gender    = '',
+                        this.memberData.name    = '',
                         this.memberData.data_of_birth    = '',
-                        this.memberData.group_id    = '',
+                        this.memberData.group_id    = [],
                         this.memberData.address    = '',
                         this.memberData.city    = '',
-                        this.memberData.phoneNumber    = '',
+                        this.memberData.phone   = '',
                         this.memberData.interested_area    = '',
                         this.memberData.source    = '',
                         this.memberData.membership_id    = '',
-                        this.memberData.class_id    = '',
-                        this.memberData.start_data    = '',
-                        this.memberData.isActive    = true
+                        this.memberData.class_id    = [],
                         this.memberData.RF_code    = ''
                         this.memberData.RF_code    = ''
                         this.memberData.period_Expiry    = ''
-                        this.memberData.Subscription_status    = ''
                         this.memberData.Subscription_period    = ''
+                        this.memberData.total_payment    = ''
+                        this.memberData.payment    = ''
                         this.memberData.profile_picture    = []
+                        this.memberData.membership_price    = ''
+                        this.classes = []
+                        this.memberData.age = ''
+                        this.memberData.Membership_choose_allow_private_Features = false
+
                            Toast.fire({
                             icon: 'success',
                             title: 'member updated successfully'
@@ -772,24 +859,27 @@ export default {
             if(to.name == 'addMember'){
                 this.edit = false
                 this.memberData.name    = '',
-                this.memberData.gender    = '',
                 this.memberData.data_of_birth    = '',
-                this.memberData.group_id    = '',
+                this.memberData.group_id    = [],
                 this.memberData.address    = '',
                 this.memberData.city    = '',
-                this.memberData.phoneNumber    = '',
+                this.memberData.phone   = '',
                 this.memberData.interested_area    = '',
                 this.memberData.source    = '',
                 this.memberData.membership_id    = '',
-                this.memberData.class_id    = '',
-                this.memberData.start_data    = '',
-                this.memberData.isActive    = true
+                this.memberData.class_id    = [],
                 this.memberData.RF_code    = ''
                 this.memberData.RF_code    = ''
                 this.memberData.period_Expiry    = ''
-                this.memberData.Subscription_status    = ''
                 this.memberData.Subscription_period    = ''
+                this.memberData.total_payment    = ''
+                this.memberData.payment    = ''
                 this.memberData.profile_picture    = []
+                this.memberData.membership_price    = ''
+                this.classes = []
+                this.memberData.age = ''
+                this.memberData.Membership_choose_allow_private_Features = false
+                this.afterChooseGroup = false
                 this.isLoading = true
 
 

@@ -123,7 +123,7 @@ use App\Http\Controllers\API\product_invoice\product_invoiceController;
         Route::get('getAllPersonInStaffToCreateClass', [ClassScheduleController::class, 'getAllPersonInStaffToCreateClass']);
         Route::post('deleteSelectedItem', [ClassScheduleController::class, 'deleteSelectedItem']);
         Route::get('getClassInDays',[ClassScheduleController::class, 'getClassInDays']);
-        Route::get('getAllClasseRelatedToThisGroup/{id}',[ClassScheduleController::class, 'getAllClasseRelatedToThisGroup']);
+        Route::post('getAllClasseRelatedToThisGroup',[ClassScheduleController::class, 'getAllClasseRelatedToThisGroup']);
 
 
         //staff

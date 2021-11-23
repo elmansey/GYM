@@ -57,10 +57,12 @@
                                                     {{ 'from : ' + details.class_relation.startingTime + 'to: '+ details.class_relation.endingTime }}
                                                     </td>
                                                 </tr>
-                                                <tr v-if="details.group_relation">
+                                                <tr v-if="details.group_id">
                                                 <th width="50" style="font-size: 17px;font-weight">group</th>
                                                     <td  >
-                                                    {{ details.group_relation.name }}
+                                                        <span class="badge badge-pill badge-dark" v-for=" (val,ke) in  details.group_id" :key="ke">
+                                                                {{  val.name }}
+                                                        </span>
                                                     </td>
                                                 </tr>
                                                 <tr>

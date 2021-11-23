@@ -60,10 +60,7 @@
                                                                 <img :src="'../../'+ data.item.qr_code" style="width:60px;height:60px"/>
                                                     </template>
 
-                                                    <template #cell(status)="data">
 
-                                                                <span v-if="data.item.status" class="badge badge-pill badge-success"> {{ data.item.status }} </span>
-                                                    </template>
 
                                                     <template #cell(action)="data">
 
@@ -185,7 +182,6 @@ export default {
                 { key: 'member_ships_relation.name', label: 'memberShip', sortable: false, },
                 'qr_code',
                 { key: 'RF_code', label: 'RF code', sortable: false, },
-                'status',
                 'action',
 
 

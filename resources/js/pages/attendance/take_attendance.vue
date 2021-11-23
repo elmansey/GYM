@@ -5,10 +5,6 @@
 
         <b-alert style="position: absolute;top: 55px;z-index: 10000;width:30%;right: 40px;border-radius: 20px;" :show="show" variant="light">
                             <h4 class="alert-heading">Well done!</h4>
-
-
-
-
                                         <div class="card-body "  >
                                                 <div class="d-flex flex-row pb-1">
 
@@ -18,8 +14,6 @@
                                                     class="img-thumbnail  border-0 rounded-circle  mr-3  list-thumbnail align-self-center "
                                                     style="width:40px;hight:40px"
                                                     >
-
-
 
                                                     <div class="d-flex flex-grow-1 min-width-zero">
                                                         <div class="m-2 pl-0  align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero ">
@@ -37,27 +31,19 @@
                                                 </div>
                                         </div>
 
-
-
-
-
-
-
         </b-alert>
+
+
         <div class="container-fluid">
 
-            <div class="row">
 
 
 
-                <div class="col-sm-12">
+
+                <!-- <div class="col-lg-12" style="padding:0px">
                     <div class="card">
-                        <div class="card-header">
-                            <h5>take attendance</h5>
-
-                        </div>
-
-                        <form  @submit.prevent="saveAttendance" class="form theme-form datepicker-responsive">
+                        <div class="col-lg-4">
+                                   <form  @submit.prevent="saveAttendance" class="form theme-form datepicker-responsive">
                             <div class="card-body">
 
                                     <div class="form-group m-t-15 m-checkbox-inline mb-0 custom-radio-ml">
@@ -133,12 +119,137 @@
 
                             </div>
                         </form>
+                        </div>
+
+
+                    </div>
+                </div>
+                 -->
+
+
+
+
+
+
+                    <!-- <div class="col-lg-6">
+                            <div class="card">
+                                <div class="card-body">
+
+                                </div>
+                            </div>
+                    </div> -->
+
+                <div class="card">
+
+                    <div class="row" style="height:600px">
+
+
+
+                                <div style="overflow:scroll" class="col-lg-4 col-md-6">
+                                    <div class="card-body" style="height:100%">
+
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 col-md-6">
+                                        <div class="card-body" style="height:100%">
+                                        <form  @submit.prevent="saveAttendance" class="form theme-form datepicker-responsive">
+
+
+                                            <div class="form-group m-t-15 m-checkbox-inline mb-0 custom-radio-ml">
+                                                <div class="radio radio-primary d-inline-block">
+                                                    <b-form-radio name="radio3" value="name" v-model="type">name</b-form-radio>
+                                                </div>
+                                                <div class="radio radio-primary d-inline-block">
+                                                    <b-form-radio name="radio3" value="RF_Person_Code" v-model="type"> RF code</b-form-radio>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="form-group" v-if="type == 'name'">
+                                                <label class=" col-form-label text-right">name</label>
+                                                <div class="col-lg-12">
+
+
+                                                    <multiselect
+
+
+                                                            tag-placeholder="Add this as new tag"
+                                                            placeholder="Search by name or choose person"
+                                                            v-model="attendanceDate.name"
+                                                            label="name"
+                                                            track-by="id"
+
+                                                            :options="options"
+                                                            :multiple="false"
+                                                            :taggable="false"
+                                                            :class="[!$v.attendanceDate.name.requiredIf ? 'is-invalid' : '']"
+
+                                                        >
+                                                        </multiselect>
+                                                    <small style="color:red" v-if="( submited &&  !$v.attendanceDate.name.requiredIf)"> the  name  failde is required   </small>
+
+                                                </div>
+
+                                            </div>
+
+
+
+                                        <div class="form-group " v-if="type == 'RF_Person_Code'">
+                                            <div class="col-lg-12" style="height:125px;overflow:scroll">
+                                                <input  type="text"  :class="['form-control', submited && !$v.attendanceDate.RF_Person_Code.requiredIf  ? 'is-invalid' : '']" style="margin: 10px;width: 96%;" @keyup="searchInUsersByRFcode" v-model="attendanceDate.RF_Person_Code" placeholder="type or search by RF code"/>
+                                                <b-form-invalid-feedback style="color:red" v-if="( submited && !$v.attendanceDate.RF_Person_Code.requiredIf)"> the  RF code  failde is required   </b-form-invalid-feedback>
+
+                                                <div style="width: 100%" >
+                                                    <p  style="width:100%;margin: 9px 15px;cursor: pointer;" v-for="(item,index) in searchData" :key="index" @click="setValue(item.RF_code)">{{ item.RF_code }} </p>
+                                                    <p v-if=" attendanceDate.RF_Person_Code.length > 1 && searchData.length < 1" style="width:100%;margin: 9px 15px;" > no data found like this RF code </p>
+
+                                                </div>
+
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="form-group  mb-0">
+                                            <label class=" col-form-label text-right">date</label>
+                                            <div class="col-lg-12">
+
+                                                <input class="form-control" type="date" v-model="attendanceDate.date" >
+                                                <small style="color: red"  v-if="error.date">{{ error.date[0] }}</small>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group form-row mb-0">
+
+                                            <div class="col-lg-12 m-t-10">
+                                                    <button id="default-custom-success" type="submit" class="btn btn-pill btn-air-success btn-success">save</button>
+                                            </div>
+                                        </div>
+
+
+                                    </form>
+                                    </div>
+
+                                </div>
+                                <div class="col-lg-4 col-md-6">
+                                        <div class="card-body" style="height:100%">
+
+                                    </div>
+
+                                </div>
                     </div>
                 </div>
 
 
-            </div>
         </div>
+
+
+
+
+
+
+
         <!-- Container-fluid Ends-->
     </div>
 </template>

@@ -5,17 +5,21 @@ namespace App\Http\Controllers\API\members;
 use QRCode;
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\Groups;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
+use App\Models\ClassSchedule;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\groupsResource;
 use App\Models\members_extra_information;
 use App\Models\members_login_information;
 use Illuminate\Support\Facades\Validator;
 use App\Models\members_contact_information;
 use Illuminate\Validation\Rules\RequiredIf;
 use phpDocumentor\Reflection\Types\Boolean;
+use App\Http\Resources\class_scheduleResource;
 
 
 class membersController extends Controller
@@ -23,14 +27,14 @@ class membersController extends Controller
 
     public function index(){
 
-        $members   = members_extra_information::with('groupRelation','classRelation','memberShipsRelation')
+        $members   = members_extra_information::with('memberShipsRelation')
         ->where('Account_freeze' ,'=', null)->get();
         return response()->json(['success' => true , 'members' => $members],200);
     }
 
     public function freezeAccountOnly(){
 
-        $members   = members_extra_information::with('groupRelation','classRelation','memberShipsRelation')
+        $members   = members_extra_information::with('memberShipsRelation')
         ->where('Account_freeze' ,'!=', null)->get();
         return response()->json(['success' => true , 'members' => $members],200);
     }
@@ -39,12 +43,26 @@ class membersController extends Controller
     public function store(Request $request){
 
 
+
                 $allowed = $request['Membership_choose_allow_private_Features'] == 'true'  ? true  : false;
 
-                $request['class_id'] =  json_decode($request['class_id'] );
-                $request['group_id'] =  json_decode($request['group_id'] );
-                $request['source'] =  json_decode($request['source'] );
-                $request['interested_area'] =  json_decode($request['interested_area'] );
+                $request['class_id'] =  json_decode($request['class_id'] ,true);
+                $request['group_id'] =  json_decode($request['group_id'] ,true);
+                $request['source']   = $request['source']  ? "null" : null;
+                $request['interested_area']   = $request['interested_area']  ? "null" : null;
+                $groupIdes= [];
+                if($request['group_id']){
+
+                        foreach ($request['group_id'] as $k => $v ){
+
+                            $groupIdes[] = $v['id'];
+                        }
+                    $request['group_id'] = $groupIdes;
+                }
+
+
+
+
                 $validator = validator::make($request->all(),[
 
 
@@ -58,15 +76,12 @@ class membersController extends Controller
                     'address'	          => 'required',
                     'city'                => 'required',
                     'phone'        => 'required',
-                    'amount_paid'            => 'required',
                     'period_Expiry'            => 'required',
-                    'Subscription_status'            => 'required',
                     'Subscription_period'        => 'required',
                     'RF_code'            => 'required',
-                    'isActive'            => 'required',
-
-
-
+                    'payment'            => 'required',
+                    'membership_price'  => 'required',
+                    'total_payment'  => 'required',
 
                 ]);
 
@@ -78,7 +93,6 @@ class membersController extends Controller
 
                 }
 
-            $request['isActive'] =  $request['isActive'] == 'true' || true || 1 || '1'? true : false;
 
 
               DB::beginTransaction();
@@ -108,16 +122,16 @@ class membersController extends Controller
                 $ExtraInformation->class_id         = $request->input('class_id');
                 $ExtraInformation->name         = $request->input('name');
                 $ExtraInformation->start_date       = $request->input('start_date');
-                $ExtraInformation->amount_paid       = $request->input('amount_paid');
                 $ExtraInformation->period_Expiry       = $request->input('period_Expiry');
-                $ExtraInformation->Subscription_status      = $request->input('Subscription_status');
-                $ExtraInformation->Subscription_period      = $request->input('Subscription_period');
+                $ExtraInformation->payment      = $request->input('payment');
                 $ExtraInformation->gender           = $request->input('gender');
                 $ExtraInformation->date_of_birth    = $request->input('date_of_birth');
                 $ExtraInformation->address          = $request->input('address');
                 $ExtraInformation->city             = $request->input('city');
                 $ExtraInformation->RF_code             = $request->input('RF_code');
-                $ExtraInformation->isActive             = $request->input('isActive');
+                $ExtraInformation->total_payment             = $request->input('total_payment');
+                $ExtraInformation->membership_price             = $request->input('membership_price');
+                $ExtraInformation->Subscription_period             = $request->input('Subscription_period');
                 $ExtraInformation->profile_picture             = $fileName ? $fileName : null ;
                 $ExtraInformation->phone             = $request->input('phone');
                 $ExtraInformation->save();
@@ -153,10 +167,14 @@ class membersController extends Controller
     public function getMemberById($id){
 
 
-        $extraInformation      = members_extra_information::where('id','=',$id)->with('groupRelation','classRelation','memberShipsRelation')->first();
+        $extraInformation      = members_extra_information::where('id','=',$id)->with('memberShipsRelation')->first();
 
 
 
+          $groups = Groups::whereIn('id', $extraInformation['group_id'])->get();
+        //   $class = ClassSchedule::whereIn('id', $extraInformation['class_id'])->get();
+          $extraInformation['group_id'] = groupsResource::collection($groups);
+        //   $extraInformation['class_id'] = class_scheduleResource::collection($class);
 
         return response()->json([
              'success'  => true  ,
@@ -170,10 +188,19 @@ class membersController extends Controller
 
         $allowed = $request['Membership_choose_allow_private_Features'] == 'true' ? true  : false;
 
-        $request['class_id'] =  json_decode($request['class_id'] );
-        $request['group_id'] =  json_decode($request['group_id'] );
-        $request['source'] =  json_decode($request['source'] );
-        $request['interested_area'] =  json_decode($request['interested_area'] );
+        $request['class_id'] =  json_decode($request['class_id'] ,true);
+        $request['group_id'] =  json_decode($request['group_id'] ,true);
+        $request['source']   = $request['source']  ? "null" : null;
+        $request['interested_area']   = $request['interested_area']  ? "null" : null;
+        $groupIdes= [];
+        if($request['group_id']){
+
+                foreach ($request['group_id'] as $k => $v ){
+
+                    $groupIdes[] = $v['id'];
+                }
+            $request['group_id'] = $groupIdes;
+        }
 
 
 
@@ -189,17 +216,13 @@ class membersController extends Controller
             'start_date'	      => 'required',
             'address'	          => 'required',
             'city'                => 'required',
-            'phone'               => 'required',
-            'amount_paid'            => 'required',
+            'phone'        => 'required',
             'period_Expiry'            => 'required',
-            'Subscription_status'        => 'required',
             'Subscription_period'        => 'required',
-            'isActive'   => 'required',
-            'phone'  => 'required',
             'RF_code'            => 'required',
-            'isActive'            => 'required',
-
-
+            'payment'            => 'required',
+            'membership_price'  => 'required',
+            'total_payment'  => 'required',
 
         ]);
 
@@ -246,7 +269,6 @@ class membersController extends Controller
            $input =  Arr::except($input,array('profile_picture'));
         }
 
-        $input['isActive'] =  $input['isActive'] == 'true' || true || 1 || '1'? true : false;
 
       // extra data
       $ExtraInformation          =  members_extra_information::where('id','=',$id)->first();

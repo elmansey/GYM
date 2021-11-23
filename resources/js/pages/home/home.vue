@@ -35,7 +35,7 @@
                     </div>
                     <div class="media-body">
                       <div class="right-chart-content">
-                        <h4>1005</h4>
+                        <h4>{{ membersNumbers  }}</h4>
                         <span>members number</span>
                       </div>
                     </div>
@@ -50,7 +50,7 @@
                     </div>
                     <div class="media-body">
                       <div class="right-chart-content">
-                        <h4>100</h4>
+                        <h4>{{ productsNumber  }}</h4>
                         <span>products</span>
                       </div>
                     </div>
@@ -67,7 +67,7 @@
                     </div>
                     <div class="media-body">
                       <div class="right-chart-content">
-                        <h4>101</h4>
+                        <h4>{{ staffNumber }}</h4>
                         <span>staff team </span>
                       </div>
                     </div>
@@ -214,7 +214,9 @@ export default {
 
     data() {
         return {
-
+            membersNumbers:'',
+            staffNumber:'',
+            productsNumber:'',
             bar_chart: {
                 chartData_1: [
                     ["type", "member", { role: "style" } ],
@@ -354,17 +356,20 @@ export default {
 
             if(res.data.success){
 
-
+                this.membersNumbers = res.data.membersNumbers
+                this.staffNumber = res.data.staffNumber
+                this.productsNumber = res.data.products
                 return res.data.MembershipsStatistics.map((item,index) => {
 
-                    var randomColor = '#'+Math.floor(Math.random()*16777215).toString(16);
+                    // var randomColor = '#'+Math.floor(Math.random()*16777215).toString(16);
                     Object.entries(item).map((val,k) => {
 
-                         this.bar_chart.chartData_1.push([val[0],val[1],randomColor])
+                         this.bar_chart.chartData_1.push([val[0],val[1],'#007bff'])
                     })
 
-
                 })
+
+
             }
 
         })

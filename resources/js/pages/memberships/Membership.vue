@@ -26,9 +26,9 @@
                                             <div class="col-form-label">payment</div>
 
                                             <select name="name" v-model="data.payment" :class="['form-control',error.payment ? 'is-invalid' : '']" >
-                                                <option value="day">daily</option>
-                                                <option value="week">Weekly </option>
-                                                <option value="month">Monthly </option>
+                                                <option value="daily">daily</option>
+                                                <option value="Weekly">Weekly </option>
+                                                <option value="Monthly">Monthly </option>
                                                 <option value="year">year</option>
                                             </select>
                                             <small style="color: red"  v-if="error.payment">{{error.payment[0]}}</small>
