@@ -97,23 +97,6 @@
                                         </div>
 
 
-
-
-
-                                        <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
-                                            <div class="col-form-label">   period Expiry </div>
-
-                                            <input name="" type="text"  readonly  :class="['form-control',error.period_Expiry? 'is-invalid' : '']"  v-model="memberData.period_Expiry" />
-                                             <small style="color: red" v-if="error.period_Expiry">{{ error.period_Expiry[0] }}</small >
-                                        </div>
-
-                                        <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
-                                            <div class="col-form-label">   amount paid  </div>
-
-                                            <input name="" readonly type="text"    :class="['form-control',error.amount_paid? 'is-invalid' : '']"  v-model="memberData.amount_paid" />
-                                             <small style="color: red" v-if="error.amount_paid">{{ error.amount_paid[0] }}</small >
-                                        </div>
-
                                         <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
                                             <div class="col-form-label">   membership  </div>
 
@@ -129,11 +112,25 @@
                                     <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
                                         <div class="col-form-label">   Subscription period  </div>
 
-                                        <input name="" readonly type="text"    :class="['form-control',error.Subscription_period? 'is-invalid' : '']"  v-model="memberData.Subscription_period" />
+                                        <input name=""  type="number"    :class="['form-control',error.Subscription_period? 'is-invalid' : '']"  v-model="memberData.Subscription_period" />
                                             <small style="color: red" v-if="error.Subscription_period">{{ error.Subscription_period[0] }}</small >
                                     </div>
 
-                                    <div class="mb-2  mt-4 col-md-6 col-lg-6 col-sm-12">
+                                        <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
+                                            <div class="col-form-label">   period Expiry </div>
+
+                                            <input name="" type="text"  readonly  :class="['form-control',error.period_Expiry? 'is-invalid' : '']"  v-model="memberData.period_Expiry" />
+                                             <small style="color: red" v-if="error.period_Expiry">{{ error.period_Expiry[0] }}</small >
+                                        </div>
+
+                                        <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
+                                            <div class="col-form-label">   amount paid  </div>
+
+                                            <input name="" readonly type="text"    :class="['form-control',error.amount_paid? 'is-invalid' : '']"  v-model="memberData.amount_paid" />
+                                            <small style="color: red" v-if="error.amount_paid">{{ error.amount_paid[0] }}</small >
+                                        </div>
+
+                                    <!-- <div class="mb-2  mt-4 col-md-6 col-lg-6 col-sm-12">
 
                                            <div class="media">
                                                 <label class="col-form-label m-r-10">Subscription status</label>
@@ -143,7 +140,7 @@
                                                 </label>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
 
                                              <div class="mb-2 col-md-12 col-lg-12 col-sm-12" v-if="memberData.Membership_choose_allow_private_Features">
                                                     <div class="col-form-label"> Group</div>
@@ -258,21 +255,6 @@
                                             <textarea style="width: 100%" :class="['form-control',error.source? 'is-invalid' : '']"  v-model="memberData.source"></textarea>
                                              <small style="color: red" v-if="error.source">{{ error.source[0] }}</small >
                                         </div>
-
-
-
-                                     <div class="mb-2  mt-4 col-md-12 col-lg-12 col-sm-12">
-
-                                           <div class="media">
-                                                <label class="col-form-label m-r-10">active</label>
-                                                <div class="media-body text-right icon-state">
-                                                <label class="switch">
-                                                    <input type="checkbox" checked="" v-model="memberData.isActive"><span class="switch-state bg-primary"></span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-
 
 
                                         <div class="mb-2 col-md-6 col-lg-4 col-sm-12">
@@ -532,15 +514,15 @@ export default {
         },
         setExpireDate(){
 
-             this.memberships.map((item,index) => {
-                if(item.id == this.memberData.membership_id){
+            //  this.memberships.map((item,index) => {
+            //     if(item.id == this.memberData.membership_id){
 
-                    var start_date = new Date(this.memberData.start_data);
-                    var Expiry_date = new Date(start_date.setDate(start_date.getDate() + Number(item.Membership_Period)))
-                    this.memberData.period_Expiry =  Expiry_date.getFullYear()+'-'+(Expiry_date.getMonth()+1)+'-'+Expiry_date.getDate();
-                    this.memberData.Subscription_period = item.Membership_Period + "  day"
-                }
-            })
+            //         var start_date = new Date(this.memberData.start_data);
+            //         var Expiry_date = new Date(start_date.setDate(start_date.getDate() + Number(item.Membership_Period)))
+            //         this.memberData.period_Expiry =  Expiry_date.getFullYear()+'-'+(Expiry_date.getMonth()+1)+'-'+Expiry_date.getDate();
+            //         this.memberData.Subscription_period = item.Membership_Period + "  day"
+            //     }
+            // })
 
         },
 
@@ -570,7 +552,7 @@ export default {
 
                 if(res.data.success){
                     this.memberData.Membership_choose_allow_private_Features = res.data.allow
-                    this.memberData.amount_paid = res.data.memberShip.Membership_price
+                    this.memberData.payment = res.data.memberShip.Membership_price
                 }
 
 

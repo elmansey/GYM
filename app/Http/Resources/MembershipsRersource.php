@@ -13,7 +13,7 @@ class MembershipsRersource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'Membership_price' => $this->Membership_price,
-            'Membership_Period' => $this->Membership_Period,
+            'payment' => $this->payment,
             'Membership_private_Features' => $this->Membership_private_Features,
         ];
     }

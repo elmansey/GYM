@@ -16,7 +16,7 @@ class CreateMembershipsTable extends Migration
         Schema::create('memberships', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('Membership_Period');
+            $table->string('payment');
             $table->string('Membership_price');
             $table->boolean('Membership_private_Features')->nullable();
             $table->timestamps();

@@ -21,7 +21,6 @@ class CreateMembersExtraInformationsTable extends Migration
             $table->string('name');
             $table->string('qr_code')->nullable();
             $table->string('RF_code');
-            $table->boolean('isActive');
             $table->string('phone');
             $table->foreignId('membership_id')->references('id')->on('memberships')->cascadeOnDelete();
             $table->foreignId('group_id')->nullable()->references('id')->on('groups')->cascadeOnDelete();

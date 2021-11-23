@@ -156,6 +156,8 @@ class membersController extends Controller
         $extraInformation      = members_extra_information::where('id','=',$id)->with('groupRelation','classRelation','memberShipsRelation')->first();
 
 
+
+
         return response()->json([
              'success'  => true  ,
              'extraInformation'    => $extraInformation
@@ -282,7 +284,7 @@ class membersController extends Controller
 
         $member = members_extra_information::find($id);
         $date =  Carbon::now('Africa/Cairo')->toDateString();
-        $fDate =  Carbon::now('Africa/Cairo');
+         $fDate =  Carbon::now('Africa/Cairo')->format('Y-m-d h:i:s');
         $today =  strtotime($date);
         $period_Expiry =  strtotime($member['period_Expiry']);
 
@@ -298,7 +300,7 @@ class membersController extends Controller
 
            $countDaysLeft = ceil(abs($b  / 86400 )); # 86400 seconds to 1 day
            $logs =  $member['log'];
-           $logs = collect($logs)->push([ 'key' => 'Freeze_in' , 'value' => $fDate, 'freeze_by'=> auth()->user()]);
+           $logs = collect($logs)->push([ 'key' => 'Freeze' , 'value' => $fDate, ]);
 
         $member->update(['log' => $logs , 'Account_freeze' => $date, 'days_left_before_freezing' => $countDaysLeft]);
 
@@ -314,7 +316,8 @@ class membersController extends Controller
         $New_period_Expiry =  $date->addDays((int)$member['days_left_before_freezing']);
         $New_period_Expiry =  $New_period_Expiry->format('Y-m-d');
         $logs =  $member['log'];
-        $logs =collect($logs)->push(['key' => 'unFreeze_in' , 'value' => $date,'unfreeze_by'=> auth()->user()]);
+         $fDate =  Carbon::now('Africa/Cairo')->format('Y-m-d h:i:s');
+        $logs =collect($logs)->push(['key' => 'unFreeze' , 'value' => $fDate]);
         $member->update(['log' => $logs ,'unFreeze_in' => $unFreezeDate, 'status' => 'unFreeze','Account_freeze' => null , 'period_Expiry' => $New_period_Expiry ]);
 
         return response()->json(['success' => true , 'message' => 'unFreeze successfully'],200);

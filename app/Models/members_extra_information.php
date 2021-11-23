@@ -21,7 +21,6 @@ class members_extra_information extends Model
         'name',
         'qr_code',
         'RF_code',
-        'isActive',
         'phone',
         'membership_id',
         'group_id',

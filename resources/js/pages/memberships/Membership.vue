@@ -23,15 +23,15 @@
                                             <small style="color: red"  v-if="error.name">{{error.name[0]}}</small>
                                         </div>
                                         <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
-                                            <div class="col-form-label">membership Period</div>
+                                            <div class="col-form-label">payment</div>
 
-                                            <select name="name" v-model="data.Membership_Period" :class="['form-control',error.Membership_Period ? 'is-invalid' : '']" >
-                                                <option value="1">daily (1 day)</option>
-                                                <option value="7">Weekly (1 week)</option>
-                                                <option value="30">Monthly (1 month)</option>
-                                                <option value="365">Annual(1 year)</option>
+                                            <select name="name" v-model="data.payment" :class="['form-control',error.payment ? 'is-invalid' : '']" >
+                                                <option value="day">daily</option>
+                                                <option value="week">Weekly </option>
+                                                <option value="month">Monthly </option>
+                                                <option value="year">year</option>
                                             </select>
-                                            <small style="color: red"  v-if="error.Membership_Period">{{error.Membership_Period[0]}}</small>
+                                            <small style="color: red"  v-if="error.payment">{{error.payment[0]}}</small>
                                         </div>
                                         <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
                                             <div class="col-form-label">membership price</div>
@@ -90,7 +90,7 @@ export default {
 
             data:{
                 name:'',
-                Membership_Period:'',
+                payment:'',
                 Membership_price:'',
                 Membership_private_Features:false
 
@@ -120,7 +120,7 @@ export default {
             axios.get(`getMembershipsById/${this.$route.params.membershipId}`)
             .then(res => {
                 this.data.name  = res.data.membership.name
-                this.data.Membership_Period  = res.data.membership.Membership_Period
+                this.data.payment  = res.data.membership.payment
                 this.data.Membership_price  = res.data.membership.Membership_price
                 this.data.Membership_private_Features  = res.data.membership.Membership_private_Features
                 this.isLoading = true
@@ -133,7 +133,7 @@ export default {
         }else{
             this.edit = false
             this.data.name = ''
-            this.data.Membership_Period = ''
+            this.data.payment = ''
             this.data.Membership_price = ''
             this.data.Membership_private_Features = false
             this.isLoading = true
@@ -151,7 +151,7 @@ export default {
 
                 let formData = new FormData()
                  formData.append('name',this.data.name)
-                 formData.append('Membership_Period',this.data.Membership_Period)
+                 formData.append('payment',this.data.Membership_Period)
                  formData.append('Membership_price',this.data.Membership_price)
                  formData.append('Membership_private_Features',this.data.Membership_private_Features)
 
@@ -185,7 +185,7 @@ export default {
 
                 let formData = new FormData()
                  formData.append('name',this.data.name)
-                 formData.append('Membership_Period',this.data.Membership_Period)
+                 formData.append('payment',this.data.Membership_Period)
                  formData.append('Membership_price',this.data.Membership_price)
                  formData.append('Membership_private_Features',this.data.Membership_private_Features)
 
@@ -226,7 +226,7 @@ export default {
 
             if(to.name == 'addMembership'){
                 this.data.name = ''
-                this.data.Membership_Period = ''
+                this.data.payment = ''
                 this.data.Membership_price = ''
                 this.data.Membership_private_Features = false
                 this.edit = false

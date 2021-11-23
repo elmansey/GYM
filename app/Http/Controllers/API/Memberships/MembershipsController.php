@@ -26,7 +26,7 @@ class MembershipsController extends Controller
 
         $validator = validator::make($request->all(), [
             'name' => 'required|max:25|unique:memberships,name',
-            'Membership_Period' => 'required',
+            'payment' => 'required',
             'Membership_price' => 'required'
         ]);
 
@@ -56,7 +56,7 @@ class MembershipsController extends Controller
 
         $validator = validator::make($request->all(), [
             'name' => ['required', 'max:25', Rule::unique('memberships')->ignore($id)],
-            'Membership_Period' => 'required',
+            'payment' => 'required',
             'Membership_price' => 'required'
         ]);
 

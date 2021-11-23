@@ -2,7 +2,8 @@
      <div v-if="isLoadig">
 
         <Breadcrumbs main="Dashboard" title="member details" />
-        <div class="container-fluid">
+         <div class="container-fluid">
+
             <div class="row">
                 <div class="col-sm-12">
                     <div class="card">
@@ -127,7 +128,25 @@
                                             <i  class="fa fa-link m-15" ></i>logs
                                         </div>
                                         <div v-for="(item,index) in details.log" :key="index">
-                                            {{ item}}
+
+                                                <section class="ps-container scroll dashboard-list-with-user ps">
+                                                    <div class="d-flex flex-row mb-3 pb-3 border-bottom">
+
+
+                                                        <img
+                                                        :src="details.profile_picture ? '../../profile_pictures/'+details.profile_picture :
+                                                            '../../profile_pictures/DefaultProfile.jpg'"
+                                                        alt=""  style="width:50px;height:50px" class="img-thumbnail  border-0 rounded-circle list-thumbnail align-self-center xsmall">
+
+                                                            <div class="pl-3 pr-2">
+
+                                                                <p class="font-weight-medium mb-0">{{ details.name }}</p>
+                                                                <p class="text-muted mb-0 text-small">{{ item.key + " "+'account in'}}</p>
+                                                                <p class="text-muted mb-0 text-small">{{ item.value }}</p>
+
+                                                            </div>
+                                                    </div>
+                                                </section>
 
                                         </div>
                                     </div>
@@ -143,8 +162,14 @@
                     </div>
                     </div>
             </div>
-        </div>
+
+
+
+
+
+
     </div>
+
 </template>
 
 <script>
