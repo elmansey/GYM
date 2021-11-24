@@ -143,20 +143,68 @@
 
                     <div class="row" style="height:600px">
 
+                            <div class="col-lg-4 ">
+                                    <div class="card-body" style="height:100%;border-left: 1px solid #EFEFEF;">
+                                        <div class="form-group  mb-0">
+                                             <div class="col-lg-12" style="margin-bottom:20px">
+                                                <multiselect
 
 
-                                <div style="overflow:scroll" class="col-lg-4 col-md-6">
-                                    <div class="card-body" style="height:100%">
+                                                        tag-placeholder="Add this as new tag"
+                                                        placeholder="Search  or choose "
+                                                        v-model="attendanceDate.name"
+                                                        label="name"
+                                                        track-by="id"
 
+                                                        :options="options"
+                                                        :multiple="false"
+                                                        :taggable="false"
+                                                        :class="[!$v.attendanceDate.name.requiredIf ? 'is-invalid' : '']"
+                                                        style="margin:0px;padding:0px"
+                                                    >
+                                                    </multiselect>
+                                                    <small style="color:red" v-if="( submited &&  !$v.attendanceDate.name.requiredIf)"> the  name  failde is required   </small>
+
+                                             </div>
+
+                                             <div class="col-lg-12" style="margin-bottom:20px">
+                                                    <input type="time"  class="form-control"/>
+                                                    <small style="color: red"  v-if="error.date">{{ error.date[0] }}</small>
+
+                                             </div>
+
+                                            <div class="col-lg-12" style="margin-bottom:20px">
+                                                <datepicker  class="my-datepicker" calendar-class="my-datepicker_calendar"  :inline="true"  format="dd-MM-yyyy" v-model="attendanceDate.date"></datepicker>
+                                                <small style="color: red"  v-if="error.date">{{ error.date[0] }}</small>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group form-row mb-0">
+
+                                            <div class="col-lg-12 m-t-10">
+                                                    <button id="default-custom-success" type="submit" class="btn   btn-dark">save</button>
+                                            </div>
+                                        </div>
+                                </div>
+
+                            </div>
+
+
+                                <div style="overflow:scroll" class="col-lg-4 ">
+                                    <div class="card-body" style="height:100%;border-left: 1px solid #EFEFEF;">
+                                        <input type="text" class="form-control" />
                                     </div>
                                 </div>
 
-                                <div class="col-lg-4 col-md-6">
-                                        <div class="card-body" style="height:100%">
+
+
+
+                            <div class="col-lg-4 " style="height: 100%;">
+                                    <div class="card-body" style="height:100%;border-left: 1px solid #EFEFEF;padding:20px">
                                         <form  @submit.prevent="saveAttendance" class="form theme-form datepicker-responsive">
 
 
-                                            <div class="form-group m-t-15 m-checkbox-inline mb-0 custom-radio-ml">
+                                            <!-- <div class="form-group m-t-15 m-checkbox-inline mb-0 custom-radio-ml">
                                                 <div class="radio radio-primary d-inline-block">
                                                     <b-form-radio name="radio3" value="name" v-model="type">name</b-form-radio>
                                                 </div>
@@ -164,9 +212,9 @@
                                                     <b-form-radio name="radio3" value="RF_Person_Code" v-model="type"> RF code</b-form-radio>
                                                 </div>
 
-                                            </div>
+                                            </div> -->
 
-                                            <div class="form-group" v-if="type == 'name'">
+                                            <!-- <div class="form-group" v-if="type == 'name'">
                                                 <label class=" col-form-label text-right">name</label>
                                                 <div class="col-lg-12">
 
@@ -191,53 +239,43 @@
 
                                                 </div>
 
-                                            </div>
+                                            </div> -->
 
 
 
-                                        <div class="form-group " v-if="type == 'RF_Person_Code'">
-                                            <div class="col-lg-12" style="height:125px;overflow:scroll">
-                                                <input  type="text"  :class="['form-control', submited && !$v.attendanceDate.RF_Person_Code.requiredIf  ? 'is-invalid' : '']" style="margin: 10px;width: 96%;" @keyup="searchInUsersByRFcode" v-model="attendanceDate.RF_Person_Code" placeholder="type or search by RF code"/>
+
+                                            <div class="col-lg-12" style="overflow:scroll;padding:5px;">
+                                                <input  type="text" autofocus :class="['form-control', submited && !$v.attendanceDate.RF_Person_Code.requiredIf  ? 'is-invalid' : '']" style="margin-top: 16px;width: 100%;" @keyup="searchInUsersByRFcode" v-model="attendanceDate.RF_Person_Code" placeholder="type or search by RF code"/>
                                                 <b-form-invalid-feedback style="color:red" v-if="( submited && !$v.attendanceDate.RF_Person_Code.requiredIf)"> the  RF code  failde is required   </b-form-invalid-feedback>
 
-                                                <div style="width: 100%" >
+                                                <!-- <div style="width: 100%" >
                                                     <p  style="width:100%;margin: 9px 15px;cursor: pointer;" v-for="(item,index) in searchData" :key="index" @click="setValue(item.RF_code)">{{ item.RF_code }} </p>
                                                     <p v-if=" attendanceDate.RF_Person_Code.length > 1 && searchData.length < 1" style="width:100%;margin: 9px 15px;" > no data found like this RF code </p>
 
+                                                </div> -->
+                                                <div v-for="(item,index) in searchData" :key="index">
+                                                    <section class="ps-container scroll dashboard-list-with-user ps">
+                                                        <div class="d-flex flex-row  border-bottom" style="margin:10px">
+
+
+                                                                <div class="pl-3 pr-2">
+
+                                                                    <p class="font-weight-medium mb-0">{{ item.RF_code }}</p>
+
+                                                                </div>
+                                                        </div>
+                                                    </section>
                                                 </div>
 
 
+
                                             </div>
 
-                                        </div>
-
-                                        <div class="form-group  mb-0">
-                                            <label class=" col-form-label text-right">date</label>
-                                            <div class="col-lg-12">
-
-                                                <input class="form-control" type="date" v-model="attendanceDate.date" >
-                                                <small style="color: red"  v-if="error.date">{{ error.date[0] }}</small>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group form-row mb-0">
-
-                                            <div class="col-lg-12 m-t-10">
-                                                    <button id="default-custom-success" type="submit" class="btn btn-pill btn-air-success btn-success">save</button>
-                                            </div>
-                                        </div>
-
-
-                                    </form>
+                                        </form>
                                     </div>
 
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                        <div class="card-body" style="height:100%">
+                            </div>
 
-                                    </div>
-
-                                </div>
                     </div>
                 </div>
 
@@ -445,3 +483,15 @@
 
 
 
+<style scoped>
+
+.my-datepicker >>> .my-datepicker_calendar {
+  width: 260px;
+}
+
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent  hiden but still scrllo*/
+};
+
+</style>
