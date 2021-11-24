@@ -11,6 +11,7 @@
     <!--<Main/>-->
 
     <router-view></router-view>
+    <notifications position="top left"  group='app'   />
   </div>
 </template>
 
@@ -24,6 +25,9 @@ export default {
     return{
       show: true
     }
+  },
+  computed:{
+
   },
   mounted() {
       this.timeOut();

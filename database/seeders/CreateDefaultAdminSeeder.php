@@ -74,55 +74,6 @@ class CreateDefaultAdminSeeder extends Seeder
 
 
 
-        #####################################################
-
-        // DB::table('members_personal_informations')->delete();
-
-        // try{
-        //     $member_personal = members_personal_information::create([
-
-        //             'first_name'	 => 'saad',
-        //             'middle_name'	 => 'ayman',
-        //             'last_name'	 => 'saprey',
-        //             'gender'	  => 'male'  ,
-        //             'date_of_birth'	 => '2021-10-05',
-
-        //     ]);
-
-        //     $member_login = members_login_information::create([
-
-
-        //             'member_id' => $member_personal->id,
-        //             'user_name' => 'saad2020',
-        //             'email' => 'member_default@gmail.com',
-        //             'password' => bcrypt(123456),
-        //             'isActive' => true,
-        //     ]);
-
-        //     $member_login->assignRole(['id' => 3 , 'name' => 'member']);
-
-
-
-        //     $member_contact = members_contact_information::create([
-
-        //             'member_id'     => $member_personal->id,
-        //             'address'     => 'dekernes',
-        //             'city'     => 'elmansora',
-        //             'phone_number'     => '0102763801',
-        //     ]);
-
-        //     $member_extra = members_extra_information::create([
-
-        //             'member_id'	       =>   $member_personal->id,
-        //             'membership_id'	   =>       factory(Memberships::class, 1)->create(),
-        //             'group_id'	       =>   Groups::factory(1)->create()->first(),
-        //             'class_id'	       =>   ClassSchedule::factory(1)->create()->first(),
-        //             'start_date'        => '2021-11-03',
-        //     ]);
-
-        // }catch(\Exception $e){
-
-        // }
 
 
         // #####################################################

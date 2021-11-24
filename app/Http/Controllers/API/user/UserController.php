@@ -2,22 +2,23 @@
 
 namespace App\Http\Controllers\API\user;
 
-use App\Http\Controllers\Controller;
-use App\Http\Resources\PermissionResource;
-use App\Http\Resources\RolesResource;
-use App\Http\Resources\UsersResource;
-use App\Http\Resources\UserToRoleResource;
+use QRCode;
 use App\Models\User;
 use Faker\Core\File;
 use http\Env\Response;
-use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use Spatie\Permission\Models\Permission;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
-use QRCode;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\RolesResource;
+use App\Http\Resources\UsersResource;
+use Spatie\Permission\Models\Permission;
+use App\Models\members_extra_information;
+use Illuminate\Support\Facades\Validator;
+use App\Http\Resources\PermissionResource;
+use App\Http\Resources\UserToRoleResource;
 
 class UserController extends Controller
 {
@@ -29,12 +30,7 @@ class UserController extends Controller
         return response()->json(['success'=>true ,'admins'=> UsersResource::collection($data)] ,200);
     }
 
-    public function allUsers()
-    {
 
-        $data = User::all();
-        return response()->json(['success'=>true ,'users'=> $data] ,200);
-    }
 
     public function getUserToChatIgnoreMe($email)
     {
@@ -54,9 +50,13 @@ class UserController extends Controller
         return response()->json(['success'=>true ,'admins'=> UsersResource::collection($data)] ,200);
     }
 
-    public function searchInUsersByRFcode($RF_code){
+    public function getAllPersonToAttendance(){
 
-        $users = User::where('RF_code','LIKE','%'.$RF_code.'%')->get();
+        $users = User::select('name','RF_code')->get();
+        $members = members_extra_information::select('name','RF_code')->get();
+
+        $users =  array_merge(($users)->toArray(),($members)->toArray());
+
 
         return response()->json(['success'=>true ,'users'=> $users],200);
     }

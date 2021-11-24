@@ -15,7 +15,7 @@ class CreateAttendanceTable extends Migration
     {
         Schema::create('attendance', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->string('RF_code');
             $table->string('date');
             $table->string('come_time');
             $table->string('leave_time')->nullable();

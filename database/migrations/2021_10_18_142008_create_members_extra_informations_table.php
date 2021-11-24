@@ -20,7 +20,7 @@ class CreateMembersExtraInformationsTable extends Migration
             $table->text('interested_area')->nullable();
             $table->string('name');
             $table->string('qr_code')->nullable();
-            $table->string('RF_code');
+            $table->string('RF_code')->unique();
             $table->string('phone');
             $table->foreignId('membership_id')->references('id')->on('memberships')->cascadeOnDelete();
             $table->string('group_id');

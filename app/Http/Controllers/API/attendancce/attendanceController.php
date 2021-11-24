@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Exports\attendanceExport;
 use App\Http\Controllers\Controller;
+use App\Models\members_extra_information;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\attendanceResource;
 
@@ -26,90 +27,248 @@ class attendanceController extends Controller
 
     public function store (Request $request){
 
+        if($request->type == 'select'){
+            if ($request->name && $request->time && $request->date) {
+                $RF_code =  json_decode($request->name, true)['RF_code'];
 
-        $validator = validator::make($request->all(), [
-
-            'date' => 'required',
-            'type' => 'required',
-
-
-        ]);
-
-
-
-        if($validator->fails()){
-
-            return response()->json(['success' => false, 'message' => $validator->errors()]);
-        }
+                if (!empty($RF_code)) {
+                    $input = User::where('RF_code', '=', $RF_code)->first() ?
+                        User::where('RF_code', '=', $RF_code)->first() :
+                        members_extra_information::where('RF_code', '=', $RF_code)->first();
 
 
-       $input = json_decode($request->name,true) ;
+                    $find = attendance::where('RF_code', '=', $input['RF_code'])
+                        ->where('date', '=', $request->date)->first();
 
 
+                    if ($find) {
+                        if ($find['come_time'] != null && $find['leave_time'] == null && $find['date'] == $request['date']) {
+                            $saveAttendance = $find;
+                            $saveAttendance->update([
 
-        if( !empty($input)  && count($input) > 0){
+                                    'leave_time' =>  date("h:i:s A", strtotime($request->time)),
+                                    'date' => $request->date
 
-                $user_id= $input['id'];
-        }
+                                ]);
 
-
-        if (!empty($request->RF_Person_Code)){
-
-            $input = User::where('RF_code','=',$request->RF_Person_Code)->first();
-            $user_id = $input['id'];
-        }
-
-
-
-
-        if($user_id){
-
-
-
-             $find = attendance::where('user_id','=',$user_id)->where('date','=',$request->date)->first();
-
-                // return $find->count() > 0 ? 'true' : 'false';
-
-            if($find){
-
-                if( $find['come_time'] != null && $find['leave_time'] == null && $find['date'] == $request['date'] ){
-
-                    $date = $request->date;
-                    $time = Carbon::now('Africa/Cairo')->toTimeString();
+                            return response()->json(['success' => true , 'attendance' => new attendanceResource($saveAttendance),'status' => 'leave','how'=> $input], 200);
+                        } else {
+                            return response()->json([ 'status' => '400', 'message' => 'attendance already taken']);
+                        }
+                    } else {
+                        $date = $request->date;
+                        $time = date("h:i:s A", strtotime($request->time));
 
 
-                    $saveAttendance = $find;
-                    $saveAttendance->update([
+                        $saveAttendance = attendance::create([
+                                'RF_code' => $RF_code,
+                                'come_time' => $time,
+                                'date' => $date
+                            ]);
 
-                        'leave_time' => $time,
-                        'date' => $date
-                    ]);
-
-                return response()->json(['success' => true , 'attendance' => new attendanceResource($saveAttendance)],200);
-
-                }else{
-
-                    return response()->json([ 'status' => '400', 'message' => 'attendance already taken']);
-
+                        return response()->json(['success' => true , 'attendance' => new attendanceResource($saveAttendance),'status' => 'come','how'=> $input], 200);
+                    }
                 }
+            }
+        }else if($request->type == 'scan'){
 
-            }else{
+            if($request->RF_code){
+                $RF_code = $request->RF_code;
 
-                    $date = $request->date;
-                    $time = Carbon::now('Africa/Cairo')->toTimeString();
+                $input = User::where('RF_code', '=', $RF_code)->first() ?
+                    User::where('RF_code', '=', $RF_code)->first() :
+                    members_extra_information::where('RF_code', '=', $RF_code)->first();
+
+                    $date = Carbon::now('Africa/Cairo')->toDateString();
+                    $time = date("h:i:s A", strtotime(Carbon::now('Africa/Cairo')->toTimeString())) ;
+
+                     $find = attendance::where('RF_code','=', $input['RF_code'])
+                    ->where('date','=',$date)->get();
 
 
-                    $saveAttendance = attendance::create([
-                        'user_id' =>  $user_id,
-                        'come_time' => $time,
-                        'date' => $date
-                    ]);
 
-                    return response()->json(['success' => true , 'attendance' => new attendanceResource($saveAttendance)],200);
+                    if (count($find) > 0)  {
+
+
+                        foreach ($find as $k => $v){
+
+                            $date = Carbon::now('Africa/Cairo')->toDateString();
+                            $time = date("h:i:s A", strtotime(Carbon::now('Africa/Cairo')->toTimeString())) ;
+
+                            $comeTimePlusSixHour = date("h:i:s A", strtotime(Carbon::parse($v['come_time'])->addHours(6)));
+
+
+                            if ($v['come_time'] != null && $v['leave_time'] == null && $v['date'] == $date &&   $time < $comeTimePlusSixHour  ) {
+
+                                $saveAttendance = $v;
+                                $saveAttendance->update([
+
+                                        'leave_time' =>  $time,
+                                        'date' => $date
+
+                                    ]);
+
+                                return response()->json(['success' => true , 'attendance' => new attendanceResource($saveAttendance),'status' => 'leave','how'=> $input], 200);
+
+                            }else if($v['come_time'] != null && $v['leave_time'] != null && $v['date'] == $date &&  $time > $comeTimePlusSixHour ){
+                                    return $time .' ' . $comeTimePlusSixHour;
+                                $RF_code = $request->RF_code;
+
+                                $date = Carbon::now('Africa/Cairo')->toDateString();
+                                $time = date("h:i:s A", strtotime(Carbon::now('Africa/Cairo')->toTimeString())) ;
+
+                                $saveAttendance = attendance::create([
+                                        'RF_code' => $RF_code,
+                                        'come_time' => $time,
+                                        'date' => $date
+                                    ]);
+
+                                return response()->json(['success' => true , 'attendance' => new attendanceResource($saveAttendance),'status' => 'come','how' => $input], 200);
+
+                            }else{
+
+                                return response()->json([ 'status' => '400', 'message' => 'attendance already taken']);
+
+                            }
+
+
+
+
+                        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        // else if($find['come_time'] != null && $find['leave_time'] == null && $find['date'] == $date && $time >= $timeAfterSixHour ){
+
+                        //     $RF_code = $request->RF_code;
+
+                        //     $date = Carbon::now('Africa/Cairo')->toDateString();
+                        //     $time = date("h:i:s A", strtotime(Carbon::now('Africa/Cairo')->toTimeString())) ;
+
+                        //     $saveAttendance = attendance::create([
+                        //             'RF_code' => $RF_code,
+                        //             'come_time' => $time,
+                        //             'date' => $date
+                        //         ]);
+
+                        //     return response()->json(['success' => true , 'attendance' => new attendanceResource($saveAttendance),'status' => 'come','how' => $input], 200);
+
+                        // }else if($find['come_time'] != null && $find['leave_time'] != null && $find['date'] == $date && $time >= $timeAfterSixHour ){
+
+                        //     $RF_code = $request->RF_code;
+
+                        //     $date = Carbon::now('Africa/Cairo')->toDateString();
+                        //     $time = date("h:i:s A", strtotime(Carbon::now('Africa/Cairo')->toTimeString())) ;
+
+                        //     $saveAttendance = attendance::create([
+                        //             'RF_code' => $RF_code,
+                        //             'come_time' => $time,
+                        //             'date' => $date
+                        //         ]);
+
+                        //     return response()->json(['success' => true , 'attendance' => new attendanceResource($saveAttendance),'status' => 'come','how' => $input], 200);
+
+                        // }else{
+
+                        //     return response()->json([ 'status' => '400', 'message' => 'attendance already taken']);
+
+                        // }
+
+
+
+
+
+
+
+                    } else {
+
+                        $RF_code = $request->RF_code;
+
+                        $date = Carbon::now('Africa/Cairo')->toDateString();
+                        $time = date("h:i:s A", strtotime(Carbon::now('Africa/Cairo')->toTimeString())) ;
+
+                        $saveAttendance = attendance::create([
+                                'RF_code' => $RF_code,
+                                'come_time' => $time,
+                                'date' => $date
+                            ]);
+
+                        return response()->json(['success' => true , 'attendance' => new attendanceResource($saveAttendance),'status' => 'come','how' => $input], 200);
+                    }
 
             }
-
         }
+
+
+
+
+
+
+
+
+
+
+
+
+        // if($user_id){
+
+
+
+        //      $find = attendance::where('user_id','=',$user_id)->where('date','=',$request->date)->first();
+
+        //         // return $find->count() > 0 ? 'true' : 'false';
+
+        //     if($find){
+
+        //         if( $find['come_time'] != null && $find['leave_time'] == null && $find['date'] == $request['date'] ){
+
+        //             $date = $request->date;
+        //             $time = Carbon::now('Africa/Cairo')->toTimeString();
+
+
+        //             $saveAttendance = $find;
+        //             $saveAttendance->update([
+
+        //                 'leave_time' => $time,
+        //                 'date' => $date
+        //             ]);
+
+        //         return response()->json(['success' => true , 'attendance' => new attendanceResource($saveAttendance)],200);
+
+        //         }else{
+
+        //             return response()->json([ 'status' => '400', 'message' => 'attendance already taken']);
+
+        //         }
+
+        //     }else{
+
+        //             $date = $request->date;
+        //             $time = Carbon::now('Africa/Cairo')->toTimeString();
+
+
+        //             $saveAttendance = attendance::create([
+        //                 'user_id' =>  $user_id,
+        //                 'come_time' => $time,
+        //                 'date' => $date
+        //             ]);
+
+        //             return response()->json(['success' => true , 'attendance' => new attendanceResource($saveAttendance)],200);
+
+        //     }
+
+        // }
     }
 
     public function attendanceSelectedToDelete(Request $request){

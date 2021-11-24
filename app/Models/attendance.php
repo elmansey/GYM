@@ -11,15 +11,12 @@ class attendance extends Model
 
     protected $table = 'attendance';
     protected $fillable = [
-        'user_id',
+        'RF_code',
         'date',
         'come_time',
         'leave_time'
     ];
 
-    public function userRelation (){
 
-        return $this->belongsTo(User::class,'user_id');
-    }
 
 }
