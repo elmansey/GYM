@@ -13,30 +13,16 @@
 
                            <div class="row">
 
-                            <div class="col-md-3" style="margin-bottom: 40px;">
-                                <label>attendance from</label>
-                                <input class="form-control" type="date"  @change="filters"  v-model="showFilter.from"  />
-                            </div>
 
-                            <div class="col-md-3" style="margin-bottom: 40px;">
-                                <label>attendance to</label>
-                                <input class="form-control" type="date"  @change="filters"  v-model="showFilter.to" />
-                            </div>
 
-                            <div class="col-md-3" style="margin-bottom: 40px;">
+                            <div class="col-lg-4" style="margin-bottom: 40px;">
                                 <label>RF code</label>
                                 <input class="form-control" type="text"  placeholder="RF code"    v-model="RF_Filter"  />
                             </div>
 
-                            <div class="col-md-3" style="margin-bottom: 40px;">
-                                <label>name</label>
-                                <input class="form-control" type="text" placeholder="name"   v-model="nameFilter"  />
-                            </div>
+                            <div class="col-lg-6" style="height:auto">
 
-                           </div>
-
-                                 <div class="row">
-                                        <div  style="display:inline-block;margin-bottom: 10px;margin-left:50px">
+                                    <div  style="display:flex;margin-top:29px">
                                             <div>
                                                 <b-button-group style="height:auto;">
                                                     <b-button size="sm"  variant="dark" style="padding: 2px 7px;">
@@ -50,8 +36,6 @@
                                                                     type="checkbox"
                                                                     @click="selectAll"
                                                                      v-model="selectedAll"
-
-
 
                                                                 />
                                                             </div>
@@ -87,26 +71,35 @@
                                                 placement="top"
                                                 >select to choose</b-tooltip
                                             >
-                                        </div>
 
-                                     <div style="margin-left: 4px;">
-                                        <b-dropdown size="small" text="Action"  variant="dark" style="margin-bottom: 14px;">
-                                                <b-dropdown-item><i style="font-size:15px" class="fa fa-file-excel-o" @click.prevent="AttendanceExport"></i> export excel</b-dropdown-item>
-                                                <b-dropdown-item><i style="font-size:15px" class="fa fa-print" @click.prevent="printNow"></i> Print </b-dropdown-item>
+                                            <div style="margin-left: 4px;">
+                                                <b-dropdown size="small" text="Action"  variant="dark" style="margin-bottom: 14px;">
+                                                        <b-dropdown-item><i style="font-size:15px" class="fa fa-print" @click.prevent="printNow"></i> Print </b-dropdown-item>
 
-                                        </b-dropdown>
-                                     </div>
+                                                </b-dropdown>
+                                            </div>
+
+                                            <b-col md="6" style="display:inline-block">
+                                                    <b-form-select v-model="perPage" :options="pageOptions"></b-form-select>
+                                            </b-col>
+                                    </div>
+
+
+                            </div>
+
+
+
+                           </div>
 
 
 
 
-                                    <b-col md="6" style="display:inline-block">
-                                        <b-form-group label-cols="2" label="Per page" class="mb-0 datatable-select">
-                                            <b-form-select v-model="perPage" :options="pageOptions"></b-form-select>
-                                        </b-form-group>
-                                    </b-col>
 
-                                 </div>
+
+
+
+
+
                             <div class="datatable-vue m-0">
 
 
@@ -122,13 +115,8 @@
 
 
                                     >
-                                       <template #cell(ID)="data">
-                                            {{ data.index + 1 }}
-                                        </template>
 
-                                       <template #cell(status)="data">
-                                            <feather type="check-square"></feather>
-                                        </template>
+
 
                                        <template #cell(check)="data">
                                             <input  type="checkbox" :value="data.item.id" v-model="selected" />
@@ -211,13 +199,9 @@ export default {
 
             tablefields: [
                 'check',
-                'ID',
-                { key: 'userRelation.name', label: 'name', sortable: false, },
-                { key: 'userRelation.RF_code', label: 'RF code', sortable: false, },
-                { key: 'date', label: 'attendance', sortable: false, },
-                { key: 'come_time', label: 'come time', sortable: false, },
-                { key: 'leave_time', label: 'leave time', sortable: false, },
-                 'status'
+                { key: 'RF_code', label: 'RF code', sortable: false, },
+                { key: 'come_dateTime', label: 'come dateTime', sortable: false, },
+                { key: 'leave_dateTime', label: 'leave dateTime', sortable: false, },
             ],
             totalRows: 1,
             currentPage: 1,
@@ -261,21 +245,19 @@ export default {
 
         nFilter(){
 
-            if(this.nameFilter.length > 0){
-                    return  this.attendance.filter(item => {
-                                                    //match
-                    return item.userRelation.name.includes((this.nameFilter ).toLowerCase())
-                })
-
-            }else {
+            if(this.RF_Filter.length > 0){
 
                 return  this.attendance.filter(item => {
                                                 //match
-                    return item.userRelation.RF_code.includes((this.RF_Filter ).toLowerCase())
+                    return item.RF_code.includes((this.RF_Filter ).toLowerCase())
                 })
+
+
+            }else{
+                return this.attendance
             }
 
-        },
+        }
 
 
     },
@@ -344,26 +326,26 @@ export default {
 
 
 
-        filters(){
+        // filters(){
 
-            let formData = new FormData();
-            formData.append("from",this.showFilter.from)
-            formData.append("to",this.showFilter.to)
+        //     let formData = new FormData();
+        //     formData.append("from",this.showFilter.from)
+        //     formData.append("to",this.showFilter.to)
 
-            axios.post('attendanceFilter',formData)
-            .then(res => {
+        //     axios.post('attendanceFilter',formData)
+        //     .then(res => {
 
-                if(res.data.success){
-                    this.attendance = Object.values(res.data.attendance)
-                    this.totalRows = this.attendance.length
-                }
+        //         if(res.data.success){
+        //             this.attendance = Object.values(res.data.attendance)
+        //             this.totalRows = this.attendance.length
+        //         }
 
 
-            })
-            .catch(err => {
-                console.error(err);
-            })
-        }
+        //     })
+        //     .catch(err => {
+        //         console.error(err);
+        //     })
+        // }
     },
 
 
@@ -373,6 +355,7 @@ export default {
             this.selectedAll = selected.length === Object.values(this.attendance).length;
             this.emptyCheckData = selected.length < 1;
             this.selectedAll = selected.length === Object.values(this.attendance).length;
+
         }
     }
 }

@@ -12,9 +12,8 @@ class attendance extends Model
     protected $table = 'attendance';
     protected $fillable = [
         'RF_code',
-        'date',
-        'come_time',
-        'leave_time'
+        'come_dateTime',
+        'leave_dateTime',
     ];
 
 

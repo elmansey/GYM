@@ -16,10 +16,8 @@ class CreateAttendanceTable extends Migration
         Schema::create('attendance', function (Blueprint $table) {
             $table->id();
             $table->string('RF_code');
-            $table->string('date');
-            $table->string('come_time');
-            $table->string('leave_time')->nullable();
-            $table->boolean('status')->default(true);
+            $table->string('come_dateTime');
+            $table->string('leave_dateTime')->nullable();
             $table->timestamps();
         });
     }

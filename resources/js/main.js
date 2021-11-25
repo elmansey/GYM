@@ -104,8 +104,7 @@ Vue.use(FormGroupPlugin)
 Vue.use(vue2Dropzone)
 Vue.use(VueFormWizared)
 Vue.use(Vuelidate)
-
-// global mixin
+    // global mixin
 Vue.mixin({
     methods: {
 

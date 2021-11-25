@@ -3,141 +3,8 @@
         <Breadcrumbs main="dashboard" title="take attendance"/>
         <!-- Container-fluid starts-->
 
-        <!-- <b-alert style="position: absolute;top: 55px;z-index: 10000;width:30%;right: 40px;border-radius: 20px;" :show="show" variant="light">
-                            <h4 class="alert-heading">Well done!</h4>
-                                        <div class="card-body "  >
-                                                <div class="d-flex flex-row pb-1">
-
-                                                    <img
-                                                    alt=""
-                                                    :src=" responseUserData.profile_picture   ? '../../profile_pictures/'+responseUserData.profile_picture :  '../../profile_pictures/DefaultProfile.jpg'"
-                                                    class="img-thumbnail  border-0 rounded-circle  mr-3  list-thumbnail align-self-center "
-                                                    style="width:40px;hight:40px"
-                                                    >
-
-                                                    <div class="d-flex flex-grow-1 min-width-zero">
-                                                        <div class="m-2 pl-0  align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero ">
-                                                            <div class="min-width-zero">
-                                                                <p>{{ responseUserData.name }}</p>
-                                                                <p class="mb-0 truncate list-item-heading">
-
-                                                                    {{ responseUserData.RF_code }}
-
-
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                        </div>
-
-        </b-alert> -->
-
 
         <div class="container-fluid">
-
-
-
-
-
-                <!-- <div class="col-lg-12" style="padding:0px">
-                    <div class="card">
-                        <div class="col-lg-4">
-                                   <form  @submit.prevent="saveAttendance" class="form theme-form datepicker-responsive">
-                            <div class="card-body">
-
-                                    <div class="form-group m-t-15 m-checkbox-inline mb-0 custom-radio-ml">
-										<div class="radio radio-primary d-inline-block">
-											<b-form-radio name="radio3" value="name" v-model="type">name</b-form-radio>
-										</div>
-										<div class="radio radio-primary d-inline-block">
-											<b-form-radio name="radio3" value="RF_Person_Code" v-model="type"> RF code</b-form-radio>
-										</div>
-
-									</div>
-                                <div class="form-group form-row" v-if="type == 'name'">
-                                     <label class="col-sm-3 col-form-label text-right">name</label>
-                                    <div class="col-xl-5 col-sm-9">
-
-
-                                          <multiselect
-
-
-                                                tag-placeholder="Add this as new tag"
-                                                placeholder="Search by name or choose person"
-                                                v-model="attendanceDate.name"
-                                                label="name"
-                                                track-by="id"
-
-                                                :options="options"
-                                                :multiple="false"
-                                                :taggable="false"
-                                                :class="[!$v.attendanceDate.name.requiredIf ? 'is-invalid' : '']"
-
-                                            >
-                                            </multiselect>
-                                           <small style="color:red" v-if="( submited &&  !$v.attendanceDate.name.requiredIf)"> the  name  failde is required   </small>
-
-                                    </div>
-
-                                </div>
-
-
-
-                                <div class="form-group form-row" v-if="type == 'RF_Person_Code'">
-                                    <label class="col-sm-3 col-form-label text-right"> RF code</label>
-                                    <div class="col-xl-5 col-sm-9" style="height:125px;overflow:scroll">
-                                        <input  type="text"  :class="['form-control', submited && !$v.attendanceDate.RF_Person_Code.requiredIf  ? 'is-invalid' : '']" style="margin: 10px;width: 96%;" @keyup="searchInUsersByRFcode" v-model="attendanceDate.RF_Person_Code" placeholder="type or search by RF code"/>
-                                        <b-form-invalid-feedback style="color:red" v-if="( submited && !$v.attendanceDate.RF_Person_Code.requiredIf)"> the  RF code  failde is required   </b-form-invalid-feedback>
-
-                                          <div style="width: 100%" >
-                                               <p  style="width:100%;margin: 9px 15px;cursor: pointer;" v-for="(item,index) in searchData" :key="index" @click="setValue(item.RF_code)">{{ item.RF_code }} </p>
-                                               <p v-if=" attendanceDate.RF_Person_Code.length > 1 && searchData.length < 1" style="width:100%;margin: 9px 15px;" > no data found like this RF code </p>
-
-                                          </div>
-
-
-                                    </div>
-
-                                </div>
-
-                                <div class="form-group form-row mb-0">
-                                    <label class="col-sm-3 col-form-label text-right">date</label>
-                                    <div class="col-sm-3">
-
-                                        <datepicker     :inline="true"  format="dd-MM-yyyy" v-model="attendanceDate.date"></datepicker>
-                                        <small style="color: red"  v-if="error.date">{{ error.date[0] }}</small>
-                                    </div>
-                                </div>
-
-                                <div class="form-group form-row mb-0">
-
-                                    <div class="col-lg-12 m-t-10">
-                                            <button id="default-custom-success" type="submit" class="btn btn-pill btn-air-success btn-success">save</button>
-                                     </div>
-                                </div>
-
-                            </div>
-                        </form>
-                        </div>
-
-
-                    </div>
-                </div>
-                 -->
-
-
-
-
-
-
-                    <!-- <div class="col-lg-6">
-                            <div class="card">
-                                <div class="card-body">
-
-                                </div>
-                            </div>
-                    </div> -->
 
                 <div class="card">
 
@@ -222,7 +89,13 @@
                                                                     <div class="pl-3 pr-2">
 
                                                                         <p class="font-weight-medium mb-0">{{ item.name }}</p>
-                                                                        <p class="text-muted mb-0 text-small">{{ item.RF_code }}</p>
+                                                                        <input readonly style="border:none"  :id="'myCopy'+index"  :value="item.RF_code" />
+                                                                        <i class="fa fa-copy" :id="'copied'+index" @click="copyThis(index)"></i>
+
+
+                                                                            <b-tooltip :target="'copied'+index" triggers="hover" placement="top">
+                                                                                 <p :id="'cop'+index">{{ 'copy  : '  + item.RF_code  + '  ? '}} </p>
+                                                                            </b-tooltip>
 
                                                                     </div>
                                                             </div>
@@ -297,6 +170,7 @@
                     }
 
                 },
+                copiedText:'',
 
 
 
@@ -343,7 +217,10 @@
                                                 //match
                     return item.RF_code.includes((this.RF_Person_Code).toLowerCase())
                 })
-            }
+            },
+
+
+
 
         },
 
@@ -377,6 +254,34 @@
 
 
 
+
+            copyThis(index){
+
+                window.getSelection().removeAllRanges()
+
+                var test = document.getElementById(`myCopy${index}`)
+                    test.select()
+                    console.log(test.value)
+
+                    try {
+
+                        var successful = document.execCommand('copy');
+
+                        var  contentTool = document.getElementById(`cop${index}`)
+
+                        contentTool.innerHTML =  successful ? 'copied : ' + test.value + '  !! ' : ''
+
+
+                    } catch (err) {
+                        console.log(err)
+                    }
+
+
+
+            },
+
+
+
             //  date
             handelData(){
                 var today = new Date(this.attendanceDate.select.date);
@@ -402,7 +307,7 @@
                                 this.$notify({
                                     group: 'app',
                                     type: 'success',
-                                    duration: 10000,
+                                    duration: 1000,
                                     speed: 1000,
                                     title: 'attendance success',
                                     text: 'god bay ' + '<span>' + res.data.how.name+ '</span>' + ' <h6> leave </h6> ' +
@@ -416,7 +321,7 @@
                                 this.$notify({
                                     type: 'success',
                                     group:"app",
-                                    duration: 10000,
+                                    duration: 1000,
                                       speed: 1000,
                                     title: 'attendance success',
                                     text: 'welcome ' + '<span>' + res.data.how.name+ '</span>' + ' <h6> come </h6> ' +
@@ -431,7 +336,7 @@
                               this.$notify({
                                     group:"app",
                                     type: 'danger',
-                                    duration: 10000,
+                                    duration: 1000,
                                     speed: 1000,
                                     title: 'attendance are already taken ',
                                     text: '<p> attendance are already taken</p>'

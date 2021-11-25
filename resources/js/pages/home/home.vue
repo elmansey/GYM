@@ -79,69 +79,6 @@
 
 
 
-        <!-- <div class="col-xl-3 xl-50 chart_data_right box-col-12">
-          <px-card>
-            <div slot="with-padding">
-              <div class="media align-items-center">
-                <div class="media-body right-chart-content">
-                  <h4>
-                    $95,900
-                    <span class="new-box">Hot</span>
-                  </h4>
-                  <span>Purchase Order Value</span>
-                </div>
-                <div class="knob-block text-center" id="ordervalue"></div>
-              </div>
-            </div>
-          </px-card>
-        </div> -->
-
-
-        <!-- <div class="col-xl-3 xl-50 chart_data_right second d-none">
-          <px-card>
-            <div slot="with-padding">
-              <div class="media align-items-center">
-                <div class="media-body right-chart-content">
-                  <h4>
-                    $95,000
-                    <span class="new-box">New</span>
-                  </h4>
-                  <span>Product Order Value</span>
-                </div>
-                <div class="knob-block text-center" id="productvalue"></div>
-              </div>
-            </div>
-          </px-card>
-        </div> -->
-
-<!--
-         <div class="col-xl-5 col-lg-12 box-col-12">
-          <px-card>
-            <div slot="headerCustom">
-              <div class="row">
-                <div class="col-9">
-                  <h5>Finance</h5>
-                </div>
-                <div class="col-3 text-right">
-                  <i class="text-muted" data-feather="navigation"></i>
-                </div>
-              </div>
-            </div>
-            <div slot="with-padding">
-              <div class="chart-container">
-                <div id="columnchart">
-                  <apexchart
-                    height="350"
-                    type="bar"
-                    :options="chart7.options"
-                    :series="chart7.series"
-                  ></apexchart>
-                </div>
-              </div>
-            </div>
-          </px-card>
-        </div> -->
-
         <div class="col-sm-12 col-xl-6">
                 <div class="card">
                   <div class="card-header">
@@ -190,6 +127,66 @@
               <functional-calendar></functional-calendar>
             </div>
           </px-card>
+        </div>
+
+
+        <div class="col-xl-12 col-lg-12 ">
+            <div class="col-xl-12">
+              <div class="card">
+                <div class="card-body">
+                  <div class="best-seller-table responsive-tbl">
+                    <div class="item">
+                      <div class="table-responsive product-list">
+                        <table class="table table-bordernone">
+                          <thead>
+                            <tr>
+                              <th class="f-22">Subscriptions to be paid</th>
+                              <th>Date</th>
+                              <th>Product</th>
+                              <th>Country</th>
+                              <th>Total</th>
+                              <th class="text-right">Status</th>
+                            </tr>
+                          </thead>
+
+                          <tbody>
+                            <tr>
+                              <td>
+                                <div class="d-inline-block align-middle">
+                                  <img
+                                    class="img-40 m-r-15 rounded-circle align-top"
+                                    src=""
+                                    alt
+                                  />
+                                  <div class="status-circle bg-primary"></div>
+                                  <div class="d-inline-block">
+                                    <span>John keter</span>
+                                    <p class="font-roboto">2019</p>
+                                  </div>
+                                </div>
+                              </td>
+                              <td>06 August</td>
+                              <td>CAP</td>
+                              <td>
+                                <i class="flag-icon flag-icon-gb"></i>
+                              </td>
+                              <td>
+                                <span class="label">$5,08,652</span>
+                              </td>
+                              <td class="text-right">
+                                <i class="fa fa-check-circle"></i>Done
+                              </td>
+                            </tr>
+
+
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
         </div>
 
 
@@ -364,7 +361,8 @@ export default {
                     // var randomColor = '#'+Math.floor(Math.random()*16777215).toString(16);
                     Object.entries(item).map((val,k) => {
 
-                         this.bar_chart.chartData_1.push([val[0],val[1],'#007bff'])
+                        this.bar_chart.chartData_1.push([val[0],val[1],'#007bff'])
+
                     })
 
                 })
