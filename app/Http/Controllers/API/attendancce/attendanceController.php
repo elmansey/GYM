@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API\attendancce;
 
+use DateTime;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\attendance;
@@ -95,11 +96,24 @@ class attendanceController extends Controller
                             $date = Carbon::now('Africa/Cairo')->toDateString();
                             $time = date("h:i:s A", strtotime(Carbon::now('Africa/Cairo')->toTimeString())) ;
 
-                            $comeTimePlusSixHour = date("h:i:s A", strtotime(Carbon::parse($v['come_time'])->addHours(6)));
+                            // $comeTimePlusSixHour = date("h:i:s A", strtotime(Carbon::parse($v['come_time'])->addHours(6)));
 
 
-                            if ($v['come_time'] != null && $v['leave_time'] == null && $v['date'] == $date &&   $time < $comeTimePlusSixHour  ) {
+                            if ($v['come_time'] != null && $v['leave_time'] == null && $v['date'] == $date  ) {
 
+                                $t1 = new DateTime($time);
+                                $t2 = new DateTime($v['come_time']);
+
+                                $difference = $t1->diff($t2);
+                              return  $diffInHours   = $difference->h;
+
+                                // if($time < $comeTimePlusSixHour){
+
+                                //     return 'yes '.$time.' < '.$comeTimePlusSixHour . ' 6 hour ';
+                                // }else if($time > $comeTimePlusSixHour){
+                                //     return 'yes '.$time.' > '.$comeTimePlusSixHour . ' 6 hour ';
+                                // }
+                                //  $time  $comeTimePlusSixHour;
                                 $saveAttendance = $v;
                                 $saveAttendance->update([
 
@@ -135,60 +149,6 @@ class attendanceController extends Controller
 
 
                         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                        // else if($find['come_time'] != null && $find['leave_time'] == null && $find['date'] == $date && $time >= $timeAfterSixHour ){
-
-                        //     $RF_code = $request->RF_code;
-
-                        //     $date = Carbon::now('Africa/Cairo')->toDateString();
-                        //     $time = date("h:i:s A", strtotime(Carbon::now('Africa/Cairo')->toTimeString())) ;
-
-                        //     $saveAttendance = attendance::create([
-                        //             'RF_code' => $RF_code,
-                        //             'come_time' => $time,
-                        //             'date' => $date
-                        //         ]);
-
-                        //     return response()->json(['success' => true , 'attendance' => new attendanceResource($saveAttendance),'status' => 'come','how' => $input], 200);
-
-                        // }else if($find['come_time'] != null && $find['leave_time'] != null && $find['date'] == $date && $time >= $timeAfterSixHour ){
-
-                        //     $RF_code = $request->RF_code;
-
-                        //     $date = Carbon::now('Africa/Cairo')->toDateString();
-                        //     $time = date("h:i:s A", strtotime(Carbon::now('Africa/Cairo')->toTimeString())) ;
-
-                        //     $saveAttendance = attendance::create([
-                        //             'RF_code' => $RF_code,
-                        //             'come_time' => $time,
-                        //             'date' => $date
-                        //         ]);
-
-                        //     return response()->json(['success' => true , 'attendance' => new attendanceResource($saveAttendance),'status' => 'come','how' => $input], 200);
-
-                        // }else{
-
-                        //     return response()->json([ 'status' => '400', 'message' => 'attendance already taken']);
-
-                        // }
-
-
-
-
-
 
 
                     } else {
