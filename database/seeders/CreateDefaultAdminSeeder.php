@@ -24,12 +24,12 @@ class CreateDefaultAdminSeeder extends Seeder
 
         DB::table('users')->delete();
 
-        $admin = User::create([
+        $owner = User::create([
 
 
-            'name' => 'test',
-            'user_name' => 'test admin',
-            'email' => 'admin_default@gmail.com',
+            'name' => 'owner',
+            'user_name' => 'owner test ',
+            'email' => 'owner@gmail.com',
             'password' => bcrypt(123456),
             'phone' => '01019535581' ,
             'RF_code' => '12-3456-e-1234' ,
@@ -37,23 +37,26 @@ class CreateDefaultAdminSeeder extends Seeder
 
         ]);
 
-        $admin->assignRole(['id' => 1 , 'name' => 'admin']);
+        $owner->assignRole(['id' => 1 , 'name' => 'owner']);
 
 
-        $dataQR =  $admin['Personal_uuid'];
-        $QRName = 'profile_QR/'.md5($admin['Personal_uuid']) . '.png';
+        $dataQR =  $owner['Personal_uuid'];
+        $QRName = 'profile_QR/'.md5($owner['Personal_uuid']) . '.png';
         $qr =  QRCode::text($dataQR)->setOutfile(public_path($QRName))->png();
-        $update = User::find($admin->id);
+        $update = User::find($owner->id);
         $update->update(['qr_code' =>  $QRName]);
+
+
+
 
 
 
         $staff = User::create([
 
 
-            'name' => 'test staff',
-            'user_name' => 'user test',
-            'email' => 'staff_default@gmail.com',
+            'name' => 'staff',
+            'user_name' => ' test staff',
+            'email' => 'staff@gmail.com',
             'password' => bcrypt(123456),
             'phone' => '01019535581' ,
             'RF_code' => '33-q130-e-1234' ,
@@ -62,7 +65,31 @@ class CreateDefaultAdminSeeder extends Seeder
 
         ]);
 
-        $staff->assignRole(['id' => 2 , 'name' => 'staff']);
+        $staff->assignRole(['id' => 3 , 'name' => 'staff']);
+
+        $dataQR =  $staff['Personal_uuid'];
+        $QRName = 'profile_QR/'.md5($staff['Personal_uuid']) . '.png';
+        $qr =  QRCode::text($dataQR)->setOutfile(public_path($QRName))->png();
+        $update = User::find($staff->id);
+        $update->update(['qr_code' =>  $QRName]);
+
+
+
+        $staff = User::create([
+
+
+            'name' => 'admin',
+            'user_name' => ' test admin',
+            'email' => 'admin@gmail.com',
+            'password' => bcrypt(123456),
+            'phone' => '01019535581' ,
+            'RF_code' => '335285-q130-e-1234' ,
+
+
+
+        ]);
+
+        $staff->assignRole(['id' => 2 , 'name' => 'admin']);
 
         $dataQR =  $staff['Personal_uuid'];
         $QRName = 'profile_QR/'.md5($staff['Personal_uuid']) . '.png';

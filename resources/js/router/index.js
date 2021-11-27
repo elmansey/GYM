@@ -192,6 +192,16 @@ const routes = [
 
 
 
+            {
+
+                path: 'notification',
+                name: 'notification',
+                component: require('@/pages/notification/notification').default,
+
+            },
+
+
+
 
 
             {

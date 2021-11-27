@@ -1,8 +1,7 @@
 import './bootstrap'
 import Vue from 'vue'
 
-// real time db plugin firebase
-import { rtdbPlugin } from 'vuefire'
+
 
 import App from './App.vue'
 import BootstrapVue from 'bootstrap-vue'
@@ -13,14 +12,32 @@ import {
 } from './store';
 
 
-import './firebase'
 
 
+//firebase confegration
+import firebase from 'firebase/app';
+import "firebase/database";
 
-Vue.use(rtdbPlugin)
+
+const firebaseConfig = {
+    apiKey: "AIzaSyBaIQZblT9_y0jzKbWhqfVLDZs1mFZqrHU",
+    authDomain: "gymnotification-9bd6f.firebaseapp.com",
+    databaseURL: "https://gymnotification-9bd6f-default-rtdb.firebaseio.com",
+    projectId: "gymnotification-9bd6f",
+    storageBucket: "gymnotification-9bd6f.appspot.com",
+    messagingSenderId: "795536904948",
+    appId: "1:795536904948:web:d2b8998605acb5d131c4a1",
+    measurementId: "G-D7Q7DJ566V"
+};
+
+Vue.config.productionTip = false
+firebase.initializeApp(firebaseConfig);
+
+window.firebase = firebase
+
+//firebase confegration
 
 
-// Vue.config.productionTip = false
 
 import Notifications from 'vue-notification'
 import velocity from 'velocity-animate'
@@ -126,7 +143,10 @@ Vue.use(FormGroupPlugin)
 Vue.use(vue2Dropzone)
 Vue.use(VueFormWizared)
 Vue.use(Vuelidate)
-    // global mixin
+
+
+
+// global mixin
 Vue.mixin({
     methods: {
 

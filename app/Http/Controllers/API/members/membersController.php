@@ -12,6 +12,7 @@ use App\Models\ClassSchedule;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UsersResource;
 use App\Http\Resources\groupsResource;
 use App\Models\members_extra_information;
 use App\Models\members_login_information;
@@ -140,7 +141,7 @@ class membersController extends Controller
                 $dataQR =  $ExtraInformation['Personal_uuid'];
                 $QRName = 'profile_QR/'.md5($ExtraInformation['Personal_uuid']) . '.png';
                 $qr =  QRCode::text($dataQR)->setOutfile(public_path($QRName))->png();
-                $update = members_extra_information::where('id',$id)->first();
+                $update = members_extra_information::where('id',$id)->with('memberShipsRelation')->first();
                 $update->update(
                     ['qr_code' =>  $QRName ]
                 );
@@ -159,7 +160,7 @@ class membersController extends Controller
 
 
 
-                return response()->json(['success' => true],200) ;
+                return response()->json(['success' => true ,'added_by' => new UsersResource(auth()->user()) , 'member' => $update],200) ;
 
     }
 

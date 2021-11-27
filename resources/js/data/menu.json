@@ -242,6 +242,27 @@
 
             ]
         },
+
+        {
+            "title": "notification",
+            "icon": "bell",
+            "type": "sub",
+            "badgeType": "primary",
+            "permission": "show-notification",
+            "active": false,
+            "children": [
+
+                {
+                    "path": "/dashboard/notification",
+                    "title": "notification table",
+                    "permission": "show-notification",
+                    "type": "link"
+
+
+                }
+            ]
+        },
+
         {
             "title": "products",
             "icon": "box",

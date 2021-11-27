@@ -17,12 +17,18 @@ class default_role_Seeder extends Seeder
     public function run()
     {
 
-        $role = Role::create([  'name'=> 'admin'  ]);
+        $role = Role::create([  'name'=> 'owner'  ]);
         $permissions = Permission::pluck('id','id')->all();
         $role->syncPermissions($permissions);
 
-         $role = Role::create([ 'name'=> 'staff'  ]);
-        $permissions = DB::table('permissions')->whereIn('id',[ 1,39,40,41])->pluck('id','id')->all();
+
+        $role = Role::create([ 'name'=> 'admin'  ]);
+        $permissions = DB::table('permissions')->whereIn('id',[ 1])->pluck('id','id')->all();
+        $role->syncPermissions($permissions);
+
+
+        $role = Role::create([ 'name'=> 'staff'  ]);
+        $permissions = DB::table('permissions')->whereIn('id',[ 1])->pluck('id','id')->all();
         $role->syncPermissions($permissions);
 
 

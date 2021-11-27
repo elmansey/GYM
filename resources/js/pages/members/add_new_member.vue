@@ -3,10 +3,8 @@
         <Breadcrumbs main="dashboard" :title="edit ? 'edit member':'registeration a new member'"/>
         <!-- Container-fluid starts-->
         <div class="container-fluid">
-                <button class="btn btn-success" @click="saveNotificationInFireBaseDatabase">try</button>
             <div class="select2-drpdwn">
                 <div class="row">
-
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header">
@@ -322,7 +320,6 @@ import 'vue2-dropzone/dist/vue2Dropzone.min.css'
 import Multiselect from 'vue-multiselect'
 import axios from 'axios'
 
-import {database} from '../../firebase'
 
 export default {
     data(){
@@ -558,13 +555,15 @@ export default {
 
 
 
-        saveNotificationInFireBaseDatabase(){
+        saveNotificationInFireBaseDatabase(title,body,DateTime){
 
-            var path = database.ref('notification');
 
-            	path.push({
-                    titel:'notification' ,
-                    body: 'mohamed has added new member',
+            var path =    firebase.database().ref("notification").orderByChild('DateTime')
+
+            path.push({
+                    title:title ,
+                    body: body,
+                    DateTime:DateTime,
                     read: 0,
                 }).then(() => {
                     console.log('sussess')
@@ -572,22 +571,42 @@ export default {
                     console.log('error')
                 })
 
-                // var db = database
-                // var id = 11
 
-                // set(ref(db, 'notification/'), {
-                //          titel:'notification' ,
-                //          body: 'mohamed has added new member',
-                //          read: 0,
-                //     })
-                //     .then(() => {
-                    
-                //     })
-                //     .catch((error) => {
-                    
-                //     });
+            // listen eny changes
+            path.on('value',(data) => {
+
+                if(data.val() != null){
+
+
+                    var notifications = Object.values(data.val())
+                    var unseen = []
+                    this.$store.dispatch('unSeenNotification', unseen)
+
+                    notifications.map((item,index) => {
+
+                        if(item.read == 0){
+
+                            unseen.push(item)
+
+                        }
+
+                    })
+
+                this.$store.dispatch('unreadNotificationNumber', unseen.length)
+
+                }
+
+            })
+
+                this.isLoadig = true
+
 
         },
+
+
+
+
+
 
 
         asyncFind (query) {
@@ -748,8 +767,36 @@ export default {
 
                     if(res.data.success){
 
+
+                       var role = this.$store.getters.authUserRole[0].role
+
+                        if(role != 'owner'){
+
+                            var title = 'New Member Added'
+                            var body  =  res.data.added_by.name  + ' add a new member ' + '    '
+                                        + 'member name : '+ res.data.member.name + '    '
+                                        + 'member phone : ' + res.data.member.phone + '    '
+                                        + 'membership : ' + res.data.member.member_ships_relation.name + '    '
+                                        + 'payment : ' + res.data.member.payment + '    '
+                                        + 'total payment : ' + res.data.member.total_payment + '    '
+                                        + 'start date : ' + res.data.member.start_date + '    '
+                                        + 'period Expiry : ' + res.data.member.period_Expiry + '    '
+                                        + 'Subscription period : ' + res.data.member.Subscription_period + '    '
+
+
+
+                            var today = new Date();
+                            var da = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate() + ' ' + today.getHours() +':' + today.getMinutes() + ':' + today.getSeconds()
+                            var DateTime = da
+
+                            this.saveNotificationInFireBaseDatabase(title ,body,DateTime)
+
+                        }
+
+
+
                         this.error = []
-                         this.memberData.name    = '',
+                        this.memberData.name    = '',
                         this.memberData.data_of_birth    = '',
                         this.memberData.group_id    = [],
                         this.memberData.address    = '',
@@ -923,6 +970,7 @@ export default {
         }
 
     }
+
 
 }
 </script>

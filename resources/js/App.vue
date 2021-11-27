@@ -41,9 +41,70 @@ export default {
       }
     },
     beforeMount() {
+
+
+
+
+
+
+
+            var path =    firebase.database().ref("notification").orderByChild("DateTime").limitToLast(4);
+            path.on('value',(data) => {
+
+                if(data.val() != null){
+
+                    var notifications = Object.values(data.val())
+                    var unseen = []
+                    this.$store.dispatch('unSeenNotification', unseen)
+                    notifications.map((item,index) => {
+
+                        if(item.read == 0){
+
+                            unseen.push(item)
+
+                        }
+
+                    })
+
+                    this.$store.dispatch('unreadNotificationNumber', unseen.length)
+
+                }
+
+            })
+
+
+            // listen eny changes
+            path.on('value',(data) => {
+
+                if(data.val() != null){
+
+                    var notifications = Object.values(data.val())
+                    var unseen = []
+                    this.$store.dispatch('unSeenNotification', unseen)
+                    notifications.map((item,index) => {
+
+                        if(item.read == 0){
+
+                            unseen.push(item)
+
+                        }
+
+                    })
+
+                    this.$store.dispatch('unreadNotificationNumber', unseen.length)
+                }
+
+        })
+
+
+
+
+
+
       if(!this.$store.getters.authentication   && this.$store.getters.AUTH_TOKEN ){
           this.$store.dispatch('userInfo')
       }
+
 
 
         axios.get('allSetting')

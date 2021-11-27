@@ -16,7 +16,7 @@ class PermissionTableSeeder extends Seeder
     public function run()
     {
 
-        $AdminPermissions = [
+        $ownerPermissions = [
             'dashboard',
             'show-roles',
             'show-roles-list',
@@ -67,6 +67,7 @@ class PermissionTableSeeder extends Seeder
             'edit-product',
             'delete-product',
             'show-store-details',
+            'show-notification'
 
 
 
@@ -75,8 +76,8 @@ class PermissionTableSeeder extends Seeder
         ];
 
 
-        foreach ($AdminPermissions as $adminPermission) {
-            Permission::create([  'name'=> $adminPermission ]);
+        foreach ($ownerPermissions as $ownerPermission) {
+            Permission::create([  'name'=> $ownerPermission ]);
         }
 
     }

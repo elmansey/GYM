@@ -105,45 +105,32 @@
     <div class="nav-right col-8 pull-right right-header p-0">
       <ul class="nav-menus">
 
-        <li class="onhover-dropdown">
+
+        <li  class="onhover-dropdown" v-if="can('show-notification')">
           <div class="notification-box">
             <feather type="bell"></feather
-            ><span class="badge badge-pill badge-secondary">4 </span>
+            ><span class="badge badge-pill badge-secondary" v-if=" this.$store.getters.unreadNotificationNumber"> {{ this.$store.getters.unreadNotificationNumber }}</span>
           </div>
-          <ul class="notification-dropdown onhover-show-div">
+          <ul style="width: 330px" class="notification-dropdown onhover-show-div">
             <li>
               <feather type="bell"></feather>
               <h6 class="f-18 mb-0">Notitications</h6>
             </li>
-            <li>
+
+            <li style="padding:10px" v-for="(item,index) in this.$store.getters.unSeenNotification" :key="index">
               <p>
-                <i class="fa fa-circle-o mr-3 font-primary"> </i>Delivery
-                processing <span class="pull-right">10 min.</span>
+                <i class="fa fa-circle-o mr-3 font-success"></i>
+                <router-link style="margin:-10px" :to="{ name :'' }"  >{{ item.title }} </router-link> <span class="pull-right badge-light badge-pill" style="color:#000" >{{handelTime(item.DateTime) }}</span>
               </p>
             </li>
+
             <li>
-              <p>
-                <i class="fa fa-circle-o mr-3 font-success"></i>Order
-                Complete<span class="pull-right">1 hr</span>
-              </p>
-            </li>
-            <li>
-              <p>
-                <i class="fa fa-circle-o mr-3 font-info"></i>Tickets
-                Generated<span class="pull-right">3 hr</span>
-              </p>
-            </li>
-            <li>
-              <p>
-                <i class="fa fa-circle-o mr-3 font-danger"></i>Delivery
-                Complete<span class="pull-right">6 hr</span>
-              </p>
-            </li>
-            <li>
-              <a class="btn btn-primary" href="#">Check all notification</a>
+              <router-link  class="btn btn-link"  :to="{name : 'notification'}">Check all notification</router-link>
             </li>
           </ul>
         </li>
+
+
 
         <!-- <li>
           <div class="mode">
@@ -268,10 +255,16 @@ var body = document.getElementsByTagName("body")[0];
 import { mapState, mapActions } from "vuex";
 import app from "../main";
 import Bookmark from "./bookmark";
+
+
+import moment from 'moment';
+
 export default {
   name: "Search",
   data() {
+
     return {
+
       terms: "",
       searchOpen: false,
       searchResult: false,
@@ -285,28 +278,50 @@ export default {
       openlanguage: false,
       mobile_accordian: false,
       mixLayout: "light-only",
-        userName:''
+      userName:'',
     };
   },
+
   components: {
     Bookmark,
   },
+
   computed: {
     ...mapState({
       menuItems: (state) => state.menu.searchData,
       megamenuItems: (state) => state.menu.megamenu,
     }),
+
       user(){
           this.userName = this.$store.getters.USER.name
       },
+
       role(){
           this.userName = this.$store.getters.USER.roles.name
       }
 
 
+
+
+
+
   },
 
   methods: {
+
+
+      handelTime(time){
+          const timeAgo =  moment(time).fromNow()
+
+          return timeAgo
+      },
+
+
+
+
+
+
+
     toggle_sidebar() {
       this.$store.dispatch("menu/opensidebar");
     },
@@ -358,6 +373,9 @@ export default {
 
 
 
+
+
+
     addFix() {
       body.classList.add("offcanvas");
       this.searchResult = true;
@@ -396,17 +414,25 @@ export default {
       this.$store.dispatch("layout/setLayout", val);
     },
   },
+
   watch: {
+
     "$i18n.locale"(to, from) {
       if (from !== to) {
         this.$router.go(this.$route.path);
       }
     },
+
     menuItems: function () {
       this.terms ? this.addFix() : this.removeFix();
       if (!this.menuItems.length) this.searchResultEmpty = true;
       else this.searchResultEmpty = false;
     },
+
+
+
+
+
   },
 };
 </script>

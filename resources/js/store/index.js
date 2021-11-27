@@ -8,6 +8,8 @@ import auth from './modules/Auth'
 import role from './modules/role'
 import admin from './modules/admin'
 import setting from './modules/setting'
+import notification from './modules/notification'
+
 Vue.use(Vuex);
 
 export const store = new Vuex.Store({
@@ -22,6 +24,7 @@ export const store = new Vuex.Store({
         role,
         admin,
         setting,
+        notification,
         namespaced: true
 
     }

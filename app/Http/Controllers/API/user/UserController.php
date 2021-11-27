@@ -63,7 +63,7 @@ class UserController extends Controller
 
     public function create()
     {
-         $roles = Role::all();
+         $roles = Role::where('name' ,'!=' , 'owner')->get();
 
 
         return response()->json(['success'=>true ,'roles'=> RolesResource::collection($roles)] ,200);
