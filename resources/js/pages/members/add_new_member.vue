@@ -3,6 +3,7 @@
         <Breadcrumbs main="dashboard" :title="edit ? 'edit member':'registeration a new member'"/>
         <!-- Container-fluid starts-->
         <div class="container-fluid">
+                <button class="btn btn-success" @click="saveNotificationInFireBaseDatabase">try</button>
             <div class="select2-drpdwn">
                 <div class="row">
 
@@ -321,6 +322,8 @@ import 'vue2-dropzone/dist/vue2Dropzone.min.css'
 import Multiselect from 'vue-multiselect'
 import axios from 'axios'
 
+import {database} from '../../firebase'
+
 export default {
     data(){
         return{
@@ -552,6 +555,39 @@ export default {
 
 
     methods: {
+
+
+
+        saveNotificationInFireBaseDatabase(){
+
+            var path = database.ref('notification');
+
+            	path.push({
+                    titel:'notification' ,
+                    body: 'mohamed has added new member',
+                    read: 0,
+                }).then(() => {
+                    console.log('sussess')
+                }).catch(() => {
+                    console.log('error')
+                })
+
+                // var db = database
+                // var id = 11
+
+                // set(ref(db, 'notification/'), {
+                //          titel:'notification' ,
+                //          body: 'mohamed has added new member',
+                //          read: 0,
+                //     })
+                //     .then(() => {
+                    
+                //     })
+                //     .catch((error) => {
+                    
+                //     });
+
+        },
 
 
         asyncFind (query) {

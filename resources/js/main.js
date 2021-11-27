@@ -1,5 +1,9 @@
 import './bootstrap'
 import Vue from 'vue'
+
+// real time db plugin firebase
+import { rtdbPlugin } from 'vuefire'
+
 import App from './App.vue'
 import BootstrapVue from 'bootstrap-vue'
 import VueFeather from 'vue-feather';
@@ -7,6 +11,16 @@ import router from './router'
 import {
     store
 } from './store';
+
+
+import './firebase'
+
+
+
+Vue.use(rtdbPlugin)
+
+
+// Vue.config.productionTip = false
 
 import Notifications from 'vue-notification'
 import velocity from 'velocity-animate'
@@ -18,14 +32,12 @@ Vue.use(Notifications, { velocity })
 
 
 
-// // firebase
 
 
 import print from 'print-js'
 
 
 
-// import './setting/pusherLaravelEcho' // pusher and laravel echo
 
 import Breadcrumbs from './components/bread_crumbs'
 import SmartTable from "vuejs-smart-table";
@@ -42,6 +54,17 @@ import Vuelidate from 'vuelidate'
 
 import './axios'
 
+
+
+
+
+
+
+
+
+
+
+
 import PxCard from './components/Pxcard.vue'
 Vue.component(PxCard.name, PxCard)
 
@@ -57,7 +80,6 @@ Vue.component('apexchart', VueApexCharts)
 Vue.use(FunctionalCalendar, {
     dayNames: ['M', 'T', 'W', 'T', 'F', 'S', 'S']
 });
-
 
 
 
