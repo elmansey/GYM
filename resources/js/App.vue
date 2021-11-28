@@ -12,6 +12,11 @@
 
     <router-view></router-view>
     <notifications position="top left"  group='app'   />
+
+
+
+
+
   </div>
 </template>
 
@@ -33,6 +38,12 @@ export default {
       this.timeOut();
     },
     methods:{
+
+
+
+
+
+
       timeOut(){
             var self = this;
             setTimeout(function(){
@@ -44,11 +55,8 @@ export default {
 
 
 
-
-
-
-
-            var path =    firebase.database().ref("notification").orderByChild("DateTime").limitToLast(4);
+                 // get count not read
+            var path =    firebase.database().ref("notification")
             path.on('value',(data) => {
 
                 if(data.val() != null){
@@ -72,15 +80,14 @@ export default {
 
             })
 
-
-            // listen eny changes
+            // to get notification content
+            var path =    firebase.database().ref("notification").limitToLast(3)
             path.on('value',(data) => {
 
                 if(data.val() != null){
 
                     var notifications = Object.values(data.val())
                     var unseen = []
-                    this.$store.dispatch('unSeenNotification', unseen)
                     notifications.map((item,index) => {
 
                         if(item.read == 0){
@@ -91,10 +98,27 @@ export default {
 
                     })
 
-                    this.$store.dispatch('unreadNotificationNumber', unseen.length)
+                    unseen.sort(function(a,b){
+
+                            return new Date(b.created_at) - new Date(a.created_at);
+                    });
+
+
+                    this.$store.dispatch('unSeenNotification', unseen)
+
+
+
                 }
 
-        })
+            })
+
+
+
+
+
+
+
+
 
 
 

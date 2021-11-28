@@ -194,9 +194,17 @@ const routes = [
 
             {
 
-                path: 'notification',
+                path: 'notification/:notificationId?',
                 name: 'notification',
                 component: require('@/pages/notification/notification').default,
+
+            },
+
+            {
+
+                path: 'history',
+                name: 'history',
+                component: require('@/pages/history/activity_logs').default,
 
             },
 

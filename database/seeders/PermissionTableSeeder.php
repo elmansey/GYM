@@ -67,8 +67,8 @@ class PermissionTableSeeder extends Seeder
             'edit-product',
             'delete-product',
             'show-store-details',
-            'show-notification'
-
+            'show-notification',
+            'show-history'
 
 
 

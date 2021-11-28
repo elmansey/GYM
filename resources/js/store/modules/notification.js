@@ -33,11 +33,14 @@ const actions = {
 
     unreadNotificationNumber({ commit }, payload) {
 
+
         commit('unreadNotificationNumber', payload)
     },
 
 
     unSeenNotification({ commit }, payload) {
+
+
         commit('unSeenNotification', payload)
     }
 

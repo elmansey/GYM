@@ -120,7 +120,10 @@
             <li style="padding:10px" v-for="(item,index) in this.$store.getters.unSeenNotification" :key="index">
               <p>
                 <i class="fa fa-circle-o mr-3 font-success"></i>
-                <router-link style="margin:-10px" :to="{ name :'' }"  >{{ item.title }} </router-link> <span class="pull-right badge-light badge-pill" style="color:#000" >{{handelTime(item.DateTime) }}</span>
+                <router-link :to="{name : 'notification',params:{notificationId: item.created_at}}"   style="margin:-10px"  >{{ item.title }} </router-link> <span class="pull-right badge-light badge-pill" style="color:#000" >{{handelTime(item.DateTime) }}</span>
+              </p>
+              <p style="margin-left: 20px">
+                  {{item.body.substring(0,30) + '...' }}
               </p>
             </li>
 
@@ -195,11 +198,17 @@
 
             </li>
 
-            <li >
+            <li v-if="can('show-history')">
 
+                    <router-link
+                    :to="{name : 'history'}"
+                    >
 
-                    <feather type="coffee"></feather>
-                    <span>History </span>
+                        <feather type="coffee"></feather>
+                        <span>History </span>
+
+                    </router-link>
+
             </li>
 
 
@@ -213,6 +222,13 @@
         </li>
       </ul>
     </div>
+
+
+
+
+
+
+
     <script class="result-template" type="text/x-handlebars-template">
       <div class="ProfileCard u-cf">
         <div class="ProfileCard-avatar">
@@ -241,12 +257,15 @@
         </div>
       </div>
     </script>
+
     <script class="empty-template" type="text/x-handlebars-template">
       <div class="EmptyMessage">
         Your search turned up 0 results. This most likely means the backend is down, yikes!
       </div>
     </script>
+
   </div>
+
 </template>
 <script>
 import axios from "axios";
@@ -308,6 +327,11 @@ export default {
   },
 
   methods: {
+
+
+
+
+
 
 
       handelTime(time){

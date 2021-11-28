@@ -555,16 +555,18 @@ export default {
 
 
 
-        saveNotificationInFireBaseDatabase(title,body,DateTime){
+        saveNotificationInFireBaseDatabase(title,body,DateTime,created_at){
 
 
-            var path =    firebase.database().ref("notification").orderByChild('DateTime')
+            var path =    firebase.database().ref("notification")
 
             path.push({
                     title:title ,
                     body: body,
                     DateTime:DateTime,
                     read: 0,
+                    created_at:created_at
+
                 }).then(() => {
                     console.log('sussess')
                 }).catch(() => {
@@ -592,7 +594,12 @@ export default {
 
                     })
 
-                this.$store.dispatch('unreadNotificationNumber', unseen.length)
+
+
+                        this.$store.dispatch('unreadNotificationNumber', unseen.length)
+
+
+
 
                 }
 
@@ -789,7 +796,9 @@ export default {
                             var da = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate() + ' ' + today.getHours() +':' + today.getMinutes() + ':' + today.getSeconds()
                             var DateTime = da
 
-                            this.saveNotificationInFireBaseDatabase(title ,body,DateTime)
+                            var created_at = Date.now()
+
+                            this.saveNotificationInFireBaseDatabase(title ,body,DateTime,created_at)
 
                         }
 
