@@ -2,14 +2,19 @@
 
 namespace App\Http\Controllers\API\products;
 
+use Carbon\Carbon;
 use App\Models\products;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\helperMe\addActivetyLogInHistory;
 use Illuminate\support\facades\Validator;
 
 class productController extends Controller
 {
+
+    use addActivetyLogInHistory;
+
 
     public function index()
     {
@@ -57,6 +62,13 @@ class productController extends Controller
 
 
         $product = products::create($input);
+
+        // save logs
+        $userId = auth()->user()->id;
+        $title  = 'has added a new product in store  ' . $product['product_name'];
+        $date = Carbon::now('Africa/Cairo')->format('D, M, d Y H:i:s A');
+        $this->saveLogs($userId,$title,$date);
+
 
 
         return response()->json(['success' => true , 'product' => $product],200);
@@ -116,6 +128,14 @@ class productController extends Controller
 
         $product = products::find($id);
         $product->update($input);
+
+
+
+        $userId = auth()->user()->id;
+        $title  = 'has update in  product  ' . $product['product_name'];
+        $date = Carbon::now('Africa/Cairo')->format('D, M, d Y H:i:s A');
+        $this->saveLogs($userId,$title,$date);
+
         return response()->json(['success' => true , 'product' => $product],200);
 
     }
@@ -137,6 +157,12 @@ class productController extends Controller
 
         $product = products::find($id);
         $product->delete();
+
+
+        $userId = auth()->user()->id;
+        $title  = 'has delete  a  product  ' . $product['product_name'] . '  from store ';
+        $date = Carbon::now('Africa/Cairo')->format('D, M, d Y H:i:s A');
+        $this->saveLogs($userId,$title,$date);
 
         return response()->json(['success' => true , 'message' => 'product delete successfully'],200);
     }

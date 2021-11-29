@@ -16,8 +16,9 @@
 
                 " class="card-body">
 
-                    <div style="display:flex">
-                            <h4 class="card-title">notifications</h4>
+                    <div style="display:flex;" class=" border-bottom mb-10" >
+
+                            <h4 class="card-title" >notifications</h4><feather style="margin-left: 10px;  margin-top: 5px;" type="bell"></feather >
 
 
                     </div>
@@ -53,8 +54,9 @@
                                  <div style="display:flex" >
                                       <p class="font-weight-medium mb-0">{{  item.title }}</p>
 
+
                                     <b-dropdown style="display:inline" text="" menu-class="dropdown-content" size="xs" variant="default">
-                                        <b-dropdown-item>
+                                        <b-dropdown-item @click="deleteNotification(key)">
                                             <feather style="width:15px;margin-right: 5px;" type="trash"></feather>delete
                                         </b-dropdown-item>
                                     </b-dropdown>
@@ -201,6 +203,8 @@ export default {
 
                         // });
 
+                        console.log(Object.keys(data.val()).length)
+
                     if(this.$route.name == 'notification'){
 
                         this.seen()
@@ -209,8 +213,8 @@ export default {
 
 
                     this.notifications =  val
-
-
+                }else{
+                    this.notifications = []
                 }
 
                 })

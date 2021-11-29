@@ -2,15 +2,21 @@
 
 namespace App\Http\Controllers\API\Groups;
 
-use App\Http\Controllers\Controller;
-use App\Http\Resources\groupsResource;
+use Carbon\Carbon;
 use App\Models\Groups;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\groupsResource;
+use Illuminate\Support\Facades\Validator;
+use App\Http\helperMe\addActivetyLogInHistory;
 
 class GroupsController extends Controller
 {
+
+    use addActivetyLogInHistory;
+
+
     public function index()
     {
 
@@ -33,6 +39,12 @@ class GroupsController extends Controller
         $group = $request->all();
         $group = Groups::create($group);
 
+
+        //save logs
+        $userId = auth()->user()->id;
+        $title  = 'has added a new group ';
+        $date = Carbon::now('Africa/Cairo')->format('D, M, d Y H:i:s A');
+        $this->saveLogs($userId,$title,$date);
 
         return  response()->json(['success' => true, 'group' => $group], 200);
     }

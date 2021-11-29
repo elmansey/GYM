@@ -24,7 +24,7 @@ class MainSettingSeeder extends Seeder
             ['key' => 'email'   , 'value' => 'vipGym@gmail.com'],
             ['key' => 'phone'   ,'value' => '012863501'],
             ['key' => 'address'   ,'value' => 'Jihan Street Dakahlia'],
-            ['key' => 'logo'   ,'value' => ''],
+            ['key' => 'logo'   ,'value' => 'default_logo.jpg'],
             ['key' => 'about_us'   ,'value' => '']
         ];
 

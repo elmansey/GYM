@@ -27,9 +27,9 @@ class CreateDefaultAdminSeeder extends Seeder
         $owner = User::create([
 
 
-            'name' => 'owner',
-            'user_name' => 'owner test ',
-            'email' => 'owner@gmail.com',
+            'name' => 'geexar',
+            'user_name' => 'geexar',
+            'email' => 'geexar@gmail.com',
             'password' => bcrypt(123456),
             'phone' => '01019535581' ,
             'RF_code' => '12-3456-e-1234' ,
@@ -54,7 +54,7 @@ class CreateDefaultAdminSeeder extends Seeder
         $staff = User::create([
 
 
-            'name' => 'staff',
+            'name' => 'staff one',
             'user_name' => ' test staff',
             'email' => 'staff@gmail.com',
             'password' => bcrypt(123456),
@@ -78,7 +78,7 @@ class CreateDefaultAdminSeeder extends Seeder
         $staff = User::create([
 
 
-            'name' => 'admin',
+            'name' => 'admin one',
             'user_name' => ' test admin',
             'email' => 'admin@gmail.com',
             'password' => bcrypt(123456),

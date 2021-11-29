@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="isLoadig">
     <Breadcrumbs main="Dashboard" title="statistics" />
     <!-- Container-fluid starts-->
     <div class="container-fluid">
@@ -77,6 +77,28 @@
           </px-card>
         </div>
 
+        <div class="col-xl-12">
+            <b-card no-body>
+
+
+
+                           <div style="display:flex;justify-content: center;">
+                                <router-link  :to="{ name : 'addMember' }"><feather    style="width:35px;cursor: pointer;margin:15px;color:#222222" type="user-plus"></feather>  </router-link>
+                                <router-link  :to="{ name : 'classSchedule' }"><feather   style="width:35px;cursor: pointer;margin:15px;color:#222222"  type="calendar"></feather>  </router-link>
+                                <router-link  :to="{ name : 'tackAttendance' }"><feather    style="width:35px;cursor: pointer;margin:15px;color:#222222" type="clipboard"></feather>  </router-link>
+                                <router-link  :to="{ name : 'TeamChat'}"><feather    style="width:35px;cursor: pointer;margin:15px;color:#222222" type="message-circle"></feather>  </router-link>
+                                <router-link  :to="{ name : 'product_store' }"><feather    style="width:35px;cursor: pointer;margin:15px;color:#222222" type="layout"></feather>  </router-link>
+                           </div>
+
+
+
+            </b-card>
+        </div>
+
+
+
+
+
 
 
         <div class="col-sm-12 col-xl-6">
@@ -85,7 +107,7 @@
                     <h5>Membership stats </h5>
                   </div>
                   <div class="card-body chart-block">
-                    <div class="chart-overflow" id="bar-chart1"></div>
+
                     <GChart
                       class="chart-overflow"
                       id="bar-chart1"
@@ -100,7 +122,7 @@
         <div class="col-sm-12 col-xl-6">
                 <div class="card">
                   <div class="card-header">
-                    <h5>Pie Chart <span class="digits">1</span></h5>
+                    <h5>gender  stats</h5>
                   </div>
                   <div class="card-body chart-block">
                     <GChart
@@ -112,6 +134,50 @@
                     />
                   </div>
                 </div>
+        </div>
+
+        <!-- <div class="col-sm-12 col-xl-6">
+                <div class="card">
+                  <div class="card-header">
+                    <h5>FF </h5>
+                  </div>
+                  <div class="card-body" style="height:478px">
+
+                       <chartist
+                            class="ct-11 flot-chart-container"
+                            ratio="ct-major-second"
+                            type="Bar"
+                            :data="chart8.data"
+                            :options="chart8.options">
+                        </chartist>
+                  </div>
+                </div>
+        </div> -->
+
+
+
+           <!-- <div class="col-xl-12 col-md-12 col-sm-12">
+              <px-card title="Simple line chart">
+                    <div slot="headerAction" ></div>
+                    <div slot="with-padding" >
+                      <chartist
+                          class="ct-1 flot-chart-container"
+                          ratio="ct-major-second"
+                          type="Line"
+                          :data="chart10.data"
+                          :options="chart10.options">
+                  </chartist>
+                    </div>
+                </px-card>
+            </div> -->
+
+
+
+
+
+
+
+
         </div>
 
       </div>
@@ -130,7 +196,7 @@
         </div>
 
 
-        <div class="col-xl-12 col-lg-12 ">
+        <!-- <div class="col-xl-12 col-lg-12 ">
             <div class="col-xl-12">
               <div class="card">
                 <div class="card-body">
@@ -187,7 +253,10 @@
                 </div>
               </div>
             </div>
-        </div>
+        </div> -->
+
+
+
 
 
 
@@ -197,12 +266,21 @@
     </div>
     <!-- Container-fluid Ends-->
   </div>
+
+    <div v-else class="col-md-3" style="margin: auto; position: absolute;top: 50%; right: 50%;transform: translate(50%,-50%);">
+        <h6 class="sub-title mb-0 text-center"></h6>
+        <div class="loader-box" >
+            <div class="loader-3"></div>
+        </div>
+    </div>
+
 </template>
 <script>
 var primary = localStorage.getItem("primary_color") || "#7366ff";
 import axios from 'axios'
 
 import { GChart } from 'vue-google-charts'
+
 
 export default {
 
@@ -211,9 +289,11 @@ export default {
 
     data() {
         return {
+            isLoadig:false,
             membersNumbers:'',
             staffNumber:'',
             productsNumber:'',
+
             bar_chart: {
                 chartData_1: [
                     ["type", "member", { role: "style" } ],
@@ -227,114 +307,75 @@ export default {
                 bar: {groupWidth: "95%"},
                 legend: { position: "none" },
                 }
-        },
-
-
-
-        pie_chart: {
-
-            chartData_1: [
-                ['Task', 'Hours per Day'],
-                ['Work',     5],
-                ['Eat',      10],
-                ['Commute',  15],
-                ['Watch TV', 20],
-                ['Sleep',    25]
-            ],
-            options_1: {
-            title: 'My Daily Activities',
-            width:'100%',
-            height: 400,
-            colors: ["#7366ff", "#f73164", "#51bb25", "#007bff", "#FF5370"]
-          },
-
-        },
-
-
-
-        chart7: {
-            options: {
-            chart: {
-                width: 585,
-                height: 350,
-                type: "bar",
-                toolbar: {
-                show: false,
-                },
-                zoom: {
-                enabled: false,
-                },
             },
-            legend: {
-                show: false,
-            },
-            colors: [primary],
-            dataLabels: {
-                enabled: false,
-            },
-            plotOptions: {
-                bar: {
-                radius: 10,
-                horizontal: false,
-                columnWidth: "55%",
-                },
-            },
-            stroke: {
-                show: true,
-                colors: ["transparent"],
-                curve: "smooth",
-                lineCap: "butt",
-                colors: ["transparent"],
-            },
-            title: {
-                text: "Load Average",
-                align: "left",
-                style: {
-                fontSize: "12px",
-                },
-            },
-            subtitle: {
-                text: "20%",
-                floating: true,
-                align: "right",
-                offsetY: 0,
-                style: {
-                fontSize: "22px",
-                },
-            },
-            xaxis: {
-                categories: [
-                "Jan",
-                "Feb",
-                "Mar",
-                "Apr",
-                "May",
-                "Jun",
-                "Jul",
-                "Aug",
-                "Sep",
-                "Oct",
-                "Nov",
-                "Dec",
+
+
+            pie_chart: {
+                chartData_1: [
+                    ['gender', 'number'],
+                  
                 ],
+                options_1: {
+                title: 'My Daily Activities',
+                width:'100%',
+                height: 400,
+                colors: ["#7366ff", "#f73164", "#51bb25", "#007bff", "#FF5370"]
             },
-            fill: {
-                colors: [primary],
-            },
-            tooltip: {
-                y: {
-                formatter: function (val) {
-                    return "$ " + val + " thousands";
-                },
-                },
-            },
-            },
-            series: [
-            {
-                data: [200, 250, 330, 390, 420, 500, 580, 620, 700],
-            },
-            ],
         },
+
+
+
+
+
+
+
+
+            chart8 : {
+                data: {
+                labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+                series: [
+                    [5, 4, 3, 7, 5, 10, 3],
+                    [3, 2, 9, 5, 4, 6, 4]
+                ]
+                },
+                options: {
+                seriesBarDistance: 10,
+                reverseData: true,
+                horizontalBars: true,
+                axisY: {
+                    offset: 70
+                },
+                },
+            },
+
+
+
+        chart10 : {
+            data: {
+            labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+            series: [
+                [12, 9, 7, 8, 5],
+                [2, 1, 3.5, 7, 3],
+                [1, 3, 4, 5, 6]
+            ]
+            },
+            options: {
+            fullWidth: true,
+            chartPadding: {
+                right: 40
+            }
+            },
+      },
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -361,11 +402,15 @@ export default {
                     // var randomColor = '#'+Math.floor(Math.random()*16777215).toString(16);
                     Object.entries(item).map((val,k) => {
 
-                        this.bar_chart.chartData_1.push([val[0],val[1],'#007bff'])
+                        this.bar_chart.chartData_1.push([val[0],val[1],'#007bff']);
 
                     })
 
+                      this.isLoadig = true
+
                 })
+
+
 
 
             }
@@ -377,6 +422,7 @@ export default {
     },
     components:{
       GChart:GChart,
+
     },
 
 

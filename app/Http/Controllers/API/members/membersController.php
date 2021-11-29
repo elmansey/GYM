@@ -21,10 +21,12 @@ use App\Models\members_contact_information;
 use Illuminate\Validation\Rules\RequiredIf;
 use phpDocumentor\Reflection\Types\Boolean;
 use App\Http\Resources\class_scheduleResource;
+use App\Http\helperMe\addActivetyLogInHistory;
 
 
 class membersController extends Controller
 {
+    use addActivetyLogInHistory;
 
     public function index(){
 
@@ -156,11 +158,14 @@ class membersController extends Controller
                }
 
 
+                $userId = auth()->user()->id;
+                $title  = 'has added a  new member';
+                $date = Carbon::now('Africa/Cairo')->format('D, M, d Y H:i:s A');
+                $this->saveLogs($userId,$title,$date);
 
 
 
-
-                return response()->json(['success' => true ,'added_by' => new UsersResource(auth()->user()) , 'member' => $update],200) ;
+            return response()->json(['success' => true ,'added_by' => new UsersResource(auth()->user()) , 'member' => $update],200) ;
 
     }
 
@@ -284,6 +289,15 @@ class membersController extends Controller
         return $e->getMessage();
        }
 
+
+       $userId = auth()->user()->id;
+       $title  = 'has edit  in   '. $ExtraInformation['Personal_uuid'] .  " account";
+       $date = Carbon::now('Africa/Cairo')->format('D, M, d Y H:i:s A');
+       $this->saveLogs($userId,$title,$date);
+
+
+
+
         return response()->json(['success' => true,'message' => 'member updated successfully'],200) ;
 
 
@@ -295,6 +309,11 @@ class membersController extends Controller
 
         $member = members_extra_information::find($id);
         $member->delete();
+
+        $userId = auth()->user()->id;
+        $title  = 'has deleted  ' . $member['Personal_uuid'] .  " account";
+        $date = Carbon::now('Africa/Cairo')->format('D, M, d Y H:i:s A');
+        $this->saveLogs($userId,$title,$date);
 
         return response()->json(['success' => true,'message' => 'member delete successfully']);
 
@@ -327,6 +346,13 @@ class membersController extends Controller
 
         $member->update(['log' => $logs , 'Account_freeze' => $date, 'days_left_before_freezing' => $countDaysLeft]);
 
+
+        $userId = auth()->user()->id;
+        $title  = 'has freeze  ' . $member['Personal_uuid'] .  " account";
+        $date = Carbon::now('Africa/Cairo')->format('D, M, d Y H:i:s A');
+        $this->saveLogs($userId,$title,$date);
+
+
             return response()->json(['success' => true , 'message' , 'account freezeing succefully'],200);
 
     }
@@ -342,6 +368,14 @@ class membersController extends Controller
          $fDate =  Carbon::now('Africa/Cairo')->format('Y-m-d h:i:s');
         $logs =collect($logs)->push(['key' => 'unFreeze' , 'value' => $fDate]);
         $member->update(['log' => $logs ,'unFreeze_in' => $unFreezeDate, 'status' => 'unFreeze','Account_freeze' => null , 'period_Expiry' => $New_period_Expiry ]);
+
+
+
+        $userId = auth()->user()->id;
+        $title  = 'has unfreeze  ' . $member['Personal_uuid'] .  " account";
+        $date = Carbon::now('Africa/Cairo')->format('D, M, d Y H:i:s A');
+        $this->saveLogs($userId,$title,$date);
+
 
         return response()->json(['success' => true , 'message' => 'unFreeze successfully'],200);
     }

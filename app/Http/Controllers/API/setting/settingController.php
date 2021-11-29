@@ -2,14 +2,18 @@
 
 namespace App\Http\Controllers\API\setting;
 
+use Carbon\Carbon;
 use App\Models\setting;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\helperMe\addActivetyLogInHistory;
 
 
 class settingController extends Controller
 {
+
+    use addActivetyLogInHistory;
 
     public function index (){
 
@@ -52,9 +56,22 @@ class settingController extends Controller
 
 
 
-             setting::where('key','=',$key)->update(['value' => $value]);
+                    $setting = setting::where('key','=',$key)->first();
+                    $setting->update(['value' => $value]);
 
         }
+
+        //save logs
+        $userId = auth()->user()->id;
+        $title  = 'has edit  system  setting';
+        $date = Carbon::now('Africa/Cairo')->format('D, M, d Y H:i:s A');
+        $this->saveLogs($userId,$title,$date);
+
+
+
+
+
+
 
         return response()->json(['success' => true , 'message' => 'setting update successfully']);
     }

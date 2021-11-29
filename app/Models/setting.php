@@ -11,4 +11,6 @@ class setting extends Model
 
     protected $table = 'setting';
 
+    protected $fillable = ['value','key'];
+
 }

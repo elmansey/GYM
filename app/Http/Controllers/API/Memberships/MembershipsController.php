@@ -2,16 +2,20 @@
 
 namespace App\Http\Controllers\API\Memberships;
 
-use App\Http\Controllers\Controller;
-use App\Models\Memberships;
+use Carbon\Carbon;
 use http\Env\Response;
+use App\Models\Memberships;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\MembershipsRersource;
-use Illuminate\Validation\Rule;
+use App\Http\helperMe\addActivetyLogInHistory;
 
 class MembershipsController extends Controller
 {
+
+    use addActivetyLogInHistory;
 
     public function index()
     {
@@ -38,6 +42,13 @@ class MembershipsController extends Controller
         $membership['Membership_private_Features'] = $request['Membership_private_Features'] == 'true' ? true : false;
 
         $membership = Memberships::create($membership);
+
+
+         //save logs
+         $userId = auth()->user()->id;
+         $title  = 'has added a new membership ';
+         $date = Carbon::now('Africa/Cairo')->format('D, M, d Y H:i:s A');
+         $this->saveLogs($userId,$title,$date);
 
 
         return  response()->json(['success' => true, 'membership' =>new  MembershipsRersource($membership) ], 200);

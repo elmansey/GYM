@@ -41,7 +41,7 @@
                                                     <div class="col-lg-6" style="width: 100px;height: 100px;">
                                                         <label class="card-title">logo</label>
 
-                                                                <img  style="width: 100px;height: 100px;margin-top:5px" :src="'../../app_setting/'+setting.logo" />
+                                                                <img  style="width: 120px;height: 120px;margin-top:5px" :src="'../../app_setting/'+setting.logo" />
 
                                                     </div>
 
@@ -87,6 +87,7 @@
         </div>
         <!-- Container-fluid Ends-->
     </div>
+
     <div v-else class="col-md-3" style="margin: auto; position: absolute;top: 50%; right: 50%;transform: translate(50%,-50%);">
         <h6 class="sub-title mb-0 text-center"></h6>
         <div class="loader-box" >

@@ -13,12 +13,14 @@ use App\Http\Resources\captainResource;
 use App\Models\members_extra_information;
 use Illuminate\support\facades\Validator;
 use App\Http\Resources\classSceduleResource;
+use App\Http\helperMe\addActivetyLogInHistory;
 use App\Http\Resources\class_scheduleResource;
 use App\Http\Resources\class_scheduleResourceToGetCountMember;
 
 class ClassScheduleController extends Controller
 {
 
+    use addActivetyLogInHistory;
 
     public function index()
     {
@@ -71,6 +73,12 @@ class ClassScheduleController extends Controller
         $class->days = $days;
         $class->save();
 
+
+        //save logs
+        $userId = auth()->user()->id;
+        $title  = 'has added a new class ';
+        $date = Carbon::now('Africa/Cairo')->format('D, M, d Y H:i:s A');
+        $this->saveLogs($userId,$title,$date);
 
 
         return response()->json(['success' => true, 'class' => new class_scheduleResource($class)]);

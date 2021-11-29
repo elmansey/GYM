@@ -17,6 +17,7 @@ use App\Http\Controllers\API\statistics\statisticsController;
 use App\Http\Controllers\API\attendancce\attendanceController;
 use App\Http\Controllers\API\Memberships\MembershipsController;
 use App\Http\Controllers\API\ClassSchedule\ClassScheduleController;
+use App\Http\Controllers\API\History\activityLogsController;
 use App\Http\Controllers\API\product_invoice\product_invoiceController;
 
 /*
@@ -194,6 +195,17 @@ use App\Http\Controllers\API\product_invoice\product_invoiceController;
 
         //statistics
         Route::get('statistics',[statisticsController::class,'index']);
+
+
+
+
+
+        // history || activity logs
+
+        Route::get('history' , [activityLogsController::class, 'index']);
+        // Route::post('addActivityLogs' , [activityLogsController::class, 'store']);
+
+
 
 
     });

@@ -31,16 +31,28 @@ class statisticsController extends Controller
         $productsNumber = products::all();
         $productsNumber = count($productsNumber);
 
+
+
+        $memeberMalNumber = count(members_extra_information::where('gender','male')->get());
+        $memeberfemaleNumber = count(members_extra_information::where('gender','female')->get());
+
+
+
+
+
+
+
+
+
+
         return response()->json([
             'success' => true,
             'MembershipsStatistics' => $membershipsMemberNumber,
             'membersNumbers' => $membersNumber ,
             'staffNumber' => $staffNumber,
-            'products'    => $productsNumber
-
-
-
-        ]);
+            'products'    => $productsNumber,
+            'gender'   =>  ['male'  => $memeberMalNumber,'female' => $memeberfemaleNumber ]
+         ]);
 
 
     }
