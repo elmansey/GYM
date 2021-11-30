@@ -3,18 +3,22 @@
     <div v-if="isLoadig">
 
         <Breadcrumbs main="Dashboard" title="product invoices" />
+            <div class="" style="display:flex;margin-left: 100px;margin-bottom: 30px;">
+                <div class="">
+                    <export-excel class="btn btn-light btn-sm  border-1"  :data   = "json_data" :fields = "json_fields" worksheet = "My Worksheet"   name = "test.xls" >
+                         excel
+                    </export-excel>
+                </div>
+                <div class="">
+                        <button class="btn btn-light btn-sm border-1 " @click="printNow">print</button>
+                </div>
+            </div>
+
+
+
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                        
-                        
-                        <export-excel   :data   = "json_data" :fields = "json_fields" worksheet = "My Worksheet"   name = "test.xls" >
-                                <i class="fa fa-file-excel-o" style="font-size:20px"></i>
-                        </export-excel>
-
-                        <i class="fa fa-print"  style="margin-left: 50px;margin-bottom: 20px;height:10px;font-size:20px" @click="printNow"> </i>
-
-
                     <div class="card">
                         <div class="card-body">
                                 <div class="datatable-vue m-0">
