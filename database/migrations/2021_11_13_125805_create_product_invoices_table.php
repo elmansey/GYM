@@ -22,6 +22,7 @@ class CreateProductInvoicesTable extends Migration
             $table->softDeletes();
             $table->string('date');
             $table->string('time');
+            $table->timestamps();
         });
     }
 

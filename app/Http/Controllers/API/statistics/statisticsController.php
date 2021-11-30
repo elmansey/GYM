@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\API\statistics;
 
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\products;
+use App\Models\attendance;
 use App\Models\Memberships;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -31,6 +33,9 @@ class statisticsController extends Controller
         $productsNumber = products::all();
         $productsNumber = count($productsNumber);
 
+        $date = Carbon::now('Africa/Cairo')->toDateString();
+        $attendanceTodayNumber = count(attendance::whereDate('come_dateTime','=',$date)->get());
+
 
 
         $memeberMalNumber = ['male' => count(members_extra_information::where('gender','male')->get())];
@@ -51,7 +56,8 @@ class statisticsController extends Controller
             'membersNumbers' => $membersNumber ,
             'staffNumber' => $staffNumber,
             'products'    => $productsNumber,
-            'gender'   =>  [$memeberMalNumber,$memeberfemaleNumber]
+            'gender'   =>  [$memeberMalNumber,$memeberfemaleNumber],
+            'attendanceToday' => $attendanceTodayNumber
          ]);
 
 

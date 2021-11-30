@@ -106,7 +106,7 @@
       <ul class="nav-menus">
 
 
-        <li  class="onhover-dropdown" v-if="can('show-notification')">
+        <li  class="onhover-dropdown" v-if="$store.getters.authUserRole[0].role == 'owner'">
           <div class="notification-box">
             <feather type="bell"></feather
             ><span class="badge badge-pill badge-secondary" v-if=" this.$store.getters.unreadNotificationNumber"> {{ this.$store.getters.unreadNotificationNumber }}</span>

@@ -61,14 +61,15 @@ class PermissionTableSeeder extends Seeder
             'show-attendance',
             'show-attendance-table',
             'take-attendance',
-            'show-reports',
             'show-products',
             'add-products-in-store',
             'edit-product',
             'delete-product',
             'show-store-details',
-            'show-notification',
-            'show-history'
+            'show-history',
+            'show-sales_invoices',
+            'add-sales-invoices',
+            'show-Archive'
 
 
 

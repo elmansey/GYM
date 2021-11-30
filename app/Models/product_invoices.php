@@ -13,12 +13,17 @@ class product_invoices extends Model
 
 
     protected $fillable = ['invoice_number','seller','invoice_details','invoice_total','time', 'date'];
-    public $timestamps = false;
+
 
     protected $casts = [
         'invoice_details' => 'array',
-
     ];
 
+
+
+    public function sellerRelation(){
+
+        return $this->belongsTo(User::class,'seller');
+    }
 
 }

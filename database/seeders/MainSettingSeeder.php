@@ -18,8 +18,8 @@ class MainSettingSeeder extends Seeder
         DB::table('setting')->delete();
 
         $data = [
-            ['key' => 'Gym_name'    ,'value' => 'vip gym'],
-            ['key' => 'Gym_title'    ,'value' => 'vip'],
+            ['key' => 'Gym_name'    ,'value' => 'geexar'],
+            ['key' => 'Gym_title'    ,'value' => 'geexar'],
             ['key' => 'owner_name'   ,'value' => 'ahmad mohamed'],
             ['key' => 'email'   , 'value' => 'vipGym@gmail.com'],
             ['key' => 'phone'   ,'value' => '012863501'],

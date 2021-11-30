@@ -16,7 +16,6 @@
 
 
 
-
   </div>
 </template>
 
@@ -154,4 +153,9 @@ export default {
 .loader-wrapper.loderhide {
   display: none;
 }
+
+
+
+
 </style>
+

@@ -8,14 +8,14 @@
                         <img
                             class="img-fluid for-light"
                             :src="'../../app_setting/'+this.$store.getters.SETTINGS.logo"
-                            style="width: 75px;height: 50px;"
+                            style="width: 50px;height: 50px;border-radius: 50%;"
                             alt=""
                         />
                         <img
                             class="img-fluid for-dark"
                              :src="'../../app_setting/'+this.$store.getters.SETTINGS.logo"
                             alt=""
-                            style="width: 75px;height: 50px;"
+                            style="width: 50px;height: 50px;border-radius: 50%;"
                         />
                     </router-link>
                 </div>
@@ -51,7 +51,7 @@
                             class="img-fluid "
                              :src="'../../app_setting/'+this.$store.getters.SETTINGS.logo"
                             alt=""
-                            style="width: 75px;height: 50px;"
+                            style="width: 50px;height: 50px;border-radius: 50%;"
                         />
 
             </router-link>
@@ -91,7 +91,7 @@
                             <img
                                 class="img-fluid"
                                  :src="require('@/assets/images/avtar/3.jpg').default"
-                                  style="width: 50px;height: 50px;border-radius:50%;"
+                                  style="width: 50px;height: 50px;border-radius: 50%;"
                         /></router-link>
                         <div class="mobile-back text-right">
                             <span>Back</span

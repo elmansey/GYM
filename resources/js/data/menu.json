@@ -289,6 +289,22 @@
 
 
 
+                },
+
+                {
+                    "path": "/dashboard/sales_records",
+                    "title": "product invoices",
+                    "type": "link",
+                    "permission": "show-sales_invoices"
+
+                },
+
+                {
+                    "path": "/dashboard/invoiceArchive",
+                    "title": "Invoice Archive",
+                    "type": "link",
+                    "permission": "show-Archive"
+
                 }
 
             ]
@@ -303,8 +319,8 @@
             "children": [
 
                 {
-                    "path": "/dashboard/store_sales",
-                    "title": "store sales",
+                    "path": "/dashboard/product_store",
+                    "title": "sell product",
                     "type": "link",
                     "permission": "show-store-details"
 
@@ -314,27 +330,7 @@
 
             ]
         },
-        {
-            "title": "reports",
-            "icon": "trending-up",
-            "type": "sub",
-            "badgeType": "primary",
-            "permission": "show-reports",
-            "active": false,
-            "children": [
 
-                {
-                    "path": "/dashboard",
-                    "title": "reports",
-                    "type": "link",
-                    "permission": "show-reports"
-
-
-
-                }
-
-            ]
-        },
         {
             "title": "setting",
             "icon": "settings",

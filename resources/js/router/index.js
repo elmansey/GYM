@@ -158,19 +158,44 @@ const routes = [
 
             {
 
-                path: 'store_sales',
-                name: 'store_sales',
-                component: require('@/pages/store/store_sales').default,
-
-            },
-
-            {
-
                 path: 'product_store',
                 name: 'product_store',
                 component: require('@/pages/store/product_store').default,
 
             },
+
+
+
+            {
+
+                path: 'sales_records',
+                name: 'sales_records',
+                component: require('@/pages/store/sales_records').default,
+
+            },
+
+            {
+
+                path: 'invoiceDetails/:invoiceId',
+                name: 'invoiceDetails',
+                component: require('@/pages/store/invoiceDetails').default,
+
+            },
+
+            {
+
+                path: 'invoiceArchive',
+                name: 'invoiceArchive',
+                component: require('@/pages/store/invoiceArchive').default,
+
+            },
+
+
+
+
+
+
+
 
 
 

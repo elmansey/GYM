@@ -474,7 +474,7 @@ import axios from 'axios'
 
 
 
-                    // console.log(index)
+                    // console.log(item)
 
                 if(index > -1 ){
 
@@ -487,7 +487,8 @@ import axios from 'axios'
                     this.itemTake.push({
                         product_name : item.product_name ,
                         product_quantity : 1 ,
-                        product_price : item.product_price
+                        product_price : item.product_price,
+                        product_id : item.id
 
                     })
 

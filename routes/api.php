@@ -171,8 +171,14 @@ use App\Http\Controllers\API\product_invoice\product_invoiceController;
         Route::get('deleteProduct/{id}',[productController::class,'destroy']);
 
 
-
+        //product invoices
+        Route::get('product_invoices',[product_invoiceController::class,'index']);
         Route::post('add_product_invoice',[product_invoiceController::class,'store']);
+        Route::get('getInvoiceById/{id}',[product_invoiceController::class,'getInvoiceById']);
+        Route::get('deleteThisInvoice/{id}',[product_invoiceController::class,'destroy']);
+        Route::get('archivedThisInvoice/{id}',[product_invoiceController::class,'archivedThisInvoice']);
+        Route::get('product_invoicesOnlyArchived',[product_invoiceController::class,'product_invoicesOnlyArchived']);
+        Route::get('restoreInvoiceInvoice/{id}',[product_invoiceController::class,'restoreInvoiceInvoice']);
 
 
 

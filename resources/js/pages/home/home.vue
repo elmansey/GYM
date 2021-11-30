@@ -1,5 +1,7 @@
 <template>
   <div v-if="isLoadig">
+
+      
     <Breadcrumbs main="Dashboard" title="statistics" />
     <!-- Container-fluid starts-->
     <div class="container-fluid">
@@ -20,7 +22,7 @@
                     </div>
                     <div class="media-body">
                       <div class="right-chart-content">
-                        <h4>1001</h4>
+                        <h4>{{ attendanceToday }}</h4>
                         <span>Attendees today</span>
                       </div>
                     </div>
@@ -136,46 +138,6 @@
                 </div>
         </div>
 
-        <div class="col-sm-12 col-xl-12">
-                <div class="card">
-                  <div class="card-header">
-                    <h5>FF </h5>
-                  </div>
-                  <div class="card-body" style="height:478px">
-
-                       <chartist
-                            class="ct-11 flot-chart-container"
-                            ratio="ct-major-second"
-                            type="Bar"
-                            :data="chart8.data"
-                            :options="chart8.options">
-                        </chartist>
-                  </div>
-                </div>
-        </div>
-
-
-
-           <!-- <div class="col-xl-12 col-md-12 col-sm-12">
-              <px-card title="Simple line chart">
-                    <div slot="headerAction" ></div>
-                    <div slot="with-padding" >
-                      <chartist
-                          class="ct-1 flot-chart-container"
-                          ratio="ct-major-second"
-                          type="Line"
-                          :data="chart10.data"
-                          :options="chart10.options">
-                  </chartist>
-                    </div>
-                </px-card>
-            </div> -->
-
-
-
-
-
-
 
 
         </div>
@@ -196,65 +158,6 @@
         </div>
 
 
-        <!-- <div class="col-xl-12 col-lg-12 ">
-            <div class="col-xl-12">
-              <div class="card">
-                <div class="card-body">
-                  <div class="best-seller-table responsive-tbl">
-                    <div class="item">
-                      <div class="table-responsive product-list">
-                        <table class="table table-bordernone">
-                          <thead>
-                            <tr>
-                              <th class="f-22">Subscriptions to be paid</th>
-                              <th>Date</th>
-                              <th>Product</th>
-                              <th>Country</th>
-                              <th>Total</th>
-                              <th class="text-right">Status</th>
-                            </tr>
-                          </thead>
-
-                          <tbody>
-                            <tr>
-                              <td>
-                                <div class="d-inline-block align-middle">
-                                  <img
-                                    class="img-40 m-r-15 rounded-circle align-top"
-                                    src=""
-                                    alt
-                                  />
-                                  <div class="status-circle bg-primary"></div>
-                                  <div class="d-inline-block">
-                                    <span>John keter</span>
-                                    <p class="font-roboto">2019</p>
-                                  </div>
-                                </div>
-                              </td>
-                              <td>06 August</td>
-                              <td>CAP</td>
-                              <td>
-                                <i class="flag-icon flag-icon-gb"></i>
-                              </td>
-                              <td>
-                                <span class="label">$5,08,652</span>
-                              </td>
-                              <td class="text-right">
-                                <i class="fa fa-check-circle"></i>Done
-                              </td>
-                            </tr>
-
-
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-        </div> -->
-
 
 
 
@@ -265,7 +168,7 @@
 
     </div>
     <!-- Container-fluid Ends-->
-  </div>
+
 
     <div v-else class="col-md-3" style="margin: auto; position: absolute;top: 50%; right: 50%;transform: translate(50%,-50%);">
         <h6 class="sub-title mb-0 text-center"></h6>
@@ -293,6 +196,7 @@ export default {
             membersNumbers:'',
             staffNumber:'',
             productsNumber:'',
+            attendanceToday:'',
 
             bar_chart: {
                 chartData_1: [
@@ -397,6 +301,7 @@ export default {
                 this.membersNumbers = res.data.membersNumbers
                 this.staffNumber = res.data.staffNumber
                 this.productsNumber = res.data.products
+                this.attendanceToday = res.data.attendanceToday
 
 
                 res.data.gender.map((item,index) => {

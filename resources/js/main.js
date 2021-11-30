@@ -11,8 +11,9 @@ import {
     store
 } from './store';
 
+import excel from 'vue-excel-export'
 
-
+Vue.use(excel)
 
 //firebase confegration
 import firebase from 'firebase/app';

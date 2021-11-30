@@ -14,6 +14,28 @@ class product_invoiceController extends Controller
 
     use addActivetyLogInHistory;
 
+
+
+    public function index(){
+
+
+        $product_invoices = product_invoices::with('sellerRelation')->get();
+
+        return response()->json(['success' => true, 'product_invoices' => $product_invoices]);
+
+
+    }
+
+
+    public function product_invoicesOnlyArchived(){
+
+
+        $product_invoices_archived = product_invoices::with('sellerRelation')->onlyTrashed()->get();
+
+        return response()->json(['success' => true, 'product_invoices_archived' => $product_invoices_archived]);
+
+    }
+
    public function store(Request $request){
 
 
@@ -45,5 +67,84 @@ class product_invoiceController extends Controller
 
          return response()->json(['success' => true, 'product_invoice' => $product_invoice],200);
 
+   }
+
+
+   public function getInvoiceById($id){
+
+
+        $invoice  = product_invoices::with('sellerRelation')->where('id','=',$id)->first();
+
+
+        if($invoice == null){
+
+            $invoice  = product_invoices::with('sellerRelation')->where('id','=',$id)->withTrashed()->first();
+
+        }
+
+        return response()->json(['success' => true, 'invoice' => $invoice]);
+
+   }
+
+
+   public function destroy($id){
+
+        $invoice = product_invoices::find($id);
+
+        if($invoice == null ){
+
+            $invoice = product_invoices::withTrashed()->find($id);
+
+        }
+
+
+        $invoice->forceDelete();
+
+
+             //save logs
+             $userId = auth()->user()->id;
+             $title  = 'has delete  Products invoice  , Invoice Number  is  ' . $invoice['invoice_number'];
+             $date = Carbon::now('Africa/Cairo')->format('D, M, d Y H:i:s A');
+             $this->saveLogs($userId,$title,$date);
+
+        return response()->json(['success' => true, 'message' => 'invoice delete successfully']);
+   }
+
+
+   public function archivedThisInvoice($id){
+
+
+    $invoice = product_invoices::find($id);
+
+    $invoice->delete();
+
+
+     //save logs
+     $userId = auth()->user()->id;
+     $title  = 'has archived  Products invoice  , Invoice Number  is  ' . $invoice['invoice_number'];
+     $date = Carbon::now('Africa/Cairo')->format('D, M, d Y H:i:s A');
+     $this->saveLogs($userId,$title,$date);
+
+
+    return response()->json(['success' => true, 'message' => 'invoice archived successfully']);
+
+
+
+   }
+
+
+   public function restoreInvoiceInvoice($id){
+
+       $invoice = product_invoices::withTrashed()->find($id);
+       $invoice -> restore();
+
+
+            //save logs
+        $userId = auth()->user()->id;
+        $title  = 'has restored form archive  Products invoice  , Invoice Number  is  ' . $invoice['invoice_number'];
+        $date = Carbon::now('Africa/Cairo')->format('D, M, d Y H:i:s A');
+        $this->saveLogs($userId,$title,$date);
+
+       return response()->json(['success' => true, 'message' => 'invoice restored successfully']);
    }
 }
