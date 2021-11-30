@@ -33,8 +33,8 @@ class statisticsController extends Controller
 
 
 
-        $memeberMalNumber = count(members_extra_information::where('gender','male')->get());
-        $memeberfemaleNumber = count(members_extra_information::where('gender','female')->get());
+        $memeberMalNumber = ['male' => count(members_extra_information::where('gender','male')->get())];
+        $memeberfemaleNumber = ['female' => count(members_extra_information::where('gender','female')->get())];
 
 
 
@@ -51,7 +51,7 @@ class statisticsController extends Controller
             'membersNumbers' => $membersNumber ,
             'staffNumber' => $staffNumber,
             'products'    => $productsNumber,
-            'gender'   =>  ['male'  => $memeberMalNumber,'female' => $memeberfemaleNumber ]
+            'gender'   =>  [$memeberMalNumber,$memeberfemaleNumber]
          ]);
 
 

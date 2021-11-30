@@ -12,7 +12,7 @@
           <px-card>
             <div class="row m-0 chart-main">
                 <div class="col-xl-3 col-md-6 col-sm-6 p-0 box-col-6">
-                  <div class="media align-items-center">
+                  <div class="media align-items-center"  style="padding:80px 40px">
                     <div class="hospital-small-chart">
                       <div class="small-bar" style="margin-top: -30px;font-size: 50px;">
                          <i class="icofont icofont-gym-alt-3" ></i>
@@ -27,7 +27,7 @@
                   </div>
                 </div>
                 <div class="col-xl-3 col-md-6 col-sm-6 p-0 box-col-6">
-                  <div class="media align-items-center">
+                  <div class="media align-items-center"  style="padding:80px 40px">
                     <div class="hospital-small-chart">
                     <div class="small-bar" style="margin-top: -30px;font-size: 50px;">
                          <i class="icofont icofont-users" ></i>
@@ -42,10 +42,10 @@
                   </div>
                 </div>
                 <div class="col-xl-3 col-md-6 col-sm-6 p-0 box-col-6">
-                  <div class="media align-items-center">
+                  <div class="media align-items-center"  style="padding:80px 40px">
                     <div class="hospital-small-chart">
                     <div class="small-bar" style="margin-top: -30px;font-size: 50px;">
-                         <i class="icofont icofont-ui-cart" ></i>
+                        <i class="fa fa-th-large"></i>
                     </div>
                     </div>
                     <div class="media-body">
@@ -57,11 +57,11 @@
                   </div>
                 </div>
                 <div class="col-xl-3 col-md-6 col-sm-6 p-0 box-col-6">
-                  <div class="media border-none align-items-center">
+                  <div class="media border-none align-items-center"  style="padding:80px 40px">
                     <div class="hospital-small-chart">
 
                      <div class="small-bar" style="margin-top: -30px;font-size: 50px;">
-                         <i class="icofont icofont-users-alt-6"></i>
+                        <i class="icofont icofont-gym-alt-2"></i>
                     </div>
 
                     </div>
@@ -136,7 +136,7 @@
                 </div>
         </div>
 
-        <!-- <div class="col-sm-12 col-xl-6">
+        <div class="col-sm-12 col-xl-12">
                 <div class="card">
                   <div class="card-header">
                     <h5>FF </h5>
@@ -152,7 +152,7 @@
                         </chartist>
                   </div>
                 </div>
-        </div> -->
+        </div>
 
 
 
@@ -313,10 +313,10 @@ export default {
             pie_chart: {
                 chartData_1: [
                     ['gender', 'number'],
-                  
+
                 ],
                 options_1: {
-                title: 'My Daily Activities',
+                title: 'gender stats',
                 width:'100%',
                 height: 400,
                 colors: ["#7366ff", "#f73164", "#51bb25", "#007bff", "#FF5370"]
@@ -397,7 +397,17 @@ export default {
                 this.membersNumbers = res.data.membersNumbers
                 this.staffNumber = res.data.staffNumber
                 this.productsNumber = res.data.products
-                return res.data.MembershipsStatistics.map((item,index) => {
+
+
+                res.data.gender.map((item,index) => {
+                    Object.entries(item).map((val,k) => {
+
+                       this.pie_chart.chartData_1.push(val)
+
+                    })
+                })
+
+                 res.data.MembershipsStatistics.map((item,index) => {
 
                     // var randomColor = '#'+Math.floor(Math.random()*16777215).toString(16);
                     Object.entries(item).map((val,k) => {
