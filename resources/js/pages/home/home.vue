@@ -1,7 +1,7 @@
 <template>
   <div v-if="isLoadig">
 
-      
+
     <Breadcrumbs main="Dashboard" title="statistics" />
     <!-- Container-fluid starts-->
     <div class="container-fluid">
@@ -317,7 +317,7 @@ export default {
                     // var randomColor = '#'+Math.floor(Math.random()*16777215).toString(16);
                     Object.entries(item).map((val,k) => {
 
-                        this.bar_chart.chartData_1.push([val[0],val[1],'#007bff']);
+                        this.bar_chart.chartData_1.push([val[0],val[1],'#2b2b2b']);
 
                     })
 

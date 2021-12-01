@@ -332,6 +332,28 @@
         },
 
         {
+            "title": "History",
+            "icon": "coffee",
+            "type": "sub",
+            "badgeType": "primary",
+            "permission": "show-history",
+            "active": false,
+            "children": [
+
+                {
+                    "path": "/dashboard/history",
+                    "title": "history",
+                    "type": "link",
+                    "permission": "show-history"
+
+
+
+                }
+
+            ]
+        },
+
+        {
             "title": "setting",
             "icon": "settings",
             "type": "sub",
