@@ -46,8 +46,8 @@
                                             style="width: 40px;height: 40px;border-radius: 50%;"
 
 
-                                            :src="row.profile_picture ? '../../profile_pictures/'+row.profile_picture :
-                                             '../../profile_pictures/DefaultProfile.jpg'"
+                                            :src="row.profile_picture ? '../../public/profile_pictures/'+row.profile_picture :
+                                             '../../public/profile_pictures/DefaultProfile.jpg'"
 
 
                                               />

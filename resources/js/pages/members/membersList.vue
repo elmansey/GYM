@@ -43,8 +43,8 @@
                                                                 style="width: 40px;height: 40px;border-radius: 50%;"
 
 
-                                                                :src="data.item.profile_picture ? '../../profile_pictures/'+data.item.profile_picture :
-                                                                '../../profile_pictures/DefaultProfile.jpg'"/>
+                                                                :src="data.item.profile_picture ? '../../public/profile_pictures/'+data.item.profile_picture :
+                                                                '../../public/profile_pictures/DefaultProfile.jpg'"/>
                                                     </template>
                                                     <template #cell(name)="data">
                                                                <router-link  v-if="can('show-member-details')" :to="{name : 'showMemberDetails', params:{memberBaseId : data.item.id}}">
@@ -57,7 +57,7 @@
                                                     </template>
                                                     <template #cell(qr_code)="data">
 
-                                                                <img :src="'../../'+ data.item.qr_code" style="width:60px;height:60px"/>
+                                                                <img :src="'../../public/'+ data.item.qr_code" style="width:60px;height:60px"/>
                                                     </template>
 
 

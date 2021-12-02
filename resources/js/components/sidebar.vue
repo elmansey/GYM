@@ -7,13 +7,13 @@
                     <router-link :to="{name : 'main'}">
                         <img
                             class="img-fluid for-light"
-                            :src="'../../app_setting/'+this.$store.getters.SETTINGS.logo"
+                            :src="'../../public/app_setting/'+this.$store.getters.SETTINGS.logo"
                             style="width: 50px;height: 50px;border-radius: 50%;"
                             alt=""
                         />
                         <img
                             class="img-fluid for-dark"
-                             :src="'../../app_setting/'+this.$store.getters.SETTINGS.logo"
+                             :src="'../../public/app_setting/'+this.$store.getters.SETTINGS.logo"
                             alt=""
                             style="width: 50px;height: 50px;border-radius: 50%;"
                         />
@@ -49,7 +49,7 @@
 
                 <img
                             class="img-fluid "
-                             :src="'../../app_setting/'+this.$store.getters.SETTINGS.logo"
+                             :src="'../../public/app_setting/'+this.$store.getters.SETTINGS.logo"
                             alt=""
                             style="width: 50px;height: 50px;border-radius: 50%;"
                         />

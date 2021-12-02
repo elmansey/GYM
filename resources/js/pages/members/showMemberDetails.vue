@@ -8,8 +8,8 @@
                 <div class="col-sm-12">
                     <div class="card">
                         <div class="card-header" style="padding: 0px" >
-                            <img style="width:100px;height: 100px;    margin-left: 40px;margin-top: 10px;margin-bottom: 15px;"  :src="details.profile_picture ? '../../profile_pictures/'+details.profile_picture :
-                                             '../../profile_pictures/DefaultProfile.jpg'" />
+                            <img style="width:100px;height: 100px;    margin-left: 40px;margin-top: 10px;margin-bottom: 15px;"  :src="details.profile_picture ? '../../public/profile_pictures/'+details.profile_picture :
+                                             '../../public/profile_pictures/DefaultProfile.jpg'" />
                         </div>
 
 

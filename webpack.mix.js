@@ -6,6 +6,7 @@ mix.js('resources/js/main.js', 'public/js')
     .vue();
 
     mix.webpackConfig({
+      
         plugins: [],
         resolve: {
           alias: {
@@ -19,7 +20,7 @@ mix.js('resources/js/main.js', 'public/js')
         },
       });
 
-mix.browserSync('http://127.0.0.1:8000');
+mix.browserSync('https://abdelrahmanelmansey.geexar.dev');
 
 
 

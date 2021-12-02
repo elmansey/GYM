@@ -13,7 +13,7 @@ use App\Models\teamChatMessage;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\staffResource;
 use App\Http\Resources\UsersResource;
-use Illuminate\support\facades\Validator;
+use Illuminate\Support\Facades\Validator;
 
 class teamChatController extends Controller
 {
@@ -104,7 +104,7 @@ class teamChatController extends Controller
         $input = $request->all();
 
 
-        //هات الرسايل المسجل دخول يكون قيها المستقبل
+        //هات الرسايل المجل دخول يكون قيها المستقبل
         $unReadMessage = teamChatMessage::where('to' ,'=',auth()->user()->id )
         ->where('from','=',$input['resever'])
         ->Where('read','=',false)->get();

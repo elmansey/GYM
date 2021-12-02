@@ -11,7 +11,7 @@ use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\captainResource;
 use App\Models\members_extra_information;
-use Illuminate\support\facades\Validator;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\classSceduleResource;
 use App\Http\helperMe\addActivetyLogInHistory;
 use App\Http\Resources\class_scheduleResource;

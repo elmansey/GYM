@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API\product_invoice;
 use Illuminate\Http\Request;
 use App\Models\product_invoices;
 use App\Http\Controllers\Controller;
-use Illuminate\support\facades\Validator;
+use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 use App\Http\helperMe\addActivetyLogInHistory;
 

@@ -40,7 +40,7 @@
                                             <td></td>
                                             <td>{{row.product_name}}</td>
                                             <td>{{row.product_price}}</td>
-                                            <td><img  style="width:70px;height:70px" :src="'../../product_img/'+row.product_img"/></td>
+                                            <td><img  style="width:70px;height:70px" :src="'../../public/product_img/'+row.product_img"/></td>
                                             <td>{{row.Production_Date}}</td>
                                             <td>{{row.Expiry_date}}</td>
                                             <td>{{row.Product_Quantity}}</td>

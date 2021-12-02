@@ -223,7 +223,7 @@ export default {
                 title: 'gender stats',
                 width:'100%',
                 height: 400,
-                colors: ["#7366ff", "#f73164", "#51bb25", "#007bff", "#FF5370"]
+                colors: ["#7366ff", '#160040']
             },
         },
 

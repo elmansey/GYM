@@ -16,8 +16,8 @@
                     <img
 
 
-                    :src="item.user_relation.profile_picture ? `../../profile_pictures/${item.user_relation.profile_picture }` :
-                                             '../../profile_pictures/DefaultProfile.jpg'"
+                    :src="item.user_relation.profile_picture ? `../../public/profile_pictures/${item.user_relation.profile_picture }` :
+                                             '../../public/profile_pictures/DefaultProfile.jpg'"
 
 
                     alt="" class=" " style="width:50px;height:50px;border-radius: 50%;">

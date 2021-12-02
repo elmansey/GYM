@@ -41,7 +41,7 @@
                                                     <div class="col-lg-6" style="width: 100px;height: 100px;">
                                                         <label class="card-title">logo</label>
 
-                                                                <img  style="width: 120px;height: 120px;margin-top:5px" :src="'../../app_setting/'+setting.logo" />
+                                                                <img  style="width: 120px;height: 120px;margin-top:5px" :src="'../../public/app_setting/'+setting.logo" />
 
                                                     </div>
 

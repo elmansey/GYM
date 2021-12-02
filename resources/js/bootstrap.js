@@ -42,7 +42,7 @@ window.Echo = new Echo({
     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
     forceTLS: true,
     encrypted: true,
-    authEndpoint: "http://localhost:8000/api/broadcasting/auth",
+    authEndpoint: "https://abdelrahmanelmansey.geexar.dev/api/broadcasting/auth",
     auth: {
         headers: {
 

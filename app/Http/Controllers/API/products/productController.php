@@ -8,7 +8,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\helperMe\addActivetyLogInHistory;
-use Illuminate\support\facades\Validator;
+use Illuminate\Support\Facades\Validator;
 
 class productController extends Controller
 {

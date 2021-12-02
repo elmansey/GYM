@@ -157,7 +157,7 @@
             <img
               class="b-r-10"
               style="width: 40px;height: 40px;border-radius: 50%!important"
-              :src=" this.$store.getters.USER['profile_picture'] ? '../../profile_pictures/'+this.$store.getters.USER['profile_picture'] :  '../../profile_pictures/DefaultProfile.jpg' "
+              :src=" this.$store.getters.USER['profile_picture'] ? '../../public/profile_pictures/'+this.$store.getters.USER['profile_picture'] :  '../../public/profile_pictures/DefaultProfile.jpg' "
               alt=""
             />
             <div class="media-body">
