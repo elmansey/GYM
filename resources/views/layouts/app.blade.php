@@ -12,13 +12,13 @@
 
     <!-- Fonts -->
 
-    <link rel="icon" href="{{asset('dumbbell.ico')}}"/>
+    <link rel="icon" href="{{asset('public/dumbbell.ico')}}"/>
 
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('public/css/app.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
@@ -27,6 +27,6 @@
     </div>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/main.js') }}" defer></script>
+    <script src="{{ asset('public/js/main.js') }}" defer></script>
 </body>
 </html>
