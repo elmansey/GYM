@@ -4,7 +4,7 @@ import router from '../router'
 // import 'es6-promise/auto';
 import layout from './modules/layout'
 import menu from './modules/menu'
-import auth from './modules/Auth'
+import auth from './modules/auth'
 import role from './modules/role'
 import admin from './modules/admin'
 import setting from './modules/setting'
