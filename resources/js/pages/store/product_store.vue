@@ -158,7 +158,7 @@
 
 
 
-                                    <b-modal id="bv-modal-example" hide-header hide-footer>
+                                    <b-modal id="bv-modal-example" size="lg"   hide-header hide-footer>
                                         <template #modal-title>
 
                                         </template>
@@ -365,7 +365,14 @@ import axios from 'axios'
         printWindow() {
 
 
-           printJS('invoice', 'html')
+            printJS(
+                    {
+                        printable : 'invoice',
+                        type : 'html',
+                        honorColor: true,
+                        targetStyles: ['*'],
+                    }
+                )
 
             this.InvoiceAfterAdd = []
             this.$bvModal.hide('bv-modal-example')

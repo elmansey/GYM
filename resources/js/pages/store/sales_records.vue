@@ -49,8 +49,8 @@
                                                         <template #cell(action)="data" >
                                                                <div class="col-xl-4 col-md-6 col-sm-12 " >
                                                                     <b-button-group  size="sm" class="btn-group-pill">
-                                                                        <b-button variant="outline-danger" id="PageButton"  @click="deleteInvoiceModel(data.item.id,data.index)">delete</b-button>
-                                                                        <b-button variant="outline-dark"  @click="archiveInvoiceModel(data.item.id,data.index)">archive</b-button>
+                                                                        <b-button variant="outline-danger" id="PageButton1"  @click="deleteInvoiceModel(data.item.id,data.index)">delete</b-button>
+                                                                        <b-button variant="outline-dark"  id="PageButton2" @click="archiveInvoiceModel(data.item.id,data.index)">archive</b-button>
                                                                     </b-button-group>
                                                                 </div>
                                                         </template>
@@ -206,7 +206,16 @@ export default{
 
         printNow(){
 
-            printJS('invoiceTable', 'html')
+             printJS(
+                     {
+                        printable : 'invoiceTable',
+                        type : 'html',
+                        
+                            honorColor: true,
+                            targetStyles: ['*'],
+                            ignoreElements:['PageButton1','PageButton2']
+                    }
+                )
         },
 
 
