@@ -1,24 +1,19 @@
-import './bootstrap'
-import Vue from 'vue'
+import "./bootstrap";
+import Vue from "vue";
 
+import App from "./App.vue";
+import BootstrapVue from "bootstrap-vue";
+import VueFeather from "vue-feather";
+import router from "./router";
+import { store } from "./store";
 
+import excel from "vue-excel-export";
 
-import App from './App.vue'
-import BootstrapVue from 'bootstrap-vue'
-import VueFeather from 'vue-feather';
-import router from './router'
-import {
-    store
-} from './store';
-
-import excel from 'vue-excel-export'
-
-Vue.use(excel)
+Vue.use(excel);
 
 //firebase confegration
-import firebase from 'firebase/app';
+import firebase from "firebase/app";
 import "firebase/database";
-
 
 const firebaseConfig = {
     apiKey: "AIzaSyBaIQZblT9_y0jzKbWhqfVLDZs1mFZqrHU",
@@ -31,171 +26,129 @@ const firebaseConfig = {
     measurementId: "G-D7Q7DJ566V"
 };
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 firebase.initializeApp(firebaseConfig);
 
-window.firebase = firebase
+window.firebase = firebase;
 
 //firebase confegration
 
+import Notifications from "vue-notification";
+import velocity from "velocity-animate";
 
+Vue.use(Notifications);
+Vue.use(Notifications, { velocity });
 
-import Notifications from 'vue-notification'
-import velocity from 'velocity-animate'
+import VueI18n from "vue-i18n";
+// Multi Language Add
+import en from "./locales/en.json";
+import ar from "./locales/ar.json";
+import { defaultLocale, localeOptions } from "./constants/config";
+Vue.use(VueI18n);
 
-
-Vue.use(Notifications)
-Vue.use(Notifications, { velocity })
-
-
-
-
-
-
-import print from 'print-js'
-
-
-
-
-import Breadcrumbs from './components/bread_crumbs'
-import SmartTable from "vuejs-smart-table";
-import {
-    FormGroupPlugin
-} from 'bootstrap-vue'
-Vue.component('pulse-loader', require('vue-spinner/src/PulseLoader.vue'));
-
-import vue2Dropzone from 'vue2-dropzone'
-import VueFormWizared from 'vue-form-wizard'
-
-
-import Vuelidate from 'vuelidate'
-
-import './axios'
-
-
-
-
-
-
-
-
-
-
-
-
-import PxCard from './components/Pxcard.vue'
-Vue.component(PxCard.name, PxCard)
-
-
-import VueApexCharts from 'vue-apexcharts';
-import FunctionalCalendar from 'vue-functional-calendar';
-
-Vue.use(require('vue-chartist'))
-
-Vue.component('apexchart', VueApexCharts)
-
-
-Vue.use(FunctionalCalendar, {
-    dayNames: ['M', 'T', 'W', 'T', 'F', 'S', 'S']
+const messages = { en: en, ar: ar };
+const locale =
+    localStorage.getItem("currentLanguage") &&
+    localeOptions.filter(x => x.id === localStorage.getItem("currentLanguage"))
+        .length > 0
+        ? localStorage.getItem("currentLanguage")
+        : defaultLocale;
+const i18n = new VueI18n({
+    locale: locale,
+    fallbackLocale: "en",
+    messages
 });
 
+import print from "print-js";
 
+import Breadcrumbs from "./components/bread_crumbs";
+import SmartTable from "vuejs-smart-table";
+import { FormGroupPlugin } from "bootstrap-vue";
+Vue.component("pulse-loader", require("vue-spinner/src/PulseLoader.vue"));
 
+import vue2Dropzone from "vue2-dropzone";
+import VueFormWizared from "vue-form-wizard";
 
+import Vuelidate from "vuelidate";
+
+import "./axios";
+
+import PxCard from "./components/Pxcard.vue";
+Vue.component(PxCard.name, PxCard);
+
+import VueApexCharts from "vue-apexcharts";
+import FunctionalCalendar from "vue-functional-calendar";
+
+Vue.use(require("vue-chartist"));
+
+Vue.component("apexchart", VueApexCharts);
+
+Vue.use(FunctionalCalendar, {
+    dayNames: ["M", "T", "W", "T", "F", "S", "S"]
+});
 
 // Import Theme scss
-import './assets/scss/app.scss'
+import "./assets/scss/app.scss";
 
-
-import Swal from 'sweetalert2';
-window.Swal = Swal
-
+import Swal from "sweetalert2";
+window.Swal = Swal;
 
 const Toast = Swal.mixin({
     toast: true,
-    position: 'top-end',
+    position: "top-end",
     showConfirmButton: false,
     timer: 3000,
     timerProgressBar: true,
-    didOpen: (toast) => {
-        toast.addEventListener('mouseenter', Swal.stopTimer)
-        toast.addEventListener('mouseleave', Swal.resumeTimer)
+    didOpen: toast => {
+        toast.addEventListener("mouseenter", Swal.stopTimer);
+        toast.addEventListener("mouseleave", Swal.resumeTimer);
     }
 });
-window.Toast = Toast
-
-
-
-
-
-
-
-
-
-
-
-
+window.Toast = Toast;
 
 Vue.use(VueFeather);
-Vue.use(BootstrapVue)
-Vue.component('Breadcrumbs', Breadcrumbs)
+Vue.use(BootstrapVue);
+Vue.component("Breadcrumbs", Breadcrumbs);
 Vue.use(SmartTable);
-Vue.use(FormGroupPlugin)
-Vue.use(vue2Dropzone)
-Vue.use(VueFormWizared)
-Vue.use(Vuelidate)
-
-
+Vue.use(FormGroupPlugin);
+Vue.use(vue2Dropzone);
+Vue.use(VueFormWizared);
+Vue.use(Vuelidate);
 
 // global mixin
 Vue.mixin({
     methods: {
-
         // can:(permission) => store.getters.authUserRole[].includes(permission) ? true : false,
         can: function(permission) {
-            var perm = store.getters.authUserRole
+            var perm = store.getters.authUserRole;
             if (perm != null) {
-
-                var len = perm.length
-
+                var len = perm.length;
             }
-            let FinalPer = []
-
+            let FinalPer = [];
 
             for (var i = 0; i < len; i++) {
-
-                store.getters.authUserRole[i].permission.forEach((element, index) => {
-
-                    FinalPer.push(element['name'])
-
-                })
-
+                store.getters.authUserRole[i].permission.forEach(
+                    (element, index) => {
+                        FinalPer.push(element["name"]);
+                    }
+                );
             }
 
-            let FinalPerLen = FinalPer.length
+            let FinalPerLen = FinalPer.length;
             for (var t = 0; t < FinalPerLen; t++) {
-
                 if (FinalPer[t] == permission) {
-                    return true
+                    return true;
                 }
-
             }
 
-
-            return false
-
+            return false;
         }
-
     }
-})
+});
 
-
-
-
-new Vue({
+export default new Vue({
     router,
+    i18n,
     store,
     render: h => h(App)
-
-
-}).$mount('#app')
+}).$mount("#app");

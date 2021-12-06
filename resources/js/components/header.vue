@@ -68,13 +68,15 @@
       </div>
     </form>
     <div class="header-logo-wrapper">
-
       <div class="logo-wrapper">
         <router-link to="/">
-          <img class="img-fluid"   :src="require('@/assets/images/logo/logo.png').default"  alt />
+          <img
+            class="img-fluid"
+            :src="require('@/assets/images/logo/logo.png').default"
+            alt
+          />
         </router-link>
       </div>
-
 
       <div class="toggle-sidebar" @click="toggle_sidebar">
         <feather
@@ -84,6 +86,28 @@
         ></feather>
       </div>
     </div>
+
+    <!-- <li class="language-nav">
+      <b-dropdown
+        id="langddm"
+        class="translate_wrapper ml-2"
+        variant="light"
+        size="sm"
+        toggle-class="language-button"
+      >
+        <template slot="button-content">
+          <span class="name">{{ $i18n.locale }}</span>
+        </template>
+        <b-dropdown-item
+          v-for="(l, index) in localeOptions"
+          :key="index"
+          @click="changeLocale(l, l.direction)"
+        >
+          {{ l.name }}
+        </b-dropdown-item>
+      </b-dropdown>
+    </li> -->
+
     <div class="left-header col horizontal-wrapper pl-0">
       <!-- <ul class="horizontal-menu">
         <li class="mega-menu outside">
@@ -105,43 +129,100 @@
     <div class="nav-right col-8 pull-right right-header p-0">
       <ul class="nav-menus">
 
+        <li class="language-nav">
+          <b-dropdown
+            id="langddm"
+            class="translate_wrapper ml-2"
+            variant="light"
+            size="sm"
+            toggle-class="language-button"
+          >
+            <template slot="button-content">
 
-        <li  class="onhover-dropdown" v-if="$store.getters.authUserRole[0].role == 'owner'">
+              <span class="name">{{ $i18n.locale }}</span>
+            </template>
+            <b-dropdown-item
+              v-for="(l, index) in localeOptions"
+              :key="index"
+              @click="changeLocale(l, l.direction)"
+            >
+
+              {{ l.name }}</b-dropdown-item
+            >
+          </b-dropdown>
+        </li>
+
+
+        <li
+          class="onhover-dropdown"
+          v-if="$store.getters.authUserRole[0].role == 'owner'"
+        >
           <div class="notification-box">
             <feather type="bell"></feather
-            ><span class="badge badge-pill badge-secondary" v-if=" this.$store.getters.unreadNotificationNumber"> {{ this.$store.getters.unreadNotificationNumber }}</span>
+            ><span
+              class="badge badge-pill badge-secondary"
+              v-if="this.$store.getters.unreadNotificationNumber"
+            >
+              {{ this.$store.getters.unreadNotificationNumber }}</span
+            >
           </div>
-          <ul style="width: 330px" class="notification-dropdown onhover-show-div">
+          <ul
+            style="width: 330px"
+            class="notification-dropdown onhover-show-div"
+          >
             <li>
               <feather type="bell"></feather>
               <h6 class="f-18 mb-0">Notitications</h6>
             </li>
 
-            <li style="padding:10px" v-for="(item,index) in this.$store.getters.unSeenNotification" :key="index">
+            <li
+              style="padding: 10px"
+              v-for="(item, index) in this.$store.getters.unSeenNotification"
+              :key="index"
+            >
               <p>
                 <i class="fa fa-circle-o mr-3 font-success"></i>
-                <router-link :to="{name : 'notification',params:{notificationId: item.created_at}}"   style="margin:-10px"  >{{ item.title }} </router-link> <span class="pull-right badge-light badge-pill" style="color:#000" >{{handelTime(item.DateTime) }}</span>
+                <router-link
+                  :to="{
+                    name: 'notification',
+                    params: { notificationId: item.created_at },
+                  }"
+                  style="margin: -10px"
+                  >{{ item.title }}
+                </router-link>
+                <span
+                  class="pull-right badge-light badge-pill"
+                  style="color: #000"
+                  >{{ handelTime(item.DateTime) }}</span
+                >
               </p>
               <p style="margin-left: 20px">
-                  {{item.body.substring(0,30) + '...' }}
+                {{ item.body.substring(0, 30) + "..." }}
               </p>
             </li>
 
             <li>
-              <router-link  class="btn btn-link"  :to="{name : 'notification'}">Check all notification</router-link>
+              <router-link class="btn btn-link" :to="{ name: 'notification' }"
+                >Check all notification</router-link
+              >
             </li>
           </ul>
         </li>
 
-
-
-        <!-- <li>
-          <div class="mode">
-            <i class="fa fa-moon-o" v-show="mixLayout == 'light-only'" @click="customizeMixLayout('dark-only')"></i>
-            <i class="fa fa-lightbulb-o" v-show="mixLayout == 'dark-only'" @click="customizeMixLayout('light-only')"></i>
-          </div>
-        </li> -->
-
+        <li>
+          <!-- <div class="mode">
+            <i
+              class="fa fa-moon-o"
+              v-show="mixLayout == 'light-only'"
+              @click="customizeMixLayout('dark-only')"
+            ></i>
+            <i
+              class="fa fa-lightbulb-o"
+              v-show="mixLayout == 'dark-only'"
+              @click="customizeMixLayout('light-only')"
+            ></i>
+          </div> -->
+        </li>
 
         <li class="maximize">
           <a
@@ -152,82 +233,61 @@
             <feather type="maximize"></feather
           ></a>
         </li>
-        <li class="profile-nav onhover-dropdown p-0 mr-0" >
-          <div class="media profile-media" >
+        <li class="profile-nav onhover-dropdown p-0 mr-0">
+          <div class="media profile-media">
             <img
               class="b-r-10"
-              style="width: 40px;height: 40px;border-radius: 50%!important"
-              :src=" this.$store.getters.USER['profile_picture'] ? '../../public/profile_pictures/'+this.$store.getters.USER['profile_picture'] :  '../../public/profile_pictures/DefaultProfile.jpg' "
+              style="width: 40px; height: 40px; border-radius: 50% !important"
+              :src="
+                this.$store.getters.USER['profile_picture']
+                  ? '../../public/profile_pictures/' +
+                    this.$store.getters.USER['profile_picture']
+                  : '../../public/profile_pictures/DefaultProfile.jpg'
+              "
               alt=""
             />
             <div class="media-body">
-              <span>  {{this.$store.getters.USER.name }} </span>
-              <p class="mb-0 font-roboto" v-for="(role,index) in this.$store.getters.authUserRole" :key="index">
-
-                  {{
-
-                      role.role
-                  }}
-                  <i class="middle fa fa-angle-down"></i>
+              <span> {{ this.$store.getters.USER.name }} </span>
+              <p
+                class="mb-0 font-roboto"
+                v-for="(role, index) in this.$store.getters.authUserRole"
+                :key="index"
+              >
+                {{ role.role }}
+                <i class="middle fa fa-angle-down"></i>
               </p>
-
             </div>
           </div>
           <ul class="profile-dropdown onhover-show-div">
             <li>
-                <router-link
-                :to="{name : 'profile'}"
-                >
-
-                    <feather type="user"></feather><span>Account </span>
-                </router-link>
-
-
+              <router-link :to="{ name: 'profile' }">
+                <feather type="user"></feather><span>Account </span>
+              </router-link>
             </li>
 
-            <li
-
-            v-if="can('show-team-chat')"
-            >
-                <router-link
-                :to="{name : 'TeamChat'}"
-                >
-
-                    <feather type="message-circle"></feather><span>chat </span>
-                </router-link>
-
+            <li v-if="can('show-team-chat')">
+              <router-link :to="{ name: 'TeamChat' }">
+                <feather type="message-circle"></feather><span>chat </span>
+              </router-link>
             </li>
 
             <li v-if="can('show-history')">
-
-                    <router-link
-                    :to="{name : 'history'}"
-                    >
-
-                        <feather type="coffee"></feather>
-                        <span>History </span>
-
-                    </router-link>
-
+              <router-link :to="{ name: 'history' }">
+                <feather type="coffee"></feather>
+                <span>History </span>
+              </router-link>
             </li>
 
-
-
-
-
             <li>
-              <a><feather type="log-in"></feather><span  @click.prevent="Logout" >Log out</span></a>
+              <a
+                ><feather type="log-in"></feather
+                ><span @click.prevent="Logout">Log out</span></a
+              >
             </li>
           </ul>
         </li>
       </ul>
     </div>
-
-
-
-
-
-
 
     <script class="result-template" type="text/x-handlebars-template">
       <div class="ProfileCard u-cf">
@@ -260,29 +320,32 @@
 
     <script class="empty-template" type="text/x-handlebars-template">
       <div class="EmptyMessage">
-        Your search turned up 0 results. This most likely means the backend is down, yikes!
+        Your search turned up 0 results. This most likely means the backend is
+        down, yikes!
       </div>
     </script>
-
   </div>
-
 </template>
 <script>
 import axios from "axios";
 
+//multi lang
+//multi lang
+
 var body = document.getElementsByTagName("body")[0];
 import { mapState, mapActions } from "vuex";
+
 import app from "../main";
-import Bookmark from "./bookmark";
+import { defaultLocale, localeOptions } from "../constants/config";
+import { getDirection, setDirection } from "../constants/config";
 
-
-import moment from 'moment';
+import moment from "moment";
 
 export default {
   name: "Search",
   data() {
-
     return {
+      localeOptions,
 
       terms: "",
       searchOpen: false,
@@ -297,12 +360,9 @@ export default {
       openlanguage: false,
       mobile_accordian: false,
       mixLayout: "light-only",
-      userName:'',
+      userName: "",
+      langIcon: localStorage.getItem("currentLanguageIcon") || "flag-icon-us",
     };
-  },
-
-  components: {
-    Bookmark,
   },
 
   computed: {
@@ -311,40 +371,35 @@ export default {
       megamenuItems: (state) => state.menu.megamenu,
     }),
 
-      user(){
-          this.userName = this.$store.getters.USER.name
-      },
+    user() {
+      this.userName = this.$store.getters.USER.name;
+    },
 
-      role(){
-          this.userName = this.$store.getters.USER.roles.name
-      }
-
-
-
-
-
-
+    role() {
+      this.userName = this.$store.getters.USER.roles.name;
+    },
   },
 
   methods: {
 
+    ...mapActions(["setLang"]),
 
+    changeLocale(locale, direction) {
 
+      const currentDirection = getDirection().direction;
 
+      if (direction !== currentDirection) {
+        setDirection(direction);
+      }
 
+      this.setLang(locale);
+    },
 
+    handelTime(time) {
+      const timeAgo = moment(time).fromNow();
 
-      handelTime(time){
-          const timeAgo =  moment(time).fromNow()
-
-          return timeAgo
-      },
-
-
-
-
-
-
+      return timeAgo;
+    },
 
     toggle_sidebar() {
       this.$store.dispatch("menu/opensidebar");
@@ -373,32 +428,14 @@ export default {
     searchterm: function () {
       this.$store.dispatch("menu/searchTerm", this.terms);
     },
-    changeLocale(locale) {
-      this.setLang(locale);
-    },
+
     mobileaccordian() {
       this.mobile_accordian = !this.mobile_accordian;
     },
 
-
-
-
-      Logout(){
-
-            this.$store.dispatch('userLogout');
-
-      },
-
-
-
-
-
-
-
-
-
-
-
+    Logout() {
+      this.$store.dispatch("userLogout");
+    },
 
     addFix() {
       body.classList.add("offcanvas");
@@ -440,7 +477,6 @@ export default {
   },
 
   watch: {
-
     "$i18n.locale"(to, from) {
       if (from !== to) {
         this.$router.go(this.$route.path);
@@ -452,11 +488,6 @@ export default {
       if (!this.menuItems.length) this.searchResultEmpty = true;
       else this.searchResultEmpty = false;
     },
-
-
-
-
-
   },
 };
 </script>
