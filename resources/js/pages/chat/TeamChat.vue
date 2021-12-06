@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Breadcrumbs main="dashboard" title="team Chat" />
+    <Breadcrumbs :main="$t('Dashboard')" :title="$t('team Chat')" />
     <!-- Container-fluid starts-->
     <div class="container-fluid">
 
@@ -177,7 +177,7 @@
                     nav-class="tabbed-card border-tab border-tab-primary custom-scrollbar mb-0"
 
                   >
-                    <b-tab title="team" active style="margin:5px!important;padding:0px!important">
+                    <b-tab :title="$t('team')" active style="margin:5px!important;padding:0px!important">
                       <div class="people-list"  v-if="isloading">
                         <ul class="list digits">
                           <li

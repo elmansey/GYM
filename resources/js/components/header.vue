@@ -87,49 +87,15 @@
       </div>
     </div>
 
-    <!-- <li class="language-nav">
-      <b-dropdown
-        id="langddm"
-        class="translate_wrapper ml-2"
-        variant="light"
-        size="sm"
-        toggle-class="language-button"
-      >
-        <template slot="button-content">
-          <span class="name">{{ $i18n.locale }}</span>
-        </template>
-        <b-dropdown-item
-          v-for="(l, index) in localeOptions"
-          :key="index"
-          @click="changeLocale(l, l.direction)"
-        >
-          {{ l.name }}
-        </b-dropdown-item>
-      </b-dropdown>
-    </li> -->
+ 
 
     <div class="left-header col horizontal-wrapper pl-0">
-      <!-- <ul class="horizontal-menu">
-        <li class="mega-menu outside">
-          <a
-            class="nav-link"
-            href="javascript:void(0);"
-          >
-            <feather type="layers"></feather><span>Bonus Ui</span>
-          </a>
-        </li>
-        <li class="level-menu outside">
-          <a class="nav-link" href="#">
-            <feather type="inbox"></feather>
-            <span>Level Menu</span></a
-          >
-        </li>
-      </ul> -->
+
     </div>
     <div class="nav-right col-8 pull-right right-header p-0">
       <ul class="nav-menus">
 
-        <li class="language-nav">
+        <li class="language-nav btn dropdown-toggle  btn-sm language-button"  style="background: #f8f8f8; border: initial;font-size: 0.8rem;color: #8f8f8f;padding: 0.6rem 1rem;border-radius: 50px;">
           <b-dropdown
             id="langddm"
             class="translate_wrapper ml-2"
@@ -172,7 +138,7 @@
           >
             <li>
               <feather type="bell"></feather>
-              <h6 class="f-18 mb-0">Notitications</h6>
+              <h6 class="f-18 mb-0">{{ $t("Notitications")}}</h6>
             </li>
 
             <li
@@ -203,7 +169,7 @@
 
             <li>
               <router-link class="btn btn-link" :to="{ name: 'notification' }"
-                >Check all notification</router-link
+                >{{$t("Check all notification")}}</router-link
               >
             </li>
           </ul>
@@ -261,27 +227,27 @@
           <ul class="profile-dropdown onhover-show-div">
             <li>
               <router-link :to="{ name: 'profile' }">
-                <feather type="user"></feather><span>Account </span>
+                <feather type="user"></feather><span>{{$t("Account")}} </span>
               </router-link>
             </li>
 
             <li v-if="can('show-team-chat')">
               <router-link :to="{ name: 'TeamChat' }">
-                <feather type="message-circle"></feather><span>chat </span>
+                <feather type="message-circle"></feather><span>{{$t("chat")}} </span>
               </router-link>
             </li>
 
             <li v-if="can('show-history')">
               <router-link :to="{ name: 'history' }">
                 <feather type="coffee"></feather>
-                <span>History </span>
+                <span>{{$t("History")}} </span>
               </router-link>
             </li>
 
             <li>
               <a
                 ><feather type="log-in"></feather
-                ><span @click.prevent="Logout">Log out</span></a
+                ><span @click.prevent="Logout">{{$t("Log out")}}</span></a
               >
             </li>
           </ul>

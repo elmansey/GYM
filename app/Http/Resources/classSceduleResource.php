@@ -16,10 +16,15 @@ class classSceduleResource extends JsonResource
     {
         return [
 
-            'id'=> $this->id,
-            'group_relation' => $this->group_relation,
-            'startingTime' => $this->startingTime,
-            'endingTime'  =>$this->endingTime
+            'id'	 => $this->id ,
+            'staffName'	 => $this->staffName ,
+            'days'	 => $this->days ,
+            'startingTime'	 => $this-> startingTime,
+            'endingTime'	 => $this->endingTime ,
+            'trainingLocation' => $this-> trainingLocation,
+            'group_relation' => $this-> group_relation,
+            'staff_relation' => $this-> staff_relation,
+            'group_id' => $this->group_id,
 
         ];
     }

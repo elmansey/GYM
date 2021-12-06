@@ -2,353 +2,308 @@
   <div v-if="isLoading">
     <Breadcrumbs main="dashboard" title="class Schedule" />
 
-    <!-- Container-fluid starts-->
-    <div class="container-fluid">
-      <div class="select2-drpdwn">
+
+
+      <div class="container-fluid">
         <div class="row">
-          <div class="col-md-12">
+
+          <div class="col-sm-12">
             <div class="card">
-              <div class="card-header">
-                <h1>
-                  <i class="fa fa-calendar"></i>
-                  Class Schedules
-                </h1>
-              </div>
-              <div class="card-body">
-                <table class="table">
-                  <tbody>
-                    <tr>
-                      <th width="50">Saturday</th>
-                      <td  >
-                        <span
-                          class="badge badge-primary mb-1 "
-                          style="font-size: 12px; height: 30px ;border-radius:40px; flex-wrap: wrap;flex-direction: row;"
-                          v-for="(item, index) in classes.saturdayClasses"
-                          :key="index"
-                        >
-                          {{
+              <!-- <div class="card-header">
+                <h5>IMAGE GALLERY</h5>
+              </div> -->
+               <h1 style="margin: 15px 20px;"><i class="fa fa-calendar"></i></h1>
 
-                              'group('+
-                            item.group_relation.name + ") -> "
-                              + " " +
-                            "class" +
-                            " " +
-                            "(" +
-                            item.startingTime +
-                            "-" +
-                            item.endingTime +
-                            ")"
-                          }}
-                          <b-dropdown
-                            v-if="can('edit-class-schedule-in-classSchedule')"
-                            size="sm"
-                            style="height: 20px"
-                            menu-class="dropdown-content"
-                            variant="primary"
-                          >
-                            <b-dropdown-item>
-                              <router-link
-                                :to="{
-                                  name: 'updateClassSchedule',
-                                  params: {
-                                    classScheduleId: item.id,
-                                  },
-                                }"
-                                style="color:#000;!important"
-                              >
-                                edit
-                              </router-link>
-                            </b-dropdown-item>
-                          </b-dropdown>
-                        </span>
-                      </td>
-                    </tr>
+                  <div  class="card-body my-gallery gallery border-bottom">
+                      
+                    <div class="row" itemscope itemprop="thumbnail">
+                        
+                      <figure class="col-xl-3 col-sm-6 m-0" v-for="(item, index) in classes.saturdayClasses"  :key="index">
+                        <div>
 
-                    <tr>
-                      <th width="50">Sunday</th>
-                      <td>
-                        <span
-                          class="badge badge-dark mb-1"
-                          style="font-size: 12px; height: 30px;border-radius:40px"
-                          v-for="(item, index) in classes.sundayClasses"
-                          :key="index"
-                        >
-                          {{
-                              'group('+
-                            item.group_relation.name + ") -> "
-                              + " " +
-                            "class" +
-                            " " +
-                            "(" +
-                            item.startingTime +
-                            "-" +
-                            item.endingTime +
-                            ")"
-                          }}
-                          <b-dropdown
-                            v-if="can('edit-class-schedule-in-classSchedule')"
-                            size="sm"
-                            style="height: 20px"
-                            menu-class="dropdown-content"
-                            variant="dark"
-                          >
-                            <b-dropdown-item>
-                              <router-link
-                                :to="{
-                                  name: 'updateClassSchedule',
-                                  params: {
-                                    classScheduleId: item.id,
-                                  },
-                                }"
-                                style="color:#000;!important"
-                              >
-                                edit
-                              </router-link>
-                            </b-dropdown-item>
-                          </b-dropdown>
-                        </span>
-                      </td>
-                    </tr>
+                              <div  style="height:150px;background-color: rgb(255, 255, 255);box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px; padding: 10px 0px; text-align: center;"  >
+                                <label style="font-size: 20px;font-weight: 700;">Saturday</label> <br />
 
-                    <tr>
-                      <th width="50">Monday</th>
-                      <td>
-                        <span
-                          class="badge badge-primary mb-1"
-                          style="font-size: 12px; height: 30px ;border-radius:40px"
-                          v-for="(item, index) in classes.mondayClasses"
-                          :key="index"
-                        >
-                          {{
-                               'group('+
-                            item.group_relation.name + ") -> "
-                              + " " +
-                            "class" +
-                            " " +
-                            "(" +
-                            item.startingTime +
-                            "-" +
-                            item.endingTime +
-                            ")"
-                          }}
-                          <b-dropdown
-                            v-if="can('edit-class-schedule-in-classSchedule')"
-                            size="sm"
-                            style="height: 20px"
-                            menu-class="dropdown-content"
-                            variant="primary"
-                          >
-                            <b-dropdown-item>
-                              <router-link
-                                :to="{
-                                  name: 'updateClassSchedule',
-                                  params: {
-                                    classScheduleId: item.id,
-                                  },
-                                }"
-                                style="color:#000;!important"
-                              >
-                                edit
-                              </router-link>
-                            </b-dropdown-item>
-                          </b-dropdown>
-                        </span>
-                      </td>
-                    </tr>
+                                <span> {{ "group name: " + item.group_relation.name }} </span>  <br />
+                                <span>{{" class time : " +  item.startingTime +" - " +item.endingTime}}</span>                            <br />
+                                <span> {{ "class captien : " +  item.staff_relation.name }}</span> <br />  
 
-                    <tr>
-                      <th width="50">Tuesday</th>
-                      <td>
-                        <span
-                          class="badge badge-success mb-1"
-                          style="font-size: 12px; height: 30px ;border-radius:40px"
-                          v-for="(item, index) in classes.tuesdayClasses"
-                          :key="index"
-                        >
-                          {{
-                              'group('+
-                            item.group_relation.name + ") -> "
-                              + " " +
-                            "class" +
-                            " " +
-                            "(" +
-                            item.startingTime +
-                            "-" +
-                            item.endingTime +
-                            ")"
-                          }}
-                          <b-dropdown
-                            v-if="can('edit-class-schedule-in-classSchedule')"
-                            size="sm"
-                            style="height: 20px"
-                            menu-class="dropdown-content"
-                            variant="success"
-                          >
-                            <b-dropdown-item>
-                              <router-link
-                                :to="{
-                                  name: 'updateClassSchedule',
-                                  params: {
-                                    classScheduleId: item.id,
-                                  },
-                                }"
-                                style="color:#000;!important"
-                              >
-                                edit
-                              </router-link>
-                            </b-dropdown-item>
-                          </b-dropdown>
-                        </span>
-                      </td>
-                    </tr>
 
-                    <tr>
-                      <th width="50">Wednesday</th>
-                      <td>
-                        <span
-                          class="badge badge-dark mb-1"
-                          style="font-size: 12px; height: 30px ;border-radius:40px"
-                          v-for="(item, index) in classes.wednesdayClasses"
-                          :key="index"
-                        >
-                          {{
-                               'group('+
-                            item.group_relation.name + ") -> "
-                              + " " +
-                            "class" +
-                            " " +
-                            "(" +
-                            item.startingTime +
-                            "-" +
-                            item.endingTime +
-                            ")"
-                          }}
-                          <b-dropdown
-                            v-if="can('edit-class-schedule-in-classSchedule')"
-                            size="sm"
-                            style="height: 20px"
-                            menu-class="dropdown-content"
-                            variant="dark"
-                          >
-                            <b-dropdown-item>
-                              <router-link
-                                :to="{
-                                  name: 'updateClassSchedule',
-                                  params: {
-                                    classScheduleId: item.id,
-                                  },
-                                }"
-                                style="color:#000;!important"
-                              >
-                                edit
-                              </router-link>
-                            </b-dropdown-item>
-                          </b-dropdown>
-                        </span>
-                      </td>
-                    </tr>
+                                <b-dropdown
+                                  v-if="can('edit-class-schedule-in-classSchedule')"
+                                  size="sm"
+                                  style="height: 20px"
+                                  menu-class="dropdown-content"
+                                  variant="default"
+                                >
+                                  <b-dropdown-item>
+                                    <router-link
+                                      :to="{name: 'updateClassSchedule',params: {classScheduleId: item.id,},  }" style="color:#000;!important" >
+                                      edit
+                                    </router-link>
+                                  </b-dropdown-item>
+                                </b-dropdown>
+                        
+                              </div>
 
-                    <tr>
-                      <th width="50">Thursday</th>
-                      <td>
-                        <span
-                          class="badge badge-primary mb-1"
-                          style="font-size: 12px; height: 30px ;border-radius:40px"
-                          v-for="(item, index) in classes.thursdayClasses"
-                          :key="index"
-                        >
-                          {{
-                              'group('+
-                            item.group_relation.name + ") -> "
-                              + " " +
-                            "class" +
-                            " " +
-                            "(" +
-                            item.startingTime +
-                            "-" +
-                            item.endingTime +
-                            ")"
-                          }}
-                          <b-dropdown
-                            v-if="can('edit-class-schedule-in-classSchedule')"
-                            size="sm"
-                            style="height: 20px"
-                            menu-class="dropdown-content"
-                            variant="primary"
-                          >
-                            <b-dropdown-item>
-                              <router-link
-                                :to="{
-                                  name: 'updateClassSchedule',
-                                  params: {
-                                    classScheduleId: item.id,
-                                  },
-                                }"
-                                style="color:#000;!important"
-                              >
-                                edit
-                              </router-link>
-                            </b-dropdown-item>
-                          </b-dropdown>
-                        </span>
-                      </td>
-                    </tr>
+                        </div>
+                      </figure>
+            
+                    </div>
+                  </div>
 
-                    <tr>
-                      <th width="50">Friday</th>
-                      <td>
-                        <span
-                          class="badge badge-success mb-1"
-                          style="font-size: 12px; height: 30px ;border-radius:40px"
-                          v-for="(item, index) in classes.fridayClasses"
-                          :key="index"
-                        >
-                          {{
-                             'group('+
-                            item.group_relation.name + ") -> "
-                              + " " +
-                            "class" +
-                            " " +
-                            "(" +
-                            item.startingTime +
-                            "-" +
-                            item.endingTime +
-                            ")"
-                          }}
-                          <b-dropdown
-                            v-if="can('edit-class-schedule-in-classSchedule')"
-                            size="sm"
-                            style="height: 20px"
-                            menu-class="dropdown-content"
-                            variant="success"
-                          >
-                            <b-dropdown-item>
-                              <router-link
-                                :to="{
-                                  name: 'updateClassSchedule',
-                                  params: {
-                                    classScheduleId: item.id,
-                                  },
-                                }"
-                                style="color:#000;!important"
-                              >
-                                edit
-                              </router-link>
-                            </b-dropdown-item>
-                          </b-dropdown>
-                        </span>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+
+                  <div  class="card-body my-gallery gallery border-bottom">
+                    <div class="row" itemscope itemprop="thumbnail">
+                      <figure class="col-xl-3 col-sm-6 m-0" v-for="(item, index) in classes.sundayClasses":key="index">
+                          <div>
+                              <div  style="height:150px;background-color: rgb(255, 255, 255);box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px; padding: 10px 0px; text-align: center;"    >
+                                  <label style="font-size: 20px;font-weight: 700;">Sunday</label><br /> 
+                                          <span> {{ "group name: " + item.group_relation.name }} </span>  <br />
+                                          <span>{{" class time : " +  item.startingTime +" - " +item.endingTime}}</span>                            <br />
+                                          <span> {{ "class captien : " +  item.staff_relation.name }}</span> <br /> 
+
+                                            <b-dropdown
+                                              v-if="can('edit-class-schedule-in-classSchedule')"
+                                              size="sm"
+                                              style="height: 20px"
+                                              menu-class="dropdown-content"
+                                              variant="default"
+                                            >
+                                              <b-dropdown-item>
+                                                <router-link
+                                                  :to="{name: 'updateClassSchedule',params: {classScheduleId: item.id,},  }" style="color:#000;!important" >
+                                                  edit
+                                                </router-link>
+                                              </b-dropdown-item>
+                                            </b-dropdown>
+                                          
+                              </div>
+                          </div> 
+                        </figure>
+                        
+                    </div>
+                  </div>
+                  
+
+                    
+
+
+
+                  <div  class="card-body my-gallery gallery border-bottom">
+                      
+                    <div class="row" itemscope itemprop="thumbnail">
+                      <figure class="col-xl-3 col-sm-6 m-0" v-for="(item, index) in classes.mondayClasses":key="index">
+                        <div >
+                            <div  style="height:150px;background-color: rgb(255, 255, 255);box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px; padding: 10px 0px; text-align: center;">
+                            
+                                      <label style="font-size: 20px;font-weight: 700;">Monday</label><br />
+                                     <span> {{ "group name: " + item.group_relation.name }} </span>  <br />
+                                  <span>{{" class time : " +  item.startingTime +" - " +item.endingTime}}</span>                            <br />
+                                  <span> {{ "class captien : " +  item.staff_relation.name }}</span> <br /> 
+
+
+                                  <b-dropdown
+                                    v-if="can('edit-class-schedule-in-classSchedule')"
+                                    size="sm"
+                                    style="height: 20px"
+                                    menu-class="dropdown-content"
+                                    variant="default"
+                                  >
+                                    <b-dropdown-item>
+                                      <router-link
+                                        :to="{name: 'updateClassSchedule',params: {classScheduleId: item.id,},  }" style="color:#000;!important" >
+                                        edit
+                                      </router-link>
+                                    </b-dropdown-item>
+                                  </b-dropdown>
+                          
+                                </div>
+                              </div>
+                      </figure>
+            
+                    </div>
+                  </div>
+
+
+                  <div  class="card-body my-gallery gallery border-bottom">
+                      
+                    <div class="row" itemscope itemprop="thumbnail">
+                      <figure class="col-xl-3 col-sm-6 m-0"   v-for="(item, index) in classes.tuesdayClasses" :key="index">
+                        <!-- <a>
+                          <img src="" class="img-thumbnail" alt="Image description" />
+                        </a> -->
+
+                        <div >
+                                <div  style=" height:150px;background-color: rgb(255, 255, 255);box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px; padding: 10px 0px; text-align: center;"  >
+                                  <label style="font-size: 20px;font-weight: 700;">Tuesday</label><br />
+
+                               <span> {{ "group name: " + item.group_relation.name }} </span>  <br />
+                                  <span>{{" class time : " +  item.startingTime +" - " +item.endingTime}}</span>         <br />
+                                  <span> {{ "class captien : " +  item.staff_relation.name }}</span> <br /> 
+
+                                  <b-dropdown
+                                    v-if="can('edit-class-schedule-in-classSchedule')"
+                                    size="sm"
+                                    style="height: 20px"
+                                    menu-class="dropdown-content"
+                                    variant="default"
+                                  >
+                                    <b-dropdown-item>
+                                      <router-link
+                                        :to="{name: 'updateClassSchedule',params: {classScheduleId: item.id,},  }" style="color:#000;!important" >
+                                        edit
+                                      </router-link>
+                                    </b-dropdown-item>
+                                  </b-dropdown>
+                          
+                                </div>
+                              </div>
+                      </figure>
+            
+                    </div>
+                  </div>
+
+
+                  <div  class="card-body my-gallery gallery border-bottom">
+                      
+                    <div class="row" itemscope itemprop="thumbnail">
+                      
+                      <figure class="col-xl-3 col-sm-6 m-0" v-for="(item, index) in classes.wednesdayClasses":key="index">
+                        <!-- <a>
+                          <img src="" class="img-thumbnail" alt="Image description" />
+                        </a> -->
+
+                        <div >
+                                <div  style="height:150px;background-color: rgb(255, 255, 255);box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px; padding: 10px 0px; text-align: center;"  >
+                              <label style="font-size: 20px;font-weight: 700;">Wednesday</label><br />
+                                     <span> {{ "group name: " + item.group_relation.name }} </span>  <br />
+                                  <span>{{" class time : " +  item.startingTime +" - " +item.endingTime}}</span>  <br />
+                                  <span> {{ "class captien : " +  item.staff_relation.name }}</span> <br /> 
+
+
+                                  <b-dropdown
+                                    v-if="can('edit-class-schedule-in-classSchedule')"
+                                    size="sm"
+                                    style="height: 20px"
+                                    menu-class="dropdown-content"
+                                    variant="default"
+                                  >
+                                    <b-dropdown-item>
+                                      <router-link
+                                        :to="{name: 'updateClassSchedule',params: {classScheduleId: item.id,},  }" style="color:#000;!important" >
+                                        edit
+                                      </router-link>
+                                    </b-dropdown-item>
+                                  </b-dropdown>
+                          
+                                </div>
+                              </div>
+                      </figure>
+            
+                    </div>
+                  </div>
+
+                  <div  class="card-body my-gallery gallery border-bottom">
+                      
+                    <div class="row" itemscope itemprop="thumbnail">
+                       
+                      <figure class="col-xl-3 col-sm-6 m-0"  v-for="(item, index) in classes.thursdayClasses" :key="index">
+                        <!-- <a>
+                          <img src="" class="img-thumbnail" alt="Image description" />
+                        </a> -->
+
+                        <div >
+                                <div  style="height:150px;background-color: rgb(255, 255, 255);box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px; padding: 10px 0px; text-align: center;">
+                             <label style="font-size: 20px;font-weight: 700;">Thursday</label><br />
+                                       <span> {{ "group name: " + item.group_relation.name }} </span>  <br />
+                                  <span>{{" class time : " +  item.startingTime +" - " +item.endingTime}}</span>  <br />
+                                  <span> {{ "class captien : " +  item.staff_relation.name }}</span> <br /> 
+
+
+                                  <b-dropdown
+                                    v-if="can('edit-class-schedule-in-classSchedule')"
+                                    size="sm"
+                                    style="height: 20px"
+                                    menu-class="dropdown-content"
+                                    variant="default"
+                                  >
+                                    <b-dropdown-item>
+                                      <router-link
+                                        :to="{name: 'updateClassSchedule',params: {classScheduleId: item.id,},  }" style="color:#000;!important" >
+                                        edit
+                                      </router-link>
+                                    </b-dropdown-item>
+                                  </b-dropdown>
+                          
+                                </div>
+                              </div>
+                      </figure>
+            
+                    </div>
+                  </div>
+
+                  <div  class="card-body my-gallery gallery border-bottom">
+                      
+                    <div class="row" itemscope itemprop="thumbnail">
+                      <figure class="col-xl-3 col-sm-6 m-0" v-for="(item, index) in classes.fridayClasses"
+                          :key="index">
+                        <!-- <a>
+                          <img src="" class="img-thumbnail" alt="Image description" />
+                        </a> -->
+
+                        <div >
+                                <div  style="height:150px;background-color: rgb(255, 255, 255);box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px; padding: 10px 0px; text-align: center;">
+                                <label style="font-size: 20px;font-weight: 700;">Friday</label><br />
+
+                                      <span> {{ "group name: " + item.group_relation.name }} </span>  <br />
+                                  <span>{{" class time : " +  item.startingTime +" - " +item.endingTime}}</span>  <br />
+                                  <span> {{ "class captien : " +  item.staff_relation.name }}</span> <br /> 
+
+
+                                  <b-dropdown
+                                    v-if="can('edit-class-schedule-in-classSchedule')"
+                                    size="sm"
+                                    style="height: 20px"
+                                    menu-class="dropdown-content"
+                                    variant="default"
+                                  >
+                                    <b-dropdown-item>
+                                      <router-link
+                                        :to="{name: 'updateClassSchedule',params: {classScheduleId: item.id,},  }" style="color:#000;!important" >
+                                        edit
+                                      </router-link>
+                                    </b-dropdown-item>
+                                  </b-dropdown>
+                          
+                                </div>
+                              </div>
+                      </figure>
+            
+                    </div>
+                  </div>
+
+
+            
+
+
+
+
+
+              
             </div>
           </div>
+          
         </div>
-      </div>
-    </div>
-    <!-- Container-fluid Ends-->
+       </div> 
+
+    
+
   </div>
+
+
+
+
   <div
     v-else
     class="col-md-3"
@@ -357,14 +312,15 @@
       position: absolute;
       top: 50%;
       right: 50%;
-      transform: translate(50%, -50%);
-    "
-  >
+      transform: translate(50%, -50%);">
+
     <h6 class="sub-title mb-0 text-center"></h6>
     <div class="loader-box">
       <div class="loader-3"></div>
     </div>
   </div>
+
+
 </template>
 
 <script>

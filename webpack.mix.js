@@ -20,7 +20,7 @@ mix.js('resources/js/main.js', 'public/js')
         },
       });
 
-mix.browserSync('https://abdelrahmanelmansey.geexar.dev');
+mix.browserSync(process.env.MIX_RUN_URL);
 
 
 

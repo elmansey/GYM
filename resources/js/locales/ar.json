@@ -1,5 +1,121 @@
-{
-    "p": {
-        "test": "تيست"
-    }
+{   
+        
+
+        "Dashboard": "الرئيسيه",
+        "chat" :  "المراسله",
+        "Registration member" : "تسجيل عضو",
+        "class schedule" :  "جدول المواعيد",
+        "Memberships type" :  "العضويات",
+        "Groups" :  "المجموعات",
+        "Work Team" :  "فريق العمل",
+        "Permissions" :  "الصلاحيات",
+        "attendance" :  "الحضور",
+        "notification" :  "الاشعارات",
+        "products" :  "المنتجات",
+        "store" :  "نقطه البيع",
+        "History" :  "سجل النشاطات",
+        "setting" :  "الاعدادت",
+        "chatting with team" : "المراسله مع الفريق",
+        "members list" : "قائمه الاعضاء",
+        "add new member" : "اضافه عضو جديد",
+        "class list" : "قائمه المواعيد",
+        "add in class schedule" : "اضافه موعد جديد",
+        "memberships list" : "قائمه العضويات",
+        "add new Membership" : "اضافه عضويه جديده",
+        "groups list" : "قائمه المجموعات",
+        "add group" : "اضافه مجموعه",
+        "work team list" : "قائمه فريق العمل",
+        "add admin in team" : "اضافه مشرف في الفريق",
+        "staff list" : "قائمه الموظفين",
+        "add person in staff" : "اضافه موظف",
+        "add role" : "اضافه صلاحيه",
+        "attendance table" : "جدول الحضور",
+        "take attendance" : "اضافه الحضور",
+        "notification table" : "قائمه الاشعارات",
+        "add product in store" : "اضافه المنتج",
+        "Invoice Archive" : "ارشيف الفواتير",
+        "sell product" : "بيع منتج",
+        "history" : "السجل",
+        "team permissions" : "صلاحيات الفريق",
+        "product invoices" : "فواتير المنتجات",
+        "Check all notification":"جميع الاشعارات",
+        "Notitications" : "الاشعارات",
+        "Log out"       : "تسجيل الخروج",
+        "Account"     : "حسابي",
+        "statistics"   : "الاحصائيات",
+        "Attendees today" : "الحاضرون اليوم",
+        "members number"  : "عدد الاعضاء",
+        "staff team"    : "فريق العمل",
+        "Membership stats" : "احصائيات العضويه",
+        "gender stats"    : "احصائيات النوع",
+        "male"            : "ذكر",
+        "female"          : "انثي", 
+        "team Chat"       : "مراسله الفريق",
+        "team"            : "الفريق",
+        "edit member"     : "تعديل عضو",
+        "registeration a new member" : "تسجيل عضو جديد",
+        "name" : "الاسم",
+        "Gender" : "النوع",
+        "Date of birth" : "تاريخ الميلاد",
+        "age" : "السن",
+        "address" : "العنوان",
+        "City" : "المدينه",
+        "phone number" : "رقم التليفون",
+        "RF code" : "كود RF",
+        "start date" : "بدايه الاشتراك",
+        "membership" : "نوع العضويه",
+        "payment pattern" : "نطام الدفع",
+        "membership price" : "سعر العضويه",
+        "Subscription period" : "فتره الاشتراك",
+        "period Expiry" : "تاريخ انتهاء الاشتراك",
+        "total payment" : "اجمالي المبلغ",
+        "groups" : "المجموعات",
+        "class" : "حصص المجموعات",
+        "Upload profile picture" : " ارفق صوره الملف الشخصي",
+        "interested area" : "الاهتمامات",
+        "source" : "مصدر المعرفه",
+        "Save" : "حفظ",
+        "update" : "تعديل",
+        "freeze list" : "قائمه الحسابات المجمده",
+        "members list" :  "قائمه الاعضاء",
+        "freeze account list" : "قائمه الحسابات المجمده",
+        "id"  : "م",
+        "profile_picture"  : "الصوره الشخصيه",
+        "phone"  : "رقم الهاتف",
+        "days_left_before_freezing"  : "الفتره المتبقيه له قبل التجميد",
+        "memberShip"  : "العضويه",
+        "action"  : "العمليات",
+        "freeze_in" : "تم التجميد في",
+        "qr_code" : "qr كود",
+        "freeze account"  : "نجميد الحساب",
+        "edit"  : "تعديل",
+        "delete"  : "حذف",
+        "Delete member"  : "حذف عضو",
+        "are you sure to delete this member"  : "هل انت متاكد من حذف هذا العضو",
+        "are you sure to freeze this account"  : "هل انت متاكد من تجميد هذا الحساب",
+        "Cancel"  : "الغاء",
+        "freeze"  : "تجميد",
+        "check"  : "اختر",
+        "staff name"  : "اسم المدرب",
+        "group Name"  : "اسم المجموعه",
+        "starting Time"  : "يبدا في ",
+        "ending Time"  : "ينتهي في ",
+        "training Location"  : "مكان التدريب"
+    
+
+
+
+
+
+
+
+
+
+     
+
+        
+    
+
+      
+    
 }

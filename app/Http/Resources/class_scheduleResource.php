@@ -23,7 +23,7 @@ class class_scheduleResource extends JsonResource
             'endingTime'	 => $this->endingTime ,
             'trainingLocation' => $this-> trainingLocation,
             'group_relation' => $this-> group_relation,
-            'captain_relation' => $this-> captain_relation,
+            'staff_relation' => $this-> staff_relation,
             'group_id' => $this->group_id,
         ];
     }

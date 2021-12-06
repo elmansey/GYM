@@ -5,10 +5,10 @@
 
     <div v-if="isLoadig">
 
-        <Breadcrumbs main="Dashboard" title="members list" />
+        <Breadcrumbs :main="$t('Dashboard')" :title="$t('members list')" />
         <button class="btn btn-primary btn-sm" style="margin-left: 30px;margin-bottom: 15px;"><i  class="icofont icofont-snow-alt"></i>
             <router-link style="color:#fff" :to="{name : 'freezeMemberAccountList'}">
-                    freeze list
+                   {{ $t('freeze list')}}
             </router-link>
         </button>
         <div class="container-fluid">
@@ -39,6 +39,7 @@
                                                     </template>
 
                                                     <template #cell(profile_picture)="data">
+                                                               
                                                            <img
                                                                 style="width: 40px;height: 40px;border-radius: 50%;"
 
@@ -67,17 +68,17 @@
 
                                                                 <b-dropdown text="" menu-class="dropdown-content" size="xs" variant="default">
                                                                     <b-dropdown-item @click.prevent="freezeAccountHandel(data.item.id,data.index)">
-                                                                        <feather  style="width:15px" type="zap" ></feather> freeze account
+                                                                        <feather  style="width:15px" type="zap" ></feather> {{ $t('freeze account')}}
 
                                                                     </b-dropdown-item>
                                                                     <b-dropdown-item >
                                                                           <router-link  :to="{name: 'editMember', params: {memberId : data.item.id}}"  v-if="can('edit-member-from-team')">
-                                                                            <feather style="width:15px" type="edit-2"></feather> edit
+                                                                            <feather style="width:15px" type="edit-2"></feather> {{ $t('edit')}}
                                                                             </router-link>
                                                                     </b-dropdown-item>
                                                                     <b-dropdown-item
                                                                     @click="DeleteAdminModal(data.item.id,data.index)"  v-if="can('delete-member-from-team')"
-                                                                    ><feather style="width:15px" type="trash"></feather>dalete</b-dropdown-item>
+                                                                    ><feather style="width:15px" type="trash"></feather>{{ $t('dalete')}}</b-dropdown-item>
 
                                                                 </b-dropdown>
 
@@ -115,26 +116,26 @@
 
                             <b-modal id="bv-modal-example" hide-footer>
                                 <template #modal-title>
-                                   Delete  member
+                                   {{$t('Delete member')}}
                                 </template>
                                 <div class="d-block text-center">
 
-                                    <h5>are you sure to delete this member</h5>
+                                    <h5>{{$t('are you sure to delete this member')}}</h5>
                                 </div>
-                                <b-button class="mt-3"  v-b-modal.modal-sm variant="default" @click="$bvModal.hide('bv-modal-example')">Cancel</b-button>
-                                <b-button class="mt-3"  v-b-modal.modal-sm variant="danger"  @click.prevent="deletemember">delete</b-button>
+                                <b-button class="mt-3"  v-b-modal.modal-sm variant="default" @click="$bvModal.hide('bv-modal-example')">{{ $t('Cancel')}}</b-button>
+                                <b-button class="mt-3"  v-b-modal.modal-sm variant="danger"  @click.prevent="deletemember">{{ $t('delete')}}</b-button>
                             </b-modal>
 
                             <b-modal id="freeze" hide-footer>
                                 <template #modal-title>
-                                   freeze  account
+                                   {{ $t('freeze account')}}
                                 </template>
                                 <div class="d-block text-center">
 
-                                    <h5> <i  class="icofont icofont-snow-alt"></i>    are you sure to freeze this account</h5>
+                                    <h5> <i  class="icofont icofont-snow-alt"></i>   {{$t('are you sure to freeze this account')}}</h5>
                                 </div>
-                                <b-button class="mt-3"  v-b-modal.modal-sm variant="default" @click="$bvModal.hide('bv-modal-example')">Cancel</b-button>
-                                <b-button class="mt-3"  v-b-modal.modal-sm variant="primary"  @click.prevent="freezeAccount">freeze</b-button>
+                                <b-button class="mt-3"  v-b-modal.modal-sm variant="default" @click="$bvModal.hide('bv-modal-example')">{{ $t('Cancel')}}</b-button>
+                                <b-button class="mt-3"  v-b-modal.modal-sm variant="primary"  @click.prevent="freezeAccount">{{ $t('freeze')}}</b-button>
                             </b-modal>
                         </div>
 
@@ -170,19 +171,19 @@ export default {
             freezeAccountIndex:'',
             totalRows: 1,
             currentPage: 1,
-            perPage: 5,
+            perPage: 10,
             tablefields1: [
-                'id',
-                'profile_picture',
-                'name',
-                { key: 'phone', label: 'phone', sortable: false, },
-                { key: 'phone', label: 'phone', sortable: false, },
-                { key: 'start_date', label: 'start date', sortable: false, },
-                { key: 'period_Expiry', label: 'period Expiry', sortable: false, },
-                { key: 'member_ships_relation.name', label: 'memberShip', sortable: false, },
-                'qr_code',
-                { key: 'RF_code', label: 'RF code', sortable: false, },
-                'action',
+                {'id' : this.$t('id')},
+                { 'profile_picture' : this.$t('profile_picture')},
+                {'name' : this.$t('name')},
+                { key: 'phone', label: this.$t('phone'), sortable: false, },
+                { key: 'phone', label: this.$t('phone'), sortable: false, },
+                { key: 'start_date', label: this.$t('start date'), sortable: false, },
+                { key: 'period_Expiry', label: this.$t('period Expiry'), sortable: false, },
+                { key: 'member_ships_relation.name', label: this.$t('memberShip'), sortable: false, },
+                {'qr_code' : this.$t('qr_code')},
+                { key: 'RF_code', label: this.$t('RF code'), sortable: false, },
+                {'action' : this.$t('action')},
 
 
 

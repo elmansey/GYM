@@ -35,7 +35,7 @@ class ClassSchedule extends Model
 
 
 
-    public function captain_relation(){
+    public function staff_relation(){
 
         return $this->belongsTo(User::class,'staffName');
 

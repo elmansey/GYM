@@ -5,7 +5,7 @@
 
     <div v-if="isLoadig">
 
-        <Breadcrumbs main="Dashboard" title="freeze account  list" />
+        <Breadcrumbs :main="$t('Dashboard')"  :title=" $t('freeze account list')" />
 
         <div class="container-fluid">
             <div class="row">
@@ -151,17 +151,17 @@ export default {
             currentPage: 1,
             perPage: 5,
             tablefields1: [
-                'id',
-                'profile_picture',
-                'name',
-                { key: 'phone', label: 'phone', sortable: false, },
-                'freeze_in',
-                'days_left_before_freezing',
-                { key: 'member_ships_relation.name', label: 'memberShip', sortable: false, },
-                'qr_code',
-                { key: 'RF_code', label: 'RF code', sortable: false, },
-                'action',
-
+                
+                {'id' : this.$t('id')},
+                { 'profile_picture' : this.$t('profile_picture')},
+                {'name' : this.$t('name')},
+                { key: 'phone', label: this.$t('phone'), sortable: false, },
+                {'freeze_in': this.$t('freeze_in')},
+                {'days_left_before_freezing': this.$t('days_left_before_freezing')},
+                { key: 'member_ships_relation.name', label: this.$t('memberShip'), sortable: false, },
+                {'qr_code' :this.$t('qr_code')},
+                { key: 'RF_code', label: this.$t('RF code'), sortable: false, },
+                {'action' : this.$t('action')},
 
 
             ],

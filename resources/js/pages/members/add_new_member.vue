@@ -1,6 +1,6 @@
 <template>
     <div v-if="isLoading">
-        <Breadcrumbs main="dashboard" :title="edit ? 'edit member':'registeration a new member'"/>
+        <Breadcrumbs :main=" $t('Dashboard')" :title="edit ? $t('edit member'): $t('registeration a new member')"/>
         <!-- Container-fluid starts-->
         <div class="container-fluid">
             <div class="select2-drpdwn">
@@ -18,7 +18,7 @@
 
 <!--                                            <div  class="mb-2 col-md-12 col-lg-12 col-sm-12">personal information</div><br/>-->
                                             <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
-                                                <div class="col-form-label"> name</div>
+                                                <div class="col-form-label"> {{ $t('name')}}</div>
 
                                                 <input name="name" :class="['form-control',error.name? 'is-invalid' : '']" v-model="memberData.name"  />
                                              <small style="color: red" v-if="error.name">{{ error.name[0] }}</small >
@@ -26,7 +26,7 @@
 
 
                                             <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
-                                                <div class="col-form-label"> Gender</div>
+                                                <div class="col-form-label"> {{ $t('Gender')}}</div>
 
                                                 <select name="gender"   :class="['form-control',error.gender? 'is-invalid' : '']"  v-model="memberData.gender" >
                                                     <option value="male">Male</option>
@@ -36,14 +36,14 @@
                                             </div>
 
                                             <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
-                                                <div class="col-form-label"> Date of birth </div>
+                                                <div class="col-form-label"> {{ $t('Date of birth')}} </div>
 
                                                 <input name="phone"  @change="countMemberAge" type="date"  :class="['form-control',error.data_of_birth? 'is-invalid' : '']"  v-model="memberData.data_of_birth"/>
                                              <small style="color: red" v-if="error.date_of_birth">{{ error.date_of_birth[0] }}</small >
                                             </div>
 
                                             <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
-                                                <div class="col-form-label"> age </div>
+                                                <div class="col-form-label"> {{ $t('age')}} </div>
 
                                                 <input name="phone" readonly type="text"  :class="['form-control',error.age? 'is-invalid' : '']"  v-model="memberData.age"/>
                                              <small style="color: red" v-if="error.age">{{ error.age[0] }}</small >
@@ -57,21 +57,21 @@
 
 
                                         <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
-                                            <div class="col-form-label"> address </div>
+                                            <div class="col-form-label"> {{ $t('address')}} </div>
 
                                             <input name="address" :class="['form-control',error.address? 'is-invalid' : '']" v-model="memberData.address" />
                                              <small style="color: red" v-if="error.address">{{ error.address[0] }}</small >
                                         </div>
 
                                         <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
-                                            <div class="col-form-label"> City </div>
+                                            <div class="col-form-label"> {{ $t('City')}} </div>
 
                                             <input name="city"  :class="['form-control',error.city? 'is-invalid' : '']"  v-model="memberData.city" />
                                              <small style="color: red" v-if="error.city">{{ error.city[0] }}</small >
                                         </div>
 
                                         <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
-                                            <div class="col-form-label"> phone number  </div>
+                                            <div class="col-form-label"> {{ $t('phone number')}}  </div>
 
                                             <input name="phone" :class="['form-control',error.phone? 'is-invalid' : '']" v-model="memberData.phone"/>
                                              <small style="color: red" v-if="error.phone">{{ error.phone[0] }}</small >
@@ -82,7 +82,7 @@
 
 
                                         <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
-                                            <div class="col-form-label"> RF code  </div>
+                                            <div class="col-form-label"> {{ $t('RF code')}}  </div>
 
                                             <input name="" :class="['form-control',error.RF_code ? 'is-invalid' : '']" v-model="memberData.RF_code"  />
                                              <small style="color: red" v-if="error.RF_code">{{ error.RF_code[0] }}</small >
@@ -90,7 +90,7 @@
 
 
                                         <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
-                                            <div class="col-form-label">   start data  </div>
+                                            <div class="col-form-label">   {{ $t('start data')}}  </div>
 
                                             <input name="" type="date" @change="setExpireDate"   :class="['form-control',error.start_date? 'is-invalid' : '']"  v-model="memberData.start_data" />
                                              <small style="color: red" v-if="error.start_date">{{ error.start_date[0] }}</small >
@@ -98,7 +98,7 @@
 
 
                                         <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
-                                            <div class="col-form-label">   membership  </div>
+                                            <div class="col-form-label">   {{ $t('membership')}}  </div>
 
                                             <select name="membership"  @change="IsAllowFuatureInThisMembership" :class="['form-control',error.membership_id? 'is-invalid' : '']"  v-model="memberData.membership_id" >
                                                 <option  :value="item.id" v-for="(item,index) in memberships"  :key="index">
@@ -112,7 +112,7 @@
 
 
                                     <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
-                                        <div class="col-form-label">    payment pattern  </div>
+                                        <div class="col-form-label">    {{ $t('payment pattern')}}  </div>
 
                                         <input name=""  readonly type="text"    :class="['form-control',error.payment? 'is-invalid' : '']"  v-model="memberData.payment" />
                                             <small style="color: red" v-if="error.payment">{{ error.payment[0] }}</small >
@@ -120,7 +120,7 @@
 
 
                                         <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
-                                            <div class="col-form-label">   membership price  </div>
+                                            <div class="col-form-label">   {{ $t('membership price')}}  </div>
 
                                             <input name="" readonly type="text"    :class="['form-control',error.membership_price? 'is-invalid' : '']"  v-model="memberData.membership_price" />
                                             <small style="color: red" v-if="error.membership_price">{{ error.membership_price[0] }}</small >
@@ -128,21 +128,21 @@
 
 
                                     <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
-                                        <div class="col-form-label">   Subscription period {{ this.memberData.payment ?  "(" + this.memberData.payment + ")" : ''}}  </div>
+                                        <div class="col-form-label">   {{ $t('Subscription period')}} {{ this.memberData.payment ?  "(" + this.memberData.payment + ")" : ''}}  </div>
 
                                         <input name=""  type="number" @change="setExpireDate"   :class="['form-control',error.Subscription_period? 'is-invalid' : '']"  v-model="memberData.Subscription_period" />
                                             <small style="color: red" v-if="error.Subscription_period">{{ error.Subscription_period[0] }}</small >
                                     </div>
 
                                         <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
-                                            <div class="col-form-label">   period Expiry </div>
+                                            <div class="col-form-label">   {{ $t('period Expiry')}} </div>
 
                                             <input name="" type="text"  readonly  :class="['form-control',error.period_Expiry? 'is-invalid' : '']"  v-model="memberData.period_Expiry" />
                                              <small style="color: red" v-if="error.period_Expiry">{{ error.period_Expiry[0] }}</small >
                                         </div>
 
                                         <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
-                                            <div class="col-form-label">    total payment </div>
+                                            <div class="col-form-label">    {{ $t('total payment')}} </div>
 
                                             <input name="" type="text"  readonly  :class="['form-control',error.total_payment? 'is-invalid' : '']"  v-model="memberData.total_payment" />
                                              <small style="color: red" v-if="error.total_payment">{{ error.total_payment[0] }}</small >
@@ -161,7 +161,7 @@
                                             </div> -->
 
                                             <div class="mb-2 col-md-12 col-lg-12 col-sm-12"  v-if="memberData.Membership_choose_allow_private_Features">
-                                                      <div class="col-form-label">groups </div>
+                                                      <div class="col-form-label">{{$t('groups')}} </div>
 
                                                       <multiselect name="group" @input="getAllClasseRelatedToThisGroup" v-model="memberData.group_id" tag-placeholder="Add this as new tag" placeholder="Search or add a tag"
                                                                     :class="[error.group_id ? 'is-invalid' : '']"     label="name" track-by="id"    :options="groups"  :multiple="true"   :taggable="true" @tag="addTag"  >
@@ -175,7 +175,7 @@
 
 
                                             <div class="mb-2 col-md-12 col-lg- col-sm-12" v-if="memberData.Membership_choose_allow_private_Features && afterChooseGroup">
-                                                <div class="col-form-label">   class <i class="icofont icofont-ui-calendar"></i>  </div>
+                                                <div class="col-form-label">   {{ $t('class')}} <i class="icofont icofont-ui-calendar"></i>  </div>
                                                     <div class="card">
                                                         <div class="card-body">
 
@@ -245,7 +245,7 @@
 
 
                                                <div class="mb-2 col-md-12 col-lg-12 col-sm-12">
-                                                  <div class="col-form-label"> Upload profile picture</div>
+                                                  <div class="col-form-label"> {{ $t('Upload profile picture')}}</div>
 
 
                                                       <vue-dropzone
@@ -265,14 +265,14 @@
                                               </div>
 
                                         <div class="mb-2 col-md-12 col-lg-12 col-sm-12">
-                                            <div class="col-form-label">  interested area  </div>
+                                            <div class="col-form-label">  {{ $t('interested area')}}  </div>
 
                                            <textarea style="width: 100%"  :class="['form-control',error.interested_area? 'is-invalid' : '']"   v-model="memberData.interested_area"></textarea>
                                              <small style="color: red" v-if="error.interested_area">{{ error.interested_area[0] }}</small >
                                         </div>
 
                                         <div class="mb-2 col-md-12 col-lg-12 col-sm-12">
-                                            <div class="col-form-label">  source </div>
+                                            <div class="col-form-label">  {{ $t('source')}} </div>
 
                                             <textarea style="width: 100%" :class="['form-control',error.source? 'is-invalid' : '']"  v-model="memberData.source"></textarea>
                                              <small style="color: red" v-if="error.source">{{ error.source[0] }}</small >
@@ -281,11 +281,11 @@
 
                                         <div class="mb-2 col-md-6 col-lg-4 col-sm-12">
                                                 <button type="submit" class="btn btn-primary mt-3"  v-if="!edit" >
-                                                    Save
+                                                    {{ $t('Save')}}
                                                 </button>
 
                                                 <button  type="submit" class="btn btn-success mt-3"   v-if="edit" >
-                                                    update
+                                                    {{ $t('update')}}
                                                 </button>
                                         </div>
 

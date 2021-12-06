@@ -2,7 +2,7 @@
   <div v-if="isLoadig">
 
 
-    <Breadcrumbs main="Dashboard" title="statistics" />
+    <Breadcrumbs :main="$t('Dashboard')" :title="$t('statistics')" />
     <!-- Container-fluid starts-->
     <div class="container-fluid">
       <div class="row second-chart-list third-news-update">
@@ -23,7 +23,7 @@
                     <div class="media-body">
                       <div class="right-chart-content">
                         <h4>{{ attendanceToday }}</h4>
-                        <span>Attendees today</span>
+                        <span>{{$t('Attendees today')}}</span>
                       </div>
                     </div>
                   </div>
@@ -38,7 +38,7 @@
                     <div class="media-body">
                       <div class="right-chart-content">
                         <h4>{{ membersNumbers  }}</h4>
-                        <span>members number</span>
+                        <span>{{ $t('members number')}}</span>
                       </div>
                     </div>
                   </div>
@@ -53,7 +53,7 @@
                     <div class="media-body">
                       <div class="right-chart-content">
                         <h4>{{ productsNumber  }}</h4>
-                        <span>products</span>
+                        <span>{{$t('products')}}</span>
                       </div>
                     </div>
                   </div>
@@ -70,7 +70,7 @@
                     <div class="media-body">
                       <div class="right-chart-content">
                         <h4>{{ staffNumber }}</h4>
-                        <span>staff team </span>
+                        <span>{{ $t('staff team')}} </span>
                       </div>
                     </div>
                   </div>
@@ -106,7 +106,7 @@
         <div class="col-sm-12 col-xl-6">
                 <div class="card">
                   <div class="card-header">
-                    <h5>Membership stats </h5>
+                    <h5>{{ $t('Membership stats')}} </h5>
                   </div>
                   <div class="card-body chart-block">
 
@@ -124,7 +124,7 @@
         <div class="col-sm-12 col-xl-6">
                 <div class="card">
                   <div class="card-header">
-                    <h5>gender  stats</h5>
+                    <h5>{{ $t('gender stats')}}</h5>
                   </div>
                   <div class="card-body chart-block">
                     <GChart

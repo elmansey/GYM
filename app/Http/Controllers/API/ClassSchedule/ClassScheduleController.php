@@ -25,7 +25,7 @@ class ClassScheduleController extends Controller
     public function index()
     {
 
-        $classes = ClassSchedule::with('captain_relation')->get();
+        $classes = ClassSchedule::with('staff_relation')->get();
         return response()->json(['success' => true, 'classes' => class_scheduleResource::collection($classes)]);
     }
 
@@ -196,7 +196,7 @@ class ClassScheduleController extends Controller
         $cl = [];
         $daysName = [];
         foreach($classes as $k => $va){
-
+            
             foreach($va['days'] as $kay => $value){
 
 

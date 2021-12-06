@@ -1,6 +1,6 @@
 <template>
     <div v-if="isLoadig">
-        <Breadcrumbs main="Dashboard" title="class list" />
+        <Breadcrumbs :main="$t('Dashboard')" :title="$t('class list')" />
 
         <div class="container-fluid">
             <div class="row">
@@ -64,7 +64,7 @@
                                     >select to choose</b-tooltip
                                 >
                             </div>
-                            <div class="datatable-vue m-0">
+                            <!-- <div class="datatable-vue m-0">
                                 <div class="table-responsive vue-smart">
                                     <v-table
                                         :data="classes"
@@ -199,7 +199,60 @@
                                         :totalPages="filter.totalPages"
                                     />
                                 </div>
+                            </div> -->
+
+                             <div class="datatable-vue m-0">
+                                <div class="table-responsive vue-smart">
+                                    <b-table
+                                        id="tablePrint"
+                                        show-empty
+                                        stacked="md"
+                                        :items="classes"
+                                        :fields="tablefields"
+                                        :current-page="currentPage"
+                                        :per-page="perPage"  >
+
+                                        <template #cell(check)="data" >
+                                            <input type="checkbox"  :value="data.item.id"  v-model="selected" v-if="can('delete-By-Select-Multi-Class')" />
+                                        </template>
+
+                                        <template #cell(id)="data" >
+                                            {{ ++data.index}}
+                                        </template>
+
+
+                                       <template #cell(action)="data" v-if="can('edit-class-schedule' ||'delete-class-schedule')">
+                                            <div>
+                                                <b-button-group class="btn-group-pill" size="sm">
+                                                    <b-button variant="outline-primary" v-if="can('edit-class-schedule' )">
+                                                            <router-link variant="outline-warning" :to="{name: 'updateClassSchedule',params: {classScheduleId:  data.item.id}}" v-if="can('edit-class-schedule')">
+                                                                {{ $t('edit')}}
+                                                            </router-link>
+                                                    </b-button>
+                                                    <b-button  variant="outline-danger"  @click="DeleteclassModal( data.item.id,data.index )" v-if="can('delete-class-schedule' )">
+                                                                {{ $t('delete')}}
+                                                    </b-button>
+                                                </b-button-group>
+                                            </div>
+                                      </template>
+
+
+                                    </b-table>
+                                </div>
+
+                               <b-col md="6" class="my-1">
+                                    <b-pagination
+                                    v-model="currentPage"
+                                    :total-rows="totalRows"
+                                    :per-page="perPage"
+                                    class="my-0"
+                                    ></b-pagination>
+                                </b-col>
+
+
                             </div>
+
+
 
                             <b-modal id="bv-modal-example" hide-footer>
                                 <template #modal-title>
@@ -274,6 +327,27 @@ import axios from "axios";
 export default {
     data() {
         return {
+
+
+
+            tablefields: [
+
+                {'check' : this.$t('check')},
+                {'ID': this.$t('id')},
+                { key: 'staff_relation.name', label: this.$t('staff name'), sortable: false, },
+                { key : 'group_relation.name' , label :this.$t('group Name') ,sortable: false,},
+                { key: 'startingTime', label: this.$t('starting Time'), sortable: false, },
+                { key: 'endingTime', label: this.$t('ending Time'), sortable: false, },
+                { key: 'trainingLocation', label: this.$t('training Location'), sortable: false, },
+                {'action' : this.$t('action')}
+            ],
+            totalRows: 1,
+            currentPage: 1,
+            perPage: 10,
+            pageOptions: [5, 10, 15],
+
+
+
             classes: [],
             selected: [],
             selectedAll: false,
@@ -296,6 +370,7 @@ export default {
             .then(res => {
                 this.classes = res.data.classes;
                 this.CheckDiseble = res.data.classes.length < 1
+                this.totalRows = res.data.classes.length 
                 this.isLoadig = true;
             })
             .catch(err => {

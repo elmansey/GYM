@@ -3,6 +3,7 @@
 ==========================**/
 
 .rtl{
+  
   .page-wrapper{
     &.compact-wrapper{
       .page-body-wrapper{
@@ -31,7 +32,7 @@
               &.close_icon {
                 margin-right: 0;
                 margin-left : unset;
-                transform: translate(180px);
+                transform: translate(0px);
                 .logo-icon-wrapper {
                   text-align: left;
                   img {
@@ -3656,6 +3657,8 @@
         .page-body-wrapper.sidebar-icon {
           .sidebar-wrapper{
             &.close_icon{
+              transform: translate(285px);
+
               &:hover {
                 transform: translate(285px);
               }
