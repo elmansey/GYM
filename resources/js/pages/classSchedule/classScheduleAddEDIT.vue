@@ -1,8 +1,8 @@
 <template>
     <div v-if="isLoading">
         <Breadcrumbs
-            main="dashboard"
-            :title="edit ? 'edit class' : 'add class'"
+            :main="$t('Dashboard')"
+            :title="edit ? $t('edit class') : $t('add class')"
         />
         <!-- Container-fluid starts-->
         <div class="container-fluid">
@@ -20,14 +20,14 @@
                                             class="mb-2 col-md-6 col-lg-6 col-sm-12"
                                         >
                                             <div style="float: right ">
-                                                <label>select all days</label>
+                                                <label>{{  $t('select all days') }}</label>
                                                 <input
                                                     type="checkbox"
                                                     @change="check($event)"
                                                 />
                                             </div>
                                             <div class="col-form-label">
-                                                select day
+                                                {{ $t('select day')}}
                                             </div>
 
                                             <multiselect
@@ -49,13 +49,13 @@
                                             <small
                                                 style="color: red"
                                                 v-if="error.days"
-                                                >{{ error.days[0] }}</small
+                                                >{{  $t(error.days[0]) }}</small
                                             >
                                         </div>
 
                                         <div class="mb-2 col-md-6 col-lg-6 col-sm-12"  >
                                             <div class="col-form-label">
-                                                captain Name
+                                                {{  $t('captain Name')}}
                                             </div>
 
                                             <select
@@ -83,13 +83,13 @@
                                                 style="color: red"
                                                 v-if="error.staffName"
                                                 >{{
-                                                    error.staffName[0]
+                                                     $t(error.staffName[0])
                                                 }}</small
                                             >
                                         </div>
                                         <div class="mb-2 col-md-6 col-lg-6 col-sm-12"  >
                                             <div class="col-form-label">
-                                                group
+                                                {{ $t('group') }}
                                             </div>
 
                                                 <select
@@ -117,7 +117,7 @@
                                                 style="color: red"
                                                 v-if="error.group_id"
                                                 >{{
-                                                    error.group_id[0]
+                                                     $t(error.group_id[0])
                                                 }}</small
                                             >
                                         </div>
@@ -126,7 +126,7 @@
                                             class="mb-2 col-md-6 col-lg-6 col-sm-12"
                                         >
                                             <div class="col-form-label">
-                                                starting Time
+                                               {{ $t('starting Time') }}
                                             </div>
 
                                             <input
@@ -145,7 +145,7 @@
                                                 style="color: red"
                                                 v-if="error.startingTime"
                                                 >{{
-                                                    error.startingTime[0]
+                                                     $t(error.startingTime[0])
                                                 }}</small
                                             >
                                         </div>
@@ -154,7 +154,7 @@
                                             class="mb-2 col-md-6 col-lg-6 col-sm-12"
                                         >
                                             <div class="col-form-label">
-                                                ending Time
+                                               {{ $t('ending Time') }}
                                             </div>
 
                                             <input
@@ -173,7 +173,7 @@
                                                 style="color: red"
                                                 v-if="error.endingTime"
                                                 >{{
-                                                    error.endingTime[0]
+                                                     $t(error.endingTime[0])
                                                 }}</small
                                             >
                                         </div>
@@ -182,7 +182,7 @@
                                             class="mb-2 col-md-6 col-lg-6 col-sm-12"
                                         >
                                             <div class="col-form-label">
-                                                training Location
+                                                {{  $t('training Location') }}
                                             </div>
 
                                             <input
@@ -199,7 +199,7 @@
                                                 style="color: red"
                                                 v-if="error.trainingLocation"
                                                 >{{
-                                                    error.trainingLocation[0]
+                                                     $t(error.trainingLocation[0])
                                                 }}</small
                                             >
                                         </div>
@@ -210,14 +210,14 @@
                                         class="btn btn-primary mt-3"
                                         v-if="!edit"
                                     >
-                                        Save
+                                        {{  $t('Save') }}
                                     </button>
                                     <button
                                         type="submit"
                                         class="btn btn-success mt-3"
                                         v-if="edit"
                                     >
-                                        update
+                                       {{ $t('update')}}
                                     </button>
                                 </form>
                             </div>
@@ -347,7 +347,7 @@ export default {
                         if (res.data.success) {
                             Toast.fire({
                                 icon: "success",
-                                title: "class adedd successfully"
+                                title: this.$t("class adedd successfully")
                             });
                             this.$router.push({ name: "classList" });
                         }
@@ -378,7 +378,7 @@ export default {
                         if (res.data.success) {
                             Toast.fire({
                                 icon: "success",
-                                title: "class updated successfully"
+                                title: this.$t("class updated successfully")
                             });
                             this.$router.push({ name: "classList" });
                         }

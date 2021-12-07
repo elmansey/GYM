@@ -84,7 +84,7 @@
 
                 {
                     "path": "/dashboard/addClassSchedule",
-                    "title": "add in class schedule ",
+                    "title": "add class",
                     "type": "link",
                     "permission": "add-membership"
 
@@ -162,7 +162,7 @@
                 },
                 {
                     "path": "/dashboard/addAdmin",
-                    "title": "add admin in team  ",
+                    "title": "add admin",
                     "type": "link",
                     "permission": "add-member-in-team"
                 },
@@ -370,15 +370,20 @@
 
 
 
+                },
+
+                {
+                    "path": "/dashboard/profile",
+                    "title": "Account",
+                    "type": "link",
+                    "permission": "show-setting"
+
+
+
                 }
 
             ]
         }
-
-
-
-
-
 
 
     ]

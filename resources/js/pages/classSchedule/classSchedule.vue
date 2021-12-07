@@ -1,6 +1,6 @@
 <template>
   <div v-if="isLoading">
-    <Breadcrumbs main="dashboard" title="class Schedule" />
+    <Breadcrumbs :main="$t('Dashboard')" :title="$t('class schedule')" />
 
 
 
@@ -14,19 +14,19 @@
               </div> -->
                <h1 style="margin: 15px 20px;"><i class="fa fa-calendar"></i></h1>
 
-                  <div  class="card-body my-gallery gallery border-bottom">
-                      
-                    <div class="row" itemscope itemprop="thumbnail">
-                        
+                  <div  class="card-body my-gallery gallery border-bottom" >
+
+                    <div class="row" itemscope itemprop="thumbnail" >
+
                       <figure class="col-xl-3 col-sm-6 m-0" v-for="(item, index) in classes.saturdayClasses"  :key="index">
                         <div>
 
                               <div  style="height:150px;background-color: rgb(255, 255, 255);box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px; padding: 10px 0px; text-align: center;"  >
-                                <label style="font-size: 20px;font-weight: 700;">Saturday</label> <br />
+                                <label style="font-size: 20px;font-weight: 700;">{{  $t('Saturday')}}</label> <br />
 
                                 <span> {{ "group name: " + item.group_relation.name }} </span>  <br />
                                 <span>{{" class time : " +  item.startingTime +" - " +item.endingTime}}</span>                            <br />
-                                <span> {{ "class captien : " +  item.staff_relation.name }}</span> <br />  
+                                <span> {{ "class captien : " +  item.staff_relation.name }}</span> <br />
 
 
                                 <b-dropdown
@@ -43,25 +43,25 @@
                                     </router-link>
                                   </b-dropdown-item>
                                 </b-dropdown>
-                        
+
                               </div>
 
                         </div>
                       </figure>
-            
+
                     </div>
                   </div>
 
 
                   <div  class="card-body my-gallery gallery border-bottom">
                     <div class="row" itemscope itemprop="thumbnail">
-                      <figure class="col-xl-3 col-sm-6 m-0" v-for="(item, index) in classes.sundayClasses":key="index">
+                      <figure class="col-xl-3 col-sm-6 m-0" v-for="(item, index) in classes.sundayClasses" :key="index">
                           <div>
                               <div  style="height:150px;background-color: rgb(255, 255, 255);box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px; padding: 10px 0px; text-align: center;"    >
-                                  <label style="font-size: 20px;font-weight: 700;">Sunday</label><br /> 
+                                  <label style="font-size: 20px;font-weight: 700;">{{  $t('Sunday')}}</label><br />
                                           <span> {{ "group name: " + item.group_relation.name }} </span>  <br />
                                           <span>{{" class time : " +  item.startingTime +" - " +item.endingTime}}</span>                            <br />
-                                          <span> {{ "class captien : " +  item.staff_relation.name }}</span> <br /> 
+                                          <span> {{ "class captien : " +  item.staff_relation.name }}</span> <br />
 
                                             <b-dropdown
                                               v-if="can('edit-class-schedule-in-classSchedule')"
@@ -77,30 +77,30 @@
                                                 </router-link>
                                               </b-dropdown-item>
                                             </b-dropdown>
-                                          
+
                               </div>
-                          </div> 
+                          </div>
                         </figure>
-                        
+
                     </div>
                   </div>
-                  
 
-                    
+
+
 
 
 
                   <div  class="card-body my-gallery gallery border-bottom">
-                      
+
                     <div class="row" itemscope itemprop="thumbnail">
-                      <figure class="col-xl-3 col-sm-6 m-0" v-for="(item, index) in classes.mondayClasses":key="index">
+                      <figure class="col-xl-3 col-sm-6 m-0" v-for="(item, index) in classes.mondayClasses" :key="index">
                         <div >
                             <div  style="height:150px;background-color: rgb(255, 255, 255);box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px; padding: 10px 0px; text-align: center;">
-                            
-                                      <label style="font-size: 20px;font-weight: 700;">Monday</label><br />
+
+                                      <label style="font-size: 20px;font-weight: 700;">{{  $t('Monday')}}</label><br />
                                      <span> {{ "group name: " + item.group_relation.name }} </span>  <br />
                                   <span>{{" class time : " +  item.startingTime +" - " +item.endingTime}}</span>                            <br />
-                                  <span> {{ "class captien : " +  item.staff_relation.name }}</span> <br /> 
+                                  <span> {{ "class captien : " +  item.staff_relation.name }}</span> <br />
 
 
                                   <b-dropdown
@@ -117,17 +117,17 @@
                                       </router-link>
                                     </b-dropdown-item>
                                   </b-dropdown>
-                          
+
                                 </div>
                               </div>
                       </figure>
-            
+
                     </div>
                   </div>
 
 
                   <div  class="card-body my-gallery gallery border-bottom">
-                      
+
                     <div class="row" itemscope itemprop="thumbnail">
                       <figure class="col-xl-3 col-sm-6 m-0"   v-for="(item, index) in classes.tuesdayClasses" :key="index">
                         <!-- <a>
@@ -136,11 +136,11 @@
 
                         <div >
                                 <div  style=" height:150px;background-color: rgb(255, 255, 255);box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px; padding: 10px 0px; text-align: center;"  >
-                                  <label style="font-size: 20px;font-weight: 700;">Tuesday</label><br />
+                                  <label style="font-size: 20px;font-weight: 700;">{{  $t('Tuesday')}}</label><br />
 
                                <span> {{ "group name: " + item.group_relation.name }} </span>  <br />
                                   <span>{{" class time : " +  item.startingTime +" - " +item.endingTime}}</span>         <br />
-                                  <span> {{ "class captien : " +  item.staff_relation.name }}</span> <br /> 
+                                  <span> {{ "class captien : " +  item.staff_relation.name }}</span> <br />
 
                                   <b-dropdown
                                     v-if="can('edit-class-schedule-in-classSchedule')"
@@ -156,19 +156,20 @@
                                       </router-link>
                                     </b-dropdown-item>
                                   </b-dropdown>
-                          
+
                                 </div>
                               </div>
                       </figure>
-            
+
                     </div>
                   </div>
 
 
                   <div  class="card-body my-gallery gallery border-bottom">
-                      
+
+
                     <div class="row" itemscope itemprop="thumbnail">
-                      
+
                       <figure class="col-xl-3 col-sm-6 m-0" v-for="(item, index) in classes.wednesdayClasses":key="index">
                         <!-- <a>
                           <img src="" class="img-thumbnail" alt="Image description" />
@@ -176,10 +177,10 @@
 
                         <div >
                                 <div  style="height:150px;background-color: rgb(255, 255, 255);box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px; padding: 10px 0px; text-align: center;"  >
-                              <label style="font-size: 20px;font-weight: 700;">Wednesday</label><br />
+                              <label style="font-size: 20px;font-weight: 700;">{{  $t('Wednesday')}}</label><br />
                                      <span> {{ "group name: " + item.group_relation.name }} </span>  <br />
                                   <span>{{" class time : " +  item.startingTime +" - " +item.endingTime}}</span>  <br />
-                                  <span> {{ "class captien : " +  item.staff_relation.name }}</span> <br /> 
+                                  <span> {{ "class captien : " +  item.staff_relation.name }}</span> <br />
 
 
                                   <b-dropdown
@@ -196,18 +197,18 @@
                                       </router-link>
                                     </b-dropdown-item>
                                   </b-dropdown>
-                          
+
                                 </div>
                               </div>
                       </figure>
-            
+
                     </div>
                   </div>
 
                   <div  class="card-body my-gallery gallery border-bottom">
-                      
+
                     <div class="row" itemscope itemprop="thumbnail">
-                       
+
                       <figure class="col-xl-3 col-sm-6 m-0"  v-for="(item, index) in classes.thursdayClasses" :key="index">
                         <!-- <a>
                           <img src="" class="img-thumbnail" alt="Image description" />
@@ -215,10 +216,10 @@
 
                         <div >
                                 <div  style="height:150px;background-color: rgb(255, 255, 255);box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px; padding: 10px 0px; text-align: center;">
-                             <label style="font-size: 20px;font-weight: 700;">Thursday</label><br />
+                             <label style="font-size: 20px;font-weight: 700;">{{  $t('Thursday')}}</label><br />
                                        <span> {{ "group name: " + item.group_relation.name }} </span>  <br />
                                   <span>{{" class time : " +  item.startingTime +" - " +item.endingTime}}</span>  <br />
-                                  <span> {{ "class captien : " +  item.staff_relation.name }}</span> <br /> 
+                                  <span> {{ "class captien : " +  item.staff_relation.name }}</span> <br />
 
 
                                   <b-dropdown
@@ -235,16 +236,16 @@
                                       </router-link>
                                     </b-dropdown-item>
                                   </b-dropdown>
-                          
+
                                 </div>
                               </div>
                       </figure>
-            
+
                     </div>
                   </div>
 
                   <div  class="card-body my-gallery gallery border-bottom">
-                      
+
                     <div class="row" itemscope itemprop="thumbnail">
                       <figure class="col-xl-3 col-sm-6 m-0" v-for="(item, index) in classes.fridayClasses"
                           :key="index">
@@ -254,11 +255,11 @@
 
                         <div >
                                 <div  style="height:150px;background-color: rgb(255, 255, 255);box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px; padding: 10px 0px; text-align: center;">
-                                <label style="font-size: 20px;font-weight: 700;">Friday</label><br />
+                                <label style="font-size: 20px;font-weight: 700;">{{  $t('Friday')}}</label><br />
 
                                       <span> {{ "group name: " + item.group_relation.name }} </span>  <br />
                                   <span>{{" class time : " +  item.startingTime +" - " +item.endingTime}}</span>  <br />
-                                  <span> {{ "class captien : " +  item.staff_relation.name }}</span> <br /> 
+                                  <span> {{ "class captien : " +  item.staff_relation.name }}</span> <br />
 
 
                                   <b-dropdown
@@ -275,29 +276,29 @@
                                       </router-link>
                                     </b-dropdown-item>
                                   </b-dropdown>
-                          
+
                                 </div>
                               </div>
                       </figure>
-            
+
                     </div>
                   </div>
 
 
-            
 
 
 
 
 
-              
+
+
             </div>
           </div>
-          
-        </div>
-       </div> 
 
-    
+        </div>
+       </div>
+
+
 
   </div>
 

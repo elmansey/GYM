@@ -5,114 +5,90 @@
 
     <div v-if="isLoadig">
 
-        <Breadcrumbs main="Dashboard" title="memberships" />
+        <Breadcrumbs :main="$t('Dashboard')" :title="$t('Memberships')" />
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
+
+
+
                             <div class="datatable-vue m-0">
-
-
                                 <div class="table-responsive vue-smart">
-                                    <v-table
-                                        :data="memberships"
-                                        class="table"
-                                        :currentPage.sync="filter.currentPage"
-                                        :pageSize="5"
-                                        @totalPagesChanged="filter.totalPages = $event"
+                                    <b-table
+                                        id="tablePrint"
+                                        show-empty
+                                        stacked="md"
+                                        :items="memberships"
+                                        :fields="tablefields"
+                                        :current-page="currentPage"
+                                        :per-page="perPage"  >
 
-                                    >
-                                        <thead slot="head">
+                                       
+                                        <template #cell(id)="data" >
+                                             {{ ++data.index}}
+                                        </template>
 
-                                        <th></th>
-                                        <th sortKey="name">name</th>
-                                        <th sortKey="name" >Membership Period</th>
-                                        <th sortKey="name" >Membership private Features</th>
-                                        <th sortKey="name" >Membership price</th>
-                                        <th sortKey="options" v-if="can('edit-membership' || 'delete-membership')">options</th>
-                                        </thead>
+                                        <template #cell(Membership_private_Features)="data" >
+                                              <i v-if="data.item.Membership_private_Features" class="icofont icofont-ui-check"></i> 
+                                              <i  v-if="!data.item.Membership_private_Features" class="icofont icofont-ui-close"></i> 
+                                        </template>
 
-                                        <tbody slot="body" slot-scope="{ displayData }">
-                                        <tr v-for="(row, index) in displayData" :key="index">
-                                            <td></td>
-                                            <td>{{row.name}}</td>
-                                            <td>{{row.Membership_Period +  '  days'}} </td>
-                                            <td v-if="row.Membership_private_Features">  <i class="icofont icofont-ui-check"></i> </td>
-                                            <td v-if="!row.Membership_private_Features">  <i class="icofont icofont-ui-close"></i> </td>
-                                            <td>{{row.Membership_price}}</td>
-                                            <td>
-                                                <div>
-                                                    <b-button-group class="btn-container ">
-
-
+                                        <template #cell(options)="data" >
+                                             <div>
+                                                 <b-button-group class="btn-container ">
                                                     <b-button
                                                        squared
                                                         variant="outline-primary"
                                                         class="btn-sm btn-child"
-                                                        v-if="can('edit-membership')"
-                                                    >
+                                                        v-if="can('edit-membership')" >
+
                                                         <router-link
                                                             squared
                                                             variant="outline-warning"
                                                             class="btn-sm btn-child"
-                                                            :to="{name : 'updateMembership',params : {membershipId : row.id}}"
+                                                            :to="{name : 'updateMembership',params : {membershipId : data.item.id}}"
 
-                                                            v-if="can('edit-membership')"
-
-                                                        >
-                                                            Edit
+                                                            v-if="can('edit-membership')" >
+                                                           {{ $t('edit') }}
                                                         </router-link>
                                                     </b-button>
+                                                    <b-button
+                                                        squared
+                                                        variant="outline-danger"
 
-
-                                                        <b-button
-                                                            squared
-                                                            variant="outline-danger"
-
-                                                            class="btn-sm btn-child"
-                                                            @click="DeleteMembershipModal(row.id,index)"
-                                                            v-if="can('delete-membership')"
-                                                        >
-
-                                                            Delete
-                                                        </b-button>
-
-
-
-
-
+                                                        class="btn-sm btn-child"
+                                                        @click="DeleteMembershipModal(data.item.id,data.index)"
+                                                        v-if="can('delete-membership')" >
+                                                            {{  $t("delete")}}
+                                                    </b-button>
                                                     </b-button-group>
                                                 </div>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </v-table>
+                                        </template>
+                                    </b-table>
                                 </div>
-
-                                <div >
-                                    <smart-pagination
-
-                                        :currentPage.sync="filter.currentPage"
-                                        :totalPages="filter.totalPages"
-                                    />
-                                </div>
-
-
+                               <b-col md="6" class="my-1">
+                                    <b-pagination
+                                    v-model="currentPage"
+                                    :total-rows="totalRows"
+                                    :per-page="perPage"
+                                    class="my-0"
+                                    ></b-pagination>
+                                </b-col>
                             </div>
-
 
 
 
                             <b-modal id="bv-modal-example" hide-footer>
                                 <template #modal-title>
-                                    Delete membership
+                                    {{ $t('Delete membership')}}
                                 </template>
                                 <div class="d-block text-center">
-                                    <h5>are you sure to delete this membership</h5>
+                                    <h5>{{ $t('are you sure to delete this membership')}}</h5>
                                 </div>
-                                <b-button class="mt-3"  v-b-modal.modal-sm variant="default" @click="$bvModal.hide('bv-modal-example')">Cancel</b-button>
-                                <b-button class="mt-3"  v-b-modal.modal-sm variant="danger" @click="deleteMemberShip" >delete</b-button>
+                                <b-button class="mt-3"  v-b-modal.modal-sm variant="default" @click="$bvModal.hide('bv-modal-example')">{{ $t('Cancel')}}</b-button>
+                                <b-button class="mt-3"  v-b-modal.modal-sm variant="danger" @click="deleteMemberShip" >{{ $t('delete')}}</b-button>
                             </b-modal>
 
 
@@ -146,6 +122,24 @@ import axios from "axios";
 export default {
     data() {
         return {
+
+
+
+            tablefields: [
+                {'id' : this.$t('id')},
+                { key: 'name', label: this.$t('name'), sortable: false, },
+                { key : 'payment' , label :this.$t('payment pattern') ,sortable: false,},
+                { 'Membership_private_Features':  this.$t('Membership private Features')},
+                { key: 'Membership_price', label: this.$t('Membership price'), sortable: false, },
+                {'options' : this.$t('options')}
+            ],
+            totalRows: 1,
+            currentPage: 1,
+            perPage: 10,
+            pageOptions: [5, 10, 15],
+
+
+
             memberships:null,
 
             filter: {
@@ -165,6 +159,7 @@ export default {
         axios.get('memberships')
         .then(res => {
             this.memberships = res.data.memberships
+            this.totalRows =  res.data.memberships.length
             this.isLoadig  = true
         })
         .then(err => {
@@ -195,7 +190,7 @@ export default {
                     this.key = ''
                     Toast.fire({
                         icon: 'success',
-                        title: 'membership deleted successfully'
+                        title: this.$t('membership deleted successfully')
                     })
 
                     this.$bvModal.hide('bv-modal-example')

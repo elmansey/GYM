@@ -5,134 +5,88 @@
 
     <div v-if="isLoadig">
 
-        <Breadcrumbs main="Dashboard" title="admin list" />
+        <Breadcrumbs :main="$t('Dashboard')" :title="$t('admin list')" />
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
                             <div class="datatable-vue m-0">
-
-
                                 <div class="table-responsive vue-smart">
-                                    <v-table
-                                        :data="admins"
-                                        class="table"
-                                        :currentPage.sync="filter.currentPage"
-                                        :pageSize="5"
-                                        @totalPagesChanged="filter.totalPages = $event"
+                                    <b-table
+                                        id="tablePrint"
+                                        show-empty
+                                        stacked="md"
+                                        :items="admins"
+                                        :fields="tablefields"
+                                        :current-page="currentPage"
+                                        :per-page="perPage"  >
 
-                                    >
-                                        <thead slot="head">
+                                    <template #cell(id)="data" >
+                                        {{ ++data.index}}
+                                    </template>
 
-                                        <th></th>
-                                        <th sortKey="name">Profile Picture</th>
-                                        <th sortKey="name"> QR</th>
-                                        <th sortKey="name">Personal uuid</th>
-                                        <th sortKey="name">name</th>
-                                        <th sortKey="name">user name</th>
-                                        <th sortKey="name" >email</th>
-                                        <th sortKey="options">phone number</th>
-                                        <th sortKey="options">roles</th>
-                                        <th sortKey="options">actions</th>
-                                        </thead>
+                                    <template #cell(QR_code)="data" >
+                                        <img style="width:45px;height: 45px" :src="'../../'+data.item.qr_code" />
+                                    </template>
 
-                                        <tbody slot="body" slot-scope="{ displayData }">
-                                        <tr v-for="(row, index) in displayData" :key="index">
-                                            <td></td>
-
-
-                                            <td><img
-                                            style="width: 40px;height: 40px;border-radius: 50%;"
-
-
-                                            :src="row.profile_picture ? '../../public/profile_pictures/'+row.profile_picture :
-                                             '../../public/profile_pictures/DefaultProfile.jpg'"
-
-
-                                              />
-                                              </td>
-
-
-                                            <td><img style="width:45px;height: 45px" :src="'../../'+row.qr_code" /> </td>
-                                            <td>{{ row.Personal_uuid}}</td>
-                                            <td>{{ row.name}}</td>
-                                            <td>{{ row.user_name}}</td>
-                                            <td>{{ row.email}}</td>
-                                            <td>{{ row.phone}}</td>
-                                            <td >
-                                                <span class="badge badge-success" v-for="(v,k) in row.role" :key="k">
+                                    <template #cell(role)="data" >
+                                        <span class="badge badge-success" v-for="(v,k) in data.item.role" :key="k">
                                                     {{v.name}}
-                                                </span>
+                                        </span>
+                                    </template>
 
-                                            </td>
-                                            <td>
-                                                <div>
-                                                    <b-button-group class="btn-container ">
 
+                                    <template #cell(action)="data" v-if="can('edit-class-schedule' ||'delete-class-schedule')">
+                                            <div>
+                                                <b-button-group class="btn-container">
                                                     <b-button
                                                        squared
                                                         variant="outline-primary"
-                                                        class="btn-sm btn-child"
-                                                    >
+                                                        class="btn-sm btn-child">
                                                             <router-link
                                                                 squared
                                                                 variant="outline-warning"
                                                                 class="btn-sm btn-child"
-                                                                :to="{name: 'updateAdmin', params: {adminId : row.id}}"
-                                                                v-if="can('edit-member-from-team')"
-                                                            >
-                                                               Edit
+                                                                :to="{name: 'updateAdmin', params: {adminId : data.item.id}}"
+                                                                v-if="can('edit-member-from-team')">
+                                                               {{  $t('edit')}}
                                                             </router-link>
-
                                                     </b-button>
-                                                        <b-button
-                                                            squared
-                                                            variant="outline-danger"
-
-                                                            class="btn-sm btn-child"
-                                                            @click="DeleteAdminModal(row.id,index)"
-                                                            v-if="can('delete-member-from-team')"
-                                                        >
-
-                                                           Delete
-                                                        </b-button>
-
-
-
-
-
-                                                    </b-button-group>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </v-table>
+                                                    <b-button
+                                                        squared
+                                                        variant="outline-danger"
+                                                        class="btn-sm btn-child"
+                                                        @click="DeleteAdminModal(data.item.id,data.index)"
+                                                        v-if="can('delete-member-from-team')">
+                                                        {{ $t('delete')}}
+                                                    </b-button>
+                                                </b-button-group>
+                                            </div>
+                                        </template>
+                                    </b-table>
                                 </div>
 
-                                <div >
-                                    <smart-pagination
-
-                                        :currentPage.sync="filter.currentPage"
-                                        :totalPages="filter.totalPages"
-                                    />
-                                </div>
-
-
+                               <b-col md="6" class="my-1">
+                                    <b-pagination
+                                    v-model="currentPage"
+                                    :total-rows="totalRows"
+                                    :per-page="perPage"
+                                    class="my-0"
+                                    ></b-pagination>
+                                </b-col>
                             </div>
-
-
 
 
                             <b-modal id="bv-modal-example" hide-footer>
                                 <template #modal-title>
-                                   Delete Team member
+                                   {{ $t('Delete Team member')}}
                                 </template>
                                 <div class="d-block text-center">
-                                    <h5>are you sure to delete this Admin</h5>
+                                    <h5>{{ $t('are you sure to delete this Admin')}}</h5>
                                 </div>
-                                <b-button class="mt-3"  v-b-modal.modal-sm variant="default" @click="$bvModal.hide('bv-modal-example')">Cancel</b-button>
-                                <b-button class="mt-3"  v-b-modal.modal-sm variant="danger"  @click.prevent="deleteAdmin">delete</b-button>
+                                <b-button class="mt-3"  v-b-modal.modal-sm variant="default" @click="$bvModal.hide('bv-modal-example')">{{  $t('Cancel')}}</b-button>
+                                <b-button class="mt-3"  v-b-modal.modal-sm variant="danger"  @click.prevent="deleteAdmin">{{  $t('delete')}}</b-button>
                             </b-modal>
                         </div>
 
@@ -163,6 +117,36 @@ import axios from "axios";
 export default {
     data() {
         return {
+
+          
+
+
+            tablefields: [
+
+                {'id': this.$t('id')},
+                { key: 'Personal_uuid', label: this.$t('Personal uuid'), sortable: false, },
+                { key: 'name', label: this.$t('name'), sortable: false, },
+                { 'QR_code': this.$t('QR') },
+                { key: 'user_name', label: this.$t('user name'), sortable: false, },
+                { key: 'email', label: this.$t('email'), sortable: false, },
+                { key: 'phone', label: this.$t('phone'), sortable: false, },
+                {'role' : this.$t('role')},
+                {'action' : this.$t('action')}
+            ],
+            totalRows: 1,
+            currentPage: 1,
+            perPage: 10,
+            pageOptions: [5, 10, 15],
+
+
+
+
+
+
+
+
+
+
             admins: null,
             filter: {
                 currentPage: 1,
@@ -186,6 +170,7 @@ export default {
             if(res.data.success == true){
 
                 this.admins = res.data.admins
+                this.totalRows = res.data.admins.lenght
                 this.isLoadig = true
 
             }
@@ -231,7 +216,7 @@ export default {
                     this.key = ''
                     Toast.fire({
                         icon: 'success',
-                        title: 'admin deleted successfully'
+                        title:  this.$t('admin deleted successfully')
                     })
 
                     this.$bvModal.hide('bv-modal-example')

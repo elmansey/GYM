@@ -5,103 +5,80 @@
 
     <div v-if="isLoadig">
 
-        <Breadcrumbs main="Dashboard" title="groups" />
+        <Breadcrumbs :main="$t('Dashboard')" :title="$t('groups')" />
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
                             <div class="datatable-vue m-0">
-
-
                                 <div class="table-responsive vue-smart">
-                                    <v-table
-                                        :data="groups"
-                                        class="table"
-                                        :currentPage.sync="filter.currentPage"
-                                        :pageSize="5"
-                                        @totalPagesChanged="filter.totalPages = $event"
+                                    <b-table
+                                        id="tablePrint"
+                                        show-empty
+                                        stacked="md"
+                                        :items="groups"
+                                        :fields="tablefields"
+                                        :current-page="currentPage"
+                                        :per-page="perPage"  >
 
-                                    >
-                                        <thead slot="head">
+                                       
 
-                                        <th></th>
-                                        <th sortKey="name">name</th>
-                                        <th sortKey="options" v-if="can('edit-group') || can('delete-group')">options</th>
-                                        </thead>
+                                        <template #cell(id)="data" >
+                                            {{ ++data.index}}
+                                        </template>
 
-                                        <tbody slot="body" slot-scope="{ displayData }">
-                                        <tr v-for="(row, index) in displayData" :key="index">
-                                            <td></td>
-                                            <td>{{row.name}}</td>
-                                            <td  v-if="can('edit-group') || can('delete-group')">
-                                                <div>
-                                                    <b-button-group class="btn-container ">
 
+                                       <template #cell(action)="data" >
+                                            <div>
+                                                <b-button-group class="btn-container ">
                                                     <b-button
                                                        squared
                                                         variant="outline-primary"
                                                         class="btn-sm btn-child"
-                                                        v-if="can('edit-group')"
-
-                                                    >
-                                                        <router-link
-
-                                                            :to="{name : 'updateGroup',params : {groupId : row.id}}"
-
-
-                                                        >
-                                                            Edit
+                                                        v-if="can('edit-group')">
+                                                        <router-link :to="{name : 'updateGroup',params : {groupId : data.item.id}}" >
+                                                            {{ $t('edit')}}
                                                         </router-link>
                                                     </b-button>
-
-                                                        <b-button
+                                                    <b-button
                                                             squared
                                                             variant="outline-danger"
 
                                                             class="btn-sm btn-child"
-                                                            @click="DeletegroupModal(row.id,index)"
-                                                            v-if="can('delete-group')"
-                                                        >
-
-                                                            Delete
-                                                        </b-button>
-
-
-
+                                                            @click="DeletegroupModal(data.item.id,data.index)"
+                                                            v-if="can('delete-group')" >
+                                                            {{ $t('delete')}}
+                                                    </b-button>
+                                                </b-button-group>
+                                            </div>
+                                      </template>
 
 
-                                                    </b-button-group>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </v-table>
+                                    </b-table>
                                 </div>
 
-                                <div >
-                                    <smart-pagination
-
-                                        :currentPage.sync="filter.currentPage"
-                                        :totalPages="filter.totalPages"
-                                    />
-                                </div>
+                               <b-col md="6" class="my-1">
+                                    <b-pagination
+                                    v-model="currentPage"
+                                    :total-rows="totalRows"
+                                    :per-page="perPage"
+                                    class="my-0"
+                                    ></b-pagination>
+                                </b-col>
 
 
                             </div>
 
-
-
-
                             <b-modal id="bv-modal-example" hide-footer>
                                 <template #modal-title>
-                                    Delete group
+                                    {{ $t('Delete group')}}
                                 </template>
                                 <div class="d-block text-center">
-                                    <h5>are you sure to delete this group</h5>
+                                    <h5>{{ $t('are you sure to delete this group')}}</h5>
                                 </div>
-                                <b-button class="mt-3"  v-b-modal.modal-sm variant="default" @click="$bvModal.hide('bv-modal-example')">Cancel</b-button>
-                                <b-button class="mt-3"  v-b-modal.modal-sm variant="danger" @click="deletegroup" >delete</b-button>
+                                <b-button class="mt-3"  v-b-modal.modal-sm variant="default" @click="$bvModal.hide('bv-modal-example')">{{ $t('Cancel')}}</b-button>
+                                <b-button class="mt-3"  v-b-modal.modal-sm variant="danger" @click="deletegroup" >{{ $t('delete')}}</b-button>
                             </b-modal>
 
 
@@ -135,6 +112,22 @@ import axios from "axios";
 export default {
     data() {
         return {
+
+              tablefields: [
+
+               
+                {'id': this.$t('id')},
+                { key: 'name', label: this.$t('group name'), sortable: false, },
+                {'action' : this.$t('action')}
+            ],
+            totalRows: 1,
+            currentPage: 1,
+            perPage: 10,
+            pageOptions: [5, 10, 15],
+
+
+
+
             groups:[],
 
             filter: {
@@ -154,6 +147,7 @@ export default {
         axios.get('groups')
             .then(res => {
                 this.groups = res.data.groups
+                this.totalRows = res.data.groups.lenght
                 this.isLoadig  = true
             })
             .then(err => {
@@ -184,7 +178,7 @@ export default {
                         this.key = ''
                         Toast.fire({
                             icon: 'success',
-                            title: 'group deleted successfully'
+                            title: this.$t('group deleted successfully')
                         })
 
                         this.$bvModal.hide('bv-modal-example')

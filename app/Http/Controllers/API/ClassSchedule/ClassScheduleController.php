@@ -34,7 +34,8 @@ class ClassScheduleController extends Controller
     {
 
 
-
+        
+        $request['days'] = json_decode($request->days, true);
 
         $validator = validator::make($request->all(), [
 
@@ -57,13 +58,13 @@ class ClassScheduleController extends Controller
 
         $days = [];
 
-        $day = json_decode($request->days, true);
-        foreach ($day as $k => $v) {
+       
+        foreach ($request->days as $k => $v) {
 
             $days[] = $v;
         }
 
-
+      
         $class = new ClassSchedule();
         $class->staffName = $request->staffName;
         $class->startingTime =  date("h:i:s", strtotime($request->startingTime));
@@ -87,7 +88,7 @@ class ClassScheduleController extends Controller
 
     public function update(Request $request, $id)
     {
-
+        $request['days'] = json_decode($request->days, true);
         $validator = validator::make($request->all(), [
 
             'staffName'   => 'required',
@@ -103,8 +104,7 @@ class ClassScheduleController extends Controller
 
         $days = [];
 
-        $day = json_decode($request->days, true);
-        foreach ($day as $k => $v) {
+        foreach ($request->days as $k => $v) {
 
             $days[] = $v;
         }

@@ -1,6 +1,6 @@
 <template>
     <div v-if="isLoading">
-        <Breadcrumbs main="dashboard" :title="edit ? 'edit admin' : 'add admin'"/>
+        <Breadcrumbs :main="$t('Dashboard')" :title="edit ? $t('edit admin') : $t('add admin')"/>
         <!-- Container-fluid starts-->
         <div class="container-fluid">
             <div class="select2-drpdwn">
@@ -17,67 +17,67 @@
                                               <div class="row">
 
                                                   <div class="mb-2 col-md-12 col-lg-6 col-sm-12">
-                                                      <div class="col-form-label">name</div>
+                                                      <div class="col-form-label">{{  $t('name')}}</div>
 
                                                       <input name="name" :class="['form-control',error.name ? 'is-invalid' : '']"  v-model="adminData.name"/>
-                                                      <small style="color: red" v-if="error.name">{{ error.name[0]}}</small>
+                                                      <small style="color: red" v-if="error.name">{{  $t(error.name[0])}}</small>
                                                   </div>
 
                                                   <div class="mb-2 col-md-12 col-lg-6 col-sm-12">
-                                                      <div class="col-form-label">RF code</div>
+                                                      <div class="col-form-label">{{  $t('RF code')}}</div>
 
                                                       <input name="name" :class="['form-control',error.RF_code ? 'is-invalid' : '']"  v-model="adminData.RF_code"/>
-                                                      <small style="color: red" v-if="error.RF_code">{{ error.RF_code[0]}}</small>
+                                                      <small style="color: red" v-if="error.RF_code">{{  $t(error.RF_code[0])}}</small>
                                                   </div>
 
                                                   <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
-                                                      <div class="col-form-label">user name</div>
+                                                      <div class="col-form-label">{{  $t('user name')}}</div>
 
                                                       <input name="name" :class="['form-control',error.user_name ? 'is-invalid' : '']"  v-model="adminData.user_name"/>
-                                                      <small style="color: red" v-if="error.user_name">{{ error.user_name[0]}}</small>
+                                                      <small style="color: red" v-if="error.user_name">{{  $t(error.user_name[0])}}</small>
                                                   </div>
 
                                                   <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
-                                                      <div class="col-form-label"> email</div>
+                                                      <div class="col-form-label"> {{  $t('email')}}</div>
 
                                                       <input name="email" type="email" :class="['form-control',error.email ? 'is-invalid' : '']"  v-model="adminData.email"/>
-                                                      <small style="color: red" v-if="error.email">{{ error.email[0]}}</small>
+                                                      <small style="color: red" v-if="error.email">{{  $t(error.email[0])}}</small>
                                                   </div>
 
                                                   <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
-                                                      <div class="col-form-label"> phone number</div>
+                                                      <div class="col-form-label"> {{  $t('phone number')}}</div>
 
                                                       <input name="phone" :class="['form-control',error.phone ? 'is-invalid' : '']" v-model="adminData.phone"/>
-                                                      <small style="color: red" v-if="error.phone">{{ error.phone[0]}}</small>
+                                                      <small style="color: red" v-if="error.phone">{{  $t(error.phone[0])}}</small>
                                                   </div>
 
                                                   <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
-                                                      <div class="col-form-label">Choose the  Roles</div>
+                                                      <div class="col-form-label">{{  $t('Choose the Roles')}}</div>
 
                                                       <multiselect name="role" v-model="adminData.roles" tag-placeholder="Add this as new tag" placeholder="Search or add a tag"
                                                                     :class="[error.role ? 'is-invalid' : '']"     label="name" track-by="id"   @search-change="asyncFind" :options="options"  :multiple="true"   :taggable="true" @tag="addTag"  >
 
                                                       </multiselect>
-                                                      <small  style="color: red" v-if="error.role">{{ error.role[0]}}</small>
+                                                      <small  style="color: red" v-if="error.role">{{  $t(error.role[0])}}</small>
 
                                                   </div>
 
                                                   <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
-                                                      <div class="col-form-label"> password</div>
+                                                      <div class="col-form-label"> {{  $t('password')}}</div>
 
                                                       <input name="password"  :class="['form-control',error.password ? 'is-invalid' : '']"  v-model="adminData.password"/>
-                                                      <small style="color: red" v-if="error.password">{{ error.password[0]}}</small>
+                                                      <small style="color: red" v-if="error.password">{{  $t(error.password[0])}}</small>
                                                   </div>
 
                                                   <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
-                                                      <div class="col-form-label"> confirm password</div>
+                                                      <div class="col-form-label"> {{  $t('confirm password')}}</div>
 
                                                       <input name="confirm_password" :class="['form-control',error.confirm_password ? 'is-invalid' : '']"  v-model="adminData.confirm_password"/>
-                                                      <small style="color: red" v-if="error.confirm_password">{{ error.confirm_password[0]}}</small>
+                                                      <small style="color: red" v-if="error.confirm_password">{{  $t(error.confirm_password[0])}}</small>
                                                   </div>
 
                                               <div class="mb-2 col-md-12 col-lg-12 col-sm-12">
-                                                  <div class="col-form-label"> Upload profile picture</div>
+                                                  <div class="col-form-label"> {{  $t('Upload profile picture')}}</div>
 
 
                                                       <vue-dropzone
@@ -93,12 +93,12 @@
                                                       </vue-dropzone>
 
 
-                                                  <small style="color: red" v-if="error.profile_picture">{{ error.profile_picture[0]}}</small>
+                                                  <small style="color: red" v-if="error.profile_picture">{{  $t(error.profile_picture[0])}}</small>
                                               </div>
 
                                                   <div class="mb-2 col-md-12 col-lg-12 col-sm-12 mt-3">
                                                              <div class="media">
-                                                                <label class="col-form-label m-r-10">active</label>
+                                                                <label class="col-form-label m-r-10">{{  $t('active')}}</label>
                                                                 <div class="media-body text-right switch-lg icon-state">
                                                                 <label class="switch">
                                                                     <input type="checkbox" checked=""   v-model="adminData.isActive"><span class="switch-state"></span>
@@ -108,11 +108,11 @@
                                                     </div>
 
                                               <button type="submit" class="btn btn-primary mt-3"  v-if="!edit" >
-                                                  Save
+                                                  {{  $t('Save')}}
                                               </button>
 
                                               <button  type="submit" class="btn btn-success mt-3"   v-if="edit" >
-                                                  update
+                                                  {{  $t('update')}}
                                               </button>
 
                                               </div>
@@ -180,7 +180,7 @@ export default {
                 maxNumberOfFiles: 1,
                 addRemoveLinks: true,
                 dictDefaultMessage:
-                    "<i class='icon-cloud-up'></i><br />Select Profile Picture",
+                    `<i class='icon-cloud-up'></i><br />Select Profile Picture`,
             },
 
 
@@ -279,7 +279,7 @@ export default {
                         if(res.data.success == true){
                             Toast.fire({
                                 icon: 'success',
-                                title: 'admin added successfully'
+                                title: this.$t('admin added successfully')
                             })
                             this.$router.push('adminsList')
 
@@ -332,7 +332,7 @@ export default {
 
                             Toast.fire({
                                 icon: 'success',
-                                title: 'admin updated successfully'
+                                title: this.$t('admin updated successfully')
                             })
                             this.$router.push({name:'adminsList'})
 

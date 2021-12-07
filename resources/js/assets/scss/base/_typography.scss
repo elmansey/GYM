@@ -1,11 +1,13 @@
 /**=====================
     Typography css start
 ==========================**/
+
 //Custom css Start
 body {
     font-size: $body-font-size;
     overflow-x: hidden;
-    font-family: $font-rubik, $font-serif;
+    // font-family: $font-rubik, $font-serif;
+    font-family: 'Cairo', sans-serif;
     color: $theme-body-font-color;
 }
 
@@ -49,12 +51,10 @@ code {
 blockquote {
     border-left: $blockquote-border;
     padding: $blockquote-padding;
-
     &.text-center {
         border: none;
         padding: $blockquote-padding;
     }
-
     &.text-right {
         border-left: none;
         border-right: $blockquote-border;
@@ -93,10 +93,8 @@ label {
 }
 
 //Custom css End
-
 //Typography css start
 .typography {
-
     h1,
     .h1,
     h2,
@@ -111,12 +109,10 @@ label {
     .h6 {
         margin: 20px 0;
         margin-top: 0;
-
         &:last-child {
             margin-bottom: 0;
         }
     }
-
     small {
         padding-left: $small-tag-padding;
         color: $small-tag-color;
@@ -128,7 +124,6 @@ pre {
     padding: $pre-tag-padding;
 }
 
-
 //Typography css end
 .owl-theme {
     .owl-dots {
@@ -136,7 +131,6 @@ pre {
             span {
                 background: lighten($primary-color, 20%);
             }
-
             &.active,
             &:hover {
                 span {
@@ -145,7 +139,6 @@ pre {
             }
         }
     }
-
     .owl-nav {
         &.disabled {
             &+.owl-dots {
@@ -204,7 +197,6 @@ pre {
         right: 30px !important;
         color: var(--theme-deafult);
     }
-
     span {
         +span {
             +span {
@@ -216,17 +208,14 @@ pre {
             }
         }
     }
-
     i {
         padding: 20px;
         padding-right: 0 !important;
         margin-right: 20px !important;
     }
-
     .progress {
         margin-top: -2px !important;
         height: 2px;
-
         .progress-bar {
             background-color: var(--theme-deafult);
         }
@@ -240,13 +229,11 @@ pre {
     width: 300px;
     color: $white;
     background-color: var(--theme-deafult);
-
     .close {
         box-shadow: none;
         color: $white;
         line-height: 1.4;
         font-weight: 100;
-
         &:focus {
             outline: none;
         }
@@ -271,7 +258,6 @@ pre {
 .irs-to,
 .irs-single {
     background: var(--theme-deafult);
-
     &:after {
         border-top-color: var(--theme-deafult);
     }
@@ -288,7 +274,6 @@ pre {
 // sweetalert css
 .swal-button {
     background-color: var(--theme-deafult);
-
     &:active {
         background-color: darken($primary-color, 5%);
     }
@@ -305,19 +290,16 @@ pre {
 }
 
 fieldset {
-
     .bootstrap-touchspin-postfix,
     .bootstrap-touchspin-prefix {
         border-radius: 0;
         padding: .4rem .75rem;
     }
-
     .input-group-prepend {
         &~.form-control {
             height: 39px;
         }
     }
-
     .input-group-lg {
         .touchspin {
             height: 50px;
@@ -338,6 +320,7 @@ fieldset {
         line-height: 1.5;
     }
 }
+
 
 /**=====================
     Typography css Ends

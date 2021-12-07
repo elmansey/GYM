@@ -49,7 +49,7 @@
                                                                 type="trash"
                                                                 style="width: 20px;"
                                                             ></feather>
-                                                            delete
+                                                            {{ $t('delete')}}
                                                         </b-dropdown-item>
                                                     </b-dropdown>
                                                 </div>
@@ -64,143 +64,8 @@
                                     >select to choose</b-tooltip
                                 >
                             </div>
-                            <!-- <div class="datatable-vue m-0">
-                                <div class="table-responsive vue-smart">
-                                    <v-table
-                                        :data="classes"
-                                        class="table"
-                                        :currentPage.sync="filter.currentPage"
-                                        :pageSize="5"
-                                        @totalPagesChanged="
-                                            filter.totalPages = $event
-                                        "
-                                    >
-                                        <thead slot="head">
-                                            <th></th>
-                                            <th sortKey="name">ID</th>
-                                            <th sortKey="name">staff Name</th>
-                                            <th sortKey="name">group Name</th>
-                                            <th sortKey="name">
-                                                starting Time
-                                            </th>
-                                            <th sortKey="name">ending Time</th>
-                                            <th sortKey="name">
-                                                training Location
-                                            </th>
-                                            <th sortKey="options"    v-if="
-                                                                    can(
-                                                                        'edit-class-schedule' ||
-                                                                        'delete-class-schedule'
-                                                                    )"
-                                                        >options</th>
-                                        </thead>
 
-                                        <tbody
-                                            slot="body"
-                                            slot-scope="{ displayData }"
-                                        >
-                                            <tr
-                                                v-for="(row,
-                                                index) in displayData"
-                                                :key="index"
-                                            >
-                                                <td>
-                                                    <input
-                                                        type="checkbox"
-                                                        :value="row.id"
-                                                        v-model="selected"
-                                                        v-if="can('delete-By-Select-Multi-Class')"
-                                                    />
-                                                </td>
-                                                <td>{{ ++index }}</td>
-                                                <td>
-                                                    {{
-                                                        row.captain_relation
-                                                            .name
-                                                    }}
-                                                </td>
-                                                <td>
-                                                    {{
-                                                        row.group_relation
-                                                            .name
-                                                    }}
-                                                </td>
-                                                <td>{{ row.startingTime }}</td>
-                                                <td>{{ row.endingTime }}</td>
-                                                <td>
-                                                    {{ row.trainingLocation }}
-                                                </td>
-
-                                                <td>
-                                                    <div>
-                                                        <b-button-group
-                                                           class="btn-group-pill"
-                                                           size="sm"
-                                                        >
-
-
-                                                    <b-button
-
-                                                        variant="outline-primary"
-                                                               v-if="
-                                                                    can(
-                                                                        'edit-class-schedule'
-                                                                    )"
-                                                            >
-
-
-                                                            <router-link
-
-                                                                variant="outline-warning"
-
-                                                                :to="{
-                                                                    name:
-                                                                        'updateClassSchedule',
-                                                                    params: {
-                                                                        classScheduleId:
-                                                                            row.id
-                                                                    }
-                                                                }"
-                                                                v-if="
-                                                                    can(
-                                                                        'edit-class-schedule'
-                                                                    )">
-                                                                edit
-                                                            </router-link>
-                                                    </b-button>
-
-                                                            <b-button
-
-                                                                variant="outline-danger"
-
-                                                                @click="
-                                                                    DeleteclassModal(
-                                                                        row.id,
-                                                                        index
-                                                                    )
-                                                                "
-                                                                v-if="
-                                                                    can(
-                                                                        'delete-class-schedule'
-                                                                    )">
-                                                                delete
-                                                            </b-button>
-                                                        </b-button-group>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </v-table>
-                                </div>
-
-                                <div>
-                                    <smart-pagination
-                                        :currentPage.sync="filter.currentPage"
-                                        :totalPages="filter.totalPages"
-                                    />
-                                </div>
-                            </div> -->
-
+                            
                              <div class="datatable-vue m-0">
                                 <div class="table-responsive vue-smart">
                                     <b-table
@@ -256,35 +121,34 @@
 
                             <b-modal id="bv-modal-example" hide-footer>
                                 <template #modal-title>
-                                    Delete class
+                                   {{ $t('Delete class')}}
                                 </template>
                                 <div class="d-block text-center">
-                                    <h5>are you sure to delete this class</h5>
+                                    <h5>{{  $t('are you sure to delete this class')}}</h5>
                                 </div>
                                 <b-button
                                     class="mt-3"
                                     v-b-modal.modal-sm
                                     variant="default"
                                     @click="$bvModal.hide('bv-modal-example')"
-                                    >Cancel</b-button
+                                    >{{ $t('Cancel')}}</b-button
                                 >
                                 <b-button
                                     class="mt-3"
                                     v-b-modal.modal-sm
                                     variant="danger"
                                     @click="deleteclass"
-                                    >delete</b-button
+                                    >{{ $t('delete')}}</b-button
                                 >
                             </b-modal>
 
                             <b-modal id="bv-modal-select-item" hide-footer>
                                 <template #modal-title>
-                                    Delete selected class
+                                  {{ $t('Delete selected class')}}
                                 </template>
                                 <div class="d-block text-center">
                                     <h5>
-                                        are you sure to delete this selected
-                                        class
+                                        {{  $t('are you sure to delete this selected class' )}}
                                     </h5>
                                 </div>
                                 <b-button
@@ -292,14 +156,13 @@
                                     v-b-modal.modal-sm
                                     variant="default"
                                     @click="$bvModal.hide('bv-modal-example')"
-                                    >Cancel</b-button
-                                >
+                                    >{{  $t('Cancel') }}</b-button>
                                 <b-button
                                     class="mt-3"
                                     v-b-modal.modal-sm
                                     variant="danger"
                                     @click="deleteSelectedItem"
-                                    >delete</b-button
+                                    >{{  $t('delete')}}</b-button
                                 >
                             </b-modal>
                         </div>
@@ -416,7 +279,7 @@ export default {
                                 this.isLoadig = true;
                                 Toast.fire({
                                     icon: "success",
-                                    title: "selected item  deleted successfully"
+                                    title: this.$t("selected item  deleted successfully")
                                 });
                             })
                             .catch(err => {
@@ -445,7 +308,7 @@ export default {
                         this.kay = "";
                         Toast.fire({
                             icon: "success",
-                            title: "class deleted successfully"
+                            title: this.$t("class deleted successfully")
                         });
 
                         this.$bvModal.hide("bv-modal-example");

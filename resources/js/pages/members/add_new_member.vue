@@ -21,7 +21,7 @@
                                                 <div class="col-form-label"> {{ $t('name')}}</div>
 
                                                 <input name="name" :class="['form-control',error.name? 'is-invalid' : '']" v-model="memberData.name"  />
-                                             <small style="color: red" v-if="error.name">{{ error.name[0] }}</small >
+                                             <small style="color: red" v-if="error.name">{{  $t(error.name[0]) }}</small >
                                             </div>
 
 
@@ -32,21 +32,21 @@
                                                     <option value="male">Male</option>
                                                     <option value="female">female </option>
                                                 </select>
-                                             <small style="color: red" v-if="error.gender">{{ error.gender[0] }}</small >
+                                             <small style="color: red" v-if="error.gender">{{  $t(error.gender[0]) }}</small >
                                             </div>
 
                                             <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
                                                 <div class="col-form-label"> {{ $t('Date of birth')}} </div>
 
                                                 <input name="phone"  @change="countMemberAge" type="date"  :class="['form-control',error.data_of_birth? 'is-invalid' : '']"  v-model="memberData.data_of_birth"/>
-                                             <small style="color: red" v-if="error.date_of_birth">{{ error.date_of_birth[0] }}</small >
+                                             <small style="color: red" v-if="error.date_of_birth">{{  $t(error.date_of_birth[0]) }}</small >
                                             </div>
 
                                             <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
                                                 <div class="col-form-label"> {{ $t('age')}} </div>
 
                                                 <input name="phone" readonly type="text"  :class="['form-control',error.age? 'is-invalid' : '']"  v-model="memberData.age"/>
-                                             <small style="color: red" v-if="error.age">{{ error.age[0] }}</small >
+                                             <small style="color: red" v-if="error.age">{{  $t(error.age[0]) }}</small >
                                             </div>
 
 
@@ -60,21 +60,21 @@
                                             <div class="col-form-label"> {{ $t('address')}} </div>
 
                                             <input name="address" :class="['form-control',error.address? 'is-invalid' : '']" v-model="memberData.address" />
-                                             <small style="color: red" v-if="error.address">{{ error.address[0] }}</small >
+                                             <small style="color: red" v-if="error.address">{{  $t(error.address[0]) }}</small >
                                         </div>
 
                                         <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
                                             <div class="col-form-label"> {{ $t('City')}} </div>
 
                                             <input name="city"  :class="['form-control',error.city? 'is-invalid' : '']"  v-model="memberData.city" />
-                                             <small style="color: red" v-if="error.city">{{ error.city[0] }}</small >
+                                             <small style="color: red" v-if="error.city">{{  $t(error.city[0]) }}</small >
                                         </div>
 
                                         <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
                                             <div class="col-form-label"> {{ $t('phone number')}}  </div>
 
                                             <input name="phone" :class="['form-control',error.phone? 'is-invalid' : '']" v-model="memberData.phone"/>
-                                             <small style="color: red" v-if="error.phone">{{ error.phone[0] }}</small >
+                                             <small style="color: red" v-if="error.phone">{{  $t(error.phone[0]) }}</small >
                                         </div>
 
 
@@ -85,7 +85,7 @@
                                             <div class="col-form-label"> {{ $t('RF code')}}  </div>
 
                                             <input name="" :class="['form-control',error.RF_code ? 'is-invalid' : '']" v-model="memberData.RF_code"  />
-                                             <small style="color: red" v-if="error.RF_code">{{ error.RF_code[0] }}</small >
+                                             <small style="color: red" v-if="error.RF_code">{{  $t(error.RF_code[0]) }}</small >
                                         </div>
 
 
@@ -93,7 +93,7 @@
                                             <div class="col-form-label">   {{ $t('start data')}}  </div>
 
                                             <input name="" type="date" @change="setExpireDate"   :class="['form-control',error.start_date? 'is-invalid' : '']"  v-model="memberData.start_data" />
-                                             <small style="color: red" v-if="error.start_date">{{ error.start_date[0] }}</small >
+                                             <small style="color: red" v-if="error.start_date">{{  $t(error.start_date[0]) }}</small >
                                         </div>
 
 
@@ -105,7 +105,7 @@
                                                         {{ item.name }}
                                                 </option>
                                             </select>
-                                             <small style="color: red" v-if="error.membership_id">{{ error.membership_id[0] }}</small >
+                                             <small style="color: red" v-if="error.membership_id">{{  $t(error.membership_id[0]) }}</small >
                                         </div>
 
 
@@ -115,7 +115,7 @@
                                         <div class="col-form-label">    {{ $t('payment pattern')}}  </div>
 
                                         <input name=""  readonly type="text"    :class="['form-control',error.payment? 'is-invalid' : '']"  v-model="memberData.payment" />
-                                            <small style="color: red" v-if="error.payment">{{ error.payment[0] }}</small >
+                                            <small style="color: red" v-if="error.payment">{{  $t(error.payment[0]) }}</small >
                                     </div>
 
 
@@ -123,29 +123,29 @@
                                             <div class="col-form-label">   {{ $t('membership price')}}  </div>
 
                                             <input name="" readonly type="text"    :class="['form-control',error.membership_price? 'is-invalid' : '']"  v-model="memberData.membership_price" />
-                                            <small style="color: red" v-if="error.membership_price">{{ error.membership_price[0] }}</small >
+                                            <small style="color: red" v-if="error.membership_price">{{  $t(error.membership_price[0]) }}</small >
                                         </div>
 
 
                                     <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
-                                        <div class="col-form-label">   {{ $t('Subscription period')}} {{ this.memberData.payment ?  "(" + this.memberData.payment + ")" : ''}}  </div>
+                                        <div class="col-form-label">   {{ $t('Subscription period')}} {{ this.memberData.payment ?  "(" + $t(this.memberData.payment) + ")" : ''}}  </div>
 
                                         <input name=""  type="number" @change="setExpireDate"   :class="['form-control',error.Subscription_period? 'is-invalid' : '']"  v-model="memberData.Subscription_period" />
-                                            <small style="color: red" v-if="error.Subscription_period">{{ error.Subscription_period[0] }}</small >
+                                            <small style="color: red" v-if="error.Subscription_period">{{  $t(error.Subscription_period[0]) }}</small >
                                     </div>
 
                                         <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
                                             <div class="col-form-label">   {{ $t('period Expiry')}} </div>
 
                                             <input name="" type="text"  readonly  :class="['form-control',error.period_Expiry? 'is-invalid' : '']"  v-model="memberData.period_Expiry" />
-                                             <small style="color: red" v-if="error.period_Expiry">{{ error.period_Expiry[0] }}</small >
+                                             <small style="color: red" v-if="error.period_Expiry"> {{ $t(error.period_Expiry[0]) }} </small >
                                         </div>
 
                                         <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
                                             <div class="col-form-label">    {{ $t('total payment')}} </div>
 
                                             <input name="" type="text"  readonly  :class="['form-control',error.total_payment? 'is-invalid' : '']"  v-model="memberData.total_payment" />
-                                             <small style="color: red" v-if="error.total_payment">{{ error.total_payment[0] }}</small >
+                                             <small style="color: red" v-if="error.total_payment">{{  $t(error.total_payment[0]) }}</small >
                                         </div>
 
 
@@ -167,7 +167,7 @@
                                                                     :class="[error.group_id ? 'is-invalid' : '']"     label="name" track-by="id"    :options="groups"  :multiple="true"   :taggable="true" @tag="addTag"  >
 
                                                       </multiselect>
-                                                     <small style="color: red" v-if="error.group_id">{{ error.group_id[0] }}</small >
+                                                     <small style="color: red" v-if="error.group_id">{{  $t(error.group_id[0]) }}</small >
 
                                             </div>
 
@@ -240,7 +240,7 @@
                                                          </div>
                                                     </div>
 
-                                                <small style="color: red" v-if="error.class_id">{{ error.class_id[0] }}</small >
+                                                <small style="color: red" v-if="error.class_id">{{  $t(error.class_id[0]) }}</small >
                                             </div>
 
 
@@ -430,6 +430,8 @@ export default {
             var today = new Date();
             var da = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
             this.memberData.start_data =  da
+
+           
 
 
             if(this.$route.params.memberId){
@@ -825,7 +827,7 @@ export default {
                         this.memberData.profile_picture    = []
                            Toast.fire({
                             icon: 'success',
-                            title: 'new member added successfully'
+                            title: this.$t('new member added successfully')
                         })
 
                         this.$router.push({name:'membersList'})
@@ -915,7 +917,7 @@ export default {
 
                            Toast.fire({
                             icon: 'success',
-                            title: 'member updated successfully'
+                            title: this.$t('member updated successfully')
                         })
 
                         this.$router.push({name:'membersList'})

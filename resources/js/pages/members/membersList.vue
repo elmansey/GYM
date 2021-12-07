@@ -78,7 +78,7 @@
                                                                     </b-dropdown-item>
                                                                     <b-dropdown-item
                                                                     @click="DeleteAdminModal(data.item.id,data.index)"  v-if="can('delete-member-from-team')"
-                                                                    ><feather style="width:15px" type="trash"></feather>{{ $t('dalete')}}</b-dropdown-item>
+                                                                    ><feather style="width:15px" type="trash"></feather>{{ $t('delete')}}</b-dropdown-item>
 
                                                                 </b-dropdown>
 
@@ -286,7 +286,7 @@ export default {
 
                     Toast.fire({
                         icon: 'success',
-                        title: 'member deleted successfully'
+                        title:  this.$t('member deleted successfully')
                     })
                 }
             })

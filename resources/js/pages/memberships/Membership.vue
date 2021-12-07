@@ -1,6 +1,6 @@
 <template>
     <div  v-if="isLoading">
-        <Breadcrumbs main="Permissions" :title="edit ? 'edit membership' : 'add membership'"/>
+        <Breadcrumbs :main="$t('Dashboard')" :title="edit ? $t('edit membership') : $t('add membership')"/>
         <!-- Container-fluid starts-->
         <div class="container-fluid">
             <div class="select2-drpdwn">
@@ -17,44 +17,44 @@
 
                                     <div class="row">
                                         <div class="mb-2 col-md-12 col-lg-12 col-sm-12">
-                                            <div class="col-form-label">membership name</div>
+                                            <div class="col-form-label">{{ $t('membership name')}}</div>
 
                                             <input name="name" v-model="data.name" :class="['form-control',error.name ? 'is-invalid' : '']" />
-                                            <small style="color: red"  v-if="error.name">{{error.name[0]}}</small>
+                                            <small style="color: red"  v-if="error.name">{{ $t(error.name[0])}}</small>
                                         </div>
                                         <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
-                                            <div class="col-form-label">payment</div>
+                                            <div class="col-form-label">{{ $t('payment pattern')}}</div>
 
                                             <select name="name" v-model="data.payment" :class="['form-control',error.payment ? 'is-invalid' : '']" >
-                                                <option value="daily">daily</option>
-                                                <option value="Weekly">Weekly </option>
-                                                <option value="Monthly">Monthly </option>
-                                                <option value="year">year</option>
+                                                <option value="daily">{{ $t('daily') }}</option>
+                                                <option value="Weekly">{{ $t('Weekly') }} </option>
+                                                <option value="Monthly">{{ $t('Monthly') }} </option>
+                                                <option value="year">{{ $t('year') }}</option>
                                             </select>
-                                            <small style="color: red"  v-if="error.payment">{{error.payment[0]}}</small>
+                                            <small style="color: red"  v-if="error.payment">{{ $t(error.payment[0])}}</small>
                                         </div>
                                         <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
-                                            <div class="col-form-label">membership price</div>
+                                            <div class="col-form-label">{{ $t('membership price')}}</div>
 
                                             <input name="name" v-model="data.Membership_price" :class="['form-control',error.Membership_price ? 'is-invalid' : '']" />
-                                            <small style="color: red"  v-if="error.Membership_price">{{error.Membership_price[0]}}</small>
+                                            <small style="color: red"  v-if="error.Membership_price">{{ $t(error.Membership_price[0])}}</small>
                                         </div>
 
                                         <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
-                                            <div class="col-form-label">with Membership private Features</div>
+                                            <div class="col-form-label">{{ $t('with Membership private Features')}}</div>
 
                                             <input name="name" v-model="data.Membership_private_Features" type="checkbox" />
-                                            <small style="color: red"  v-if="error.Membership_private_Features">{{error.Membership_private_Features[0]}}</small>
+                                            <small style="color: red"  v-if="error.Membership_private_Features">{{ $t(error.Membership_private_Features[0])}}</small>
                                         </div>
 
 
                                     </div>
 
                                     <button type="submit" class="btn btn-primary mt-3" v-if="!edit" >
-                                        Save
+                                        {{ $t('Save')}}
                                     </button>
                                     <button type="submit" class="btn btn-success mt-3" v-if="edit" >
-                                        update
+                                        {{ $t('update')}}
                                     </button>
 
                                 </form>
@@ -151,7 +151,7 @@ export default {
 
                 let formData = new FormData()
                  formData.append('name',this.data.name)
-                 formData.append('payment',this.data.Membership_Period)
+                 formData.append('payment',this.data.payment)
                  formData.append('Membership_price',this.data.Membership_price)
                  formData.append('Membership_private_Features',this.data.Membership_private_Features)
 
@@ -165,7 +165,7 @@ export default {
 
                         Toast.fire({
                             icon: 'success',
-                            title: 'membership updated successfully'
+                            title: this.$t('membership updated successfully')
                         })
                         this.$router.push({name:'memberships'})
 
@@ -185,7 +185,7 @@ export default {
 
                 let formData = new FormData()
                  formData.append('name',this.data.name)
-                 formData.append('payment',this.data.Membership_Period)
+                 formData.append('payment',this.data.payment)
                  formData.append('Membership_price',this.data.Membership_price)
                  formData.append('Membership_private_Features',this.data.Membership_private_Features)
 
@@ -200,7 +200,7 @@ export default {
 
                             Toast.fire({
                                 icon: 'success',
-                                title: 'membership added successfully'
+                                title:  this.$t('membership added successfully')
                             })
                             this.$router.push({name:'memberships'})
 

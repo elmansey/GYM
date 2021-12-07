@@ -78,7 +78,7 @@ class MembershipsController extends Controller
 
 
         $membership = Memberships::find($id);
-        $request['Membership_private_Features'] = $request['Membership_private_Features'] == 'true' ? true : false;
+        $request['Membership_private_Features'] = $request['Membership_private_Features'] == 'true' || '1' || 1 ? true : false;
         $membership->update($request->all());
 
 

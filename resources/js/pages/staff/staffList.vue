@@ -5,134 +5,96 @@
 
     <div v-if="isLoadig">
 
-        <Breadcrumbs main="Dashboard" title="staff list" />
+        <Breadcrumbs :main="$t('Dashboard')" :title="$t('staff list')" />
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
+
+
+
+
+
                             <div class="datatable-vue m-0">
-
-
                                 <div class="table-responsive vue-smart">
-                                    <v-table
-                                        :data="staffPerson"
-                                        class="table"
-                                        :currentPage.sync="filter.currentPage"
-                                        :pageSize="5"
-                                        @totalPagesChanged="filter.totalPages = $event"
+                                    <b-table
+                                        id="tablePrint"
+                                        show-empty
+                                        stacked="md"
+                                        :items="staffPerson"
+                                        :fields="tablefields"
+                                        :current-page="currentPage"
+                                        :per-page="perPage"  >
 
-                                    >
-                                        <thead slot="head">
+                                       
 
-                                        <th></th>
-                                        <th sortKey="name">Profile Picture</th>
-                                        <th sortKey="name">Personal uuid</th>
-                                        <th sortKey="name">name</th>
-                                        <th sortKey="name">user name</th>
-                                        <th sortKey="name" >email</th>
-                                        <th sortKey="options">phone number</th>
-                                        <th sortKey="options">roles</th>
-                                        <th sortKey="options">active</th>
-                                        <th sortKey="options">actions</th>
-                                        </thead>
+                                        <template #cell(id)="data" >
+                                            {{ ++data.index}}
+                                        </template>
 
-                                        <tbody slot="body" slot-scope="{ displayData }">
-                                        <tr v-for="(row, index) in displayData" :key="index">
-                                            <td></td>
+                                        <template #cell(profile_picture)="data" >
+                                            <img style="width: 40px;height: 40px;border-radius: 50%;"
+                                            :src="data.item.profile_picture ? `../../profile_pictures/${data.item.profile_picture}` :
+                                             '../../profile_pictures/DefaultProfile.jpg'" />
+                                        </template>
 
+                                        <template #cell(qr_code)="data" >
+                                            <img style="width: 40px;height: 40px;border-radius: 50%;"
+                                            :src="'../../'+data.item.qr_code" >
+                                        </template>
 
-                                            <td><img
-                                            style="width: 40px;height: 40px;border-radius: 50%;"
-
-
-                                            :src="row.profile_picture ? `../../profile_pictures/${row.profile_picture}` :
-                                             '../../profile_pictures/DefaultProfile.jpg'"
-
-
-                                              />
-                                              </td>
-
-
-
-                                            <td>{{ row.Personal_uuid}}</td>
-                                            <td>{{ row.name  }} </td>
-                                            <td>{{ row.user_name}}</td>
-                                            <td>{{ row.email}}</td>
-                                            <td>{{ row.phone}}</td>
-                                            <td >
-                                                <span class="badge badge-success" v-for="(v,k) in row.roles">
+                                   
+                                        <template #cell(role)="data" >
+                                            <span class="badge badge-success" v-for="(v,k) in data.item.roles" :key="k">
                                                     {{v.name}}
-                                                </span>
+                                            </span>
+                                        </template>
 
-                                            </td>
-                                            <td>
-                                             <span class="badge badge-success" v-if="row.isActive">
+                                        <template #cell(active)="data" >
+                                           <span class="badge badge-success" v-if="data.item.isActive">
                                                     active
                                             </span>
-                                             <span class="badge badge-danger" v-if="!row.isActive">
+                                             <span class="badge badge-danger" v-if="!data.item.isActive">
                                                     not Active
                                             </span>
-                                            </td>
+                                        </template>
 
-                                            <td>
+                                        <template #cell(action)="data" >
                                             <div>
-                                                 <b-button-group class="btn-group-pill" size="sm">
-
-                                                    <b-button
-
-                                                        variant="outline-primary"
-                                                    >
-                                                            <router-link
-
+                                                <b-button-group class="btn-group-pill" size="sm">
+                                                    <b-button  variant="outline-primary" >
+                                                        <router-link
                                                                 variant="outline-warning"
-                                                                :to="{name: 'editPersonInStaff', params: {staffPersonId : row.id}}"
-                                                                v-if="can('edit-member-from-team')"
-                                                            >
-                                                               edit
-                                                            </router-link>
-
+                                                                :to="{name: 'editPersonInStaff', params: {staffPersonId : data.item.id}}"
+                                                                v-if="can('edit-member-from-team')" >
+                                                               {{ $t('edit')}}
+                                                        </router-link>
                                                     </b-button>
-
                                                     <b-button
-
                                                             variant="outline-danger"
-
-                                                            @click="DeletestaffModal(row.id,index)"
-                                                            v-if="can('delete-member-from-team')"
-                                                        >
-
-                                                           delete
+                                                            @click="DeletestaffModal(data.item.id,data.index)"
+                                                            v-if="can('delete-member-from-team')" >
+                                                           {{  $t('delete') }}
                                                     </b-button>
-
-
-
-
-
-                                                    </b-button-group>
-                                                </div>
-
-                                            </td>
-
-                                        </tr>
-                                        </tbody>
-                                    </v-table>
+                                                </b-button-group>
+                                            </div>
+                                        </template>
+                                    </b-table>
                                 </div>
 
-                                <div >
-                                    <smart-pagination
-
-                                        :currentPage.sync="filter.currentPage"
-                                        :totalPages="filter.totalPages"
-                                    />
-                                </div>
+                               <b-col md="6" class="my-1">
+                                    <b-pagination
+                                    v-model="currentPage"
+                                    :total-rows="totalRows"
+                                    :per-page="perPage"
+                                    class="my-0"
+                                    ></b-pagination>
+                                </b-col>
 
 
                             </div>
-
-
-
-
+                                
                             <b-modal id="bv-modal-example" hide-footer>
                                 <template #modal-title>
                                    Delete Team member
@@ -144,11 +106,10 @@
                                 <b-button class="mt-3"  v-b-modal.modal-sm variant="danger"  @click.prevent="deletePersonInStaff">delete</b-button>
                             </b-modal>
                         </div>
-
-                        </div>
                     </div>
                 </div>
             </div>
+        </div>
 
 
 
@@ -172,6 +133,31 @@ import axios from "axios";
 export default {
     data() {
         return {
+
+            tablefields: [
+
+                {'id': this.$t('id')},
+                {'profile_picture': this.$t('profile_picture')},
+                { key: 'Personal_uuid', label: this.$t('Personal uuid'), sortable: false, },
+                { key: 'name', label: this.$t('name'), sortable: false, },
+                { 'qr_code': this.$t('QR') },
+                { key: 'user_name', label: this.$t('user name'), sortable: false, },
+                { key: 'email', label: this.$t('email'), sortable: false, },
+                { key: 'phone', label: this.$t('phone'), sortable: false, },
+                {'role' : this.$t('role')},
+                {'active' : this.$t('active')},
+                {'action' : this.$t('action')}
+            ],
+            totalRows: 1,
+            currentPage: 1,
+            perPage: 10,
+            pageOptions: [5, 10, 15],
+
+
+
+
+
+
             staffPerson: null,
             filter: {
                 currentPage: 1,

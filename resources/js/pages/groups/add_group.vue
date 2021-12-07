@@ -1,6 +1,6 @@
 <template>
     <div  v-if="isLoading">
-        <Breadcrumbs main="dashboard" :title="edit ? 'edit group' : 'add group'"/>
+        <Breadcrumbs  :main="$t('Dashboard')"  :title="edit ? $t('edit group') : $t('add group')"/>
         <!-- Container-fluid starts-->
         <div class="container-fluid">
             <div class="select2-drpdwn">
@@ -17,10 +17,10 @@
 
                                     <div class="row">
                                         <div class="mb-2 col-md-12 col-lg-12 col-sm-12">
-                                            <div class="col-form-label">Group name</div>
+                                            <div class="col-form-label">{{  $t('group name') }}</div>
 
                                             <input name="name" v-model="data.name" :class="['form-control',error.name ? 'is-invalid' : '']" />
-                                            <small style="color: red"  v-if="error.name">{{error.name[0]}}</small>
+                                            <small style="color: red"  v-if="error.name">{{ $t(error.name[0])}}</small>
                                         </div>
 
 
@@ -28,10 +28,10 @@
                                     </div>
 
                                     <button type="submit" class="btn btn-primary mt-3" v-if="!edit" >
-                                        Save
+                                       {{ $t('Save') }}
                                     </button>
                                     <button type="submit" class="btn btn-success mt-3" v-if="edit" >
-                                        update
+                                        {{  $t('update')}}
                                     </button>
 
                                 </form>
@@ -128,7 +128,7 @@ export default {
 
                             Toast.fire({
                                 icon: 'success',
-                                title: 'group updated successfully'
+                                title: this.$t('group updated successfully')
                             })
                             this.$router.push({name:'groups'})
 
@@ -158,7 +158,7 @@ export default {
 
                             Toast.fire({
                                 icon: 'success',
-                                title: 'group added successfully'
+                                title: this.$t('group added successfully')
                             })
                             this.$router.push({name:'groups'})
 
