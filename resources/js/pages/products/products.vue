@@ -29,7 +29,7 @@
                                                 </template>
 
                                                 <template #cell(product_img)="data" >
-                                                <img  style="width:70px;height:70px" :src="'../../public/product_img/'+data.item.product_img"/>
+                                                <img  style="width:70px;height:70px" :src="'../../product_img/'+data.item.product_img"/>
                                                 </template>
 
 

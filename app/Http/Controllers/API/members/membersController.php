@@ -110,7 +110,7 @@ class membersController extends Controller
 
                     $fileName = md5(time().now().rand(1,10)).'.'.$extension;
 
-                    $file->move(public_path('profile_pictures'),$fileName);
+                    $file->move('profile_pictures/',$fileName);
                     $request['profile_picture'] = $fileName;
 
                 }
@@ -142,7 +142,7 @@ class membersController extends Controller
                 $id = $ExtraInformation->id;
                 $dataQR =  $ExtraInformation['Personal_uuid'];
                 $QRName = 'profile_QR/'.md5($ExtraInformation['Personal_uuid']) . '.png';
-                $qr =  QRCode::text($dataQR)->setOutfile(public_path($QRName))->png();
+                $qr =  QRCode::text($dataQR)->setOutfile($QRName)->png();
                 $update = members_extra_information::where('id',$id)->with('memberShipsRelation')->first();
                 $update->update(
                     ['qr_code' =>  $QRName ]
@@ -253,7 +253,7 @@ class membersController extends Controller
 
             $oldImg = members_extra_information::where('id','=',$id)->pluck('profile_picture');
 
-            $path =  public_path('profile_pictures\\'.$oldImg[0]);
+            $path =  'profile_pictures\\'.$oldImg[0];
             if($oldImg[0]){
                 if(file_exists($path)){
 
@@ -267,7 +267,7 @@ class membersController extends Controller
 
             $fileName = md5(time().now().rand(1,10)).'.'.$extension;
 
-            $file->move(public_path('profile_pictures'),$fileName);
+            $file->move('profile_pictures/',$fileName);
 
             $input['profile_picture'] = $input['profile_picture'] ? $fileName : null;
 
@@ -338,7 +338,7 @@ class membersController extends Controller
 
             // //     24 * 60 * 60 = 86400 seconds
             // //     abs return postive number
-            // //     ceil return اعلي عدد صحيح
+            // //     ceil return الي عدد صحيح
 
            $countDaysLeft = ceil(abs($b  / 86400 )); # 86400 seconds to 1 day
            $logs =  $member['log'];

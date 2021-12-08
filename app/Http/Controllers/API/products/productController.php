@@ -52,7 +52,7 @@ class productController extends Controller
 
             $fileName = md5(time().now().rand(1,10)).'.'.$extension;
 
-            $file->move(public_path('product_img'),$fileName);
+            $file->move('product_img/',$fileName);
 
 
         }
@@ -116,7 +116,7 @@ class productController extends Controller
 
             $fileName = md5(time().now().rand(1,10)).'.'.$extension;
 
-            $file->move(public_path('product_img'),$fileName);
+            $file->move('product_img/',$fileName);
             $input['product_img'] = $fileName;
 
         }else{
@@ -145,7 +145,7 @@ class productController extends Controller
 
         $oldImg = products::where('id','=',$id)->pluck('product_img');
 
-        $path =  public_path('product_img\\'.$oldImg[0]);
+        $path =  'product_img\\'.$oldImg[0];
 
         if($oldImg[0]){
             if(file_exists($path)){

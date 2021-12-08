@@ -16,7 +16,7 @@
                         <div class="row mb-2">
                         <div class="col-auto">
                               <img class="img-70 rounded-circle"
-                             :src=" ProfileInfo.profile_picture   ? '../../public/profile_pictures/'+ProfileInfo.profile_picture :  '../../public/profile_pictures/DefaultProfile.jpg'" alt="" >
+                             :src=" ProfileInfo.profile_picture   ? '../../profile_pictures/'+ProfileInfo.profile_picture :  '../../profile_pictures/DefaultProfile.jpg'" alt="" >
                         </div>
                           <div class="col">
                             <h3 class="mb-1">{{ ProfileInfo.name }}</h3>
@@ -27,7 +27,7 @@
                           <p class="form-label">Use This Qr Code To Take Attendance</p>
                                 <div >
                                     <img
-                                    :src="'../../public/'+ProfileInfo.qr_code" alt=""
+                                    :src="'../../'+ProfileInfo.qr_code" alt=""
                                     />
                                 </div>
                         </div>

@@ -25,7 +25,18 @@
                                     <template #cell(id)="data" >
                                         {{ ++data.index}}
                                     </template>
+									
+                                      <template #cell(profile_picture)="data">
+                                                               
+                                                           <img
+                                                                style="width: 40px;height: 40px;border-radius: 50%;"
 
+
+                                                                :src="data.item.profile_picture ? '../../profile_pictures/'+data.item.profile_picture :
+                                                                '../../profile_pictures/DefaultProfile.jpg'"/>
+                                      </template>
+                                    
+                                    
                                     <template #cell(QR_code)="data" >
                                         <img style="width:45px;height: 45px" :src="'../../'+data.item.qr_code" />
                                     </template>
@@ -124,6 +135,7 @@ export default {
             tablefields: [
 
                 {'id': this.$t('id')},
+                 { 'profile_picture' : this.$t('profile_picture')},
                 { key: 'Personal_uuid', label: this.$t('Personal uuid'), sortable: false, },
                 { key: 'name', label: this.$t('name'), sortable: false, },
                 { 'QR_code': this.$t('QR') },

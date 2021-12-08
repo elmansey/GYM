@@ -42,7 +42,7 @@ class CreateDefaultAdminSeeder extends Seeder
 
         $dataQR =  $owner['Personal_uuid'];
         $QRName = 'profile_QR/'.md5($owner['Personal_uuid']) . '.png';
-        $qr =  QRCode::text($dataQR)->setOutfile(public_path($QRName))->png();
+        $qr =  QRCode::text($dataQR)->setOutfile($QRName)->png();
         $update = User::find($owner->id);
         $update->update(['qr_code' =>  $QRName]);
 
@@ -69,7 +69,7 @@ class CreateDefaultAdminSeeder extends Seeder
 
         $dataQR =  $staff['Personal_uuid'];
         $QRName = 'profile_QR/'.md5($staff['Personal_uuid']) . '.png';
-        $qr =  QRCode::text($dataQR)->setOutfile(public_path($QRName))->png();
+        $qr =  QRCode::text($dataQR)->setOutfile($QRName)->png();
         $update = User::find($staff->id);
         $update->update(['qr_code' =>  $QRName]);
 
@@ -93,7 +93,7 @@ class CreateDefaultAdminSeeder extends Seeder
 
         $dataQR =  $staff['Personal_uuid'];
         $QRName = 'profile_QR/'.md5($staff['Personal_uuid']) . '.png';
-        $qr =  QRCode::text($dataQR)->setOutfile(public_path($QRName))->png();
+        $qr =  QRCode::text($dataQR)->setOutfile($QRName)->png();
         $update = User::find($staff->id);
         $update->update(['qr_code' =>  $QRName]);
         #############################################

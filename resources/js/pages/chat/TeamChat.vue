@@ -22,7 +22,7 @@
 
                           <img
                                 class="rounded-circle"
-                                :src=" reseverInfo.profile_picture   ? '../../public/profile_pictures/'+reseverInfo.profile_picture :  '../../public/profile_pictures/DefaultProfile.jpg'"
+                                :src=" reseverInfo.profile_picture   ? '../../profile_pictures/'+reseverInfo.profile_picture :  '../../profile_pictures/DefaultProfile.jpg'"
                                 alt=""
                               v-if="chatting"
                          />
@@ -81,7 +81,7 @@
                                                 <div class="d-flex flex-row pb-1">
 
                                                     <img   v-if="message.from == $store.getters.USER.id" alt=""
-                                                    :src=" senderInfo.profile_picture   ? '../../public/profile_pictures/'+senderInfo.profile_picture :  '../../public/profile_pictures/DefaultProfile.jpg'"
+                                                    :src=" senderInfo.profile_picture   ? '../../profile_pictures/'+senderInfo.profile_picture :  '../../profile_pictures/DefaultProfile.jpg'"
                                                     class="img-thumbnail  border-0 rounded-circle  mr-3  list-thumbnail align-self-center "
                                                     style="width:40px;hight:40px"
                                                     >
@@ -89,7 +89,7 @@
 
                                                     <img  v-if="message.from != $store.getters.USER.id"
                                                     alt=""
-                                                    :src="  reseverInfo.profile_picture   ? '../../public/profile_pictures/'+reseverInfo.profile_picture :  '../../public/profile_pictures/DefaultProfile.jpg'"
+                                                    :src="  reseverInfo.profile_picture   ? '../../profile_pictures/'+reseverInfo.profile_picture :  '../../profile_pictures/DefaultProfile.jpg'"
                                                     class="img-thumbnail  border-0 rounded-circle  mr-3  list-thumbnail align-self-center "
                                                         style="width:40px;hight:40px"
                                                     >
@@ -188,7 +188,7 @@
                           >
                             <img
                               class="rounded-circle user-image"
-                            :src=" teamPerson.profile_picture   ? '../../public/profile_pictures/'+teamPerson.profile_picture :  '../../public/profile_pictures/DefaultProfile.jpg'"
+                            :src=" teamPerson.profile_picture   ? '../../profile_pictures/'+teamPerson.profile_picture :  '../../profile_pictures/DefaultProfile.jpg'"
                              alt=""
                              @click.prevent="getOldMessageInChat(teamPerson.id)"
                             />

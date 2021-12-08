@@ -206,9 +206,9 @@
               style="width: 40px; height: 40px; border-radius: 50% !important"
               :src="
                 this.$store.getters.USER['profile_picture']
-                  ? '../../public/profile_pictures/' +
+                  ? '../../profile_pictures/' +
                     this.$store.getters.USER['profile_picture']
-                  : '../../public/profile_pictures/DefaultProfile.jpg'
+                  : '../../profile_pictures/DefaultProfile.jpg'
               "
               alt=""
             />

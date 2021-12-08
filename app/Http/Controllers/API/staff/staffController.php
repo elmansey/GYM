@@ -68,7 +68,7 @@ class staffController extends Controller
 
                 $fileName = md5(time().now().rand(1,10)).'.'.$extension;
 
-                $file->move(public_path('profile_pictures'),$fileName);
+                $file->move('profile_pictures/',$fileName);
                 $input['profile_picture'] = $fileName;
 
 
@@ -83,7 +83,7 @@ class staffController extends Controller
 
         $dataQR =  $staff['Personal_uuid'];
         $QRName = 'profile_QR/'.md5($staff['Personal_uuid']) . '.png';
-        $qr =  QRCode::text($dataQR)->setOutfile(public_path($QRName))->png();
+        $qr =  QRCode::text($dataQR)->setOutfile($QRName)->png();
         $update = User::find($staff->id);
         $update->update(['qr_code' =>  $QRName]);
 
@@ -172,7 +172,7 @@ class staffController extends Controller
 
                 $fileName = md5(time().now().rand(1,10)).'.'.$extension;
 
-                $file->move(public_path('profile_pictures'),$fileName);
+                $file->move('profile_pictures/',$fileName);
                 $input['profile_picture'] = $fileName;
 
             }else{
@@ -213,7 +213,7 @@ class staffController extends Controller
 
         $oldImg = User::where('id','=',$id)->pluck('profile_picture');
 
-        $path =  public_path('profile_pictures\\'.$oldImg[0]);
+        $path =  'profile_pictures\\'.$oldImg[0];
 
         if($oldImg[0]){
             if(file_exists($path)){
