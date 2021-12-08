@@ -1,6 +1,6 @@
 <template>
   <div v-if="isLoading">
-    <Breadcrumbs main="Dashboard" title="Invoice details" />
+    <Breadcrumbs :main="$t('Dashboard')" :title="$t('Invoice details')" />
     <!-- Container-fluid starts-->
     <div class="container">
       <div class="row">
@@ -13,24 +13,24 @@
                     <div class="row">
                       <div class="col-sm-6">
 
-                          <h3>  seller # </h3>
+                          <h3>  {{  $store.getters.SETTINGS.Gym_name}}  </h3>
                             <p>
                             <span>
-                             name : {{ invoice.seller_relation.name }} <br />
-                            RF code :  {{ invoice.seller_relation.RF_code }}
+                            {{ $t('seller name :')}} {{ invoice.seller_relation.name }} <br />
+                            {{ $t('seller RF code :')}}  {{ invoice.seller_relation.RF_code }}
                             </span>
                             </p>
 
                       </div>
                       <div class="col-sm-6">
                         <div class="text-md-right">
-                          <h2> Invoice number #  </h2>
+                          <h2> {{ $t('invoice number')}}   </h2>
                            <h4 class="digits counter">{{ invoice.invoice_number  }}</h4>
 
                           <p>
-                            date:
+                            {{  $t('date')}}:
                             <span class="digits">{{ invoice.date }}</span>
-                            <br />time:
+                            <br />{{  $t('time')}}:
                             <span class="digits">{{  invoice.time }}</span>
                           </p>
 
@@ -58,17 +58,17 @@
 
                           <tr>
                             <td class="Hours">
-                              <h6 class="p-2 mb-0">product name</h6>
+                              <h6 class="p-2 mb-0">{{ $t('product name')}}</h6>
                             </td>
                             <td class="Rate">
-                              <h6 class="p-2 mb-0">unit price </h6>
+                              <h6 class="p-2 mb-0">{{ $t('unit price')}} </h6>
                             </td>
 
                             <td class="Rate">
-                              <h6 class="p-2 mb-0">product quantity </h6>
+                              <h6 class="p-2 mb-0">{{ $t('product quantity')}} </h6>
                             </td>
                             <td class="subtotal">
-                              <h6 class="p-2 mb-0">products price</h6>
+                              <h6 class="p-2 mb-0">{{ $t('products price')}}</h6>
                             </td>
                           </tr>
 
@@ -103,7 +103,7 @@
                             <td></td>
                             <td></td>
                             <td class="Rate">
-                              <h6 class="mb-0 p-2"><b>Total</b></h6>
+                              <h6 class="mb-0 p-2"><b>{{ $t('Total')}}</b></h6>
                             </td>
                             <td class="payment digits">
                               <h6 class="mb-0 p-2"><b>{{ invoice.invoice_total }}</b></h6>

@@ -1,6 +1,6 @@
 <template>
     <div  v-if="isLoading">
-        <Breadcrumbs main="dashboard" :title="edit ? 'edit product' : 'add product'"/>
+        <Breadcrumbs :main="$t('Dashboard')" :title="edit ?  $t('edit product') :  $t('add product')"/>
         <!-- Container-fluid starts-->
         <div class="container-fluid">
             <div class="select2-drpdwn">
@@ -17,26 +17,26 @@
 
                                     <div class="row">
                                         <div class="mb-2 col-md-6 col-lg-4 col-sm-12">
-                                            <div class="col-form-label">product name</div>
+                                            <div class="col-form-label">{{ $t('product name')}}</div>
 
-                                            <input name="name" v-model="product_info.product_name" :class="['form-control',error.product_name ? 'is-invalid' : '']"  placeholder="product name"/>
-                                            <small style="color: red"  v-if="error.product_name">{{error.product_name[0]}}</small>
+                                            <input name="name" v-model="product_info.product_name" :class="['form-control',error.product_name ? 'is-invalid' : '']"  :placeholder=" $t('product name')"/>
+                                            <small style="color: red"  v-if="error.product_name">{{ $t(error.product_name[0])}}</small>
                                         </div>
                                         <div class="mb-2 col-md-6 col-lg-4 col-sm-12">
-                                            <div class="col-form-label">product price</div>
+                                            <div class="col-form-label">{{ $t('product price')}}</div>
 
-                                            <input name="product_price" type="number" v-model="product_info.product_price" :class="['form-control',error.product_price ? 'is-invalid' : '']"  placeholder="product price"/>
-                                            <small style="color: red"  v-if="error.product_price">{{error.product_price[0]}}</small>
+                                            <input name="product_price" type="number" v-model="product_info.product_price" :class="['form-control',error.product_price ? 'is-invalid' : '']"  :placeholder=" $t('product price')"/>
+                                            <small style="color: red"  v-if="error.product_price">{{ $t(error.product_price[0])}}</small>
                                         </div>
                                         <div class="mb-2 col-md-6 col-lg-4 col-sm-12">
-                                            <div class="col-form-label">Product Quantity</div>
+                                            <div class="col-form-label">{{ $t('Product Quantity')}}</div>
 
-                                            <input name="product_quantity" type="number"  v-model="product_info.product_quantity" :class="['form-control',error.Product_Quantity ? 'is-invalid' : '']"  placeholder="product Quantity"/>
-                                            <small style="color: red"  v-if="error.Product_Quantity">{{error.Product_Quantity[0]}}</small>
+                                            <input name="product_quantity" type="number"  v-model="product_info.product_quantity" :class="['form-control',error.Product_Quantity ? 'is-invalid' : '']"  :placeholder=" $t('Product Quantity')"/>
+                                            <small style="color: red"  v-if="error.Product_Quantity">{{$t(error.Product_Quantity[0])}}</small>
                                         </div>
 
                                              <div class="mb-2 col-md-12 col-lg-12 col-sm-12">
-                                                  <div class="col-form-label"> Upload product img</div>
+                                                  <div class="col-form-label"> {{ $t('Upload product img')}}</div>
 
 
                                                       <vue-dropzone
@@ -52,20 +52,20 @@
                                                       </vue-dropzone>
 
 
-                                                  <small style="color: red" v-if="error.product_img">{{ error.product_img[0]}}</small>
+                                                  <small style="color: red" v-if="error.product_img">{{  $t(error.product_img[0])}}</small>
                                               </div>
 
 
                                         <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
-                                            <div class="col-form-label">Production Date</div>
+                                            <div class="col-form-label">{{ $t('Production Date')}}</div>
 
                                             <input name="Production_Date" type="date" v-model="product_info.Production_Date" :class="['form-control',error.Production_Date ? 'is-invalid' : '']" />
-                                            <small style="color: red"  v-if="error.Production_Date">{{error.Production_Date[0]}}</small>
+                                            <small style="color: red"  v-if="error.Production_Date">{{$t(error.Production_Date[0])}}</small>
                                         </div>
                                         <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
-                                            <div class="col-form-label">Expiry date</div>
+                                            <div class="col-form-label">{{ $t('Expiry date')}}</div>
                                             <input name="Expiry_date" type="date"  v-model="product_info.Expiry_date" :class="['form-control',error.Expiry_date ? 'is-invalid' : '']"  />
-                                            <small style="color: red"  v-if="error.Expiry_date">{{error.Expiry_date[0]}}</small>
+                                            <small style="color: red"  v-if="error.Expiry_date">{{ $t(error.Expiry_date[0])}}</small>
                                         </div>
 
 
@@ -74,10 +74,10 @@
                                     </div>
 
                                     <button type="submit" class="btn btn-primary mt-3" v-if="!edit" >
-                                        Save
+                                        {{ $t('Save')}}
                                     </button>
                                     <button type="submit" class="btn btn-success mt-3" v-if="edit" >
-                                        update
+                                        {{ $t('update')}}
                                     </button>
 
                                 </form>
@@ -229,7 +229,7 @@ export default {
                             },
                                 Toast.fire({
                                     icon: 'success',
-                                    title: 'product  added successfully'
+                                    title: this.$t('product added successfully')
                                 })
                                 this.$router.push({name : 'products'})
 
@@ -268,7 +268,7 @@ export default {
                             this.error = ''
                             Toast.fire({
                                 icon: 'success',
-                                title: 'product  updated successfully'
+                                title: this.$t('product updated successfully')
                             })
                                 this.$router.push({name : 'products'})
 

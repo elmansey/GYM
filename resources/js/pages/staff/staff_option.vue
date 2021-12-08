@@ -1,6 +1,6 @@
 <template>
     <div v-if="isLoading">
-        <Breadcrumbs main="dashboard" :title="edit ? 'edit person in staff' : 'add person in staff'"/>
+        <Breadcrumbs :main="$t('Dashboard')" :title="edit ? $t('edit person in staff') : $t('add person in staff')"/>
         <!-- Container-fluid starts-->
         <div class="container-fluid">
             <div class="select2-drpdwn">
@@ -17,22 +17,22 @@
                                               <div class="row">
 
                                                   <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
-                                                      <div class="col-form-label">  name</div>
+                                                      <div class="col-form-label">  {{$t('name')}}</div>
 
                                                       <input name="name" :class="['form-control', submited && !$v.staffData.name.required ||  error.name ? 'is-invalid' : '']"  v-model="staffData.name"/>
-                                                      <small style="color: red" v-if="error.name">{{ error.name[0]}}</small>
-                                                     <b-form-invalid-feedback style="color:red" v-if="( submited && !$v.staffData.name.required)"> the first name faild is required</b-form-invalid-feedback>
+                                                      <small style="color: red" v-if="error.name">{{  $t(error.name[0]) }}</small>
+                                                     <b-form-invalid-feedback style="color:red" v-if="( submited && !$v.staffData.name.required)">{{  $t("the first name faild is required")}}</b-form-invalid-feedback>
 
                                                   </div>
 
 
 
                                                   <div class="mb-2 col-md-6 co1l-lg-6 col-sm-12">
-                                                      <div class="col-form-label"> phone number</div>
+                                                      <div class="col-form-label"> {{  $t('phone number') }}</div>
 
                                                       <input name="phone" :class="['form-control', submited && !$v.staffData.phone.required ||   error.phone ? 'is-invalid' : '']" v-model="staffData.phone"/>
-                                                      <small style="color: red" v-if="error.phone">{{ error.phone[0]}}</small>
-                                                      <b-form-invalid-feedback style="color:red" v-if="( submited && !$v.staffData.phone.required)"> the phone faild is required</b-form-invalid-feedback>
+                                                      <small style="color: red" v-if="error.phone">{{  $t(error.phone[0])}}</small>
+                                                      <b-form-invalid-feedback style="color:red" v-if="( submited && !$v.staffData.phone.required)">{{  $t("the phone faild is required")}}</b-form-invalid-feedback>
 
                                                   </div>
 
@@ -47,7 +47,7 @@
 
 
                                               <div class="mb-2 col-md-12 col-lg-12 col-sm-12">
-                                                  <div class="col-form-label"> Upload profile picture</div>
+                                                  <div class="col-form-label"> {{ $t('Upload profile picture') }}</div>
 
 
                                                       <vue-dropzone
@@ -63,7 +63,7 @@
                                                       </vue-dropzone>
 
 
-                                                  <small style="color: red" v-if="error.profile_picture">{{ error.profile_picture[0]}}</small>
+                                                  <small style="color: red" v-if="error.profile_picture">{{  $t(error.profile_picture[0]) }}</small>
                                               </div>
 
 
@@ -76,50 +76,50 @@
                                                     <div class="login data row" >
 
                                                     <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
-                                                      <div class="col-form-label"> email</div>
+                                                      <div class="col-form-label"> {{$t('email')}}</div>
 
                                                         <input name="email" type="email" :class="['form-control',error.email || submited && !$v.staffData.loginData.email.required ? 'is-invalid' : '']"  v-model="staffData.loginData.email"/>
-                                                        <small style="color: red" v-if="error.email">{{ error.email[0]}}</small>
-                                                        <b-form-invalid-feedback style="color:red" v-if="( !$v.staffData.loginData.email.required)"> the email faild is required</b-form-invalid-feedback>
-                                                        <b-form-invalid-feedback style="color:red" v-if="( !$v.staffData.loginData.email.email)"> the email  must vaild email </b-form-invalid-feedback>
+                                                        <small style="color: red" v-if="error.email">{{  $t(error.email[0]) }}</small>
+                                                        <b-form-invalid-feedback style="color:red" v-if="( !$v.staffData.loginData.email.required)">{{  $t('the email faild is required')}}</b-form-invalid-feedback>
+                                                        <b-form-invalid-feedback style="color:red" v-if="( !$v.staffData.loginData.email.email)">{{  $t('the email must vaild email')}}</b-form-invalid-feedback>
 
                                                     </div>
 
                                                   <div class="mb-2 col-md-12 col-lg-6 col-sm-12">
-                                                      <div class="col-form-label">RF code</div>
+                                                      <div class="col-form-label">{{$t('RF code')}}</div>
 
                                                       <input name="name" :class="['form-control',error.RF_code ? 'is-invalid' : '']"  v-model="staffData.loginData.RF_code"/>
-                                                      <small style="color: red" v-if="error.RF_code">{{ error.RF_code[0]}}</small>
+                                                      <small style="color: red" v-if="error.RF_code">{{  $t(error.RF_code[0]) }}</small>
                                                   </div>
 
                                                     <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
-                                                      <div class="col-form-label"> user name</div>
+                                                      <div class="col-form-label"> {{$t('user name')}}</div>
 
                                                         <input name="user_name" type="text" :class="['form-control', submited && !$v.staffData.loginData.user_name.required || error.user_name ? 'is-invalid' : '']"  v-model="staffData.loginData.user_name"/>
-                                                        <small style="color: red" v-if="error.user_name">{{ error.user_name[0]}}</small>
-                                                        <b-form-invalid-feedback style="color:red" v-if="( !$v.staffData.loginData.user_name.required)"> the user name failde is required   </b-form-invalid-feedback>
+                                                        <small style="color: red" v-if="error.user_name">{{  $t(error.user_name[0]) }}</small>
+                                                        <b-form-invalid-feedback style="color:red" v-if="( !$v.staffData.loginData.user_name.required)">{{ $t('the user name failde is required')}}</b-form-invalid-feedback>
                                                     </div>
                                                  <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
-                                                      <div class="col-form-label"> password</div>
+                                                      <div class="col-form-label"> {{$t('password')}}</div>
 
                                                         <input name="password" type="password" :class="['form-control' , submited && !$v.staffData.loginData.password.requiredIf || !$v.staffData.loginData.password.maxLength || !$v.staffData.loginData.password.minLength || error.password ? 'is-invalid' : '']"  v-model="staffData.loginData.password"/>
-                                                        <small style="color: red" v-if="error.password">{{ error.password[0]}}</small>
-                                                        <b-form-invalid-feedback style="color:red" v-if="( !$v.staffData.loginData.password.requiredIf)"> the  password failde is required   </b-form-invalid-feedback>
-                                                        <b-form-invalid-feedback style="color:red" v-if="( !$v.staffData.loginData.password.maxLength)"> the max character allow is {{  $v.staffData.loginData.password.$params.maxLength.max }}   </b-form-invalid-feedback>
-                                                        <b-form-invalid-feedback style="color:red" v-if="( !$v.staffData.loginData.password.minLength)">  the min character allow is {{  $v.staffData.loginData.password.$params.minLength.min }}    </b-form-invalid-feedback>
+                                                        <small style="color: red" v-if="error.password">{{  $t(error.password[0]) }}</small>
+                                                        <b-form-invalid-feedback style="color:red" v-if="( !$v.staffData.loginData.password.requiredIf)">{{  $t('the password failde is required')}}</b-form-invalid-feedback>
+                                                        <b-form-invalid-feedback style="color:red" v-if="( !$v.staffData.loginData.password.maxLength)">{{ $t("the max character allow is")}} {{   $v.staffData.loginData.password.$params.maxLength.max }}   </b-form-invalid-feedback>
+                                                        <b-form-invalid-feedback style="color:red" v-if="( !$v.staffData.loginData.password.minLength)">  {{ $t('the min character allow is')  }}   {{  $v.staffData.loginData.password.$params.minLength.min }}  </b-form-invalid-feedback>
 
                                                     </div>
                                                     <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
-                                                      <div class="col-form-label"> confirm password</div>
+                                                      <div class="col-form-label">{{$t('confirm password')}}</div>
 
                                                         <input name="password" type="password" :class="['form-control', submited &&   !$v.staffData.loginData.confirm_Password.requiredIf ||  error.confirm_Password ? 'is-invalid' : '']"  v-model="staffData.loginData.confirm_Password"/>
-                                                        <small style="color: red" v-if="error.confirm_Password">{{ error.confirm_Password}}</small>
-                                                        <b-form-invalid-feedback style="color:red" v-if="( submited && !$v.staffData.loginData.confirm_Password.requiredIf)"> the confirm  password failde is required   </b-form-invalid-feedback>
+                                                        <small style="color: red" v-if="error.confirm_Password">{{  $t(error.confirm_Password)}}</small>
+                                                        <b-form-invalid-feedback style="color:red" v-if="(submited && !$v.staffData.loginData.confirm_Password.requiredIf)"> {{  $t('the confirm password failde is required') }}   </b-form-invalid-feedback>
 
                                                     </div>
                                                     <div class="mb-2 col-md-12 col-lg-12 col-sm-12 mt-3">
                                                              <div class="media">
-                                                                <label class="col-form-label m-r-10">active</label>
+                                                                <label class="col-form-label m-r-10">{{$t('active')}}</label>
                                                                 <div class="media-body text-right switch-lg icon-state">
                                                                 <label class="switch">
                                                                     <input type="checkbox" checked=""   v-model="staffData.loginData.isActive"><span class="switch-state"></span>
@@ -132,11 +132,11 @@
                                                 <div class="mb-2 col-md-12 col-lg-12 col-sm-12">
 
                                                         <button type="submit" class="btn btn-primary mt-3"  v-if="!edit" >
-                                                            Save
+                                                            {{$t('Save')}}
                                                         </button>
 
                                                         <button  type="submit" class="btn btn-success mt-3"   v-if="edit" >
-                                                            update
+                                                            {{$t('update')}}
                                                         </button>
                                                 </div>
                                               </div>
@@ -197,7 +197,7 @@ export default {
 
                 },
                 'profile_picture':'',
-                'role':{id: 1, name: "staff"},
+                'role':{id: 3, name: "staff"},
             },
             isLoading:false,
             allowLogin:false,
@@ -316,6 +316,7 @@ export default {
 
                     },
                      'password':{
+
                             requiredIf:requiredIf( function(){
                             return   this.edit == false
                         }),
@@ -389,12 +390,12 @@ export default {
                                     this.staffData.loginData.RF_code = ''
                                     this.staffData.loginData.confirm_Password = ''
                                     this.staffData.profile_picture   = ''
-                                    this.staffData.role = {id: 1, name: "staff"},
+                                    this.staffData.role = {id:3, name: "staff"},
 
-                                this.$router.push('staffList')
+                                this.$router.push({name : 'staffList'})
                                 Toast.fire({
                                     icon: 'success',
-                                    title: 'person added in staff successfully'
+                                    title: this.$t('person added in staff successfully')
                                 })
 
                                 console.log(res.data)
@@ -450,15 +451,15 @@ export default {
                                     this.staffData.loginData.user_name = ''
                                     this.staffData.loginData.password = ''
                                     this.staffData.loginData.isActive = true
-                                    this.staffData.loginData.RF_code = RF_code
+                                    this.staffData.loginData.RF_code = ''
                                     this.staffData.loginData.confirm_Password = ''
                                     this.staffData.profile_picture   = ''
-                                    this.staffData.role = {id: 1, name: "staff"},
+                                    this.staffData.role = {id: 3, name: "staff"},
                                     this.$router.push({name : 'staffList'})
 
                                 Toast.fire({
                                     icon: 'success',
-                                    title: 'staff person updated  successfully'
+                                    title: this.$t('staff person updated successfully')
                                    })
                                 console.log(res.data)
 
@@ -550,7 +551,7 @@ export default {
                     this.staffData.loginData.isActive   = true,
                     this.staffData.loginData.RF_code   = '',
                     this.staffData.profile_picture   = '',
-                    this.staffData.role   = '',
+                    this.staffData.role   = {id: 3, name: "staff"},
                     this.allowLogin     = false
 
 

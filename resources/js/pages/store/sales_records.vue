@@ -2,15 +2,15 @@
 
     <div v-if="isLoadig">
 
-        <Breadcrumbs main="Dashboard" title="product invoices" />
+        <Breadcrumbs :main="$t('Dashboard')" :title="$t('product invoices')" />
             <div class="" style="display:flex;margin-left: 100px;margin-bottom: 30px;">
                 <div class="">
                     <export-excel class="btn btn-light btn-sm  border-1"  :data   = "json_data" :fields = "json_fields" worksheet = "My Worksheet"   name = "test.xls" >
-                         excel
+                         {{ $t('excel')}}
                     </export-excel>
                 </div>
                 <div class="">
-                        <button class="btn btn-light btn-sm border-1 " @click="printNow">print</button>
+                        <button class="btn btn-light btn-sm border-1 " @click="printNow">{{  $t('print')}}</button>
                 </div>
             </div>
 
@@ -37,20 +37,20 @@
 
 
 
-                                                        <template #cell(ID)="data">
+                                                        <template #cell(id)="data">
                                                                 {{ ++data.index }}
                                                         </template>
 
                                                         <template #cell(invoice_details)="data">
 
-                                                                <span style="cursor: pointer" class="badge-primary badge-pill" @click="showDetails(data.item.id)">details</span>
+                                                                <span style="cursor: pointer" class="badge-primary badge-pill" @click="showDetails(data.item.id)">{{ $t('details') }}</span>
                                                         </template>
 
                                                         <template #cell(action)="data" >
                                                                <div class="col-xl-4 col-md-6 col-sm-12 " >
                                                                     <b-button-group  size="sm" class="btn-group-pill">
-                                                                        <b-button variant="outline-danger" id="PageButton1"  @click="deleteInvoiceModel(data.item.id,data.index)">delete</b-button>
-                                                                        <b-button variant="outline-dark"  id="PageButton2" @click="archiveInvoiceModel(data.item.id,data.index)">archive</b-button>
+                                                                        <b-button variant="outline-danger" id="PageButton1"  @click="deleteInvoiceModel(data.item.id,data.index)">{{  $t('delete')}}</b-button>
+                                                                        <b-button variant="outline-dark"  id="PageButton2" @click="archiveInvoiceModel(data.item.id,data.index)">{{  $t('archive')}}</b-button>
                                                                     </b-button-group>
                                                                 </div>
                                                         </template>
@@ -88,24 +88,24 @@
 
                             <b-modal id="invoiceModel" hide-footer>
                                 <template #modal-title>
-                                    Delete invoice
+                                    {{ $t('Delete invoice')}}
                                 </template>
                                 <div class="d-block text-center">
-                                    <h5>are you sure to delete this invoice</h5>
+                                    <h5>{{ $t('are you sure to delete this invoice')}}</h5>
                                 </div>
-                                <b-button class="mt-3"  v-b-modal.modal-sm variant="default" @click="$bvModal.hide('invoiceModel')">Cancel</b-button>
-                                <b-button class="mt-3"  v-b-modal.modal-sm variant="danger" @click="deletInvoice()"  >delete</b-button>
+                                <b-button class="mt-3"  v-b-modal.modal-sm variant="default" @click="$bvModal.hide('invoiceModel')">{{ $t('Cancel') }}</b-button>
+                                <b-button class="mt-3"  v-b-modal.modal-sm variant="danger" @click="deletInvoice()"  >{{ $t('delete')}}</b-button>
                             </b-modal>
 
                             <b-modal id="archiveModel" hide-footer>
                                 <template #modal-title>
-                                    archive invoice
+                                    {{ $t('archive invoice')}}
                                 </template>
                                 <div class="d-block text-center">
-                                    <h5>are you sure to archive this invoice</h5>
+                                    <h5>{{ $t('are you sure to archive this invoice')}}</h5>
                                 </div>
-                                <b-button class="mt-3"  v-b-modal.modal-sm variant="default" @click="$bvModal.hide('invoiceModel')">Cancel</b-button>
-                                <b-button class="mt-3"  v-b-modal.modal-sm variant="primary" @click="archiveInvoice()"  >archive</b-button>
+                                <b-button class="mt-3"  v-b-modal.modal-sm variant="default" @click="$bvModal.hide('invoiceModel')">{{ $t('Cancel')}}</b-button>
+                                <b-button class="mt-3"  v-b-modal.modal-sm variant="primary" @click="archiveInvoice()"  >{{ $t('archive')}}</b-button>
                             </b-modal>
 
 
@@ -162,14 +162,14 @@ export default{
             isLoadig:false,
             tablefields: [
 
-                'ID',
-                { key: 'invoice_number', label: 'invoice_number', sortable: false, },
-                { key: 'seller_relation.name', label: 'seller', sortable: false, },
-                'invoice_details',
-                { key: 'invoice_total', label: 'invoice total', sortable: false, },
-                { key: 'date', label: 'date', sortable: false, },
-                { key: 'time', label: 'time', sortable: false, },
-                'action'
+                {'id' : this.$t('id')},
+                { key: 'invoice_number', label: this.$t('invoice number'), sortable: false, },
+                { key: 'seller_relation.name', label: this.$t('seller'), sortable: false, },
+                {'invoice_details' : this.$t('invoice details')},
+                { key: 'invoice_total', label: this.$t('invoice total'), sortable: false, },
+                { key: 'date', label: this.$t('date'), sortable: false, },
+                { key: 'time', label: this.$t('time'), sortable: false, },
+                {'action' : this.$t("action")}
 
 
             ],
@@ -231,7 +231,7 @@ export default{
                     this.key = ''
                     this.$bvModal.hide('archiveModel')
                     Toast.fire({
-                        'title' : 'invoice archived successfully ',
+                        'title' : this.$t('invoice archived successfully'),
                           'icon' : 'success'
                     })
                 }
@@ -267,7 +267,7 @@ export default{
                     this.key = ''
                     this.$bvModal.hide('invoiceModel')
                     Toast.fire({
-                        'title' : 'invoice delete successfully ',
+                        'title' :  this.$t('invoice delete successfully'),
                           'icon' : 'success'
                     })
                 }

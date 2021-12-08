@@ -1,8 +1,8 @@
 <template>
     <div v-if="isLoading">
         <Breadcrumbs
-            main="Permissions"
-            :title="edit ? 'edit Role' : 'add Role'"
+            :main="$t('Permissions')"
+            :title="edit ? $t('edit Role') : $t('add Role')"
         />
         <!-- Container-fluid starts-->
         <div class="container-fluid">
@@ -13,74 +13,52 @@
                             <div class="card-header"></div>
                             <div class="card-body">
                                 <div class="row">
-                                    <div
-                                        class="mb-2 col-md-6 col-lg-6 col-sm-12"
-                                    >
-                                        <div class="col-form-label">
-                                            Role name
+                                    <div  class="mb-2 col-md-6 col-lg-6 col-sm-12" >
+                                    <div class="col-form-label">
+                                            {{ $t('Role name')}}
                                         </div>
-
-                                        <input
-                                            :class="[
-                                                'form-control',
-                                                error.name ? 'is-invalid' : ''
-                                            ]"
-                                            v-model="role.name"
-                                        />
+                                        <input :class="['form-control',error.name ? 'is-invalid' : '']"  v-model="role.name" />
                                         <small
                                             style="color: red"
-                                            v-if="error.name"
-                                            >{{ error.name[0] }}</small
-                                        >
+                                            v-if="error.name">{{  $t(error.name[0]) }}
+                                        </small>
                                     </div>
-
-                                    <div
-                                        class="mb-2 col-md-6 col-lg-6 col-sm-12"
-                                    >
+                                    <div class="mb-2 col-md-6 col-lg-6 col-sm-12" >
                                         <div class="col-form-label">
-                                            Choose the permissions for this Role
+                                            {{ $t('Choose the permissions for this Role')}}
                                         </div>
-
                                         <multiselect
                                             v-model="role.permission"
                                             tag-placeholder="Add this as new tag"
                                             placeholder="Search or add a tag"
-                                            :class="[
-                                                error.permission
-                                                    ? 'is-invalid'
-                                                    : ''
-                                            ]"
+                                            :class="[ error.permission ? 'is-invalid'  : '']"
                                             label="name"
                                             track-by="id"
                                             @search-change="asyncFind"
                                             :options="options"
                                             :multiple="true"
                                             :taggable="true"
-                                            @tag="addTag"
-                                        >
+                                            @tag="addTag">
                                         </multiselect>
-                                        <small
-                                            style="color: red"
-                                            v-if="error.permission"
-                                            >{{ error.permission[0] }}</small
-                                        >
+                                        <small style="color: red"v-if="error.permission">
+
+                                            {{  $t(error.permission[0]) }}
+                                        
+                                        </small >
                                     </div>
                                 </div>
-
                                 <button
                                     class="btn btn-primary mt-3"
                                     v-if="!edit"
-                                    @click.prevent="storeRole"
-                                >
-                                    Save
+                                    @click.prevent="storeRole">
+                                    {{  $t('Save')}}
                                 </button>
                                 <button
                                     class="btn btn-success mt-3"
                                     v-if="edit"
-                                    @click.prevent="UpdateRole"
-                                >
-                                    update
-                                </button>
+                                    @click.prevent="UpdateRole" >
+                                    {{ $t('update')}}
+                                </button> 
                             </div>
                         </div>
                     </div>
@@ -178,7 +156,7 @@ export default {
                     if (res.data.success == true) {
                         Toast.fire({
                             icon: "success",
-                            title: "add Role successfully"
+                            title: this.$t("add Role successfully")
                         });
                         this.role.name = "";
                         this.role.permission = [];
@@ -199,7 +177,7 @@ export default {
                     if (res.data.success == true) {
                         Toast.fire({
                             icon: "success",
-                            title: "Update Role successfully"
+                            title: this.$t("Update Role successfully")
                         });
 
                         this.$router.push({ name: "permissions" });

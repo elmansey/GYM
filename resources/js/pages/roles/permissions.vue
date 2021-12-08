@@ -1,6 +1,6 @@
 <template>
     <div v-if="isLoadig">
-        <Breadcrumbs main="Dashboard" title="permissions" />
+        <Breadcrumbs :main="$t('Dashboard')" :title="$t('Permissions')" />
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
@@ -8,128 +8,86 @@
                         <div class="card-body">
                             <div class="datatable-vue m-0">
                                 <div class="table-responsive vue-smart">
-                                    <v-table
-                                        :data="roles"
-                                        class="table"
-                                        :currentPage.sync="filter.currentPage"
-                                        :pageSize="5"
-                                        @totalPagesChanged="
-                                            filter.totalPages = $event
-                                        "
-                                    >
-                                        <thead slot="head">
-                                            <th></th>
-                                            <th sortKey="name">name</th>
-                                            <th sortKey="name">permission</th>
-                                            <th sortKey="options">options</th>
-                                        </thead>
+                                    <b-table
+                                        id="tablePrint"
+                                        show-empty
+                                        stacked="md"
+                                        :items="roles"
+                                        :fields="tablefields"
+                                        :current-page="currentPage"
+                                        :per-page="perPage"  >
 
-                                        <tbody
-                                            slot="body"
-                                            slot-scope="{ displayData }"
-                                        >
-                                            <tr
-                                                v-for="(row,
-                                                index) in displayData"
-                                                :key="index"
-                                            >
-                                                <td>
-                                                    <i class="fa fa-key"></i>
-                                                </td>
-                                                <td>{{ row.role }}</td>
-                                                <td>
-                                                    <span
-                                                        class="badge badge-success"
-                                                        style="cursor:pointer"
-                                                        @click.prevent="
-                                                            showRole(row)
-                                                        "
-                                                        >{{ row.role }}</span
-                                                    >
-                                                </td>
-                                                <td>
-                                                    <div>
-                                                        <b-button-group
-                                                            class="btn-container"
-                                                        >
+                                       
 
-                                                    <b-button
-                                                       squared
-                                                        variant="outline-primary"
-                                                        class="btn-sm btn-child"
-                                                    >
-                                                            <router-link
-                                                                squared
-                                                                variant="outline-warning"
-                                                                class="btn-sm btn-child"
-                                                                :to="{
-                                                                    name:
-                                                                        'editRole',
-                                                                    params: {
-                                                                        roleId:
-                                                                            row.id
-                                                                    }
-                                                                }"
-                                                                v-if="can('edit-role')"
-                                                            >
-                                                                Edit
-                                                            </router-link>
+                                        <template #cell(id)="data" >
+                                            {{ ++data.index}}
+                                        </template>
+
+                                        <template #cell(permissions)="data" >
+                                             <span
+                                                class="badge badge-success"
+                                                style="cursor:pointer"
+                                                @click.prevent="showRole(data.item)">{{ data.item.role }}
+                                            </span>
+                                        </template>
+
+
+
+                                    <template #cell(options)="data" >
+                                            <div>
+                                                <b-button-group  class="btn-container">
+                                                    <b-button squared variant="outline-primary" class="btn-sm btn-child">
+                                                        <router-link
+                                                            squared
+                                                            variant="outline-warning"
+                                                            class="btn-sm btn-child"
+                                                            :to="{ name:'editRole',params: {roleId:data.item.id}}"v-if="can('edit-role')">
+                                                            {{  $t("edit")}}
+                                                        </router-link>
                                                     </b-button>
-
-                                                            <b-button
-                                                                squared
-                                                                variant="outline-danger"
-                                                                class="btn-sm btn-child"
-                                                                @click="
-                                                                    twoEvent(
-                                                                        row.id,
-                                                                        index
-                                                                    )
-                                                                "
-                                                                v-if="
-                                                                    can(
-                                                                        'delete-role'
-                                                                    )
-                                                                "
-                                                            >
-                                                                Delete
-                                                            </b-button>
-                                                        </b-button-group>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </v-table>
-                                </div>
-
-                                <div>
-                                    <smart-pagination
-                                        :currentPage.sync="filter.currentPage"
-                                        :totalPages="filter.totalPages"
-                                    />
-                                </div>
+                                                    <b-button
+                                                        squared
+                                                        variant="outline-danger"
+                                                        class="btn-sm btn-child"
+                                                        @click="twoEvent( data.item.id,data.index)"
+                                                        v-if="can('delete-role')">
+                                                        {{  $t("delete")}}
+                                                    </b-button>
+                                                </b-button-group>
+                                            </div>
+                                    </template>
+                                </b-table>
                             </div>
+                        <b-col md="6" class="my-1">
+                                <b-pagination
+                                    v-model="currentPage"
+                                    :total-rows="totalRows"
+                                    :per-page="perPage"
+                                    class="my-0">
+                                </b-pagination>
+                        </b-col>
+                    </div>
 
                             <b-modal id="bv-modal-example" hide-footer>
                                 <template #modal-title>
-                                    Delete Role
+                                    {{ $t('Delete Role')}}
                                 </template>
                                 <div class="d-block text-center">
-                                    <h5>are you sure to delete this Role</h5>
+                                    <h5>{{ $t('are you sure to delete this Role')}}</h5>
                                 </div>
                                 <b-button
                                     class="mt-3"
                                     v-b-modal.modal-sm
                                     variant="default"
                                     @click="$bvModal.hide('bv-modal-example')"
-                                    >Cancel</b-button
+                                    >{{  $t('Cancel')}}</b-button
                                 >
                                 <b-button
                                     class="mt-3"
                                     v-b-modal.modal-sm
                                     variant="danger"
                                     @click="destroy"
-                                    >delete</b-button
+                                    >{{  $t('delete')}}</b-button
                                 >
                             </b-modal>
                         </div>
@@ -157,6 +115,27 @@ import axios from "axios";
 export default {
     data() {
         return {
+
+
+            tablefields: [
+
+               
+
+
+                {'id': this.$t('id')},
+                { key: 'role', label: this.$t('name'), sortable: false },
+                {'permissions' : this.$t('Permissions')},
+                {'options' : this.$t('options')}
+            ],
+            totalRows: 1,
+            currentPage: 1,
+            perPage: 10,
+            pageOptions: [5, 10, 15],
+
+
+
+
+
             roles: [],
 
             filter: {
@@ -173,6 +152,7 @@ export default {
             .get("roles")
             .then(res => {
                 this.roles = res.data.RoleAndPermission;
+                this.totalRows = res.data.RoleAndPermission.lenght;
                 this.isLoadig = true;
             })
             .catch(err => {
@@ -208,7 +188,7 @@ export default {
                         this.roles.splice(this.key, 1);
                         Toast.fire({
                             icon: "success",
-                            title: "Role deleted successfully"
+                            title: this.$t("Role deleted successfully")
                         });
 
                         this.$bvModal.hide("bv-modal-example");

@@ -2,7 +2,7 @@
 
     <div v-if="isLoadig">
 
-        <Breadcrumbs main="Dashboard" title="Invoice Archive" />
+        <Breadcrumbs :main="$t('Dashboard')" :title="$t('Invoice Archive')" />
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
@@ -44,8 +44,8 @@
                                                         <template #cell(action)="data">
                                                                <div class="col-xl-4 col-md-6 col-sm-12">
                                                                     <b-button-group  size="sm" class="btn-group-pill">
-                                                                        <b-button variant="outline-danger"  @click="deleteInvoiceModel(data.item.id,data.index)">delete</b-button>
-                                                                        <b-button variant="outline-success"  @click="restoreInvoiceInvoiceModel(data.item.id,data.index)">restore</b-button>
+                                                                        <b-button variant="outline-danger"  @click="deleteInvoiceModel(data.item.id,data.index)">{{ $t('delete')}}</b-button>
+                                                                        <b-button variant="outline-success"  @click="restoreInvoiceInvoiceModel(data.item.id,data.index)">{{ $t('restore')}}</b-button>
                                                                     </b-button-group>
                                                                 </div>
                                                         </template>
@@ -83,24 +83,24 @@
 
                             <b-modal id="invoiceModel2" hide-footer>
                                 <template #modal-title>
-                                    Delete invoice
+                                    {{ $t('Delete invoice')}}
                                 </template>
                                 <div class="d-block text-center">
-                                    <h5>are you sure to delete this invoice</h5>
+                                    <h5>{{ $t('are you sure to delete this invoice') }}</h5>
                                 </div>
-                                <b-button class="mt-3"  v-b-modal.modal-sm variant="default" @click="$bvModal.hide('invoiceModel2')">Cancel</b-button>
-                                <b-button class="mt-3"  v-b-modal.modal-sm variant="danger" @click="deletInvoice()"  >delete</b-button>
+                                <b-button class="mt-3"  v-b-modal.modal-sm variant="default" @click="$bvModal.hide('invoiceModel2')">{{  $t('Cancel')}}</b-button>
+                                <b-button class="mt-3"  v-b-modal.modal-sm variant="danger" @click="deletInvoice()"  >{{  $t('delete')}}</b-button>
                             </b-modal>
 
                             <b-modal id="restoreModel" hide-footer>
                                 <template #modal-title>
-                                    restore invoice
+                                    {{  $t('restore invoice')}}
                                 </template>
                                 <div class="d-block text-center">
-                                    <h5>are you sure to restore this invoice </h5>
+                                    <h5>{{  $t('are you sure to restore this invoice ')}}</h5>
                                 </div>
-                                <b-button class="mt-3"  v-b-modal.modal-sm variant="default" @click="$bvModal.hide('invoiceModel')">Cancel</b-button>
-                                <b-button class="mt-3"  v-b-modal.modal-sm variant="success" @click="restoreInvoice()"  >restore</b-button>
+                                <b-button class="mt-3"  v-b-modal.modal-sm variant="default" @click="$bvModal.hide('invoiceModel')">{{  $t('Cancel')}}</b-button>
+                                <b-button class="mt-3"  v-b-modal.modal-sm variant="success" @click="restoreInvoice()"  >{{  $t('restore')}}</b-button>
                             </b-modal>
 
 
@@ -134,15 +134,17 @@ export default{
             isLoadig:false,
             tablefields: [
 
-                'ID',
-                { key: 'invoice_number', label: 'invoice_number', sortable: false, },
-                { key: 'seller_relation.name', label: 'seller', sortable: false, },
-                'invoice_details',
-                { key: 'invoice_total', label: 'invoice total', sortable: false, },
-                { key: 'date', label: 'date', sortable: false, },
-                { key: 'time', label: 'time', sortable: false, },
-                'archived_at',
-                'action'
+            
+                {'id' : this.$t('id')},
+                { key: 'invoice_number', label: this.$t('invoice number'), sortable: false, },
+                { key: 'seller_relation.name', label: this.$t('seller'), sortable: false, },
+                {'invoice_details' : this.$t('invoice details')},
+                { key: 'invoice_total', label: this.$t('invoice total'), sortable: false, },
+                { key: 'date', label: this.$t('date'), sortable: false, },
+                { key: 'time', label: this.$t('time'), sortable: false, },
+                {'actiarchived_at' : this.$t("archived at")},
+                {'action' : this.$t("action")}
+
 
 
             ],
@@ -192,7 +194,7 @@ export default{
                     this.key2 = ''
                     this.$bvModal.hide('restoreModel')
                     Toast.fire({
-                        'title' : 'invoice restored successfully ',
+                        'title' : this.$t('invoice restored successfully'),
                           'icon' : 'success'
                     })
                 }
@@ -228,7 +230,7 @@ export default{
                     this.key2 = ''
                     this.$bvModal.hide('invoiceModel2')
                     Toast.fire({
-                        'title' : 'invoice delete successfully ',
+                        'title' : this.$t('invoice delete successfully'),
                           'icon' : 'success'
                     })
                 }

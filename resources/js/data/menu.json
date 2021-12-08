@@ -6,13 +6,30 @@
             "title": "Dashboard",
             "permission": "dashboard",
             "icon": "home",
-            "type": "link",
+            "type": "sub",
             "badgeType": "primary",
             "active": false,
-            "path": "/dashboard"
+            "children": [
 
+                {
+                    "path": "/dashboard",
+                    "title": "Dashboard",
+                    "type": "link",
+                    "permission": "show-statistics"
+
+                },
+                {
+                    "path": "/dashboard/profile",
+                    "title": "Account",
+                    "type": "link",
+                    "permission": "show-setting"
+
+                }
+
+            ]
 
         },
+
         {
             "title": "chat",
             "icon": "message-circle",
@@ -370,17 +387,9 @@
 
 
 
-                },
-
-                {
-                    "path": "/dashboard/profile",
-                    "title": "Account",
-                    "type": "link",
-                    "permission": "show-setting"
-
-
-
                 }
+
+
 
             ]
         }

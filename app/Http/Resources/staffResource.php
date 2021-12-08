@@ -25,6 +25,7 @@ class staffResource extends JsonResource
             'qr_code' => $this->qr_code,
             'roles'	 => $this->roles,
             'isActive'	 => $this->isActive,
+            'RF_code'	 => $this->RF_code,
         ];
     }
 }

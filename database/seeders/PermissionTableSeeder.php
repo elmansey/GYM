@@ -69,7 +69,10 @@ class PermissionTableSeeder extends Seeder
             'show-history',
             'show-sales_invoices',
             'add-sales-invoices',
-            'show-Archive'
+            'show-Archive',
+            "Account",
+            "show-statistics"
+
 
 
 

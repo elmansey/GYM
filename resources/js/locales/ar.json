@@ -185,7 +185,113 @@
     "The password field is required.": " حقل كلمه السر مطلوب ",
     "The confirm password field is required.": "تاكيد كلمه السر مطلوب",
     "admin added successfully": "تم اضافه المشرف بنجاح",
-    "admin updated successfully": "تم تعديل المشرف بنجاح"
+    "admin updated successfully": "تم تعديل المشرف بنجاح",
+    "edit person in staff": "تعديل موظف",
+    "the first name faild is required": "حقل الاسم الاول مطلوب",
+    "the phone faild is required": "رقم الهاتف مطلوب",
+    "the email faild is required": "حقل البريد الالكتروني مطلوب",
+    "the email must vaild email": "يجب ان يكون ايميل صالح",
+    "the user name failde is required": "اسم المستخدم مطلوب",
+    "the password failde is required": "حقل الرقم السري مطلوب",
+    "the max character allow is": "اكبر عدد مسموح به هو",
+    "the min character allow is": "اقل عدد مسموح به هو",
+    "the confirm password failde is required": "حقل تاكيد الرقم السري مطلوب",
+    "person added in staff successfully": "تم اضافه الموظف بنجاح",
+    "staff person updated successfully": "تم تعديل الموظف بنجاح",
+    "Role deleted successfully": "تم حذف الصلاحيه بنجاح",
+    "Delete Role": "حذف صلاحيه",
+    "are you sure to delete this Role": "هل انت متاكد من حذف هذه الصلاحيه",
+    "add Role": "اضافه صلاحيه",
+    "edit Role": "تعديل صلاحيه",
+    "Choose the permissions for this Role": "اختر الاذونات لهذه الصلاحيه",
+    "Role name": "اسم الصلاحيه",
+    "The permission field is required.": "حقل الاذونات مطلوب",
+    "add Role successfully": "تم اضافه الصلاحيه بنجاح",
+    "Update Role successfully": "تم تعديل الصلاحيه ينجاح ",
+    "come dateTime": "وقت الحضور",
+    "leave dateTime": "وقت المغادره",
+    "search by RF code": "ابحث ب كود RF",
+    "Search or choose": "ابحث او اختر",
+    "copied : ": "تم النسخ : ",
+    "copy  : ": "نسخ  : ",
+    "<p> attendance are already taken</p>": "<p> تم تسجيل الحضور اليوم</p>",
+    "attendance are already taken": " تم تسجيل الحضور اليوم",
+    "Leave": "مغادره",
+    "Come": "حضور",
+    "Delete product": "حذف المنتج",
+    "are you sure to delete this product": "هل انت متاكد من حذف هذا المنتج",
+    "product name": "اسم المنتج",
+    "product price": "سعر المنتج",
+    "product img": "صوره المنتج",
+    "Production Date": "تاريخ الانتاج",
+    "Expiry date": "تاريخ الانتهاء",
+    "Product Quantity": "عدد المنتج",
+    "product deleted successfully": "تم حذف المنتج بنجاح",
+    "edit product": "تعديل المنتج",
+    "add product": "اضافه المنتج",
+    "Upload product img": "ارفق صوره المنتج",
+    "The product name field is required.": "اسم المنتج مطلوب",
+    "The product price field is required.": "سعر المنتج مطلوب",
+    "The product quantity field is required.": "عدد المنتج مطلوب",
+    "The product img field is required.": "صوره المنتج مطلوب",
+    "The production date field is required.": "تاريخ انتاج المنتج مطلوب",
+    "The expiry date field is required.": "تاريخ انتهاء المنتج مطلوب",
+    "excel": "تصدير اكسل",
+    "print": "طباعه",
+    "invoice number": "رقم الفاتوره",
+    "seller": "البائع",
+    "invoice details": "تفاصيل الفاتوره",
+    "invoice total": "اجمالي الفاتوره",
+    "date": "التاريخ",
+    "time": "الوقت",
+    "product added successfully": "تم اضافه المنتج بنجاح",
+    "product updated successfully": "تم تعديل المنتج بنجاح",
+    "The expiry date must be a date after production date.": "تاريخ الانتهاء يجب ان يكون اكبر من تاريخ الانتاج",
+    "archived at": "تمت الارشفه في",
+    "invoice restored successfully": "تم استرجاع الفاتوره بنجاح",
+    "invoice delete successfully": "تم حذف الفاتوره بنجاح ",
+    "Delete invoice": "حذف الفاتوره",
+    "are you sure to delete this invoice": "هل انت متاكد من حذف هذه الفاتوره",
+    "restore invoice": "استرجاع الفاتوره",
+    "are you sure to restore this invoice ": "هل انت متاكد من استرجاع الفاتوره",
+    "restore": "استرجاع",
+    "invoice archived successfully": "تم ارشفه الفاتوره بنجاح",
+    "archive": "ارشفه",
+    "details": "التفاصيل",
+    "archive invoice": "ارشيف الفواتير",
+    "are you sure to archive this invoice": "هل انت متاكد من ارشفه هذه الفاتوره",
+    "seller name :": "اسم البائع :",
+    "seller RF code :": " للبائع RFكود :",
+    "Invoice details": "تفاصيل الفاتوره",
+    "unit price": "سعر الوحده",
+    "product quantity": "عدد المنتج",
+    "products price": "سعر المنتج",
+    "Total": "المجموع",
+    "add new Order": "اضافه اوردر جديد",
+    "Product": "المنتج",
+    "Quantity": "العدد",
+    "Subtotal" : "المجموع الفرعي"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

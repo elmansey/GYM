@@ -3,7 +3,7 @@
 
     <div v-if="isLoadig">
 
-        <Breadcrumbs main="Dashboard" title="attendance table" />
+        <Breadcrumbs :main="$t('Dashboard')" :title="$t('attendance table')" />
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
@@ -198,10 +198,10 @@ export default {
         return {
 
             tablefields: [
-                'check',
-                { key: 'RF_code', label: 'RF code', sortable: false, },
-                { key: 'come_dateTime', label: 'come dateTime', sortable: false, },
-                { key: 'leave_dateTime', label: 'leave dateTime', sortable: false, },
+                {'check': this.$t('check')},
+                { key: 'RF_code', label: this.$t('RF code'), sortable: false, },
+                { key: 'come_dateTime', label: this.$t('come dateTime'), sortable: false, },
+                { key: 'leave_dateTime', label: this.$t('leave dateTime'), sortable: false, },
             ],
             totalRows: 1,
             currentPage: 1,

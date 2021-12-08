@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Breadcrumbs main="dashboard" title="take attendance"/>
+        <Breadcrumbs :main="$t('Dashboard')" :title="$t('take attendance')"/>
         <!-- Container-fluid starts-->
 
 
@@ -19,7 +19,7 @@
                                                     <multiselect
 
                                                             tag-placeholder="Add this as new tag"
-                                                            placeholder="Search  or choose "
+                                                            :placeholder="$t('Search or choose')"
                                                             v-model="attendanceDate.select.name"
                                                             label="name"
                                                             track-by="id"
@@ -50,7 +50,7 @@
                                             <div class="form-group form-row mb-0">
 
                                                 <div class="col-lg-12 m-t-10">
-                                                        <button id="default-custom-success" type="submit" class="btn   btn-dark">save</button>
+                                                        <button id="default-custom-success" type="submit" class="btn   btn-dark">{{ $t('Save') }}</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -60,7 +60,7 @@
 
                             <div  class="col-lg-4 ">
                                 <div class="card-body" style="height:100%;border-left: 1px solid #EFEFEF;">
-                                    <input  id="mytext"  @keyup.enter="handelAttendanceByScan" type="text" v-model="attendanceDate.scan.RF_code" placeholder="RF code" style="width: 100%; padding: 8px;border: 1px solid #EFEFEF"/>
+                                    <input  id="mytext"  @keyup.enter="handelAttendanceByScan" type="text" v-model="attendanceDate.scan.RF_code" :placeholder="$t('RF code')" style="width: 100%; padding: 8px;border: 1px solid #EFEFEF"/>
                                 </div>
                             </div>
 
@@ -71,7 +71,7 @@
                                            <div class="row" >
                                             <div class="col-lg-12" style="overflow:scroll;padding:5px;">
                                                 <input  type="text"
-                                                 :class="['form-control']" style="margin-top: 16px;width: 100%;"  v-model="RF_Person_Code" placeholder=" search by RF code"   />
+                                                 :class="['form-control']" style="margin-top: 16px;width: 100%;"  v-model="RF_Person_Code" :placeholder="$t('search by RF code')"   />
 
                                             </div>
 
@@ -94,7 +94,7 @@
 
 
                                                                             <b-tooltip :target="'copied'+index" triggers="hover" placement="top">
-                                                                                 <p :id="'cop'+index">{{ 'copy  : '  + item.RF_code  + '  ? '}} </p>
+                                                                                 <p :id="'cop'+index">{{ $t('copy  : ')  + item.RF_code  + '  ? '}} </p>
                                                                             </b-tooltip>
 
                                                                     </div>
@@ -194,7 +194,6 @@
         },
         mounted() {
 
-
                 document.getElementById("mytext").focus();
 
         },
@@ -214,9 +213,11 @@
 
             search(){
                  return  this.searchData.filter(item => {
+                    //  console.log(item.RF_code)
                                                 //match
                     return item.RF_code.includes((this.RF_Person_Code).toLowerCase())
                 })
+               
             },
 
 
@@ -269,7 +270,7 @@
 
                         var  contentTool = document.getElementById(`cop${index}`)
 
-                        contentTool.innerHTML =  successful ? 'copied : ' + test.value + '  !! ' : ''
+                        contentTool.innerHTML =  successful ?  this.$t('copied : ')  + test.value + '  !! ' : ''
 
 
                     } catch (err) {
@@ -310,7 +311,7 @@
                                     duration: 1000,
                                     speed: 1000,
                                     title: 'attendance success',
-                                    text: 'god bay ' + '<span>' + res.data.how.name+ '</span>' + ' <h6> leave </h6> ' +
+                                    text: 'god bay ' + '<span>' + res.data.how.name+ '</span>' + ' <h6>'+ this.$t('Leave') +'</h6>' +
                                     'in '+res.data.attendance.leave_time
                                 });
 
@@ -324,7 +325,7 @@
                                     duration: 1000,
                                       speed: 1000,
                                     title: 'attendance success',
-                                    text: 'welcome ' + '<span>' + res.data.how.name+ '</span>' + ' <h6> come </h6> ' +
+                                    text: 'welcome ' + '<span>' + res.data.how.name+ '</span>' + ' <h6>'+ this.$t('Come') +'</h6>' +
                                     'in '+res.data.attendance.come_time
                                 });
 
@@ -338,8 +339,8 @@
                                     type: 'danger',
                                     duration: 1000,
                                     speed: 1000,
-                                    title: 'attendance are already taken ',
-                                    text: '<p> attendance are already taken</p>'
+                                    title: this.$t('attendance are already taken'),
+                                    text: this.$t('<p> attendance are already taken</p>')
                                 });
                         }
 

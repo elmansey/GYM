@@ -5,101 +5,75 @@
 
     <div v-if="isLoadig">
 
-        <Breadcrumbs main="Dashboard" title="products" />
+        <Breadcrumbs :main="$t('Dashboard')" :title="$t('products')" />
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
                             <div class="datatable-vue m-0">
-
-
                                 <div class="table-responsive vue-smart">
-                                    <v-table
-                                        :data="products"
-                                        class="table"
-                                        :currentPage.sync="filter.currentPage"
-                                        :pageSize="5"
-                                        @totalPagesChanged="filter.totalPages = $event"
+                                    <b-table
+                                        id="tablePrint"
+                                        show-empty
+                                        stacked="md"
+                                        :items="products"
+                                        :fields="tablefields"
+                                        :current-page="currentPage"
+                                        :per-page="perPage"  >
 
-                                    >
-                                        <thead slot="head">
+                                       
 
-                                        <th>ID</th>
-                                        <th sortKey="name">product name</th>
-                                        <th sortKey="name" >product price</th>
-                                        <th sortKey="name" >product img	</th>
-                                        <th sortKey="name" >Production Date</th>
-                                        <th sortKey="name" >Expiry date</th>
-                                        <th sortKey="name" >Product Quantity</th>
-                                        <th sortKey="options" >options</th>
-                                        </thead>
+                                                <template #cell(id)="data" >
+                                                    {{ ++data.index}}
+                                                </template>
 
-                                        <tbody slot="body" slot-scope="{ displayData }">
-                                        <tr v-for="(row, index) in displayData" :key="index">
-                                            <td></td>
-                                            <td>{{row.product_name}}</td>
-                                            <td>{{row.product_price}}</td>
-                                            <td><img  style="width:70px;height:70px" :src="'../../public/product_img/'+row.product_img"/></td>
-                                            <td>{{row.Production_Date}}</td>
-                                            <td>{{row.Expiry_date}}</td>
-                                            <td>{{row.Product_Quantity}}</td>
-                                            <td >
-                                                 <div>
-                                                    <b-button-group class="btn-group-pill" size="sm">
-
-                                                         <b-button
-                                                          variant="outline-dark"
-                                                          >
-                                                            <router-link
-                                                                :to="{name: 'updateProduct', params: {productId : row.id}}"
-                                                                v-if="can('edit-product')"
-                                                            >
-                                                               edit
-                                                            </router-link>
-                                                        </b-button>
-
-                                                        <b-button
-
-                                                            variant="outline-danger"
-
-                                                            @click="DeleteProductModal(row.id,index)"
-                                                            v-if="can('delete-product')"
-                                                        >
-
-                                                           delete
-                                                        </b-button>
-                                                    </b-button-group>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </v-table>
-                                </div>
-
-                                <div >
-                                    <smart-pagination
-
-                                        :currentPage.sync="filter.currentPage"
-                                        :totalPages="filter.totalPages"
-                                    />
-                                </div>
+                                                <template #cell(product_img)="data" >
+                                                <img  style="width:70px;height:70px" :src="'../../public/product_img/'+data.item.product_img"/>
+                                                </template>
 
 
+                                                <template #cell(action)="data" >
+                                                    <div>
+                                                        <b-button-group class="btn-group-pill" size="sm">
+                                                            <b-button variant="outline-dark">
+                                                                <router-link :to="{name: 'updateProduct', params: {productId : data.item.id}}" v-if="can('edit-product')" >
+                                                                        {{ $t('edit') }}
+                                                                </router-link>
+                                                            </b-button>
+                                                            <b-button variant="outline-danger"  @click="DeleteProductModal(data.item.id,data.index)" v-if="can('delete-product')">
+                                                                    {{ $t('delete') }}
+                                                            </b-button>
+                                                        </b-button-group>
+                                                    </div>
+                                                </template>
+                                        </b-table>
+                                    </div>
+
+                                <b-col md="6" class="my-1">
+                                        <b-pagination
+                                        v-model="currentPage"
+                                        :total-rows="totalRows"
+                                        :per-page="perPage"
+                                        class="my-0"
+                                        ></b-pagination>
+                                </b-col>
                             </div>
+
+
 
 
 
 
                             <b-modal id="bv-modal-example" hide-footer>
                                 <template #modal-title>
-                                    Delete product
+                                    {{  $t('Delete product')}}
                                 </template>
                                 <div class="d-block text-center">
-                                    <h5>are you sure to delete this product</h5>
+                                    <h5>{{  $t('are you sure to delete this product')}}</h5>
                                 </div>
-                                <b-button class="mt-3"  v-b-modal.modal-sm variant="default" @click="$bvModal.hide('bv-modal-example')">Cancel</b-button>
-                                <b-button class="mt-3"  v-b-modal.modal-sm variant="danger" @click.prevent="deleteProduct" >delete</b-button>
+                                <b-button class="mt-3"  v-b-modal.modal-sm variant="default" @click="$bvModal.hide('bv-modal-example')">{{  $t('Cancel')}}</b-button>
+                                <b-button class="mt-3"  v-b-modal.modal-sm variant="danger" @click.prevent="deleteProduct" >{{  $t('delete')}}</b-button>
                             </b-modal>
 
 
@@ -133,6 +107,29 @@ import axios from "axios";
 export default {
     data() {
         return {
+
+            tablefields: [
+
+                {'id': this.$t('id')},
+                { key: 'product_name', label: this.$t('product name'), sortable: false, },
+                { key: 'product_price', label: this.$t('product price'), sortable: false, },
+                { 'product_img' : this.$t('product img') },
+                { key: 'Production_Date', label: this.$t('Production Date'), sortable: false, },
+                { key: 'Expiry_date', label: this.$t('Expiry date'), sortable: false, },
+                { key: 'Product_Quantity', label: this.$t('Product Quantity'), sortable: false, },
+                {'action' : this.$t('action')}
+            ],
+            totalRows: 1,
+            currentPage: 1,
+            perPage: 10,
+            pageOptions: [5, 10, 15],
+
+
+
+
+
+
+
             products:[],
 
             filter: {
@@ -188,7 +185,7 @@ export default {
                         this.elkey = ''
                         Toast.fire({
                             icon: 'success',
-                            title: 'product deleted successfully'
+                            title: this.$t('product deleted successfully')
                         })
 
                         this.$bvModal.hide('bv-modal-example')
