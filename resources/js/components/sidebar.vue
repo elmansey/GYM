@@ -74,7 +74,7 @@
             >
                 <feather type="arrow-left"></feather>
             </li>
-            <div id="sidebar-menu">
+            <div id="sidebar-menu" style="height:100vh">
                 <ul
                     class="sidebar-links custom-scrollbar"
                     id="myDIV"

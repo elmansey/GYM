@@ -2,7 +2,7 @@
 
     <div v-if="isLoadig">
 
-        <Breadcrumbs main="Dashboard" title="Activities logs" />
+        <Breadcrumbs :main="$t('Dashboard')" :title="$t('Activities logs')" />
         <div class="card-body" style="overflow:scroll;width:600px;height:600px;margin: auto auto 70px ;background-color: #fff;box-shadow: 0 1px 15px  rgba(0 0 0 /4%), 0 1px 6px  rgba(0 0 0 /4%);">
             <div class=" border-bottom " style='margin-bottom: 10px;'>
                 <h4 class="card-title">Activities list</h4>

@@ -240,7 +240,7 @@
             <li v-if="can('show-history')">
               <router-link :to="{ name: 'history' }">
                 <feather type="coffee"></feather>
-                <span>{{$t("History")}} </span>
+                <span>{{$t("history")}} </span>
               </router-link>
             </li>
 
