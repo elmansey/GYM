@@ -9,15 +9,15 @@
             </div>
 
 
-        <section class="ps-container scroll dashboard-list-with-user ps" v-for="(item,index) in history" :key="index">
+        <section class="ps-container scroll dashboard-list-with-user ps" v-for="(item,index) in history" :key="index" style="direction: ltr !important;" >
 
             <div class="d-flex flex-row mb-3 pb-3 border-bottom">
 
                     <img
 
 
-                    :src="item.user_relation.profile_picture ? `../../public/profile_pictures/${item.user_relation.profile_picture }` :
-                                             '../../public/profile_pictures/DefaultProfile.jpg'"
+                    :src="item.user_relation.profile_picture ? `../../profile_pictures/${item.user_relation.profile_picture }` :
+                                             '../../profile_pictures/DefaultProfile.jpg'"
 
 
                     alt="" class=" " style="width:50px;height:50px;border-radius: 50%;">
@@ -75,4 +75,7 @@ export default {
     width: 0px;
     background:transparent;
 };
+
+
+
 </style>
