@@ -1,6 +1,6 @@
 {
 
-	
+
     "Dashboard": "الرئيسيه",
     "chat": "المراسله",
     "Registration member": "تسجيل عضو",
@@ -270,33 +270,20 @@
     "add new Order": "اضافه اوردر جديد",
     "Product": "المنتج",
     "Quantity": "العدد",
-    "Subtotal" : "المجموع الفرعي",
-    "Activities logs" : "سجل النشاطات"
+    "Subtotal": "المجموع الفرعي",
+    "Activities logs": "سجل النشاطات",
+    "Activities list": "قائمه النشاطات",
+    "setting": "الاعدادات",
+    "Gym name"  : "اسم الجيم",
+    "Gym title"  : "اللقب",
+    "owner name"  : "اسم المالك",
+    "about us"  : "معلومات عنا",
+    "logo"     : "الشعار"
+
+
+
 
 
 
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

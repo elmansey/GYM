@@ -1,6 +1,6 @@
 <template>
     <div  v-if="isLoading">
-        <Breadcrumbs main="dashboard" title="setting"/>
+        <Breadcrumbs :main="$t('Dashboard')" :title="$t('setting')"/>
         <!-- Container-fluid starts-->
         <div class="container-fluid">
             <div class="select2-drpdwn">
@@ -15,31 +15,31 @@
                                         <form @submit.prevent="handeleSettingFormSubmit">
                                             <div class="row">
                                                     <div class="col-lg-6">
-                                                                <label class="card-title">Gym name</label>
+                                                                <label class="card-title">{{ $t('Gym name')}}</label>
                                                                 <input class="form-control"  style="background-color:#F6F6F6;width:100%;border: none;" v-model="setting.Gym_name"/>
                                                     </div>
                                                     <div class="col-lg-6">
-                                                                <label class="card-title">Gym title</label>
+                                                                <label class="card-title">{{ $t('Gym title')}}</label>
                                                                 <input class="form-control"  style="background-color:#F6F6F6;width:100%;border: none;" v-model="setting.Gym_title"/>
                                                     </div>
                                                     <div class="col-lg-6">
-                                                                <label class="card-title">owner name</label>
+                                                                <label class="card-title">{{ $t('owner name')}}</label>
                                                                 <input class="form-control"  style="background-color:#F6F6F6;width:100%;border: none;" v-model="setting.owner_name"/>
                                                     </div>
                                                     <div class="col-lg-6">
-                                                                <label class="card-title">email</label>
+                                                                <label class="card-title">{{ $t('email')}}</label>
                                                                 <input class="form-control"  style="background-color:#F6F6F6;width:100%;border: none;" v-model="setting.email"/>
                                                     </div>
                                                     <div class="col-lg-6">
-                                                                <label class="card-title">phone</label>
+                                                                <label class="card-title">{{ $t('phone')}}</label>
                                                                 <input class="form-control"  style="background-color:#F6F6F6;width:100%;border: none;" v-model="setting.phone"/>
                                                     </div>
                                                     <div class="col-lg-6">
-                                                                <label class="card-title">address</label>
+                                                                <label class="card-title">{{ $t('address')}}</label>
                                                                 <input class="form-control"  style="background-color:#F6F6F6;width:100%;border: none;" v-model="setting.address"/>
                                                     </div>
                                                     <div class="col-lg-6" style="width: 100px;height: 100px;">
-                                                        <label class="card-title">logo</label>
+                                                        <label class="card-title">{{ $t('logo')}}</label>
 
                                                                 <img  style="width: 120px;height: 120px;margin-top:5px" :src="'../../public/app_setting/'+setting.logo" />
 
@@ -64,14 +64,14 @@
 
                                                     <div class="col-md-12">
 
-                                                            <label class="card-title">about us</label>
+                                                            <label class="card-title">{{ $t('about us')}}</label>
                                                             <vue-editor v-model="setting.about_us" ></vue-editor>
 
                                                     </div>
 
 
                                                     <div style="margin: 30px;">
-                                                        <button class="btn btn-primary" type="submit"  >save</button>
+                                                        <button class="btn btn-primary" type="submit"  >{{ $t('Save')}}</button>
                                                     </div>
 
 

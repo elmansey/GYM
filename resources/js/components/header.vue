@@ -457,3 +457,11 @@ export default {
   },
 };
 </script>
+
+<style>
+@media only screen and (max-width: 575.98px) {
+    .profile-nav {
+        display: block !important;
+    }
+}
+</style>

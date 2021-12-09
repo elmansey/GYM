@@ -268,8 +268,16 @@
     "add new Order": "add new Order",
     "Product": "Product",
     "Quantity": "Quantity",
-    "Subtotal" : "Subtotal",
-    "Activities logs" : "Activities logs"
+    "Subtotal": "Subtotal",
+    "Activities logs": "Activities logs",
+    "Activities list": "Activities list",
+    "setting": "setting",
+    "Gym name": "Gym name",
+    "Gym title": "Gym title",
+    "owner name": "owner name",
+    "about us": "about us",
+    "logo"     : "logo"
+
 
 
 

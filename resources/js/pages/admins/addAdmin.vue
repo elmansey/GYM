@@ -54,10 +54,24 @@
                                                   <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
                                                       <div class="col-form-label">{{  $t('Choose the Roles')}}</div>
 
-                                                      <multiselect name="role" v-model="adminData.roles" tag-placeholder="Add this as new tag" placeholder="Search or add a tag"
+                                                      <!-- <multiselect name="role" v-model="adminData.roles" tag-placeholder="Add this as new tag" placeholder="Search or add a tag"
                                                                     :class="[error.role ? 'is-invalid' : '']"     label="name" track-by="id"   @search-change="asyncFind" :options="options"  :multiple="true"   :taggable="true" @tag="addTag"  >
 
-                                                      </multiselect>
+                                                      </multiselect> -->
+                                                       <div class="col col-12">
+                                                            <b-form-group class="has-float-label my-3 p-0">
+                                                                <v-select
+                                                                v-model="adminData.roles"
+                                                                :options="options"
+                                                                :searchable="true"
+                                                                :clearable="true"
+                                                                placeholder="Search"
+                                                                label="name"
+                                                                multiple
+                                                                :class="[error.role ? 'is-invalid' : '']"  
+                                                                />
+                                                            </b-form-group>
+                                                        </div>
                                                       <small  style="color: red" v-if="error.role">{{  $t(error.role[0])}}</small>
 
                                                   </div>

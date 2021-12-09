@@ -27,7 +27,7 @@
                                         <div class="col-form-label">
                                             {{ $t('Choose the permissions for this Role')}}
                                         </div>
-                                        <multiselect
+                                        <!-- <multiselect
                                             v-model="role.permission"
                                             tag-placeholder="Add this as new tag"
                                             placeholder="Search or add a tag"
@@ -39,7 +39,22 @@
                                             :multiple="true"
                                             :taggable="true"
                                             @tag="addTag">
-                                        </multiselect>
+                                        </multiselect> -->
+                                        <div class="col col-12">
+                                            <b-form-group class="has-float-label my-3 p-0">
+                                                <v-select
+                                                
+                                                v-model="role.permission"
+                                                :options="options"
+                                                :searchable="true"
+                                                :clearable="true"
+                                                placeholder="Search"
+                                                label="name"
+                                                multiple
+                                               :class="[ error.permission ? 'is-invalid'  : '']"
+                                                />
+                                            </b-form-group>
+                                        </div>
                                         <small style="color: red"v-if="error.permission">
 
                                             {{  $t(error.permission[0]) }}
