@@ -31,7 +31,6 @@ class productController extends Controller
 
             'product_name' => 'required' ,
             'product_price' => 'required' ,
-            'product_img' => 'required' ,
             'Production_Date' => 'required|date' ,
             'Expiry_date' => 'required|date|after:Production_Date' ,
             'Product_Quantity' => 'required'
@@ -44,7 +43,7 @@ class productController extends Controller
         }
 
 
-
+        $fileName = '';
         if($request->file('product_img')){
 
             $file = $request->file('product_img');

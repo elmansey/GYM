@@ -22,14 +22,14 @@
                                         :current-page="currentPage"
                                         :per-page="perPage"  >
 
-                                       
+
 
                                                 <template #cell(id)="data" >
                                                     {{ ++data.index}}
                                                 </template>
 
                                                 <template #cell(product_img)="data" >
-                                                <img  style="width:70px;height:70px" :src="'../../product_img/'+data.item.product_img"/>
+                                                <img  style="width:70px;height:70px" :src="data.item.product_img ? '../../product_img/'+data.item.product_img : '../../product_img/no-image.png'"/>
                                                 </template>
 
 

@@ -1,0 +1,286 @@
+[33mcommit 2a9244617fc45ed77461ce2c28ccfdbf0aadc859[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m
+Author: CyberPanel <support@cyberpanel.net>
+Date:   Thu Dec 2 15:20:31 2021 +0200
+
+    stille handel
+
+[33mcommit 5e73893a3a42488b535bc18ea663aa621d4f4b33[m
+Merge: 31ced91 243ccb3
+Author: 0102763801elmansey <almanseyalmansey@gmail.com>
+Date:   Thu Dec 2 12:13:36 2021 +0200
+
+    Merge branch 'main' of https://github.com/elmansey/geexerGYM
+
+[33mcommit 31ced91e85e181dc8bc047be647f64532e38230d[m
+Author: 0102763801elmansey <almanseyalmansey@gmail.com>
+Date:   Thu Dec 2 12:12:49 2021 +0200
+
+    chnge in store file
+
+[33mcommit 243ccb310da07c45f7fdb8b2a14a57f317341ae1[m
+Author: CyberPanel <support@cyberpanel.net>
+Date:   Thu Dec 2 11:59:48 2021 +0200
+
+    handel push server
+
+[33mcommit d3a31d230fc6ea28d8fe9d47748e5d35b63947e1[m
+Author: 0102763801elmansey <almanseyalmansey@gmail.com>
+Date:   Wed Dec 1 13:46:28 2021 +0200
+
+    chang index htaccess
+
+[33mcommit cfd74a4a9110626f107a7c1585d34d6bc939c348[m
+Author: Abdelrahman Elmansey <Abdelrahman Elmansey>
+Date:   Tue Nov 30 22:06:28 2021 +0200
+
+    test uplod
+
+[33mcommit d11b51cc6a33376ee069fd2ff15e176b1d566302[m
+Author: 0102763801elmansey <almanseyalmansey@gmail.com>
+Date:   Tue Nov 30 17:03:50 2021 +0200
+
+    handel exel
+
+[33mcommit 72d9c2ef47d3e44571860815a3e594ba4846317b[m
+Author: Abdelrahman Elmansey <Abdelrahman Elmansey>
+Date:   Tue Nov 30 09:33:03 2021 +0200
+
+    statistics finshed
+
+[33mcommit bbdf0438418125976186b6f617ac36c41f9cb66f[m
+Author: 0102763801elmansey <almanseyalmansey@gmail.com>
+Date:   Mon Nov 29 17:06:30 2021 +0200
+
+    edit charts
+
+[33mcommit 8f8a02b6c2687cd0a8c6dc6c9e09a40edb934185[m
+Author: 0102763801elmansey <almanseyalmansey@gmail.com>
+Date:   Sun Nov 28 17:00:02 2021 +0200
+
+    history logs
+
+[33mcommit d295ff56774d3c3f6d1c9953657645b985d3e3b4[m
+Author: 0102763801elmansey <almanseyalmansey@gmail.com>
+Date:   Sat Nov 27 17:05:04 2021 +0200
+
+    handel notifications
+
+[33mcommit d803659edbca49439197dfee46587edc8835fa2a[m
+Author: Abdelrahman Elmansey <Abdelrahman Elmansey>
+Date:   Sat Nov 27 07:09:46 2021 +0200
+
+    firebase configration
+
+[33mcommit 36b009ce629d2e16acce2c75689c6fd3ea297910[m
+Author: 0102763801elmansey <almanseyalmansey@gmail.com>
+Date:   Thu Nov 25 16:49:17 2021 +0200
+
+    reader barcode
+
+[33mcommit 8f58e37e59094b2d33b14a3ef8f5764197b922e2[m
+Author: Abdelrahman Elmansey <Abdelrahman Elmansey>
+Date:   Thu Nov 25 07:15:56 2021 +0200
+
+    solve 6 hour
+
+[33mcommit 9914940a1abd37bf5a43f67db0c5f0758fccb597[m
+Author: 0102763801elmansey <almanseyalmansey@gmail.com>
+Date:   Wed Nov 24 17:10:25 2021 +0200
+
+    edit ate
+
+[33mcommit 91c21395410a2ca25281b72b85dfd32f6895c76e[m
+Author: Abdelrahman Elmansey <Abdelrahman Elmansey>
+Date:   Wed Nov 24 09:11:59 2021 +0200
+
+    attend change style
+
+[33mcommit 1a72ae042ed423f6a6c80621f4cd431b178bae24[m
+Author: 0102763801elmansey <almanseyalmansey@gmail.com>
+Date:   Tue Nov 23 17:20:06 2021 +0200
+
+    edit attendance
+
+[33mcommit 5a4c21a1972e2887aaee2088ce26ccd59e1466dc[m
+Author: Abdelrahman Elmansey <Abdelrahman Elmansey>
+Date:   Tue Nov 23 09:18:49 2021 +0200
+
+    change paymant style
+
+[33mcommit b3e55e326417d9fae3618301a90cbd7a40117d98[m
+Author: 0102763801elmansey <almanseyalmansey@gmail.com>
+Date:   Sun Nov 21 16:57:48 2021 +0200
+
+    handell thisdetails
+
+[33mcommit bb68815da3cdadc58edcbfd35ab9c0fcc5544820[m
+Author: 0102763801elmansey <almanseyalmansey@gmail.com>
+Date:   Sat Nov 20 17:11:59 2021 +0200
+
+    edit member
+
+[33mcommit 4bec3a60dadbf996511d339537f0748dd36ac946[m
+Author: Abdelrahman Elmansey <Abdelrahman Elmansey>
+Date:   Sat Nov 20 09:10:51 2021 +0200
+
+    memberships golden
+
+[33mcommit adc7b99bc3de7ff6fa03ca026a05de4e19e49e87[m
+Author: 0102763801elmansey <almanseyalmansey@gmail.com>
+Date:   Thu Nov 18 16:56:04 2021 +0200
+
+    handel member ships
+
+[33mcommit b2610593d19aa3b3414b20c79d032e717fa0ba6b[m
+Author: 0102763801elmansey <almanseyalmansey@gmail.com>
+Date:   Wed Nov 17 17:11:39 2021 +0200
+
+    handel setting
+
+[33mcommit a2de0d5835d94134a84c43952161b423299bee9e[m
+Author: Abdelrahman Elmansey <Abdelrahman Elmansey>
+Date:   Wed Nov 17 10:10:03 2021 +0200
+
+    attendance last
+
+[33mcommit 6bef05db48102d59a331c34ae9f1659e07a29fe2[m
+Author: Abdelrahman Elmansey <Abdelrahman Elmansey>
+Date:   Wed Nov 17 08:53:57 2021 +0200
+
+    filters
+
+[33mcommit e654e1a03d52c8a7a4428ab61e7ac17dd47b14b1[m
+Author: 0102763801elmansey <almanseyalmansey@gmail.com>
+Date:   Tue Nov 16 17:29:40 2021 +0200
+
+    still attendance
+
+[33mcommit 4e5c94466ad69871d05e1716246277b58f5725e0[m
+Author: Abdelrahman Elmansey <Abdelrahman Elmansey>
+Date:   Tue Nov 16 10:02:44 2021 +0200
+
+    attendance table s
+
+[33mcommit 038c9869b0ab76e146e0f2ab4209a87dab8e0ebe[m
+Author: 0102763801elmansey <almanseyalmansey@gmail.com>
+Date:   Sun Nov 14 16:58:35 2021 +0200
+
+    attendance
+
+[33mcommit 980202e97530facc49b8f06885d76a33e9fe93be[m
+Author: 0102763801elmansey <almanseyalmansey@gmail.com>
+Date:   Sat Nov 13 17:08:53 2021 +0200
+
+    print
+
+[33mcommit f4158b46d8ba7c138d62a1df9d6585cd586eaa2d[m
+Author: Abdelrahman Elmansey <Abdelrahman Elmansey>
+Date:   Sat Nov 13 08:56:36 2021 +0200
+
+    product
+
+[33mcommit 3f0601624b5ce1c395aa49126e98ac085abf01b2[m
+Author: 0102763801elmansey <almanseyalmansey@gmail.com>
+Date:   Thu Nov 11 16:20:19 2021 +0200
+
+    refresh new task
+
+[33mcommit 65923e76a64bcb09e48ef14b3a2c7c4006a80060[m
+Author: Abdelrahman Elmansey <Abdelrahman Elmansey>
+Date:   Thu Nov 11 09:16:33 2021 +0200
+
+    scaner qr
+
+[33mcommit 7495b4923b0b62026c16834fe810f7d9f81f2943[m
+Author: 0102763801elmansey <almanseyalmansey@gmail.com>
+Date:   Wed Nov 10 17:00:32 2021 +0200
+
+    qr code
+
+[33mcommit 342062926c0ddc07998c9e663cc59034866a1b51[m
+Author: Abdelrahman Elmansey <Abdelrahman Elmansey>
+Date:   Wed Nov 10 09:00:42 2021 +0200
+
+    still group chat
+
+[33mcommit ff9ed8416ff04696aa5c4a5b0b246dd7fa0c73bf[m
+Author: 0102763801elmansey <almanseyalmansey@gmail.com>
+Date:   Tue Nov 9 17:01:07 2021 +0200
+
+    sort by new
+
+[33mcommit b45bdc9ce7044c88ead10a08597d91d89645904d[m
+Author: 0102763801elmansey <almanseyalmansey@gmail.com>
+Date:   Mon Nov 8 17:10:50 2021 +0200
+
+    new mwssage
+
+[33mcommit a1d4a237ac56de26942b80d80c5f7e54e59970cd[m
+Author: Abdelrahman Elmansey <Abdelrahman Elmansey>
+Date:   Mon Nov 8 08:49:53 2021 +0200
+
+    still typing
+
+[33mcommit 24a6e8da2ae6be18d4cacdac7c9221418290720b[m
+Author: 0102763801elmansey <almanseyalmansey@gmail.com>
+Date:   Sun Nov 7 16:34:34 2021 +0200
+
+    creat typing now
+
+[33mcommit 79c1b3431696f752054350102d07220240c00ee1[m
+Author: Abdelrahman Elmansey <Abdelrahman Elmansey>
+Date:   Sun Nov 7 08:35:28 2021 +0200
+
+    change guard
+
+[33mcommit 2017e59f1ed95522f086918b5b82339368a4184c[m
+Author: 0102763801elmansey <almanseyalmansey@gmail.com>
+Date:   Sat Nov 6 16:43:07 2021 +0200
+
+    in chat bug still
+
+[33mcommit 00295efb0b08bd1773aac06e34dbd3313b27f07b[m
+Author: Abdelrahman Elmansey <Abdelrahman Elmansey>
+Date:   Sat Nov 6 08:45:56 2021 +0200
+
+    chat is debag
+
+[33mcommit 3dfeef36d28f52fc2a4560ebe8e068e6d9a08784[m
+Author: 0102763801elmansey <almanseyalmansey@gmail.com>
+Date:   Thu Nov 4 16:52:47 2021 +0200
+
+    chat chat
+
+[33mcommit 1a9b3e3902ebd38398eae4a547163eeb3fe99af2[m
+Author: Abdelrahman Elmansey <Abdelrahman Elmansey>
+Date:   Thu Nov 4 08:36:07 2021 +0200
+
+    rtc
+
+[33mcommit 9ba81bd7234232af5d34bed75bab49180b97f905[m
+Author: 0102763801elmansey <almanseyalmansey@gmail.com>
+Date:   Wed Nov 3 16:26:46 2021 +0200
+
+    debaging chatting
+
+[33mcommit 99ef514e6539952769fdb20e0c96d8dd194a623a[m
+Author: Abdelrahman Elmansey <Abdelrahman Elmansey>
+Date:   Wed Nov 3 08:39:12 2021 +0200
+
+    chat chat
+
+[33mcommit 06569b771f5b07bd1b70894b662838dc646ef276[m
+Author: 0102763801elmansey <almanseyalmansey@gmail.com>
+Date:   Mon Nov 1 16:54:08 2021 +0200
+
+    real time debag
+
+[33mcommit b78d3978b8d086f3b9c5b7585084d05211e9038e[m
+Author: Abdelrahman Elmansey <Abdelrahman Elmansey>
+Date:   Mon Nov 1 08:59:02 2021 +0200
+
+    still chat
+
+[33mcommit 7dd47b1ad9c34617c64689c84e73f5e227b18f80[m
+Author: 0102763801elmansey <almanseyalmansey@gmail.com>
+Date:   Sun Oct
