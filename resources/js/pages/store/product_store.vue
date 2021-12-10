@@ -14,95 +14,62 @@
                                 <div class="form-group col-sm-3" >
 
                                     <label for="inputEmail4"> {{  $t('choose product')}}</label>
-                                
+
                                             <b-form-group style="border:none;" class="has-float-label my-3 p-0">
                                                 <v-select
-                                                
-                                                    v-model="itemTake.product_name[index]"
+
+                                                    v-model="product_name[index]"
                                                     :options="options"
                                                     :searchable="true"
                                                     :clearable="true"
-                                                    placeholder="Search"
+                                                    :placeholder="$t('Search')"
                                                     label="name"
-                                                   @input="getRecourdTotalAndUnitPrice(index)"
-                                                    
-                                                
-                                                />
+                                                    @input="getRecourdTotalAndUnitPrice(index)"
+                                                >
+                                                <template v-slot:option="option"   >
+
+                                                    <option  :disabled="IsSet(option.id)">{{ option.name }}</option>
+                                                </template>
+                                                </v-select>
                                             </b-form-group>
-                                
+
                                     <div  class="invalid-feedback"  ></div>
                                 </div>
 
                                 <div class="form-group col-sm-3">
-                                    <label for="inputEmail4">{{  $t('product Quantity')}}</label>
-                                    <input type="number" @input="getRecourdTotalAndUnitPrice(index)"  class="form-control"  style="margin-top: 12px;" v-model="itemTake.product_quantity[index]"/>
+                                    <label for="inputEmail4">{{  $t('product quantity')}}</label>
+                                    <input type="number" @input="getRecourdTotalAndUnitPrice(index)"  class="form-control"  style="margin-top: 12px;" v-model="product_quantity[index]"/>
                                     <div  class="invalid-feedback"  ></div>
                                 </div>
 
                                 <div class="form-group col-sm-3">
                                     <label for="inputEmail4">{{ $t('unit price')}}</label>
-                                    <input type="text" readonly class="form-control" style="margin-top: 12px;"  v-model="itemTake.unit_price[index]"/>
+                                    <input type="text" readonly class="form-control" style="margin-top: 12px;"  v-model="unit_price[index]"/>
                                     <div  class="invalid-feedback"></div>
                                 </div>
 
-                                <div class="form-group col-sm-1">
+                                <div class="form-group col-sm-2">
                                     <label for="inputEmail4">{{ $t('Total')}}</label>
-                                    <input type="text"  readonly class="form-control" style="margin-top: 12px;" v-model="itemTake.recourd_total[index]"/>
+                                    <input type="text"  readonly class="form-control" style="margin-top: 12px;" v-model="recourd_total[index]"/>
                                     <div  class="invalid-feedback"></div>
                                 </div>
 
                                 <div class="form-group col-sm-1">
-                                
-                                    
+
+
                                 <feather v-if="index > 0" @click.prevent="deleteRecourd(index)" type="trash" style="cursor:pointer;margin-top: 45px;"></feather>
-                                
+
                                 </div>
                             </div>
                         </div>
-                             
+
 
 
                             <div class="col-lg-12 col-sm-12">
                                 <div class="checkout-details">
                                     <div class="order-box">
                                         <div class="table-responsive invoice-table" id="table">
-                                                <table class="table table-bordered table-striped">
-                                                    <thead>
-                                                        <tr>
-                                                            <td class="item">
-                                                                <h6 class="p-2 mb-0">{{ $t('product name')}} </h6>
-                                                            </td>
-                                                            <td>
-                                                                <h6>{{ $t('unit price')}}</h6>
-                                                            </td>
-                                                             <td class="Hours">
-                                                                 <h6 class="p-2 mb-0">{{ $t('product price')}}</h6>
-                                                            </td>
-                                                            <td class="Rate">
-                                                                 <h6 class="p-2 mb-0">{{ $t('product quantity')}}</h6>
-                                                            </td>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr v-for="(item, index) in  InvoiceAfterAdd.invoice_details" :key="index">
-                                                            <td class="item">
-                                                                 <h6 class="p-2 mb-0">{{ item.product_name }}</h6>
-                                                            </td>
 
-                                                            <td class="Hours">
-                                                                <h6 class="p-2 mb-0">{{ (item.product_price / item.product_quantity) }}</h6>
-                                                            </td>
-
-                                                            <td class="Hours">
-                                                                <h6 class="p-2 mb-0">{{ item.product_price }}</h6>
-                                                            </td>
-
-                                                            <td class="Rate">
-                                                                <h6 class="p-2 mb-0">{{ item.product_quantity }}</h6>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
 
                                                 <div class="order-box">
                                                     <div class="title-box">
@@ -115,16 +82,19 @@
                                                 <ul class="sub-total">
                                                     <li>
                                                         {{ $t('Subtotal')}}
-                                                        <span class="count">LE {{  InvoiceAfterAdd.invoice_total  }}</span>
+                                                        <span class="count">LE {{  total  }}</span>
                                                     </li>
                                                 </ul>
 
                                                 <ul class="sub-total">
                                                     <li>
                                                         {{ $t('Total')}}
-                                                        <span class="count">LE {{  InvoiceAfterAdd.invoice_total  }}</span>
+                                                        <span class="count">LE {{  total  }}</span>
                                                     </li>
                                                 </ul>
+                                        </div>
+                                        <div>
+                                            <button   @click.prevent="handelSaveInvoice" class="btn btn-primary" >{{  $t('Save')}}</button>
                                         </div>
                                     </div>
                                 </div>
@@ -134,273 +104,140 @@
                 </div>
             </form>
         </div>
-    </div>
-</div>
 
 
 
+    <b-modal id="bv-modal-example" size="lg"   hide-header hide-footer>
+        <template #modal-title>
 
+        </template>
+       <div class="d-block text-center" >
 
+            <div class="invoice" id="invoice">
 
+                <div>
 
-            <!-- <div class="row" >
-                <div class="col-lg-6">
-                    <div class="card card-mb-faq">
-                        <div class="card-header faq-header">
+                    <div>
 
-                        </div>
-                            <div class="card-body faq-body"  style="height:500px;overflow: scroll;" >
-                                        <div  class="row" >
-                                            <div class="col-xl-6 col-md-6" style="height:85px"  v-for="(item,index) in products" :key="index" >
-                                                <div class="prooduct-details-box"   >
-                                                <div class="media" style="height: 80px">
-                                                    <img  @click.prevent="takeItem(item)" class="align-self-center  " style="width: 60px!important; height: 60px;margin-left: 18px;" :src="'../../product_img/'+item.product_img" alt="#" />
-                                                    <div class="media-body ml-3">
-                                                    <div @click.prevent="takeItem(item)" class="product-name">
-                                                        <h6><a href="#"> {{ $t('product name') }} :  {{ item.product_name }}</a></h6>
-                                                    </div>
-                                                    <div class="price d-flex">
-                                                        <div @click.prevent="takeItem(item)" class="text-muted mr-2"></div> {{ $t('product price')}} :  {{ item.product_price }}
-                                                    </div>
+                        <div class="row">
 
-                                                    </div>
-                                                </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                </div>
+                            <div class="col-sm-6">
 
-
-
-                                <b-modal id="bv-modal-example" size="lg"   hide-header hide-footer>
-                                    <template #modal-title>
-
-                                    </template>
-                                <div class="d-block text-center" >
-
-                                    <div class="invoice" id="invoice">
-                                            <div>
-                                            <div>
-                                                <div class="row">
-                                                <div class="col-sm-6">
-                                                    <div class="media">
-
-                                                    <div class="media-body m-l-20">
-                                                        <h4 class="media-heading" style="margin-top: 45px;">{{ $store.getters.SETTINGS.Gym_name }}</h4>
-
-                                                        <p>
-                                                            <span>
+                                <div class="media">
+                                    <div class="media-body m-l-20">
+                                        <h4 class="media-heading" style="margin-top: 45px;">{{ $store.getters.SETTINGS.Gym_name }}</h4>
+                                            <p>
+                                                <span>
                                                             {{ $t('seller name :')}} {{  $store.getters.USER.name }} <br />
                                                             {{ $t('seller RF code :')}}  {{  $store.getters.USER.RF_code }}
-                                                            </span>
-                                                            </p>
-                                                    </div>
-
-                                                    </div>
-                                                    <!-- End Info-->
-                                                <!-- </div>
-                                                <div class="col-sm-6">
-                                                    <div class="text-md-right">
-                                                    <h4>{{  $t('invoice number') }} </h4>
-                                                    <P class="digits counter">{{ InvoiceAfterAdd.invoice_number}}</P>
-                                                    <p>
-
-
-                                                        {{  $t('date') }}:
-                                                        <span class="digits"> <span class="digits">{{ InvoiceAfterAdd.date}}</span></span>
-                                                        <br  />
-                                                         {{ $t('time')}} :
-                                                        <span class="digits"> <span class="digits">{{ InvoiceAfterAdd.time}}</span></span>
-                                                    </p>
-                                                    </div>
-                                                    <!-- End Title-->
-                                                <!-- </div>
-                                                </div>
-                                            </div>
-                                            <hr /> -->
-                                            <!-- End InvoiceTop-->
-
-                                            <!-- End Invoice Mid-->
-                                            <!-- <div>
-                                            <div class="table-responsive invoice-table" id="table">
-                                                <table class="table table-bordered table-striped">
-                                                    <thead>
-                                                        <tr >
-                                                        <td class="item">
-                                                        <h6 class="p-2 mb-0">{{ $t('product name')}} </h6>
-
-                                                        </td>
-
-                                                        <td>
-
-                                                            <h6>{{ $t('unit price')}}</h6>
-
-                                                        </td>
-                                                        <td class="Hours">
-                                                        <h6 class="p-2 mb-0">{{ $t('product price')}}</h6>
-                                                        </td>
-                                                        <td class="Rate">
-                                                        <h6 class="p-2 mb-0">{{ $t('product quantity')}}</h6>
-                                                        </td>
-
-
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    <tr v-for="(item, index) in  InvoiceAfterAdd.invoice_details" :key="index">
-                                                        <td class="item">
-                                                        <h6 class="p-2 mb-0">{{ item.product_name }}</h6>
-
-                                                        </td>
-                                                        <td class="Hours">
-                                                            <h6 class="p-2 mb-0">{{ (item.product_price / item.product_quantity) }}</h6>
-                                                        </td>
-                                                        <td class="Hours">
-                                                        <h6 class="p-2 mb-0">{{ item.product_price }}</h6>
-                                                        </td>
-                                                        <td class="Rate">
-                                                        <h6 class="p-2 mb-0">{{ item.product_quantity }}</h6>
-                                                        </td>
-
-
-                                                    </tr>
-
-                                                    </tbody>
-                                                </table>
-                                                    <div class="order-box">
-                                                    <div class="title-box">
-                                                        <div class="checkbox-title">
-
-                                                        </div>
-                                                        </div>
-
-                                                        <ul class="sub-total">
-                                                            <li>
-                                                            {{ $t('Subtotal')}}
-                                                            <span class="count">LE {{  InvoiceAfterAdd.invoice_total  }}</span>
-                                                            </li>
-                                                        </ul>
-                                                        <ul class="sub-total">
-                                                            <li>
-                                                            {{ $t('Total')}}
-                                                            <span class="count">LE {{  InvoiceAfterAdd.invoice_total  }}</span>
-                                                            </li>
-                                                            </ul>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                            <!-- End InvoiceBot-->
-                                            <!-- </div>
+                                                </span>
+                                            </p>
                                     </div>
                                 </div>
-                                    <b-button class="mt-3 " id="printPageButton"   v-b-modal.modal-sm variant="default" @click="$bvModal.hide('bv-modal-example')">{{ $t('Cancel')}}</b-button>
-                                    <b-button class="mt-3 "   id="printPageButton2" v-b-modal.modal-sm variant="primary"  @click.prevent="printWindow">{{ $t('print')}}</b-button>
-                                </b-modal>
+
                             </div>
-                </div>
-                <div class="col-lg-6" >
-                    <div class="card card-mb-faq">
-                        <div class="card-header faq-header">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="media">
+
+                            <div class="col-sm-6">
+                                <div class="text-md-right">
+                                    <h4>{{  $t('invoice number') }} </h4>
+                                        <P class="digits counter">{{ InvoiceAfterAdd.invoice_number}}</P>
+                                            <p>
+                                                {{  $t('date') }}:
+
+                                                 <span class="digits"> <span class="digits">{{ InvoiceAfterAdd.date}}</span></span>
+                                                <br  />
+                                                {{ $t('time')}} :
+                                                <span class="digits"> <span class="digits">{{ InvoiceAfterAdd.time}}</span></span>
+                                            </p>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <hr />
+
+                    <div>
+                        <div class="table-responsive invoice-table" id="table">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <td class="item">
+                                            <h6 class="p-2 mb-0">{{ $t('product name')}} </h6>
+                                        </td>
+                                        <td>
+                                            <h6>{{ $t('unit price')}}</h6>
+                                        </td>
+
+                                        <td class="Rate">
+                                            <h6 class="p-2 mb-0">{{ $t('product quantity')}}</h6>
+                                        </td>
+
+                                        <td class="Rate">
+                                            <h6 class="p-2 mb-0">{{ $t('total')}}</h6>
+                                        </td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="(item, index) in  InvoiceAfterAdd.invoice_details" :key="index">
+                                        <td class="item">
+                                            <h6 class="p-2 mb-0">{{ item.product_name.name }}</h6>
+                                        </td>
+                                        <td class="Hours">
+                                            <h6 class="p-2 mb-0">{{ (item.unit_price) }}</h6>
+                                        </td>
+                                        <td class="Hours">
+                                            <h6 class="p-2 mb-0">{{ item.product_quantity }}</h6>
+                                        </td>
+                                        <td class="Rate">
+                                            <h6 class="p-2 mb-0">{{ item.recourd_total }}</h6>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="order-box">
+                                <div class="title-box">
+                                    <div class="checkbox-title">
 
                                     </div>
                                 </div>
-                                <div class="col-sm-6">
-                                </div>
+                                <ul class="sub-total">
+                                    <li>
+                                        {{ $t('Subtotal')}}
+                                            <span class="count">LE {{  InvoiceAfterAdd.invoice_total  }}</span>
+                                    </li>
+                                </ul>
+                                <ul class="sub-total">
+                                    <li>
+                                        {{ $t('Total')}}
+                                        <span class="count">LE {{  InvoiceAfterAdd.invoice_total  }}</span>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
-                            <div class="card-body faq-body" style="height:500px;overflow: scroll;">
-
-
-                                <div class="col-lg-12 col-sm-12">
-                                    <div class="form-row">
-
-                                            <table class="table table-bordered table-striped" style="width:100%;margin-bottom: 145px;!important">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>{{ $t('Product')}}</th>
-                                                                    <th>{{ $t('unit price')}}</th>
-                                                                    <th>{{ $t('Quantity')}}</th>
-                                                                    <th>{{ $t('Total')}}</th>
-                                                                    <th></th>
-                                                                </tr>
-
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr v-for="(item,index) in itemTake" :key="index">
-                                                                    <td style="font-size:14px">{{  item.product_name }}</td>
-                                                                    <td style="font-size:14px">{{    (item.product_price / item.product_quantity) }}</td>
-                                                                    <td >
-                                                                        <div style="text-align:center">
-                                                                            <feather   type="chevron-left" @click.prevent="decrease(item)"  v-if=" item.product_quantity > 1" style="width: 13px;" ></feather>
-                                                                            <i style="font-size:12px">{{  item.product_quantity }}</i>
-                                                                            <feather  type="chevron-right"  @click.prevent="increase(item)"  style="width: 13px;"></feather>
-                                                                        </div>
-
-
-
-                                                                    </td>
-                                                                    <td style="font-size:14px">{{  item.product_price }}</td>
-                                                                    <td @click.prevent="removeItem(item,index)">
-                                                                        <a href="javascript:void(0)" >
-                                                                            <feather type="x-circle"></feather>
-                                                                        </a>
-                                                                    </td>
-                                                                </tr>
-
-                                                            </tbody>
-                                                </table>
-
-                                    </div>
-
-
-                                </div>
-
-                                <div class="col-lg-12 col-sm-12 " style="background-color:#F7F6F2;padding: 25px;">
-                                    <div class="checkout-details">
-                                        <div class="order-box">
-                                            <div class="title-box">
-                                                <div class="checkbox-title">
-
-                                                </div>
-                                                </div>
-
-                                                <ul class="sub-total">
-                                                    <li>
-                                                    {{ $t('Subtotal')}}
-                                                    <span class="count">LE {{  total }}</span>
-                                                    </li>
-                                                </ul>
-                                                <ul class="sub-total">
-                                                    <li>
-                                                    {{ $t('Total')}}
-                                                    <span class="count">LE {{  total }}</span>
-                                                    </li>
-                                                    </ul>
-                                            </div>
-
-
-                                    </div>
-                                        <div>
-                                        <button :disabled="CheckDiseble"  @click.prevent="handelSaveInvoice" class="btn btn-primary" >{{  $t('Save')}}</button>
-                                    </div>
-                                </div>
-
-                            </div>
                     </div>
+
                 </div>
-            </div>   -->
+
+            </div>
+
+        </div>
+
+        <b-button class="mt-3 " id="printPageButton"   v-b-modal.modal-sm variant="default" @click="$bvModal.hide('bv-modal-example')">{{ $t('Cancel')}}</b-button>
+        <b-button class="mt-3 "   id="printPageButton2" v-b-modal.modal-sm variant="primary"  @click.prevent="printWindow">{{ $t('print')}}</b-button>
+    </b-modal>
 
 
 
+
+    </div>
 </template>
 
 <script>
 import axios from 'axios'
-
+import {required} from 'vuelidate/lib/validators'
   export default {
 
     data(){
@@ -409,23 +246,26 @@ import axios from 'axios'
           count:1,
           products:[],
           options:[],
-          total:'',
-          itemTake:{
-                product_name : [],
-                product_quantity : [],
-                unit_price : [],
-                recourd_total : []
-          },
+
+          total:0,
+
+        product_name : [],
+        product_quantity : [],
+        unit_price : [],
+        recourd_total : [],
+
+
+          invoice:[],
+
           product_invoice:{
               saler:'',
               invoice_number:''
 
           },
+        InvoiceAfterAdd:[]
 
 
-          CheckDiseble:true,
 
-          InvoiceAfterAdd:[]
 
       }
     },
@@ -457,7 +297,6 @@ import axios from 'axios'
         var invoice_number = 'G'+ Date.now();
         this.product_invoice.invoice_number =  invoice_number
 
-        this.CheckDiseble = (this.itemTake.length < 1)
 
     },
     computed: {
@@ -466,41 +305,106 @@ import axios from 'axios'
     mounted() {
 
     },
+
+
+
     methods:{
 
+        IsSet(id){
+            if(this.product_name.length > 0){
+                this.product_name.map((v,k) => {
+                if(v.id == id){
+                    return true
+                }else{
+                    return false
+                }
+            })
+        }
+
+        },
         getRecourdTotalAndUnitPrice(index){
 
-            
-            if(this.itemTake.product_name[index]){
+            // to dont write quitity < 1
+            if(this.product_quantity[index] == '' || !this.product_quantity[index] || this.product_quantity[index] < 1){
+                this.product_quantity[index]   = 1
 
-                var product_id  = this.itemTake.product_name[index].id
+            }
+            if(this.product_name[index] == '' || this.product_name[index] == null || this.product_name[index] == undefined || !this.product_name[index]){
+                this.product_quantity[index] = ''
+                 this.recourd_total[index]   = ''
+                 this.unit_price[index]   = ''
+                   this.total = this.recourd_total.reduce(calcFunc)
+                    function calcFunc(a,b){
+                            return a+b
+                    }
+
+
+            }
+
+            if(this.product_name[index]){
+
+                var product_id  = this.product_name[index].id
                 this.products.filter((item,key) => {
 
-                        if(item.id == product_id){
+                    if(item.id == product_id){
                             var product_price =  item.product_price
-                            this.itemTake.unit_price[index] = product_price
+                            this.unit_price[index] = product_price
+                            if(this.product_quantity[index] == '' || !this.product_quantity[index] || this.product_quantity[index] < 1){
+                               this.product_quantity[index]   = 1
+                            }
                         }
                     })
-               }
+            }
 
-                if(this.itemTake.product_quantity[index]){
+            if(this.product_quantity[index]){
 
-                   this.itemTake.recourd_total[index] = (Number(this.itemTake.unit_price[index]) * Number(this.itemTake.product_quantity[index]))
+                this.recourd_total[index] = (Number(this.unit_price[index]) * Number(this.product_quantity[index]))
 
-               }
+            }
+
+            if(this.product_quantity[index] && this.product_name[index]){
+
+                    var recourd  = {'index':index,'product_name' : this.product_name[index] , 'unit_price' : this.unit_price[index] , 'product_quantity' : this.product_quantity[index],'recourd_total' : this.recourd_total[index]}
+
+                    if(this.invoice.length < 1){
+                         this.invoice.push(recourd)
+                    }else{
+                        this.invoice.map((v,k) => {
+                            if(v.index == index){
+                                v.product_quantity = Number(this.product_quantity[index])
+                                v.recourd_total = Number(this.recourd_total[index])
+                            }
+                        })
+                    }
+
+
+                    this.total = this.recourd_total.reduce(calcFunc)
+                    function calcFunc(a,b){
+                            return a+b
+                    }
+            }
+
         },
-
-
 
         handelRecourdData(){
             console.log(this.itemTake)
         },
 
         deleteRecourd(index){
-            
+
                  var elem = document.getElementById(`recourd${index}`)
                 elem.remove()
-            
+
+                this.product_name.splice(index)
+                this.recourd_total.splice(index)
+                this.product_quantity.splice(index)
+                this.unit_price.splice(index)
+                this.total = this.recourd_total.reduce(calcFunc)
+                    function calcFunc(a,b){
+                            return a+b
+                    }
+
+
         },
         addNewRecourd(){
             if(this.count >= 1 ){
@@ -508,16 +412,7 @@ import axios from 'axios'
             }
         },
 
-        removeItem(item,index){
 
-            let ProductTotal = item.product_price
-            this.itemTake.splice(index,1)
-
-            this.total = this.total - ProductTotal
-            this.CheckDiseble = (this.itemTake.length < 1)
-
-
-        },
 
         printWindow() {
 
@@ -544,29 +439,34 @@ import axios from 'axios'
                 let formData = new FormData();
 
 
-
-
                 formData.append('invoice_number',this.product_invoice.invoice_number)
                 formData.append('seller',this.product_invoice.saler)
-                formData.append('invoice_details',JSON.stringify(this.itemTake))
+                formData.append('invoice_details',JSON.stringify(this.invoice))
                 formData.append('invoice_total',this.total)
 
                 axios.post('add_product_invoice',formData)
                 .then(res => {
 
+                    console.log(res.data)
                     this.InvoiceAfterAdd = res.data.product_invoice
                     this.$bvModal.show('bv-modal-example')
-                     this.itemTake = []
-                     this.total = ''
+
+                    this.total = ''
                     this.product_invoice = {
                         saler:'',
                         invoice_number:''
                     }
+                        this.product_name = []
+                        this.product_quantity = []
+                        this.unit_price = []
+                        this.recourd_total = []
+                        this.count = 1
+                        this.invoice = []
 
                     this.product_invoice.saler = this.$store.getters.USER.id
                     var invoice_number = 'G'+ Date.now();
                     this.product_invoice.invoice_number =  invoice_number
-                    this.CheckDiseble = (this.itemTake.length < 1)
+
 
 
 
@@ -574,110 +474,18 @@ import axios from 'axios'
 
                 })
 
-
-
-
-            },
-
-              decrease(product){
-
-                  let res = this.itemTake.map((element,index) => {
-
-                       if(element.product_name == product.product_name){
-
-                           element.product_price =  element.product_price -  (element.product_price / element.product_quantity)
-                           element.product_quantity = element.product_quantity - 1
-
-
-                         let total  = this.itemTake.map((element,index) => {return Number(element.product_price) })
-
-                        let sum = 0;
-                        for(var  i = 0 ; i < total.length ; i++){
-                            sum += total[i]
-                        }
-
-                        this.total = sum
-
-                       }
-
-                      })
             },
 
 
-              increase(product){
-
-                  let res = this.itemTake.map((element,index) => {
-
-                       if(element.product_name == product.product_name){
-
-                           element.product_price =  Number(element.product_price) +  (element.product_price / element.product_quantity)
-                           element.product_quantity = element.product_quantity + 1
 
 
 
 
-                       }
-
-                       let total  = this.itemTake.map((element,index) => {return Number(element.product_price) })
-
-                        let sum = 0;
-                        for(var  i = 0 ; i < total.length ; i++){
-                            sum += total[i]
-                        }
-
-                        this.total = sum
-
-                      })
-            },
-
-            takeItem(item){
-
-
-                let res = this.itemTake.map((element,index) => {return element.product_name })
-                let index =  res.indexOf(item.product_name)
-
-
-
-                    // console.log(item)
-
-                if(index > -1 ){
-
-                    this.itemTake[index].product_quantity = this.itemTake[index].product_quantity + 1
-                    this.itemTake[index].product_price = Number(this.itemTake[index].product_price) + Number(item.product_price)
-
-                }else{
-
-
-                    this.itemTake.push({
-                        product_name : item.product_name ,
-                        product_quantity : 1 ,
-                        product_price : item.product_price,
-                        product_id : item.id
-
-                    })
-
-                }
-
-                this.CheckDiseble = (this.itemTake.length < 1)
-                 let total  = this.itemTake.map((element,index) => {return Number(element.product_price) })
-
-                let sum = 0;
-                for(var  i = 0 ; i < total.length ; i++){
-                    sum += total[i]
-                }
-
-                this.total = sum
-
-
-            }
   },
 
   watch: {
 
-       disable() {
 
-            this.CheckDiseble = (this.itemTake.length < 1)
-       }
   }
 
   }

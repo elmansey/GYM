@@ -46,6 +46,8 @@ class product_invoiceController extends Controller
             'invoice_total' => 'required'
         ]);
 
+
+
         $details = json_decode($request['invoice_details'],true);
 
         $input = $request->all();
@@ -148,3 +150,6 @@ class product_invoiceController extends Controller
        return response()->json(['success' => true, 'message' => 'invoice restored successfully']);
    }
 }
+
+
+
