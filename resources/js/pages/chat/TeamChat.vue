@@ -206,7 +206,7 @@
                             </div>
                               <div class="status"  style="display: flex;margin-top:0px;!important">
                                  <i class="fa fa-briefcase" style="margin: 6px;"></i>
-                                  <p> {{  teamPerson.role[0].name }}</p>
+                                  <p> {{  $t(teamPerson.role[0].name) }}</p>
 
                               </div>
                               <div  v-if="IsOnline(teamPerson.id)">

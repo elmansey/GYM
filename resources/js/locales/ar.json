@@ -274,14 +274,35 @@
     "Activities logs": "سجل النشاطات",
     "Activities list": "قائمه النشاطات",
     "setting": "الاعدادات",
-    "Gym name"  : "اسم الجيم",
-    "Gym title"  : "اللقب",
-    "owner name"  : "اسم المالك",
-    "about us"  : "معلومات عنا",
-    "logo"     : "الشعار",
-    "add record" : "اضف سجل",
-    "choose product" : "اختر المنتج",
-    "Search"   : "ابحث"
+    "Gym name": "اسم الجيم",
+    "Gym title": "اللقب",
+    "owner name": "اسم المالك",
+    "about us": "معلومات عنا",
+    "logo": "الشعار",
+    "There are empty fields": "هناك حقول فارغه",
+    "My Profile": "ملفي الشخصي",
+    "Profile": "الملف الشخصي",
+    "owner": "المالك",
+    "admin": "مشرف",
+    "staff": "موظف",
+    "profile picture": "صوره الملف الشخصي",
+    "Update Profile": "تعديل الملف الشخصي",
+    "Edit Profile": "تعديل الملف الشخصي",
+    "profile updated successfully": "تم تعديل الملف الشخصي بنجاح",
+    "Use This RF Code To Take Attendance": "استخدم ال RF كود لاخذ الحضور",
+    "Enter your email & password to login" : "ادخل البريد الالكتروني والرقم السري",
+    "Sign in to account" : "تسجيل الدخول الي حسابك",
+    "Sign in" : "تسجيل الدخول",
+    "forget password" : "نسيت كلمه السر"
+
+
+
+
+
+
+
+
+
 
 
 

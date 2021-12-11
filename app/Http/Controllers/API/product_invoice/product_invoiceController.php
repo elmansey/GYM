@@ -47,6 +47,13 @@ class product_invoiceController extends Controller
         ]);
 
 
+           
+
+            if($validator->fails()){
+
+                return response()->json(['success' => false , 'message' => $validator->errors()],200);
+
+            }
 
         $details = json_decode($request['invoice_details'],true);
 
