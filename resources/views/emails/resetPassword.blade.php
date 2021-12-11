@@ -5,7 +5,7 @@
 <p>geexar team</p>
 
 
-@component('mail::button', ['url' => 'http://localhost:3000/resetPassword/'.$email.'/'.$token])
+@component('mail::button', ['url' =>  env('MIX_RUN_URL').'resetPassword/'.$email.'/'.$token])
 reset password
 @endcomponent
 
