@@ -9,6 +9,7 @@ const state = {
     errors: '',
     token: localStorage.getItem('token'),
     authUserRole: [],
+    authCustomPermission: []
 
 }
 
@@ -33,6 +34,10 @@ const getters = {
 
     authUserRole(state) {
         return state.authUserRole
+    },
+
+    authCustomPermission(state) {
+        return state.authCustomPermission
     },
 
 
@@ -91,6 +96,7 @@ const mutations = {
         state.user = []
         state.token = ''
         state.authUserRole = []
+        state.authCustomPermission = []
         router.push({
             name: 'login'
         })
@@ -112,11 +118,17 @@ const mutations = {
         state.token = null;
         state.user = null;
         state.authUserRole = [];
+        state.authCustomPermission = [];
     },
 
     authUserRole(state, payload) {
 
         state.authUserRole = payload
+    },
+
+    authCustomPermission(state, payload) {
+
+        state.authCustomPermission.push(payload)
     },
 
 
@@ -158,14 +170,23 @@ const actions = {
 
             } else {
 
-                commit('loginSuccess', res.data.data.access_token, res.data.data.user)
-                commit('SET_USER', res.data.data.user)
 
+
+                commit('SET_USER', res.data.data.user)
+                commit('loginSuccess', res.data.data.access_token, res.data.data.user)
+
+                
+               
                 axios.get('info')
                     .then(res => {
 
                         commit('USER_INFO_SUCCESS', res.data.data)
                         commit('authUserRole', res.data.roleAndPermission)
+
+                        res.data.customPermission.map((v, k) => {
+                            commit('authCustomPermission', v.permission_relassion)
+                        })
+
 
 
                     })
@@ -215,6 +236,9 @@ const actions = {
             await commit('USER_INFO_SUCCESS', res.data.data)
 
             commit('authUserRole', res.data.roleAndPermission)
+            res.data.customPermission.map((v, k) => {
+                commit('authCustomPermission', v.permission_relassion)
+            })
 
 
 

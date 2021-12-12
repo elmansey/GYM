@@ -274,18 +274,15 @@
     "Activities logs": "سجل النشاطات",
     "Activities list": "قائمه النشاطات",
     "setting": "الاعدادات",
-<<<<<<< HEAD
-    "Gym name"  : "اسم الجيم",
-    "Gym title"  : "اللقب",
-    "owner name"  : "اسم المالك",
-    "about us"  : "معلومات عنا",
-    "logo"     : "الشعار",
-    "add record" : "اضف سجل",
-    "choose product" : "اختر المنتج",
-    "Search"   : "ابحث",
-    "custom permissions" : "اذونات مخصصه"
-
-=======
+    "Gym name": "اسم الجيم",
+    "Gym title": "اللقب",
+    "owner name": "اسم المالك",
+    "about us": "معلومات عنا",
+    "logo": "الشعار",
+    "add record": "اضف سجل",
+    "choose product": "اختر المنتج",
+    "Search": "ابحث",
+    "custom permissions": "اذونات مخصصه",
     "Gym name": "اسم الجيم",
     "Gym title": "اللقب",
     "owner name": "اسم المالك",
@@ -302,22 +299,65 @@
     "Edit Profile": "تعديل الملف الشخصي",
     "profile updated successfully": "تم تعديل الملف الشخصي بنجاح",
     "Use This RF Code To Take Attendance": "استخدم ال RF كود لاخذ الحضور",
-    "Enter your email & password to login" : "ادخل البريد الالكتروني والرقم السري",
-    "Sign in to account" : "تسجيل الدخول الي حسابك",
-    "Sign in" : "تسجيل الدخول",
-    "forget password" : "نسيت كلمه السر"
->>>>>>> 011a2c5ea120112055c10f0a298abe8af77f8b4a
-
-
-
-
-
-
-
-
-
-
-
+    "Enter your email & password to login": "ادخل البريد الالكتروني والرقم السري",
+    "Sign in to account": "تسجيل الدخول الي حسابك",
+    "Sign in": "تسجيل الدخول",
+    "forget password": "نسيت كلمه السر",
+    "dashboard": "الرئيسيه",
+    "show-roles": "مشاهده الصلاحيات",
+    "show-roles-list": "مشاهده قائمه الصلاحيات",
+    "add-role": "اضافه صلاحيه",
+    "edit-role": "تعديل صلاحيه",
+    "delete-role": "مسح صلاحيه",
+    "show-role-details": "مشاهده تفاصيل الصلاحيه",
+    "show-team": "مشاهده الفريق",
+    "show-team-member-list": "مشاهده قائمه المشرفين",
+    "add-member-in-team": "اضافه مشرف",
+    "edit-member-from-team": "تعديل مشرف",
+    "delete-member-from-team": "حذف مشرف",
+    "show-memberships": "مشاهده العضويات",
+    "show-memberships-list": "مشاهده قائمه العضويات",
+    "add-membership": "اضافه عضويه",
+    "edit-membership": "تعديل عضويه",
+    "delete-membership": "حذف عضويه",
+    "show-staff-list": "مشاهده قائمه الموظفين",
+    "add-person-in-staff": "اضافه موظف",
+    "edit-person-in-staff": "تعديل موظف",
+    "delete-person-in-staff": "حذف موظف",
+    "show-groups": "مشاعده المجموعات",
+    "show-groups-list": "مشاهده قائمه المجموعات",
+    "add-group": "اضافه مجموعه",
+    "edit-group": "تعديل مجموعه",
+    "delete-group": "حذف مجموعه",
+    "show-class-schedule-all": "مشاعده  المواعيد",
+    "show-class_schedule-list": "مشاعده قائمه المواعيد",
+    "show-class_schedule": "مشاهده مواعيد المجموعات",
+    "add-class-schedule": "اضافه  ميعاد",
+    "edit-class-schedule": "تعديل ميعاد في جدول المواعيد",
+    "edit-class-schedule-in-classSchedule": "تعديل ميعاد في صفحه مواعيد المجموعات",
+    "delete-class-schedule": "حذف ميعاد",
+    "delete-By-Select-Multi-Class": "حذف مواعيد متعدده",
+    "show-Registration-member": "تسجيل عضو جديد",
+    "show-Registration-member-list": "مشاهده قائمه الاعضاء",
+    "add-member-in-gym": "اضافه عضو",
+    "show-member-details": "مشاهده  تفاصيل عضو",
+    "show-setting": "الاعدادت",
+    "show-team-chat": "المراسله",
+    "show-attendance": "الحضور",
+    "show-attendance-table": "مشاهده جدول الحضور",
+    "take-attendance": "اخذ الحضور",
+    "show-products": "المنتجات",
+    "add-products-in-store": "اضافه منتج",
+    "edit-product": "تعديل منتج",
+    "delete-product": "حذف منتج",
+    "show-store-details": "البيع",
+    "show-history": "سجل النشاطات",
+    "show-sales_invoices": "فواتير المنتجات",
+    "add-sales-invoices": "بيع منتج واستخراج فاتوره",
+    "show-Archive": "الارشيف",
+    "show-statistics": "مشاهده الاحصائيات",
+    "show-customPermissions": "الاذونات المخصصه",
+    "Permissions allowed successfully" : "تم السماح بالاذونات بنجاح"
 
 
 

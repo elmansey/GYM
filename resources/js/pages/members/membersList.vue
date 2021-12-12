@@ -6,7 +6,7 @@
     <div v-if="isLoadig">
 
         <Breadcrumbs :main="$t('Dashboard')" :title="$t('members list')" />
-        <button class="btn btn-primary btn-sm" style="margin-left: 30px;margin-bottom: 15px;"><i  class="icofont icofont-snow-alt"></i>
+        <button v-if="can('freezeMemberAccountList')" class="btn btn-primary btn-sm" style="margin-left: 30px;margin-bottom: 15px;"><i  class="icofont icofont-snow-alt"></i>
             <router-link style="color:#fff" :to="{name : 'freezeMemberAccountList'}">
                    {{ $t('freeze list')}}
             </router-link>
@@ -67,17 +67,17 @@
 
 
                                                                 <b-dropdown text="" menu-class="dropdown-content" size="xs" variant="default">
-                                                                    <b-dropdown-item @click.prevent="freezeAccountHandel(data.item.id,data.index)">
+                                                                    <b-dropdown-item   v-if="can('freezeMemberAccount')" @click.prevent="freezeAccountHandel(data.item.id,data.index)">
                                                                         <feather  style="width:15px" type="zap" ></feather> {{ $t('freeze account')}}
 
                                                                     </b-dropdown-item>
                                                                     <b-dropdown-item >
-                                                                          <router-link  :to="{name: 'editMember', params: {memberId : data.item.id}}"  v-if="can('edit-member-from-team')">
+                                                                          <router-link  :to="{name: 'editMember', params: {memberId : data.item.id}}"  v-if="can('edit-member-in-gym')">
                                                                             <feather style="width:15px" type="edit-2"></feather> {{ $t('edit')}}
                                                                             </router-link>
                                                                     </b-dropdown-item>
                                                                     <b-dropdown-item
-                                                                    @click="DeleteAdminModal(data.item.id,data.index)"  v-if="can('delete-member-from-team')"
+                                                                    @click="DeleteAdminModal(data.item.id,data.index)"  v-if="can('delete-member-in-gym')"
                                                                     ><feather style="width:15px" type="trash"></feather>{{ $t('delete')}}</b-dropdown-item>
 
                                                                 </b-dropdown>

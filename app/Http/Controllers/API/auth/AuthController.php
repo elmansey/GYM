@@ -15,6 +15,8 @@ use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\PermissionResource;
 use App\Http\Resources\UserToRoleResource;
+use App\Models\model_has_permissions;
+
 
 class AuthController extends Controller
 {
@@ -74,6 +76,8 @@ class AuthController extends Controller
 
 
             $roleAndPermission = [];
+            $customPermission = model_has_permissions::with('permissionRelassion')->where('model_id','=',Auth()->user()->id)->get();
+
 
             for ($i = 0 ; $i < count($roles) ; $i++) {
                 $role[] = $roles[$i];
@@ -83,11 +87,14 @@ class AuthController extends Controller
                 // return $val['id'];
                 $roleAndPermission[] = ['id' => $val->id, 'role' => $val->name, 'permission' => PermissionResource::collection(Permission::join('role_has_permissions', 'role_has_permissions.permission_id', '=', 'permissions.id')
                 ->where('role_has_permissions.role_id','=', $val->id)->get())];
+                
             }
 
 
 
-            return response()->json(['success' => true, 'data' =>  new UserToRoleResource(Auth::guard()->user()), 'roleAndPermission' => $roleAndPermission], 200);
+
+
+            return response()->json(['success' => true, 'data' =>  new UserToRoleResource(Auth::guard()->user()), 'roleAndPermission' => $roleAndPermission,'customPermission' => $customPermission], 200);
 
         }
 

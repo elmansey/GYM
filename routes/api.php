@@ -85,11 +85,15 @@ use App\Http\Controllers\API\product_invoice\product_invoiceController;
 
         //role
         Route::get('roles', [RoleController::class, 'index'])->name('roles');
-        Route::get('createRole/{id}', [RoleController::class, 'create'])->name('create');
+        Route::get('createRole', [RoleController::class, 'create'])->name('create');
         Route::post('roleAdd', [RoleController::class, 'store'])->name('roleAdd');
         Route::post('roleUpdate', [RoleController::class, 'update'])->name('roleUpdate');
         Route::get('roleDelete/{id}', [RoleController::class, 'destroy'])->name('roleDelete');
         Route::get('getRoleById/{id}', [RoleController::class, 'getRoleById'])->name('getRoleById');
+        Route::get('getAllUserToCustomPermission', [RoleController::class, 'getAllUserToCustomPermission'])->name('getAllUserToCustomPermission');
+        Route::post('assignCustomPermissions',[RoleController::class,'assignCustomPermissions']);
+        Route::get('getOldCustomPermission/{id}',[RoleController::class,'getOldCustomPermission']);
+
 
 
         //memberships

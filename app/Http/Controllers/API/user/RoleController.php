@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use App\Models\model_has_permissions;
+use App\Models\User;
 
 class RoleController extends Controller
 {
@@ -38,7 +40,14 @@ class RoleController extends Controller
     }
 
 
-    public function create($id)
+    public function getAllUserToCustomPermission(){
+
+        $users =  User::role(['staff','admin'])->select('name','id')->get();
+
+        return response()->json(['success' => true , 'users' => $users]);
+    }
+
+    public function create()
     {
 
 
@@ -136,5 +145,26 @@ class RoleController extends Controller
         $role = Role::find($id);
         $role->delete();
         return response()->json(['success' => true, 'message' => 'Role deleted successfully'], 200);
+    }
+
+
+    public function getOldCustomPermission($id){
+
+        $oldPermission = model_has_permissions::with('permissionRelassion')->where('model_id','=',$id)->get();
+
+        return response()->json(['success' => true,'oldPermission'=> $oldPermission]);
+
+    }
+
+    public function assignCustomPermissions(Request $request){
+
+        $request['user'] = json_decode($request['user'],true);
+        $request['permissions'] = json_decode($request['permissions'],true);
+
+     
+        $user = User::find($request->user['id']);
+        $user->syncPermissions($request->permissions);
+
+        return response()->json(['success' => true,'user'=>$user]);
     }
 }

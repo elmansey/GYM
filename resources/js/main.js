@@ -127,10 +127,17 @@ Vue.mixin({
         // can:(permission) => store.getters.authUserRole[].includes(permission) ? true : false,
         can: function(permission) {
             var perm = store.getters.authUserRole;
+
+
             if (perm != null) {
                 var len = perm.length;
             }
+
+
+
             let FinalPer = [];
+
+
 
             for (var i = 0; i < len; i++) {
                 store.getters.authUserRole[i].permission.forEach(
@@ -139,6 +146,15 @@ Vue.mixin({
                     }
                 );
             }
+
+            store.getters.authCustomPermission.map((v, k) => {
+                FinalPer.push(v.name)
+
+            })
+
+
+
+
 
             let FinalPerLen = FinalPer.length;
             for (var t = 0; t < FinalPerLen; t++) {

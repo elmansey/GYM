@@ -50,6 +50,9 @@ class UserController extends Controller
         return response()->json(['success'=>true ,'admins'=> UsersResource::collection($data)] ,200);
     }
 
+
+    
+
     public function getAllPersonToAttendance(){
 
         $users = User::select('name','RF_code')->get();

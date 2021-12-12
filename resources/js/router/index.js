@@ -84,6 +84,7 @@ const routes = [
                 name: 'profile',
                 component: require('@/pages/details/profile').default,
 
+
             },
 
             {
@@ -91,6 +92,11 @@ const routes = [
                 path: 'membersList',
                 name: 'membersList',
                 component: require('@/pages/members/membersList').default,
+                meta: {
+
+                    permission: 'show-Registration-member-list'
+
+                },
 
             },
             {
@@ -98,7 +104,11 @@ const routes = [
                 path: 'freezeMemberAccountList',
                 name: 'freezeMemberAccountList',
                 component: require('@/pages/members/freezeMemberAccountList').default,
+                meta: {
 
+                    permission: 'freezeMemberAccountList'
+
+                },
             },
 
             {
@@ -106,13 +116,23 @@ const routes = [
                 path: 'addMember',
                 name: 'addMember',
                 component: require('@/pages/members/add_new_member').default,
+                meta: {
 
+                    permission: 'add-member-in-gym'
+
+                },
             },
             {
 
                 path: 'editMember/:memberId',
                 name: 'editMember',
                 component: require('@/pages/members/add_new_member').default,
+
+                meta: {
+
+                    permission: 'edit-member-in-gym'
+
+                },
 
             },
 
@@ -121,7 +141,11 @@ const routes = [
                 path: 'showMemberDetails/:memberBaseId',
                 name: 'showMemberDetails',
                 component: require('@/pages/members/showMemberDetails').default,
+                meta: {
 
+                    permission: 'show-member-details'
+
+                },
             },
 
 
@@ -131,6 +155,11 @@ const routes = [
                 path: 'staffList',
                 name: 'staffList',
                 component: require('@/pages/staff/staffList').default,
+                meta: {
+
+                    permission: 'show-staff-list'
+
+                },
 
             },
             {
@@ -138,6 +167,12 @@ const routes = [
                 path: 'addPersonInStaff',
                 name: 'addPersonInStaff',
                 component: require('@/pages/staff/staff_option').default,
+                meta: {
+
+                    permission: 'add-person-in-staff'
+
+                },
+
 
             },
 
@@ -146,7 +181,11 @@ const routes = [
                 path: 'editPersonInStaff/:staffPersonId',
                 name: 'editPersonInStaff',
                 component: require('@/pages/staff/staff_option').default,
+                meta: {
 
+                    permission: 'edit-person-in-staff'
+
+                },
             },
 
 
@@ -161,7 +200,11 @@ const routes = [
                 path: 'product_store',
                 name: 'product_store',
                 component: require('@/pages/store/product_store').default,
+                meta: {
 
+                    permission: 'add-sales-invoices'
+
+                },
             },
 
 
@@ -171,8 +214,14 @@ const routes = [
                 path: 'sales_records',
                 name: 'sales_records',
                 component: require('@/pages/store/sales_records').default,
+                meta: {
 
+                    permission: 'show-sales_invoices'
+
+                },
             },
+
+
 
             {
 
@@ -187,6 +236,12 @@ const routes = [
                 path: 'invoiceArchive',
                 name: 'invoiceArchive',
                 component: require('@/pages/store/invoiceArchive').default,
+                meta: {
+
+                    permission: 'show-Archive'
+
+                },
+
 
             },
 
@@ -204,6 +259,11 @@ const routes = [
                 path: 'attendance',
                 name: 'attendance',
                 component: require('@/pages/attendance/attendance').default,
+                meta: {
+
+                    permission: 'show-attendance-table'
+
+                },
 
             },
 
@@ -212,7 +272,11 @@ const routes = [
                 path: 'tackAttendance',
                 name: 'tackAttendance',
                 component: require('@/pages/attendance/take_attendance').default,
+                meta: {
 
+                    permission: 'take-attendance'
+
+                },
             },
 
 
@@ -230,8 +294,16 @@ const routes = [
                 path: 'history',
                 name: 'history',
                 component: require('@/pages/history/activity_logs').default,
+                meta: {
 
+                    permission: 'show-history'
+
+                },
             },
+
+
+
+
 
 
 
@@ -242,6 +314,11 @@ const routes = [
                 path: 'products',
                 name: 'products',
                 component: require('@/pages/products/products').default,
+                meta: {
+
+                    permission: 'show-products'
+
+                },
 
             },
             {
@@ -284,14 +361,13 @@ const routes = [
 
 
 
-
-
-
-
             {
                 path: 'addMembership',
                 name: 'addMembership',
                 component: require('@/pages/memberships/Membership').default,
+                meta: {
+                    permission: 'add-membership'
+                },
 
             },
 
@@ -300,11 +376,19 @@ const routes = [
                 name: 'updateMembership',
                 component: require('@/pages/memberships/Membership').default,
 
+                meta: {
+                    permission: 'edit-membership'
+                },
+
+
             },
             {
                 path: 'memberships',
                 name: 'memberships',
                 component: require('@/pages/memberships/memberships').default,
+                meta: {
+                    permission: 'show-memberships'
+                },
 
             },
 
@@ -312,12 +396,23 @@ const routes = [
                 path: 'groups',
                 name: 'groups',
                 component: require('@/pages/groups/groups_list').default,
+                meta: {
+
+                    permission: 'show-groups-list'
+                },
+
 
             },
             {
                 path: 'addGroup',
                 name: 'addGroup',
                 component: require('@/pages/groups/add_group').default,
+                meta: {
+
+                    permission: 'add-group'
+                },
+
+
 
             },
 
@@ -325,7 +420,10 @@ const routes = [
                 path: 'updateGroup/:groupId',
                 name: 'updateGroup',
                 component: require('@/pages/groups/add_group').default,
+                meta: {
 
+                    permission: 'edit-group'
+                },
             },
 
 
@@ -336,25 +434,37 @@ const routes = [
                 path: 'classList',
                 name: 'classList',
                 component: require('@/pages/classSchedule/classList').default,
-
+                meta: {
+                    permission: 'show-class_schedule-list'
+                },
             },
             {
                 path: 'classSchedule',
                 name: 'classSchedule',
                 component: require('@/pages/classSchedule/classSchedule').default,
+                meta: {
+                    permission: 'show-class_schedule'
 
+
+                },
             },
             {
                 path: 'updateClassSchedule/:classScheduleId',
                 name: 'updateClassSchedule',
                 component: require('@/pages/classSchedule/classScheduleAddEDIT').default,
+                meta: {
 
+                    permission: 'edit-class-schedule'
+                },
             },
             {
                 path: 'addClassSchedule',
                 name: 'addClassSchedule',
                 component: require('@/pages/classSchedule/classScheduleAddEDIT').default,
+                meta: {
 
+                    permission: 'add-class-schedule'
+                },
             },
 
 
@@ -391,6 +501,11 @@ const routes = [
                 path: 'addRole',
                 name: 'addRole',
                 component: require('@/pages/roles/Role').default,
+                meta: {
+
+                    permission: 'add-role'
+                },
+
 
 
             },
@@ -398,8 +513,10 @@ const routes = [
                 path: 'editRole/:roleId',
                 name: 'editRole',
                 component: require('@/pages/roles/Role').default,
+                meta: {
 
-
+                    permission: 'edit-role'
+                },
             },
             {
                 path: 'showRole',
@@ -407,8 +524,7 @@ const routes = [
                 component: require('@/pages/roles/showRole').default,
                 meta: {
                     requirIsSetData: true,
-                    permission: 'show-team-member-list'
-
+                    permission: 'show-roles-list'
                 },
             },
             {
@@ -435,23 +551,20 @@ const routes = [
                 name: 'updateAdmin',
                 component: require('@/pages/admins/addAdmin').default,
                 meta: {
-                    permission: 'add-member-in-team'
+                    permission: 'edit-member-from-team'
                 }
 
             },
 
-            {
-                path: 'products',
-                name: 'products',
-                component: require('@/pages/products/products').default,
 
-            },
 
             {
                 path: 'setting',
                 name: 'setting',
                 component: require('@/pages/setting/setting').default,
-
+                meta: {
+                    permission: 'show-setting'
+                }
             },
 
 
@@ -559,6 +672,10 @@ router.beforeEach(async(to, from, next) => {
 
         }
 
+        store.getters.authCustomPermission.map((v, k) => {
+            FinalPer.push(v.name)
+        })
+
 
         var res = FinalPer.includes(permi) ? true : false
 
@@ -574,11 +691,7 @@ router.beforeEach(async(to, from, next) => {
 
     if (to.matched.some(record => record.meta.permission)) {
 
-        let {
-            meta: {
-                permission
-            }
-        } = to.matched.find(record => record.meta.permission);
+        let { meta: { permission } } = to.matched.find(record => record.meta.permission);
 
 
         if (checker(permission)) {
