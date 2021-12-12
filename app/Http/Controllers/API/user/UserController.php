@@ -276,7 +276,7 @@ class UserController extends Controller
 
 
     public function updateProfileInfo(Request $request,$id){
-
+           
         $input = $request->all();
 
 
@@ -304,7 +304,7 @@ class UserController extends Controller
                 return response()->json(['success' => false, 'message' => ['confirm_Password' => 'the confirm password felid must same password felid']]);
             }
         }
-
+   
 
 
                 if($request->file('profile_picture')){

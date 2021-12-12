@@ -276,11 +276,32 @@
     "Gym title": "Gym title",
     "owner name": "owner name",
     "about us": "about us",
+<<<<<<< HEAD
     "logo"     : "logo",
     "add record" : "add record",
     "choose product" : "choose product",
     "Search"   : "Search",
     "custom permissions" : "custom permissions"
+=======
+    "logo": "logo",
+    "There are empty fields": "There are empty fields",
+    "My Profile": "My Profile",
+    "Profile": "Profile",
+    "owner": "owner",
+    "admin": "admin",
+    "staff": "staff",
+    "profile picture": "profile picture",
+    "Use This RF Code To Take Attendance": "Use This RF Code To Take Attendance",
+    "Enter your email & password to login": "Enter your email & password to login",
+    "forget password" : "forget password"
+>>>>>>> 011a2c5ea120112055c10f0a298abe8af77f8b4a
+
+
+
+
+
+
+
 
 
 

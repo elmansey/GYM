@@ -25,6 +25,7 @@
                                                     :placeholder="$t('Search')"
                                                     label="name"
                                                     @input="getRecourdTotalAndUnitPrice(index)"
+                                                   
                                                 >
                                                 <template v-slot:option="option"   >
 
@@ -38,7 +39,7 @@
 
                                 <div class="form-group col-sm-3">
                                     <label for="inputEmail4">{{  $t('product quantity')}}</label>
-                                    <input type="number" @input="getRecourdTotalAndUnitPrice(index)"  class="form-control"  style="margin-top: 12px;" v-model="product_quantity[index]"/>
+                                    <input   type="number" @input="getRecourdTotalAndUnitPrice(index)"  class="form-control"  style="margin-top: 12px;" v-model="product_quantity[index]"/>
                                     <div  class="invalid-feedback"  ></div>
                                 </div>
 
@@ -248,7 +249,7 @@ import {required} from 'vuelidate/lib/validators'
           options:[],
 
           total:0,
-
+        product_nameLength:'',
         product_name : [],
         product_quantity : [],
         unit_price : [],
@@ -300,7 +301,7 @@ import {required} from 'vuelidate/lib/validators'
 
     },
     computed: {
-
+    
     },
     mounted() {
 
@@ -311,17 +312,26 @@ import {required} from 'vuelidate/lib/validators'
     methods:{
 
         IsSet(id){
-            if(this.product_name.length > 0){
-                this.product_name.map((v,k) => {
-                if(v.id == id){
-                    return true
-                }else{
-                    return false
-                }
-            })
-        }
 
+            if(this.product_name.length > 0){
+                    
+                    var ides = []
+
+                    this.product_name.map((v,k) => {
+                        if(v.id && v.id  != null){
+                             ides.push(v.id)
+                        }else{
+                            return false
+                        }
+
+
+                    })
+                    return  (ides.includes(id))
+            }else{
+                return false
+            }
         },
+
         getRecourdTotalAndUnitPrice(index){
 
             // to dont write quitity < 1
@@ -329,14 +339,47 @@ import {required} from 'vuelidate/lib/validators'
                 this.product_quantity[index]   = 1
 
             }
+
             if(this.product_name[index] == '' || this.product_name[index] == null || this.product_name[index] == undefined || !this.product_name[index]){
-                this.product_quantity[index] = ''
-                 this.recourd_total[index]   = ''
-                 this.unit_price[index]   = ''
-                   this.total = this.recourd_total.reduce(calcFunc)
-                    function calcFunc(a,b){
+            
+                 this.product_name.map((v,k) => {
+
+                    if(k == index){
+                       this.product_name.splice(k,1)
+                    }     
+                })
+
+                this.product_quantity.map((v,k) => {
+
+                    if(k == index){
+                       this.product_quantity.splice(k,1)
+                    }     
+                })
+                 this.recourd_total.map((v,k) => {
+
+                    if(k == index){
+                       this.recourd_total.splice(k,1)
+                    }     
+                })
+                 this.unit_price.map((v,k) => {
+
+                    if(k == index){
+                       this.unit_price.splice(k,1)
+                    }     
+                })
+
+                this.invoice.map((v,k) => {
+
+                   
+                    if(v.index == index){
+                       this.invoice.splice(k,1)
+                    }     
+                })
+
+                this.total = this.recourd_total.reduce(calcFunc)
+                function calcFunc(a,b){
                             return a+b
-                    }
+                }
 
 
             }
@@ -365,24 +408,38 @@ import {required} from 'vuelidate/lib/validators'
             if(this.product_quantity[index] && this.product_name[index]){
 
                     var recourd  = {'index':index,'product_name' : this.product_name[index] , 'unit_price' : this.unit_price[index] , 'product_quantity' : this.product_quantity[index],'recourd_total' : this.recourd_total[index]}
-
-                    if(this.invoice.length < 1){
-                         this.invoice.push(recourd)
-                    }else{
+                    
+                    
+                        let indexes = []
                         this.invoice.map((v,k) => {
-                            if(v.index == index){
-                                v.product_quantity = Number(this.product_quantity[index])
-                                v.recourd_total = Number(this.recourd_total[index])
-                            }
+                           indexes.push(v.index)
                         })
-                    }
 
+                        let check = indexes.includes(index)
+                        
+                        if(check){
+                            this.invoice.map((v,k) => {
+
+                                if(v.index == index){
+                                    v.product_quantity = Number(this.product_quantity[index])
+                                    v.recourd_total = Number(this.recourd_total[index])   
+                                }     
+                            })
+                             
+
+                        }else{
+                            this.invoice.push(recourd)
+                        }
+                
+                             
+            }        
 
                     this.total = this.recourd_total.reduce(calcFunc)
                     function calcFunc(a,b){
                             return a+b
                     }
-            }
+                
+            
 
         },
 
@@ -395,10 +452,41 @@ import {required} from 'vuelidate/lib/validators'
                  var elem = document.getElementById(`recourd${index}`)
                 elem.remove()
 
-                this.product_name.splice(index)
-                this.recourd_total.splice(index)
-                this.product_quantity.splice(index)
-                this.unit_price.splice(index)
+              
+                this.product_name.map((v,k) => {
+
+                    if(k == index){
+                       this.product_name.splice(k,1)
+                    }     
+                })
+
+                this.product_quantity.map((v,k) => {
+
+                    if(k == index){
+                       this.product_quantity.splice(k,1)
+                    }     
+                })
+                 this.recourd_total.map((v,k) => {
+
+                    if(k == index){
+                       this.recourd_total.splice(k,1)
+                    }     
+                })
+                 this.unit_price.map((v,k) => {
+
+                    if(k == index){
+                       this.unit_price.splice(k,1)
+                    }     
+                })
+
+                this.invoice.map((v,k) => {
+
+                   
+                    if(v.index == index){
+                       this.invoice.splice(k,1)
+                    }     
+                })
+              
                 this.total = this.recourd_total.reduce(calcFunc)
                     function calcFunc(a,b){
                             return a+b
@@ -435,57 +523,60 @@ import {required} from 'vuelidate/lib/validators'
 
             handelSaveInvoice(){
 
+                if(this.product_name.length > 0){
 
-                let formData = new FormData();
-
-
-                formData.append('invoice_number',this.product_invoice.invoice_number)
-                formData.append('seller',this.product_invoice.saler)
-                formData.append('invoice_details',JSON.stringify(this.invoice))
-                formData.append('invoice_total',this.total)
-
-                axios.post('add_product_invoice',formData)
-                .then(res => {
-
-                    console.log(res.data)
-                    this.InvoiceAfterAdd = res.data.product_invoice
-                    this.$bvModal.show('bv-modal-example')
-
-                    this.total = ''
-                    this.product_invoice = {
-                        saler:'',
-                        invoice_number:''
-                    }
-                        this.product_name = []
-                        this.product_quantity = []
-                        this.unit_price = []
-                        this.recourd_total = []
-                        this.count = 1
-                        this.invoice = []
-
-                    this.product_invoice.saler = this.$store.getters.USER.id
-                    var invoice_number = 'G'+ Date.now();
-                    this.product_invoice.invoice_number =  invoice_number
+                    let formData = new FormData();
 
 
+                        formData.append('invoice_number',this.product_invoice.invoice_number)
+                        formData.append('seller',this.product_invoice.saler)
+                        formData.append('invoice_details',JSON.stringify(this.invoice))
+                        formData.append('invoice_total',this.total)
+
+                        axios.post('add_product_invoice',formData)
+                        .then(res => {
+
+                            if(res.data.success){
+                                
+                            this.InvoiceAfterAdd = res.data.product_invoice
+                            this.$bvModal.show('bv-modal-example')
+
+                            this.total = ''
+                            this.product_invoice = {
+                                saler:'',
+                                invoice_number:''
+                            }
+                                this.product_name = []
+                                this.product_quantity = []
+                                this.unit_price = []
+                                this.recourd_total = []
+                                this.count = 1
+                                this.invoice = []
+
+                            this.product_invoice.saler = this.$store.getters.USER.id
+                            var invoice_number = 'G'+ (Date.now());
+                            this.product_invoice.invoice_number =  invoice_number
+
+                            }
 
 
-                }).catch(err => {
 
-                })
+                        }).catch(err => {
+
+                        })
+                }else{
+                    Toast.fire({
+                          'title' : this.$t('There are empty fields'),
+                          'icon' : 'error'
+                    })
+                }
 
             },
-
-
-
-
-
 
   },
 
   watch: {
-
-
+       
   }
 
   }

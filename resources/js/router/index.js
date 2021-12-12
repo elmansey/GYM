@@ -40,7 +40,7 @@ const routes = [
     },
 
     {
-        path: '/resetPassword/:email/:token/:guard',
+        path: '/resetPassword/:email/:token',
         name: 'resetPassword',
         component: require('@/pages/authentication/resetPassword').default
     },

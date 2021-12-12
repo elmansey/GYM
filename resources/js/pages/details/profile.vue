@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Breadcrumbs main="dashboard" title="Profile"/>
+        <Breadcrumbs :main="$t('Dashboard')" :title="$t('Profile')"/>
         <!-- Container-fluid starts-->
         <div class="container-fluid">
             <div class="edit-profile">
@@ -8,7 +8,7 @@
                 <div class="col-xl-4">
                   <div class="card">
                     <div class="card-header">
-                      <h4 class="card-title mb-0">My Profile</h4>
+                      <h4 class="card-title mb-0">{{$t('My Profile')}}</h4>
                       <div class="card-options"><a class="card-options-collapse" href="#" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a><a class="card-options-remove" href="#" data-toggle="card-remove"><i class="fe fe-x"></i></a></div>
                     </div>
                     <div class="card-body">
@@ -20,32 +20,39 @@
                         </div>
                           <div class="col">
                             <h3 class="mb-1">{{ ProfileInfo.name }}</h3>
-                            <p class="mb-4">{{ role[0].role }}</p>
+                            <p class="mb-4">{{ $t(role[0].role) }}</p>
                           </div>
                         </div>
                         <div class="form-group">
-                          <p class="form-label">Use This Qr Code To Take Attendance</p>
                                 <div >
                                     <img
                                     :src="'../../'+ProfileInfo.qr_code" alt=""
                                     />
                                 </div>
                         </div>
+
                         <div class="form-group">
-                          <label style="font-size:12px" class="form-label">Email-Address:</label>
+                          <p class="form-label">{{ $t('Use This RF Code To Take Attendance')}}</p>
+                                    <label style="font-size:12px" class="form-label">{{ $t('RF code')}}:</label>
+                                <div >
+                                    {{ ProfileInfo.RF_code}}
+                                </div>
+                        </div>
+                        <div class="form-group">
+                          <label style="font-size:12px" class="form-label">{{ $t('email')}}:</label>
                           <div  style="font-size:18px">{{ ProfileInfo.email }}</div>
                         </div>
 
                         <div class="form-group">
-                          <label style="font-size:15px" class="form-label">ID:</label>
+                          <label style="font-size:15px" class="form-label">{{ $t('id')}}:</label>
                           <div style="font-size:18px" >{{ ProfileInfo.Personal_uuid }}</div>
                         </div>
                         <div class="form-group">
-                          <label style="font-size:15px"  class="form-label">userName:</label>
+                          <label style="font-size:15px"  class="form-label">{{ $t('user name')}}:</label>
                             <div style="font-size:18px" >{{ ProfileInfo.user_name }}</div>
                         </div>
                         <div class="form-group">
-                          <label style="font-size:15px"  class="form-label">phone:</label>
+                          <label style="font-size:15px"  class="form-label">{{ $t('phone')}}:</label>
                            <div style="font-size:18px" >{{ ProfileInfo.phone }}</div>
                         </div>
 
@@ -56,7 +63,7 @@
                 <div class="col-xl-8">
                   <form class="card" @submit.prevent="handelSubmitForm">
                     <div class="card-header">
-                        <h4 class="card-title mb-0">Edit Profile</h4>
+                        <h4 class="card-title mb-0">{{ $t('Edit Profile')}}</h4>
                         <div class="card-options">
                             <a class="card-options-collapse" href="#" data-toggle="card-collapse">
                                 <i class="fe fe-chevron-up"></i>
@@ -70,14 +77,14 @@
                       <div class="row">
                         <div class="col-md-6">
                           <div class="form-group">
-                            <label class="form-label">name</label>
+                            <label class="form-label">{{ $t('name')}}</label>
                             <input :class="['form-control',error.name ? 'is-invalid' : '']" type="text" placeholder="name" v-model="userData.name">
                             <small style="color: red" v-if="error.name">{{ error.name[0] }}</small>
                           </div>
                         </div>
                         <div class="col-sm-6 col-md-6">
                           <div class="form-group">
-                            <label class="form-label">Username</label>
+                            <label class="form-label">{{ $t('user name')}}</label>
                             <input :class="['form-control',error.user_name ? 'is-invalid' : '']" type="text" placeholder="user name" v-model="userData.user_name" >
                             <small style="color: red" v-if="error.user_name">{{ error.user_name[0] }}</small>
 
@@ -85,7 +92,7 @@
                         </div>
                         <div class="col-sm-6 col-md-6">
                           <div class="form-group">
-                            <label class="form-label">Email address</label>
+                            <label class="form-label">{{ $t('email')}}</label>
                             <input :class="['form-control',error.email ? 'is-invalid' : '']" type="email" placeholder="Email" v-model="userData.email">
                             <small style="color: red" v-if="error.email">{{ error.email[0] }}</small>
 
@@ -93,22 +100,22 @@
                         </div>
                           <div class="col-md-6">
                           <div class="form-group">
-                            <label class="form-label">phone</label>
+                            <label class="form-label">{{ $t('phone')}}</label>
                             <input :class="['form-control',error.phone ? 'is-invalid' : '']" type="text" placeholder="phone number" v-model="userData.phone">
                             <small style="color: red" v-if="error.phone">{{ error.phone[0] }}</small>
                           </div>
                         </div>
                         <div class="col-sm-6 col-md-6">
                           <div class="form-group">
-                            <label class="form-label">password</label>
-                            <input :class="['form-control',error.password ? 'is-invalid' : '']" type="password" placeholder="password" v-model="userData.password" >
+                            <label class="form-label">{{ $t('password')}}</label>
+                            <input :class="['form-control',error.password ? 'is-invalid' : '']" type="password" :placeholder="$t('password')" v-model="userData.password" >
                             <small style="color: red" v-if="error.password">{{ error.password[0] }}</small>
                           </div>
                         </div>
                         <div class="col-sm-6 col-md-6">
                           <div class="form-group">
-                            <label class="form-label">confirm password</label>
-                            <input :class="['form-control',error.confirm_password ? 'is-invalid' : '']"  type="password" placeholder="confirm password" v-model="userData.confirm_password">
+                            <label class="form-label">{{ $t('confirm password')}}</label>
+                            <input :class="['form-control',error.confirm_password ? 'is-invalid' : '']"  type="password" :placeholder="$t('confirm password')" v-model="userData.confirm_password">
                             <small style="color: red" v-if="error.confirm_password">{{ error.confirm_password[0] }}</small>
                           </div>
                         </div>
@@ -116,7 +123,7 @@
 
                         <div class="col-sm-12 col-md-12">
                           <div class="form-group">
-                            <label class="form-label">profile picture</label>
+                            <label class="form-label">{{ $t('profile picture')}}</label>
                                     <vue-dropzone
                                         name="file"
                                         ref="myVueDropzone"
@@ -136,7 +143,7 @@
                       </div>
                     </div>
                     <div class="card-footer text-right">
-                      <button class="btn btn-primary btn-sm" type="submit" >Update Profile</button>
+                      <button class="btn btn-primary btn-sm" type="submit" >{{ $t('Update Profile')}}</button>
                     </div>
                   </form>
                 </div>
@@ -247,7 +254,7 @@ export default {
                  this.ProfileInfo = this.$store.getters.USER,
                     Toast.fire({
                     icon: 'success',
-                    title: 'profile updated successfully'
+                    title: this.$t('profile updated successfully')
                 })
                 this.error=[]
 
@@ -270,7 +277,6 @@ export default {
             this.userData.name = this.$store.getters.USER.name
             this.userData.user_name = this.$store.getters.USER.user_name
             this.userData.email = this.$store.getters.USER.email
-            this.userData.password = this.$store.getters.USER.password
             this.userData.phone = this.$store.getters.USER.phone
             this.userData.phone = this.$store.getters.USER.phone
 

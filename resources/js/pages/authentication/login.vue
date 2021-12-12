@@ -33,11 +33,11 @@
                                 method="post"
                                 @submit.prevent="login"
                             >
-                                <h4>Sign in to  account</h4>
-                                <p>Enter your email & password to login</p>
+                                <h4>{{ $t('Sign in to account')}}</h4>
+                                <p>{{ $t('Enter your email & password to login')}}</p>
                                 <div class="form-group">
                                     <label class="col-form-label"
-                                        >Email Address</label
+                                        >{{ $t('email')}}</label
                                     >
                                     <input
                                         :class="[
@@ -47,7 +47,7 @@
                                                 : ''
                                         ]"
                                         type="email"
-                                        placeholder="your email"
+                                        :placeholder=" $t('email')"
                                         v-model="user.email"
                                     />
                                     <div
@@ -64,7 +64,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="col-form-label"
-                                        >Password</label
+                                        >{{ $t('password')}}</label
                                     >
                                     <input
                                         :class="[
@@ -76,7 +76,7 @@
                                         ]"
                                         type="password"
                                         name="login[password]"
-                                        placeholder="password"
+                                        :placeholder=" $t('password')"
                                         v-model="user.password"
                                     />
 
@@ -96,13 +96,13 @@
                                         class="btn btn-primary btn-block"
                                         type="submit"
                                     >
-                                        Sign in
+                                        {{$t('Sign in')}}
                                     </button>
                                 </div>
                             </form>
                             <h6 class="mt-3 ">
 
-                               <router-link :to="{name : 'forgotPassword'}">forget password ?</router-link>
+                               <router-link :to="{name : 'forgotPassword'}">{{ $t('forget password')}} ?</router-link>
 
                             </h6>
                         </div>
