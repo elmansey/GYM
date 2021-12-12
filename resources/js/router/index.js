@@ -368,17 +368,23 @@ const routes = [
                 component: require('@/pages/errors/error_403').default,
 
             },
+
             {
                 path: 'permissions',
                 name: 'permissions',
                 component: require('@/pages/roles/permissions').default,
                 meta: {
-
                     permission: 'show-roles-list'
-
                 },
+            },
 
-
+            {
+                path: 'customPermissions',
+                name: 'customPermissions',
+                component: require('@/pages/roles/customPermissions').default,
+                meta: {
+                    permission: 'show-customPermissions'
+                },
             },
 
             {

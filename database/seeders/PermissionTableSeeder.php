@@ -71,7 +71,8 @@ class PermissionTableSeeder extends Seeder
             'add-sales-invoices',
             'show-Archive',
             "Account",
-            "show-statistics"
+            "show-statistics",
+            "show-customPermissions"
 
 
 

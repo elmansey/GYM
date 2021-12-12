@@ -55,7 +55,7 @@
                                                 />
                                             </b-form-group>
                                         </div>
-                                        <small style="color: red"v-if="error.permission">
+                                        <small style="color: red" v-if="error.permission">
 
                                             {{  $t(error.permission[0]) }}
                                         

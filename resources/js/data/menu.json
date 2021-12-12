@@ -224,6 +224,14 @@
                     "type": "link",
                     "permission": "add-role"
 
+                },
+
+                {
+                    "path": "/dashboard/customPermissions",
+                    "title": "custom permissions",
+                    "type": "link",
+                    "permission": "show-customPermissions"
+
                 }
             ]
         },
