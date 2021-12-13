@@ -31,6 +31,7 @@ class members_extra_information extends Model
         'start_date',
         'period_Expiry',
         'Subscription_period',
+        'subscription_status',
         'gender',
         'membership_price',
         'date_of_birth',

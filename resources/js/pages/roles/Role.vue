@@ -41,7 +41,7 @@
                                             @tag="addTag">
                                         </multiselect> -->
                                         <div class="col col-12">
-                                            <b-form-group class="has-float-label my-3 p-0">
+                                            <b-form-group class="has-float-label my-3 p-0"  style="border: none">
                                                 <v-select
                                                 
                                                 v-model="role.permission"

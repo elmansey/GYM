@@ -38,6 +38,11 @@
                                                             {{ ++data.index }}
                                                     </template>
 
+                                                    <template #cell(subscription_status)="data">
+                                                           <span v-if="data.item.subscription_status == 'paid'" class="badge badge-pill badge-success">{{data.item.subscription_status}}</span>
+                                                           <span v-if="data.item.subscription_status == 'expired'" class="badge badge-pill badge-danger">{{data.item.subscription_status}}</span>
+                                                    </template>
+
                                                     <template #cell(profile_picture)="data">
                                                                
                                                            <img
@@ -175,6 +180,7 @@ export default {
             tablefields1: [
                 {'id' : this.$t('id')},
                 { 'profile_picture' : this.$t('profile_picture')},
+                { 'subscription_status' : this.$t('subscription status')},
                 {'name' : this.$t('name')},
                 { key: 'phone', label: this.$t('phone'), sortable: false, },
                 { key: 'phone', label: this.$t('phone'), sortable: false, },

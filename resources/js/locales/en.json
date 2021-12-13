@@ -50,6 +50,7 @@
     "Membership stats": "Membership stats",
     "membership name": "membership name",
     "gender stats": "gender stats",
+    "gender": "gender",
     "male": "male",
     "female": "female",
     "team Chat": "team Chat",
@@ -346,7 +347,17 @@
     "show-Archive": "show-Archive",
     "show-statistics": "show-statistics",
     "show-customPermissions": "show-customPermissions",
-    "Permissions allowed successfully" : "Permissions allowed successfully"
+    "Permissions allowed successfully": "Permissions allowed successfully",
+    "latest events": "latest events",
+    "Subscription has expired": "Subscription has expired",
+    "subscription status": "subscription status",
+    "expiry at": "expiry at",
+    "start data": "start data",
+    "uuid": "uuid",
+    "city" : "city"
+
+
+
 
 
 

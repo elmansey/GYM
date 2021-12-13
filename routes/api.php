@@ -153,6 +153,8 @@ use App\Http\Controllers\API\product_invoice\product_invoiceController;
         Route::post('addMember',[membersController::class,'store']);
         Route::get('freezeThisAccount/{id}',[membersController::class,'freezeThisAccount']);
         Route::get('unFreezeThisAccount/{id}',[membersController::class,'unFreezeThisAccount']);
+        Route::get('Subscription_Expiry' , [membersController::class, 'Subscription_Expiry']);
+
 
 
 
@@ -213,6 +215,7 @@ use App\Http\Controllers\API\product_invoice\product_invoiceController;
         // history || activity logs
 
         Route::get('history' , [activityLogsController::class, 'index']);
+        Route::get('lastLogs' , [activityLogsController::class, 'lastLogs']);
         // Route::post('addActivityLogs' , [activityLogsController::class, 'store']);
 
 

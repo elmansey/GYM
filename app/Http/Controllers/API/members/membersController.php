@@ -45,14 +45,13 @@ class membersController extends Controller
 
     public function store(Request $request){
 
-
+       
 
                 $allowed = $request['Membership_choose_allow_private_Features'] == 'true'  ? true  : false;
 
                 $request['class_id'] =  json_decode($request['class_id'] ,true);
                 $request['group_id'] =  json_decode($request['group_id'] ,true);
-                $request['source']   = $request['source']  ? "null" : null;
-                $request['interested_area']   = $request['interested_area']  ? "null" : null;
+         
                 $groupIdes= [];
                 if($request['group_id']){
 
@@ -81,6 +80,7 @@ class membersController extends Controller
                     'phone'        => 'required',
                     'period_Expiry'            => 'required',
                     'Subscription_period'        => 'required',
+                    'subscription_status'        => 'required',
                     'RF_code'            => 'required',
                     'payment'            => 'required',
                     'membership_price'  => 'required',
@@ -135,6 +135,7 @@ class membersController extends Controller
                 $ExtraInformation->total_payment             = $request->input('total_payment');
                 $ExtraInformation->membership_price             = $request->input('membership_price');
                 $ExtraInformation->Subscription_period             = $request->input('Subscription_period');
+                $ExtraInformation->subscription_status             = $request->input('subscription_status');
                 $ExtraInformation->profile_picture             = $fileName ? $fileName : null ;
                 $ExtraInformation->phone             = $request->input('phone');
                 $ExtraInformation->save();
@@ -191,13 +192,12 @@ class membersController extends Controller
 
     public function update(Request $request, $id){
 
-
         $allowed = $request['Membership_choose_allow_private_Features'] == 'true' ? true  : false;
 
         $request['class_id'] =  json_decode($request['class_id'] ,true);
         $request['group_id'] =  json_decode($request['group_id'] ,true);
-        $request['source']   = $request['source']  ? "null" : null;
-        $request['interested_area']   = $request['interested_area']  ? "null" : null;
+        $request['source']   = json_decode($request['source']);
+        $request['interested_area']   = json_decode($request['interested_area']);
         $groupIdes= [];
         if($request['group_id']){
 
@@ -208,6 +208,7 @@ class membersController extends Controller
             $request['group_id'] = $groupIdes;
         }
 
+   
 
 
         $validator = validator::make($request->all(),[
@@ -224,7 +225,8 @@ class membersController extends Controller
             'city'                => 'required',
             'phone'        => 'required',
             'period_Expiry'            => 'required',
-            'Subscription_period'        => 'required',
+            'subscription_status'        => 'required',
+            'subscription_status'        => 'required',
             'RF_code'            => 'required',
             'payment'            => 'required',
             'membership_price'  => 'required',
@@ -278,7 +280,7 @@ class membersController extends Controller
 
       // extra data
       $ExtraInformation          =  members_extra_information::where('id','=',$id)->first();
-
+      
       $ExtraInformation->update($input);
 
 
@@ -357,6 +359,8 @@ class membersController extends Controller
 
     }
 
+
+
     public function unFreezeThisAccount($id){
 
         $member = members_extra_information::find($id);
@@ -378,6 +382,16 @@ class membersController extends Controller
 
 
         return response()->json(['success' => true , 'message' => 'unFreeze successfully'],200);
+    }
+
+
+    public function Subscription_Expiry(){
+        $today = Carbon::now('Africa/Cairo')->toDateString();
+
+        
+
+        $members = members_extra_information::where('period_Expiry','<=',$today)->get();
+        return response()->json(['success' => 'true','members' => $members]);
     }
 
 }

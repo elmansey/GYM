@@ -1,7 +1,7 @@
 <template>
      <div v-if="isLoadig">
 
-        <Breadcrumbs main="Dashboard" title="member details" />
+        <Breadcrumbs :main="$t('Dashboard')" :title="$t('member details')" />
          <div class="container-fluid">
 
             <div class="row">
@@ -20,7 +20,7 @@
                                         <table class="table">
                                             <tbody>
                                                 <tr>
-                                                <th width="50" style="font-size: 17px;font-weight">uuid</th>
+                                                <th width="50" style="font-size: 17px;font-weight">{{ $t('uuid')}}</th>
                                                     <td  >
                                                     {{ details.Personal_uuid }}
                                                     </td>
@@ -28,37 +28,37 @@
 
                                                 </tr>
                                                 <tr>
-                                                <th width="50" style="font-size: 17px;font-weight">name</th>
+                                                <th width="50" style="font-size: 17px;font-weight">{{ $t('name')}}</th>
                                                     <td  >
                                                     {{ details.name }}
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                <th width="50" style="font-size: 17px;font-weight">qr code</th>
+                                                <th width="50" style="font-size: 17px;font-weight">{{ $t('qr_code')}}</th>
                                                     <td  >
                                                     <img :src="'../../'+details.qr_code" />
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                <th width="50" style="font-size: 17px;font-weight">phone</th>
+                                                <th width="50" style="font-size: 17px;font-weight">{{ $t('phone')}}</th>
                                                     <td  >
                                                     {{ details.phone }}
                                                     </td>
                                                 </tr>
                                                 <tr v-if="details.member_ships_relation">
-                                                <th width="50" style="font-size: 17px;font-weight">membership</th>
+                                                <th width="50" style="font-size: 17px;font-weight">{{ $t('membership')}}</th>
                                                     <td  >
                                                     {{ details.member_ships_relation.name }}
                                                     </td>
                                                 </tr>
                                                 <tr v-if="details.class_relation">
-                                                <th width="50" style="font-size: 17px;font-weight">class</th>
+                                                <th width="50" style="font-size: 17px;font-weight">{{ $t('class')}}</th>
                                                     <td  >
                                                     {{ 'from : ' + details.class_relation.startingTime + 'to: '+ details.class_relation.endingTime }}
                                                     </td>
                                                 </tr>
                                                 <tr v-if="details.group_id && details.group_id.length > 1">
-                                                <th width="50" style="font-size: 17px;font-weight">group</th>
+                                                <th width="50" style="font-size: 17px;font-weight">{{ $t('group')}}</th>
                                                     <td  >
                                                         <span class="badge badge-pill badge-dark" v-for=" (val,ke) in  details.group_id" :key="ke">
                                                                 {{  val.name }}
@@ -66,35 +66,43 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                <th width="50" style="font-size: 17px;font-weight">Subscription period</th>
+                                                <th width="50" style="font-size: 17px;font-weight">{{ $t('Subscription period')}}</th>
                                                     <td  >
                                                     {{ details.Subscription_period }}
                                                     </td>
                                                 </tr>
 
                                                 <tr>
-                                                <th width="50" style="font-size: 17px;font-weight">start date</th>
+                                                <th width="50" style="font-size: 17px;font-weight">{{ $t('start date')}}</th>
                                                     <td  >
                                                     {{ details.start_date }}
                                                     </td>
                                                 </tr>
 
                                                 <tr>
-                                                <th width="50" style="font-size: 17px;font-weight">period Expiry</th>
+                                                <th width="50" style="font-size: 17px;font-weight">{{ $t('period Expiry')}}</th>
                                                     <td  >
                                                     {{ details.period_Expiry }}
                                                     </td>
                                                 </tr>
 
+                                                <th width="50" style="font-size: 17px;font-weight">{{ $t('subscription status')}}</th>
+                                                    <td  >
+                                                        <span v-if="details.subscription_status == 'paid'" class="badge badge-pill badge-success">{{details.subscription_status}}</span>
+                                                        <span v-if="details.subscription_status == 'expired'" class="badge badge-pill badge-danger">{{details.subscription_status}}</span>
+                                                   
+                                                    </td>
+                                                </tr>
+
 
                                                 <tr>
-                                                <th width="50" style="font-size: 17px;font-weight">gender </th>
+                                                <th width="50" style="font-size: 17px;font-weight">{{ $t('gender')}} </th>
                                                     <td  >
                                                     {{ details.gender }}
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                <th width="50" style="font-size: 17px;font-weight">date of birth </th>
+                                                <th width="50" style="font-size: 17px;font-weight">{{ $t('date of birth')}} </th>
                                                     <td  >
                                                     {{ details.date_of_birth }}
                                                     </td>
@@ -102,13 +110,13 @@
 
 
                                                 <tr>
-                                                <th width="50" style="font-size: 17px;font-weight">address </th>
+                                                <th width="50" style="font-size: 17px;font-weight">{{ $t('address')}} </th>
                                                     <td  >
                                                     {{ details.address }}
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                <th width="50" style="font-size: 17px;font-weight">city </th>
+                                                <th width="50" style="font-size: 17px;font-weight">{{ $t('City')}} </th>
                                                     <td  >
                                                     {{ details.city }}
                                                     </td>
@@ -127,7 +135,7 @@
                                 <div style="overflow:scroll" class="col-lg-6 col-md-6">
                                     <div class="card-body">
                                         <div >
-                                            <i  class="fa fa-link m-15" ></i>logs
+                                            <i  class="fa fa-link m-15" ></i>{{ $t('logs')}}
                                         </div>
                                         <div v-for="(item,index) in details.log" :key="index">
 

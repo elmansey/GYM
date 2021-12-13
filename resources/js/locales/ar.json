@@ -52,6 +52,7 @@
     "staff team": "فريق العمل",
     "Membership stats": "احصائيات العضويه",
     "gender stats": "احصائيات النوع",
+    "gender": "النوع",
     "male": "ذكر",
     "female": "انثي",
     "team Chat": "مراسله الفريق",
@@ -272,6 +273,7 @@
     "Quantity": "العدد",
     "Subtotal": "المجموع الفرعي",
     "Activities logs": "سجل النشاطات",
+    "logs": "سجل النشاطات",
     "Activities list": "قائمه النشاطات",
     "setting": "الاعدادات",
     "Gym name": "اسم الجيم",
@@ -357,7 +359,15 @@
     "show-Archive": "الارشيف",
     "show-statistics": "مشاهده الاحصائيات",
     "show-customPermissions": "الاذونات المخصصه",
-    "Permissions allowed successfully" : "تم السماح بالاذونات بنجاح"
+    "Permissions allowed successfully": "تم السماح بالاذونات بنجاح",
+    "latest events": "اخر النشاطات",
+    "Subscription has expired": "انتهي الاشتراك",
+    "subscription status": "حاله الاشتراك",
+    "expiry at": "انتهي منذ",
+    "start data" :"تاريخ البدء",
+    "uuid" : "المعرف"
+
+
 
 
 
