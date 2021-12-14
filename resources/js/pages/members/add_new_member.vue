@@ -149,28 +149,6 @@
                                         </div>
 
 
-                                        <div class="mb-2 col-md-6 col-lg-6 col-sm-12">
-                                            <div class="col-form-label">    {{ $t('subscription status')}} </div>
-
-                                            <b-form-group class="has-float-label my-3 p-0"  style="border: none">
-                                                <v-select
-                                                
-                                                v-model="memberData.subscription_status"
-                                                :options="options"
-                                                :searchable="true"
-                                                :clearable="true"
-                                                placeholder="Search"
-                                                label="name"
-                                                
-                                              
-                                                />
-                                            </b-form-group>
-                                             <small style="color: red" v-if="error.total_payment">{{  $t(error.total_payment[0]) }}</small >
-                                        </div>
-
-
-                                          
-
                                             <div class="mb-2 col-md-12 col-lg-12 col-sm-12"  v-if="memberData.Membership_choose_allow_private_Features">
                                                       <div class="col-form-label">{{$t('groups')}} </div>
 
@@ -367,7 +345,6 @@ export default {
                 age:'',
 
                 total_payment:'',
-                subscription_status:'paid',
 
 
                 address:'',
@@ -475,7 +452,6 @@ export default {
                             this.memberData.total_payment    = res.data.extraInformation.total_payment
                             this.memberData.membership_price    = res.data.extraInformation.membership_price
                             this.memberData.Subscription_period    = res.data.extraInformation.Subscription_period
-                            this.memberData.subscription_status    = res.data.extraInformation.subscription_status
                             this.memberData.Membership_choose_allow_private_Features    = this.IsAllowFuatureInThisMembership()
                             this.getAllClasseRelatedToThisGroup()
                             this.countMemberAge()
@@ -510,7 +486,6 @@ export default {
                 this.memberData.RF_code    = ''
                 this.memberData.period_Expiry    = ''
                 this.memberData.Subscription_period    = ''
-                this.memberData.subscription_status    = 'paid'
                 this.memberData.total_payment    = ''
                 this.memberData.payment    = ''
                 this.memberData.profile_picture    = []
@@ -764,7 +739,6 @@ export default {
                 formData.append('profile_picture'           , this.memberData.profile_picture)
                 formData.append('period_Expiry'           , this.memberData.period_Expiry)
                 formData.append('Subscription_period'           , this.memberData.Subscription_period)
-                formData.append('subscription_status'           , this.memberData.subscription_status)
                 formData.append('total_payment'           , this.memberData.total_payment)
                 formData.append('payment'           , this.memberData.payment)
                 formData.append('membership_price'           , this.memberData.membership_price)
@@ -832,7 +806,6 @@ export default {
                         this.memberData.RF_code    = ''
                         this.memberData.period_Expiry    = ''
                         this.memberData.Subscription_period    = ''
-                        this.memberData.subscription_status    = 'paid'
                         this.memberData.total_payment = ''
                         this.memberData.payment = ''
                         this.memberData.membership_price = ''
@@ -884,7 +857,6 @@ export default {
                 formData.append('payment'           , this.memberData.total_payment)
                 formData.append('membership_price'           , this.memberData.membership_price)
                 formData.append('Subscription_period'           , this.memberData.Subscription_period)
-                formData.append('subscription_status'           , this.memberData.subscription_status)
                 formData.append('Membership_choose_allow_private_Features'           , this.memberData.Membership_choose_allow_private_Features)
 
 
@@ -920,7 +892,6 @@ export default {
                         this.memberData.RF_code    = ''
                         this.memberData.period_Expiry    = ''
                         this.memberData.Subscription_period    = ''
-                        this.memberData.subscription_status    = 'paid'
                         this.memberData.total_payment    = ''
                         this.memberData.payment    = ''
                         this.memberData.profile_picture    = []
@@ -980,7 +951,6 @@ export default {
                 this.memberData.RF_code    = ''
                 this.memberData.period_Expiry    = ''
                 this.memberData.Subscription_period    = ''
-                this.memberData.subscription_status    = 'paid'
                 this.memberData.total_payment    = ''
                 this.memberData.payment    = ''
                 this.memberData.profile_picture    = []

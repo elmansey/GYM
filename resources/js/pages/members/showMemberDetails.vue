@@ -86,13 +86,7 @@
                                                     </td>
                                                 </tr>
 
-                                                <th width="50" style="font-size: 17px;font-weight">{{ $t('subscription status')}}</th>
-                                                    <td  >
-                                                        <span v-if="details.subscription_status == 'paid'" class="badge badge-pill badge-success">{{details.subscription_status}}</span>
-                                                        <span v-if="details.subscription_status == 'expired'" class="badge badge-pill badge-danger">{{details.subscription_status}}</span>
-                                                   
-                                                    </td>
-                                                </tr>
+                                              
 
 
                                                 <tr>

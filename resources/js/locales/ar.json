@@ -69,6 +69,7 @@
     "RF code": "كود RF",
     "start date": "بدايه الاشتراك",
     "membership": "نوع العضويه",
+    "number": "عدد",
     "payment pattern": "نطام الدفع",
     "membership price": "سعر العضويه",
     "Subscription period": "فتره الاشتراك",
@@ -215,8 +216,8 @@
     "Search or choose": "ابحث او اختر",
     "copied : ": "تم النسخ : ",
     "copy  : ": "نسخ  : ",
-    "<p> attendance are already taken</p>": "<p> تم تسجيل الحضور اليوم</p>",
-    "attendance are already taken": " تم تسجيل الحضور اليوم",
+    "attendance already taken": " تم تسجيل الحضور اليوم مسبقا",
+    "taken": "تم التسجيل",
     "Leave": "مغادره",
     "Come": "حضور",
     "Delete product": "حذف المنتج",
@@ -370,7 +371,10 @@
     "attendance fail": "الدخول فشل",
     "edit-member-in-gym": "تعديل عضو",
     "freezeMemberAccountList": "قائمه الحسابات المجمده",
-    "freezeMemberAccount": "تجميد حساب"
+    "freezeMemberAccount": "تجميد حساب",
+    "expire": "الاشتراك منتهي"
+
+
 
 
 

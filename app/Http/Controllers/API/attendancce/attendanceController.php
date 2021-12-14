@@ -40,15 +40,15 @@ class attendanceController extends Controller
                         User::where('RF_code', '=', $RF_code)->first() :
                         members_extra_information::where('RF_code', '=', $RF_code)->first();
 
-                        if($input['period_Expiry'] && $input['subscription_status'] ){
+                        if($input['period_Expiry']){
                             $today = Carbon::now('Africa/Cairo')->toDateString();
-                            if($input['period_Expiry'] <= $today && $input['subscription_status'] == 'expired'){
+                            if($input['period_Expiry'] <= $today){
     
-                                return response()->json(['success' => true , 'status' => 'expire' ]);
+                                return response()->json(['success' => true , 'status' => 'expire','how' => $input ,'message' => 'attendance fail']);
                             }
                         }
                         
-                        
+
                     $find = attendance::where('RF_code', '=', $input['RF_code'])->latest()->get()->first();
 
 
@@ -66,7 +66,7 @@ class attendanceController extends Controller
 
                                 ]);
 
-                            return response()->json(['success' => true , 'attendance' => new attendanceResource($saveAttendance),'status' => 'leave','how'=> $input], 200);
+                            return response()->json(['success' => true , 'attendance' => new attendanceResource($saveAttendance),'status' => 'leave','how'=> $input,'message' => 'attendance success'], 200);
 
                         } else if ($find['come_dateTime'] != null && $find['leave_dateTime'] != null  && $diffInHours > 6) {
                             $dateTime = $request->date .' '. $request->time;
@@ -88,10 +88,10 @@ class attendanceController extends Controller
 
                                 ]);
 
-                            return response()->json(['success' => true , 'attendance' => new attendanceResource($saveAttendance),'status' => 'come','how'=> $input], 200);
+                            return response()->json(['success' => true , 'attendance' => new attendanceResource($saveAttendance),'status' => 'come','how'=> $input,'message' => 'attendance success'], 200);
 
                         } else {
-                            return response()->json([ 'status' => '400', 'message' => 'attendance already taken']);
+                            return response()->json([ 'status' => 'taken', 'message' => 'attendance already taken','how' => $input]);
                         }
                     } else {
 
@@ -102,7 +102,7 @@ class attendanceController extends Controller
                                 'come_dateTime' => $dateTime
                             ]);
 
-                        return response()->json(['success' => true , 'attendance' => new attendanceResource($saveAttendance),'status' => 'come','how'=> $input], 200);
+                        return response()->json(['success' => true , 'attendance' => new attendanceResource($saveAttendance),'status' => 'come','how'=> $input, 'message' => 'attendance success'], 200);
 
                     }
 
@@ -121,11 +121,11 @@ class attendanceController extends Controller
 
 
 
-                    if($input['period_Expiry'] && $input['subscription_status'] ){
+                    if($input['period_Expiry'] ){
                         $today = Carbon::now('Africa/Cairo')->toDateString();
-                        if($input['period_Expiry'] <= $today && $input['subscription_status'] == 'expired'){
+                        if($input['period_Expiry'] <= $today ){
 
-                            return response()->json(['success' => true , 'status' => 'expire' ]);
+                            return response()->json(['success' => true , 'status' => 'expire' ,'how' => $input,'message' => 'attendance fail']);
                         }
                     }
 
@@ -156,7 +156,7 @@ class attendanceController extends Controller
 
                                             ]);
 
-                                return response()->json(['success' => true , 'attendance' => new attendanceResource($saveAttendance),'status' => 'leave','how'=> $input], 200);
+                                return response()->json(['success' => true , 'attendance' => new attendanceResource($saveAttendance),'status' => 'leave','how'=> $input,'message' => 'attendance success'], 200);
 
                             } else if ($find['come_dateTime'] != null && $find['leave_dateTime'] != null   && $diffInHours > 6) {
                                 $RF_code = $request->RF_code;
@@ -173,7 +173,7 @@ class attendanceController extends Controller
                                                 'come_dateTime' => $dateTime
                                             ]);
 
-                                return response()->json(['success' => true , 'attendance' => new attendanceResource($saveAttendance),'status' => 'come','how'=> $input], 200);
+                                return response()->json(['success' => true , 'attendance' => new attendanceResource($saveAttendance),'status' => 'come','how'=> $input,'message' => 'attendance success'], 200);
 
                             }else if ($find['come_dateTime'] != null && $find['leave_dateTime'] != null  && $diffInHours > 6) {
                                     $dateTime = $date .' '. $time;
@@ -194,11 +194,11 @@ class attendanceController extends Controller
 
                                         ]);
 
-                                    return response()->json(['success' => true , 'attendance' => new attendanceResource($saveAttendance),'status' => 'come','how'=> $input], 200);
+                                    return response()->json(['success' => true , 'attendance' => new attendanceResource($saveAttendance),'status' => 'come','how'=> $input,'message' => 'attendance success'], 200);
 
                             } else {
 
-                                    return response()->json([ 'status' => '400', 'message' => 'attendance already taken']);
+                                    return response()->json([ 'status' => 'taken', 'message' => 'attendance already taken','how' => $input]);
 
                             }
 
@@ -218,7 +218,7 @@ class attendanceController extends Controller
                                 'come_dateTime' => $dateTime
                             ]);
 
-                    return response()->json(['success' => true , 'attendance' => new attendanceResource($saveAttendance),'status' => 'come','how'=> $input], 200);
+                    return response()->json(['success' => true , 'attendance' => new attendanceResource($saveAttendance),'status' => 'come','how'=> $input,'message' => 'attendance success'], 200);
 
                 }
             }

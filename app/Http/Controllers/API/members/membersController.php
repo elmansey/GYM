@@ -80,7 +80,6 @@ class membersController extends Controller
                     'phone'        => 'required',
                     'period_Expiry'            => 'required',
                     'Subscription_period'        => 'required',
-                    'subscription_status'        => 'required',
                     'RF_code'            => 'required',
                     'payment'            => 'required',
                     'membership_price'  => 'required',
@@ -135,7 +134,6 @@ class membersController extends Controller
                 $ExtraInformation->total_payment             = $request->input('total_payment');
                 $ExtraInformation->membership_price             = $request->input('membership_price');
                 $ExtraInformation->Subscription_period             = $request->input('Subscription_period');
-                $ExtraInformation->subscription_status             = $request->input('subscription_status');
                 $ExtraInformation->profile_picture             = $fileName ? $fileName : null ;
                 $ExtraInformation->phone             = $request->input('phone');
                 $ExtraInformation->save();
@@ -225,8 +223,7 @@ class membersController extends Controller
             'city'                => 'required',
             'phone'        => 'required',
             'period_Expiry'            => 'required',
-            'subscription_status'        => 'required',
-            'subscription_status'        => 'required',
+            'Subscription_period'        => 'required',
             'RF_code'            => 'required',
             'payment'            => 'required',
             'membership_price'  => 'required',
@@ -386,12 +383,15 @@ class membersController extends Controller
 
 
     public function Subscription_Expiry(){
-        $today = Carbon::now('Africa/Cairo')->toDateString();
 
-        
+        $today = Carbon::now('Africa/Cairo')->toDateString();
 
         $members = members_extra_information::where('period_Expiry','<=',$today)->get();
         return response()->json(['success' => 'true','members' => $members]);
     }
+
+
+
+  
 
 }

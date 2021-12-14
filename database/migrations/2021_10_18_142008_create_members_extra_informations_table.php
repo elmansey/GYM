@@ -41,7 +41,6 @@ class CreateMembersExtraInformationsTable extends Migration
             $table->string('days_left_before_freezing')->nullable();
             $table->string('total_payment')->nullable();
             $table->json('log')->nullable();
-            $table->enum('subscription_status',['paid','expired']);
             $table->timestamps();
 
 

@@ -61,7 +61,38 @@
                             <div  class="col-lg-4 ">
                                 <div class="card-body" style="height:100%;border-left: 1px solid #EFEFEF;">
                                     <input  id="mytext"  @keyup.enter="handelAttendanceByScan" type="text" v-model="attendanceDate.scan.RF_code" :placeholder="$t('RF code')" style="width: 100%; padding: 8px;border: 1px solid #EFEFEF"/>
+
+                                             
+                                    <div  class="col-lg-12" style="height:600px;overflow:scroll!important;padding:0px" >
+                                        <div v-for="(item,index) in attendanceAction" :key="index">
+                                            <section class=" dashboard-list-with-user ">
+                                                    <div class="d-flex flex-row   border-bottom" style=" margin-top: 4px;padding: 6px;">
+                                                        
+                                                            
+                                                                <div class="col-10">
+                                                                    <p class="font-weight-medium mb-0">{{item.how.name}}</p>
+                                                                    <h5 class="font-weight-medium mb-0">{{$t(item.status)}}</h5>
+                                                                    <span>{{$t(item.message)}}</span>
+                                                                </div>
+                                                                
+
+                                                                <div class="col-2">
+                                                                    <feather  style="width: 20px;margin-top: 12px;color:#116530"    v-if="item.status == 'come'" type="log-in"></feather>
+                                                                    <feather style="width: 20px;margin-top: 12px;color:#116530"    v-if="item.status == 'leave'" type="log-out"></feather>
+                                                                    <feather  style="width: 20px;margin-top: 12px;color:#516BEB"   v-if="item.status == 'taken'" type="check-circle"></feather>
+                                                                    <feather  style="width: 20px;margin-top: 12px;color:#CD1818"  v-if="item.status == 'expire'" type="x-circle"></feather>
+                                                                </div>
+                                                            
+                                                    </div>
+                                            </section>
+                                        </div>
+                                    </div>
+
+
+
                                 </div>
+
+
                             </div>
 
 
@@ -171,6 +202,7 @@
 
                 },
                 copiedText:'',
+                attendanceAction:[],
 
 
 
@@ -300,63 +332,66 @@
                   axios.post('saveAttendance',formData)
                     .then(res => {
 
-                        if(res.data.success){
+                        if(res.data.success || res.data.status == 'taken' ){
 
-                            if(res.data.status == 'leave'){
+                            this.attendanceAction.unshift(res.data)
 
-
-                                this.$notify({
-                                    group: 'app',
-                                    type: 'success',
-                                    duration: 1000,
-                                    speed: 1000,
-                                    title: 'attendance success',
-                                    text: 'god bay ' + '<span>' + res.data.how.name+ '</span>' + ' <h6>'+ this.$t('Leave') +'</h6>' +
-                                    'in '+res.data.attendance.leave_time
-                                });
-
-                            }
-
-                            if(res.data.status == 'expire'){
+                            // if(res.data.status == 'leave'){
 
 
-                                this.$notify({
-                                    group: 'app',
-                                    type: 'error',
-                                    duration: 1000,
-                                    speed: 1000,
-                                    title: '<span style="color:#fff">'+ this.$t('attendance fail')+'</span>',
-                                    text: '<span style="color:#fff;padding:25px">'+ this.$t('The monthly subscription has expired')+'</span>'
-                                });
+                            //     this.$notify({
+                            //         group: 'app',
+                            //         type: 'success',
+                            //         duration: 1000,
+                            //         speed: 1000,
+                            //         title: 'attendance success',
+                            //         text: 'god bay ' + '<span>' + res.data.how.name+ '</span>' + ' <h6>'+ this.$t('Leave') +'</h6>' +
+                            //         'in '+res.data..leave_time
+                            //     });
 
-                            }
+                            // }
 
-                            if(res.data.status == 'come'){
+                            // if(res.data.status == 'expire'){
 
-                                this.$notify({
-                                    type: 'success',
-                                    group:"app",
-                                    duration: 1000,
-                                      speed: 1000,
-                                    title: 'attendance success',
-                                    text: 'welcome ' + '<span>' + res.data.how.name+ '</span>' + ' <h6>'+ this.$t('Come') +'</h6>' +
-                                    'in '+res.data.attendance.come_time
-                                });
 
-                            }
+                            //     this.$notify({
+                            //         group: 'app',
+                            //         type: 'error',
+                            //         duration: 1000,
+                            //         speed: 1000,
+                            //         title: '<span style="color:#fff">'+ this.$t('attendance fail')+'</span>',
+                            //         text: '<span style="color:#fff;padding:25px">'+ this.$t('The monthly subscription has expired')+'</span>'
+                            //     });
+
+                            // }
+
+                            // if(res.data.status == 'come'){
+
+                            //     this.$notify({
+                            //         type: 'success',
+                            //         group:"app",
+                            //         duration: 1000,
+                            //           speed: 1000,
+                            //         title: 'attendance success',
+                            //         text: 'welcome ' + '<span>' + res.data.how.name+ '</span>' + ' <h6>'+ this.$t('Come') +'</h6>' +
+                            //         'in '+res.data.attendance.come_time
+                            //     });
+
+                            // }
 
 
                         }
-                        if(res.data.status == 400){
-                              this.$notify({
-                                    group:"app",
-                                    type: 'danger',
-                                    duration: 1000,
-                                    speed: 1000,
-                                    title: this.$t('attendance are already taken'),
-                                    text: this.$t('<p> attendance are already taken</p>')
-                                });
-                        }
+
+                        // if(res.data.status == 400){
+                        //       this.$notify({
+                        //             group:"app",
+                        //             type: 'danger',
+                        //             duration: 1000,
+                        //             speed: 1000,
+                        //             title: this.$t('attendance are already taken'),
+                        //             text: this.$t('<p> attendance are already taken</p>')
+                        //         });
+                        // }
 
                     }).catch(err => {
 

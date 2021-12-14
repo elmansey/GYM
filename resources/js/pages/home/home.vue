@@ -12,13 +12,23 @@
                     <div class="card-body">
                         <h4 class="card-title">{{ $t('Membership stats')}}</h4>
                         <div class="dashboard-line-chart">
-                            <chartist
+                            <!-- <chartist
                                     class="ct-4 flot-chart-container"
                                     ratio="ct-major-second"
                                     type="Line"
                                     :data="chart5.data"
                                     :options="chart5.options">
-                            </chartist>
+                            </chartist> -->
+
+                                <GChart
+                                    class="chart-overflow" 
+                                    id="bar-chart1"
+                                    type="ColumnChart"
+                                    :data="bar_chart.chartData_1"
+                                    :options="bar_chart.options_1"
+                                    />
+                                        
+
                         </div>
                     </div>
                 </div>
@@ -213,9 +223,12 @@ import * as Chartist from 'chartist';
 import { GChart } from 'vue-google-charts'
  import moment from "moment";
 
+
 export default {
+    
     data() {
         return {
+
             isLoadig:false,
             membersNumbers:'',
             staffNumber:'',
@@ -228,38 +241,73 @@ export default {
 
 
             pie_chart: {
-                chartData_2: [
-                    ['gender', 'number'],
+                    chartData_2: [
+                        ['gender', 'number'],
 
-                ],
-                options_2: {
-                title: this.$t('gender stats'),
-                width:'80%',
-                height: 200,
-                colors: ["#191919", '#2D4263']
-            },
-        },
-
-
-        chart5 : {
-            data: {
-                labels: [],
-                series: []
+                    ],
+                    options_2: {
+                    title: this.$t('gender stats'),
+                    width:'80%',
+                    height: 200,
+                    colors: ["#191919", '#2D4263']
+                },
             },
 
-            options: {
-                low: 0,
-                showArea: true,
+
+            chart5 : {
+                data: {
+                    labels: [],
+                    series: []
+                },
+
+                options: {
+                fullWidth: true,
+                chartPadding: {
+                    right: 10
+                },
+                lineSmooth: Chartist.Interpolation.cardinal({
+                    fillHoles: true
+                }),
+                low: 0
+                }
+                
             },
-        },
 
 
-     }
-    },
+        bar_chart: {
+            chartData_1: [  
+                [this.$t("membership"), this.$t("number"), { role: "style" } ],
+               
+            ],
+            options_1:  {
+            width:'100%',
+            height: 250,
+            bar: {groupWidth: "30%"},
+            // legend: { position: "none" },
+            }
+      },
+
+
+    
+    
+
+
+   
+
+
+    }
+},
+
+
+
+
+
+
 
     components:{
-        GChart:GChart
+        GChart:GChart,
     },
+
 
     beforeMount() {
 
@@ -282,8 +330,9 @@ export default {
 
                     // var randomColor = '#'+Math.floor(Math.random()*16777215).toString(16);
                     Object.entries(item).map((val,k) => {
-                        this.chart5.data.labels.push([val[0]]);
-                        this.chart5.data.series.push([val[1]]);
+                         
+                        this.bar_chart.chartData_1.push([val[0],val[1],'#212121']);
+                        
                     })
                       this.isLoadig = true
                 })

@@ -67,6 +67,7 @@
     "RF code": "RF code",
     "start date": "start data",
     "membership": "membership",
+    "number": "number",
     "payment pattern": "payment pattern",
     "membership price": "membership price",
     "Subscription period": "Subscription period",
@@ -214,8 +215,8 @@
     "Search or choose": "Search or choose",
     "copied : ": "copied : ",
     "copy  : ": "copy  : ",
-    "<p> attendance are already taken</p>": "<p> attendance are already taken</p>",
-    "attendance are already taken": "attendance are already taken",
+    "attendance already taken": "attendance already taken",
+    "taken": "taken",
     "Leave": "Leave",
     "Come": "Come",
     "Delete product": "Delete product",
@@ -359,33 +360,8 @@
     "attendance fail": "attendance fail",
     "edit-member-in-gym": "edit-member-in-gym",
     "freezeMemberAccountList": "freezeMemberAccountList",
-    "freezeMemberAccount" : "freezeMemberAccount"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    "freezeMemberAccount": "freezeMemberAccount",
+    "expire": "expire"
 
 
 
