@@ -44,14 +44,14 @@ class MembershipsController extends Controller
         $membership = Memberships::create($membership);
 
 
-         //save logs
-         $userId = auth()->user()->id;
-         $title  = 'has added a new membership ';
-         $date = Carbon::now('Africa/Cairo')->format('D, M, d Y H:i:s A');
-         $this->saveLogs($userId,$title,$date);
+        //save logs
+        $userId = auth()->user()->id;
+        $title  = 'has added a new membership ';
+        $date = Carbon::now('Africa/Cairo')->format('D, M, d Y H:i:s A');
+        $this->saveLogs($userId, $title, $date);
 
 
-        return  response()->json(['success' => true, 'membership' =>new  MembershipsRersource($membership) ], 200);
+        return  response()->json(['success' => true, 'membership' => new  MembershipsRersource($membership)], 200);
     }
 
     public function getMembershipsById($id)
@@ -94,17 +94,14 @@ class MembershipsController extends Controller
     }
 
 
-    public function IsAllowFuatureInThisMembership($id){
+    public function IsAllowFuatureInThisMembership($id)
+    {
 
-        $membership = Memberships::where('id','=',$id)->first();
+        $membership = Memberships::where('id', '=', $id)->first();
 
 
-        $allow =  $membership['Membership_private_Features'] == true ? true : false ;
+        $allow =  $membership['Membership_private_Features'] == true ? true : false;
 
-         return response()->json(['success' => true , 'memberShip' => $membership,'allow' => $allow],200);
-
+        return response()->json(['success' => true, 'memberShip' => $membership, 'allow' => $allow], 200);
     }
-
-
-
 }

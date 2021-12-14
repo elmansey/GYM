@@ -9,17 +9,17 @@ use Illuminate\Http\Request;
 class activityLogsController extends Controller
 {
 
-    public function index (){
+    public function index()
+    {
 
         $history = activity_logs::with('userRelation')->orderBy('id', 'DESC')->get();
-        return  response()->json(['success' => true , 'history' => $history]);
-
+        return  response()->json(['success' => true, 'history' => $history]);
     }
 
-    public function lastLogs (){
+    public function lastLogs()
+    {
 
         $history = activity_logs::with('userRelation')->orderBy('id', 'DESC')->take(10)->get();
-        return  response()->json(['success' => true , 'lastLogs' => $history]);
-
+        return  response()->json(['success' => true, 'lastLogs' => $history]);
     }
 }

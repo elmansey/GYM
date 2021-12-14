@@ -21,7 +21,7 @@ class membershipsDefaultSeeder extends Seeder
         DB::table('memberships')->delete();
 
         $memberShips  = Memberships::create([
-           'name'=>'golden',
+            'name' => 'golden',
             'payment' => 'Monthly',
             'Membership_price'  => 2000,
             'Membership_private_Features' => true
@@ -29,12 +29,11 @@ class membershipsDefaultSeeder extends Seeder
         ]);
 
         $memberShips  = Memberships::create([
-            'name'=>'Normal',
+            'name' => 'Normal',
             'payment' => 'Monthly',
             'Membership_price'  =>  800,
             'Membership_private_Features' => false
 
         ]);
-
     }
 }

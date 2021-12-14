@@ -18,14 +18,14 @@ class staffResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'Personal_uuid' => $this->Personal_uuid,
-            'phone'	 => $this->phone,
-            'user_name'	 => $this->user_name,
+            'phone'     => $this->phone,
+            'user_name'     => $this->user_name,
             'email' => $this->email,
             'profile_picture' => $this->profile_picture,
             'qr_code' => $this->qr_code,
-            'roles'	 => $this->roles,
-            'isActive'	 => $this->isActive,
-            'RF_code'	 => $this->RF_code,
+            'roles'     => $this->roles,
+            'isActive'     => $this->isActive,
+            'RF_code'     => $this->RF_code,
         ];
     }
 }

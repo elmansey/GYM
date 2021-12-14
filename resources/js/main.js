@@ -7,11 +7,9 @@ import VueFeather from "vue-feather";
 import router from "./router";
 import { store } from "./store";
 
-
 import "vue-select/dist/vue-select.css";
 import vSelect from "vue-select";
 Vue.component("v-select", vSelect);
-
 
 import excel from "vue-excel-export";
 
@@ -56,9 +54,9 @@ const messages = { en: en, ar: ar };
 const locale =
     localStorage.getItem("currentLanguage") &&
     localeOptions.filter(x => x.id === localStorage.getItem("currentLanguage"))
-    .length > 0 ?
-    localStorage.getItem("currentLanguage") :
-    defaultLocale;
+        .length > 0
+        ? localStorage.getItem("currentLanguage")
+        : defaultLocale;
 const i18n = new VueI18n({
     locale: locale,
     fallbackLocale: "en",
@@ -128,16 +126,11 @@ Vue.mixin({
         can: function(permission) {
             var perm = store.getters.authUserRole;
 
-
             if (perm != null) {
                 var len = perm.length;
             }
 
-
-
             let FinalPer = [];
-
-
 
             for (var i = 0; i < len; i++) {
                 store.getters.authUserRole[i].permission.forEach(
@@ -148,13 +141,8 @@ Vue.mixin({
             }
 
             store.getters.authCustomPermission.map((v, k) => {
-                FinalPer.push(v.name)
-
-            })
-
-
-
-
+                FinalPer.push(v.name);
+            });
 
             let FinalPerLen = FinalPer.length;
             for (var t = 0; t < FinalPerLen; t++) {

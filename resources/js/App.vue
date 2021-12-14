@@ -43,27 +43,21 @@ export default {
     },
   },
   beforeMount() {
-   
+    //     let defaultDirection = "rtl";
+    //     let defaultLanguage = "ar";
+    //    localStorage.setItem("direction", defaultDirection);
+    //    localStorage.setItem("currentLanguage", defaultLanguage);
 
-  //     let defaultDirection = "rtl";
-  //     let defaultLanguage = "ar";
-  //    localStorage.setItem("direction", defaultDirection);
-  //    localStorage.setItem("currentLanguage", defaultLanguage);
-
-
-  //    const direction = getDirection();
-  //   if (direction.isRtl) {
-  //    document.body.classList.add("rtl");
-  //    document.dir = "rtl";
-  //    document.body.classList.remove("ltr");
-  //  } else {
-  //    document.body.classList.add("ltr");
-  //    document.dir = "ltr";
-  //    document.body.classList.remove("rtl");
-  //   }
-
-
-
+    //    const direction = getDirection();
+    //   if (direction.isRtl) {
+    //    document.body.classList.add("rtl");
+    //    document.dir = "rtl";
+    //    document.body.classList.remove("ltr");
+    //  } else {
+    //    document.body.classList.add("ltr");
+    //    document.dir = "ltr";
+    //    document.body.classList.remove("rtl");
+    //   }
 
     // get count not read
     var path = firebase.database().ref("notification");

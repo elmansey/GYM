@@ -14,7 +14,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable implements JWTSubject
 {
-    use HasApiTokens, HasFactory, Notifiable , HasRoles;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -64,7 +64,7 @@ class User extends Authenticatable implements JWTSubject
     }
 
 
-   public function getJWTCustomClaims()
+    public function getJWTCustomClaims()
     {
         return [];
     }
@@ -77,27 +77,19 @@ class User extends Authenticatable implements JWTSubject
         parent::boot();
 
 
-        static::creating(function($model){
+        static::creating(function ($model) {
 
-            if(empty($model->Personal_uuid)){
+            if (empty($model->Personal_uuid)) {
                 $model->Personal_uuid = Str::uuid();
             }
-
         });
-
     }
 
 
 
-    public function messageTeamRelationTo(){
+    public function messageTeamRelationTo()
+    {
 
-        return $this->hasMany(teamChatMessage::class,'from');
-
+        return $this->hasMany(teamChatMessage::class, 'from');
     }
-
-
-
-
-
-
 }

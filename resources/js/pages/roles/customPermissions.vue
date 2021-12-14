@@ -128,80 +128,77 @@
 <script>
 import axios from "axios";
 export default {
-    data() {
-        return {
-            options: [],
-            permission: [],
-            custom: {
-                permissinonChoose: [],
-                user: "",
-            },
-            isLoading: false,
-        };
-    },
+  data() {
+    return {
+      options: [],
+      permission: [],
+      custom: {
+        permissinonChoose: [],
+        user: "",
+      },
+      isLoading: false,
+    };
+  },
 
-    beforeMount() {
+  beforeMount() {
+    axios
+      .get("createRole")
+      .then((res) => {
+        this.permission = res.data.permission;
+        this.isLoading = true;
+      })
+      .catch((err) => {});
+
+    axios
+      .get("getAllUserToCustomPermission")
+      .then((res) => {
+        this.options = res.data.users;
+      })
+      .catch((err) => {});
+  },
+  methods: {
+    handelSaveData() {
+      if (this.custom.user == null || this.custom.user == "") {
+        Toast.fire({
+          icon: "error",
+          title: this.$t("There are empty fields"),
+        });
+      } else {
+        let formData = new FormData();
+
+        formData.append(
+          "permissions",
+          JSON.stringify(this.custom.permissinonChoose)
+        );
+        formData.append("user", JSON.stringify(this.custom.user));
+
         axios
-            .get("createRole")
-            .then((res) => {
-                this.permission = res.data.permission;
-                this.isLoading = true;
-            })
-            .catch((err) => { });
-
-        axios
-            .get("getAllUserToCustomPermission")
-            .then((res) => {
-                this.options = res.data.users;
-            })
-            .catch((err) => { });
-    },
-    methods: {
-        handelSaveData() {
-            if (
-                this.custom.user == null ||
-                this.custom.user == ""
-            ) {
-                Toast.fire({
-                    icon: "error",
-                    title: this.$t("There are empty fields"),
-                });
-            } else {
-                let formData = new FormData();
-
-                formData.append(
-                    "permissions",
-                    JSON.stringify(this.custom.permissinonChoose)
-                );
-                formData.append("user", JSON.stringify(this.custom.user));
-
-                axios
-                    .post("assignCustomPermissions", formData)
-                    .then((res) => {
-                        if (res.data.success) {
-                            Toast.fire({
-                                icon: "success",
-                                title: this.$t("Permissions allowed successfully"),
-                            });
-                        }
-                    })
-                    .catch((err) => { });
+          .post("assignCustomPermissions", formData)
+          .then((res) => {
+            if (res.data.success) {
+              Toast.fire({
+                icon: "success",
+                title: this.$t("Permissions allowed successfully"),
+              });
             }
-        },
-
-        getOldCustomPermission() {
-            axios
-                .get(`getOldCustomPermission/${this.custom.user.id}`)
-                .then((res) => {
-                    if (res.data.success) {
-                        this.custom.permissinonChoose = [];
-                        res.data.oldPermission.map((v, k) => {
-                            this.custom.permissinonChoose.push(v.permission_relassion);
-                        });
-                    }
-                })
-                .catch((err) => { });
-        },
+          })
+          .catch((err) => {});
+      }
     },
+
+    getOldCustomPermission() {
+      axios
+        .get(`getOldCustomPermission/${this.custom.user.id}`)
+        .then((res) => {
+          if (res.data.success) {
+            this.custom.permissinonChoose = [];
+            res.data.oldPermission.map((v, k) => {
+              this.custom.permissinonChoose.push(v.permission_relassion);
+            });
+          }
+        })
+        .catch((err) => {});
+    },
+  },
 };
 </script>

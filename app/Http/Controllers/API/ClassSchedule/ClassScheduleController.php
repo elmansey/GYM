@@ -34,7 +34,7 @@ class ClassScheduleController extends Controller
     {
 
 
-        
+
         $request['days'] = json_decode($request->days, true);
 
         $validator = validator::make($request->all(), [
@@ -58,13 +58,13 @@ class ClassScheduleController extends Controller
 
         $days = [];
 
-       
+
         foreach ($request->days as $k => $v) {
 
             $days[] = $v;
         }
 
-      
+
         $class = new ClassSchedule();
         $class->staffName = $request->staffName;
         $class->startingTime =  date("h:i:s", strtotime($request->startingTime));
@@ -79,7 +79,7 @@ class ClassScheduleController extends Controller
         $userId = auth()->user()->id;
         $title  = 'has added a new class ';
         $date = Carbon::now('Africa/Cairo')->format('D, M, d Y H:i:s A');
-        $this->saveLogs($userId,$title,$date);
+        $this->saveLogs($userId, $title, $date);
 
 
         return response()->json(['success' => true, 'class' => new class_scheduleResource($class)]);
@@ -132,7 +132,7 @@ class ClassScheduleController extends Controller
 
 
 
-        return response()->json(['success' => true, 'class' => new class_scheduleResource($class) ]);
+        return response()->json(['success' => true, 'class' => new class_scheduleResource($class)]);
     }
 
 
@@ -181,133 +181,116 @@ class ClassScheduleController extends Controller
     }
 
 
-    public function getClassInDays(){
+    public function getClassInDays()
+    {
 
         $classes = ClassSchedule::all();
 
-        $Saturday=[];
-        $Sunday=[];
-        $Monday=[];
-        $Tuesday=[];
-        $Wednesday=[];
-        $Thursday=[];
-        $Friday=[];
+        $Saturday = [];
+        $Sunday = [];
+        $Monday = [];
+        $Tuesday = [];
+        $Wednesday = [];
+        $Thursday = [];
+        $Friday = [];
 
         $cl = [];
         $daysName = [];
-        foreach($classes as $k => $va){
-            
-            foreach($va['days'] as $kay => $value){
+        foreach ($classes as $k => $va) {
+
+            foreach ($va['days'] as $kay => $value) {
 
 
-                if($value['name'] == 'Saturday'){
+                if ($value['name'] == 'Saturday') {
 
                     $Saturday[] = new classSceduleResource($va);
+                } else if ($value['name'] == 'Sunday') {
 
-                }
-                 else if($value['name'] == 'Sunday'){
-
-                  $Sunday[]  = new classSceduleResource($va);
-                 }
-                else if($value['name'] == 'Monday'){
+                    $Sunday[]  = new classSceduleResource($va);
+                } else if ($value['name'] == 'Monday') {
                     $Monday[]  = new classSceduleResource($va);
-
-                }
-               else if($value['name'] == 'Tuesday'){
+                } else if ($value['name'] == 'Tuesday') {
                     $Tuesday[]  = new classSceduleResource($va);
-
-                }
-               else if($value['name'] == 'Wednesday'){
+                } else if ($value['name'] == 'Wednesday') {
                     $Wednesday[]  = new classSceduleResource($va);
-
-                }
-               else if($value['name'] == 'Thursday'){
+                } else if ($value['name'] == 'Thursday') {
                     $Thursday[]  = new classSceduleResource($va);
-
-                }
-               else if($value['name'] == 'Friday'){
+                } else if ($value['name'] == 'Friday') {
                     $Friday[]  = new classSceduleResource($va);
-
                 }
-
             }
-
-
-
         }
 
 
 
 
         return response()->json([
-            'success'=>true,
-            'classes'=>
-            ['saturdayClasses' => $Saturday,
-            'sundayClasses' => $Sunday,
-            'mondayClasses' => $Monday,
-            'tuesdayClasses' => $Tuesday,
-            'wednesdayClasses' => $Wednesday,
-            'thursdayClasses' => $Thursday,
-            'fridayClasses' => $Friday,]
+            'success' => true,
+            'classes' =>
+            [
+                'saturdayClasses' => $Saturday,
+                'sundayClasses' => $Sunday,
+                'mondayClasses' => $Monday,
+                'tuesdayClasses' => $Tuesday,
+                'wednesdayClasses' => $Wednesday,
+                'thursdayClasses' => $Thursday,
+                'fridayClasses' => $Friday,
+            ]
 
 
-        ],200);
-
-
+        ], 200);
     }
 
-    public function getClassToSelect(){
+    public function getClassToSelect()
+    {
 
         $classes = ClassSchedule::all();
 
 
-        foreach($classes as $k => $v){
+        foreach ($classes as $k => $v) {
 
-            $v['countMember'] = count( members_extra_information::where('class_id','=',$v['id'])->get());
+            $v['countMember'] = count(members_extra_information::where('class_id', '=', $v['id'])->get());
         }
 
 
 
 
-        return  response()->json(['success'=>true,'classes'=> class_scheduleResourceToGetCountMember::collection($classes)]);
+        return  response()->json(['success' => true, 'classes' => class_scheduleResourceToGetCountMember::collection($classes)]);
     }
 
 
 
-    public function getAllClasseRelatedToThisGroup(Request $request){
+    public function getAllClasseRelatedToThisGroup(Request $request)
+    {
 
 
         $GroupIdes = [];
 
-        foreach ($request->all() as $k => $v){
+        foreach ($request->all() as $k => $v) {
 
             $GroupIdes[] = $v['id'];
         }
 
 
 
-        $classes = ClassSchedule::whereIn('group_id',$GroupIdes)->get();
+        $classes = ClassSchedule::whereIn('group_id', $GroupIdes)->get();
         $members = members_extra_information::all();
 
-        foreach ($classes as $k => $v){
+        foreach ($classes as $k => $v) {
             $v['countMember'] = 0;
 
-            foreach ($members as $key => $value){
+            foreach ($members as $key => $value) {
                 $c = is_array($value['class_id']) ? count($value['class_id']) : 0;
 
-                for ($i=0; $i < $c ; $i++) {
-                   if($value['class_id'][$i] == $v['id']){
-                    $v['countMember'] += 1;
-                   }
+                for ($i = 0; $i < $c; $i++) {
+                    if ($value['class_id'][$i] == $v['id']) {
+                        $v['countMember'] += 1;
+                    }
                 }
-
             }
         }
 
 
-        return  response()->json(['success'=>true,'classes'=> class_scheduleResourceToGetCountMember::collection($classes)]);
-
+        return  response()->json(['success' => true, 'classes' => class_scheduleResourceToGetCountMember::collection($classes)]);
     }
-
-
 }

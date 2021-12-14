@@ -44,7 +44,7 @@ class GroupsController extends Controller
         $userId = auth()->user()->id;
         $title  = 'has added a new group ';
         $date = Carbon::now('Africa/Cairo')->format('D, M, d Y H:i:s A');
-        $this->saveLogs($userId,$title,$date);
+        $this->saveLogs($userId, $title, $date);
 
         return  response()->json(['success' => true, 'group' => $group], 200);
     }

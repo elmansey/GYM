@@ -15,9 +15,9 @@ class UserToRoleResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'=> $this->id,
-            'name'=>$this->name,
-            'user_name'=>$this->user_name,
+            'id' => $this->id,
+            'name' => $this->name,
+            'user_name' => $this->user_name,
             'email' => $this->email,
             'phone' => $this->phone,
             'profile_picture' => $this->profile_picture,
@@ -25,6 +25,6 @@ class UserToRoleResource extends JsonResource
             'qr_code' => $this->qr_code,
             'isActive' => $this->isActive,
             'RF_code' => $this->RF_code
-            ];
+        ];
     }
 }

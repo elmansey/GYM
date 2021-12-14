@@ -13,15 +13,16 @@ use App\Models\members_extra_information;
 
 class statisticsController extends Controller
 {
-    public function index(){
+    public function index()
+    {
 
         $membership = Memberships::all();
         $membershipsMemberNumber = [];
 
-        foreach ($membership as $k => $v){
+        foreach ($membership as $k => $v) {
 
 
-            $membershipsMemberNumber[] = [ $v['name'] => count(members_extra_information::where('membership_id','=',$v['id'])->get())];
+            $membershipsMemberNumber[] = [$v['name'] => count(members_extra_information::where('membership_id', '=', $v['id'])->get())];
         }
 
         $membersNumber = members_extra_information::all();
@@ -34,12 +35,12 @@ class statisticsController extends Controller
         $productsNumber = count($productsNumber);
 
         $date = Carbon::now('Africa/Cairo')->toDateString();
-        $attendanceTodayNumber = count(attendance::whereDate('come_dateTime','=',$date)->get());
+        $attendanceTodayNumber = count(attendance::whereDate('come_dateTime', '=', $date)->get());
 
 
 
-        $memeberMalNumber = ['male' => count(members_extra_information::where('gender','male')->get())];
-        $memeberfemaleNumber = ['female' => count(members_extra_information::where('gender','female')->get())];
+        $memeberMalNumber = ['male' => count(members_extra_information::where('gender', 'male')->get())];
+        $memeberfemaleNumber = ['female' => count(members_extra_information::where('gender', 'female')->get())];
 
 
 
@@ -53,13 +54,11 @@ class statisticsController extends Controller
         return response()->json([
             'success' => true,
             'MembershipsStatistics' => $membershipsMemberNumber,
-            'membersNumbers' => $membersNumber ,
+            'membersNumbers' => $membersNumber,
             'staffNumber' => $staffNumber,
             'products'    => $productsNumber,
-            'gender'   =>  [$memeberMalNumber,$memeberfemaleNumber],
+            'gender'   =>  [$memeberMalNumber, $memeberfemaleNumber],
             'attendanceToday' => $attendanceTodayNumber
-         ]);
-
-
+        ]);
     }
 }

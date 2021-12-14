@@ -16,14 +16,14 @@ class class_scheduleResourceToGetCountMember extends JsonResource
     {
         return  [
 
-            'id'	 => $this->id ,
-            'staffName'	 => $this->staffName ,
-            'days'	 => $this->days ,
-            'startingTime'	 => $this-> startingTime,
-            'endingTime'	 => $this->endingTime ,
-            'trainingLocation' => $this-> trainingLocation,
-            'group_relation' => $this-> group_relation,
-            'captain_relation' => $this-> captain_relation,
+            'id'     => $this->id,
+            'staffName'     => $this->staffName,
+            'days'     => $this->days,
+            'startingTime'     => $this->startingTime,
+            'endingTime'     => $this->endingTime,
+            'trainingLocation' => $this->trainingLocation,
+            'group_relation' => $this->group_relation,
+            'captain_relation' => $this->captain_relation,
             'group_id' => $this->group_id,
             'countMember' => $this->countMember,
         ];

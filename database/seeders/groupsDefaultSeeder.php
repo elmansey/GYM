@@ -14,22 +14,19 @@ class groupsDefaultSeeder extends Seeder
         DB::table('groups')->delete();
 
         $group  = Groups::create([
-            'name'=>'Cardio',
+            'name' => 'Cardio',
         ]);
         $group  = Groups::create([
-            'name'=>'Bodybuilding',
+            'name' => 'Bodybuilding',
         ]);
         $group  = Groups::create([
-            'name'=>'WeightLoss',
+            'name' => 'WeightLoss',
         ]);
         $group  = Groups::create([
-            'name'=>'Yoga',
+            'name' => 'Yoga',
         ]);
         $group  = Groups::create([
-            'name'=>'GeneralTraining',
+            'name' => 'GeneralTraining',
         ]);
-
-
-
     }
 }

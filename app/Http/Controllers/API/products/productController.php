@@ -21,39 +21,38 @@ class productController extends Controller
 
         $products = products::all();
 
-        return response()->json(['success' => true , 'products' => $products],200);
+        return response()->json(['success' => true, 'products' => $products], 200);
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
 
 
         $validator = validator::make($request->all(), [
 
-            'product_name' => 'required' ,
-            'product_price' => 'required' ,
-            'Production_Date' => 'required|date' ,
-            'Expiry_date' => 'required|date|after:Production_Date' ,
+            'product_name' => 'required',
+            'product_price' => 'required',
+            'Production_Date' => 'required|date',
+            'Expiry_date' => 'required|date|after:Production_Date',
             'Product_Quantity' => 'required'
         ]);
 
 
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json(['success' => false, 'message' => $validator->errors()]);
         }
 
 
         $fileName = '';
-        if($request->file('product_img')){
+        if ($request->file('product_img')) {
 
             $file = $request->file('product_img');
             $extension = $file->extension();
 
-            $fileName = md5(time().now().rand(1,10)).'.'.$extension;
+            $fileName = md5(time() . now() . rand(1, 10)) . '.' . $extension;
 
-            $file->move('product_img/',$fileName);
-
-
+            $file->move('product_img/', $fileName);
         }
 
         $input = $request->all();
@@ -66,41 +65,38 @@ class productController extends Controller
         $userId = auth()->user()->id;
         $title  = 'has added a new product in store  ' . $product['product_name'];
         $date = Carbon::now('Africa/Cairo')->format('D, M, d Y H:i:s A');
-        $this->saveLogs($userId,$title,$date);
+        $this->saveLogs($userId, $title, $date);
 
 
 
-        return response()->json(['success' => true , 'product' => $product],200);
-
-
-
-
+        return response()->json(['success' => true, 'product' => $product], 200);
     }
 
-    public function getProductById ($id){
+    public function getProductById($id)
+    {
 
         $product = products::find($id);
 
-        return response()->json(['success' => true , 'product' => $product],200);
-
+        return response()->json(['success' => true, 'product' => $product], 200);
     }
 
-    public function update(Request $request,$id){
+    public function update(Request $request, $id)
+    {
 
 
 
         $validator = validator::make($request->all(), [
 
-            'product_name' => 'required' ,
-            'product_price' => 'required' ,
-            'Production_Date' => 'required|date' ,
-            'Expiry_date' => 'required|date|after:Production_Date' ,
+            'product_name' => 'required',
+            'product_price' => 'required',
+            'Production_Date' => 'required|date',
+            'Expiry_date' => 'required|date|after:Production_Date',
             'Product_Quantity' => 'required'
         ]);
 
 
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json(['success' => false, 'message' => $validator->errors()]);
         }
 
@@ -108,19 +104,18 @@ class productController extends Controller
         $input = $request->all();
 
 
-        if($request->hasFile('product_img')){
+        if ($request->hasFile('product_img')) {
 
             $file = $request->file('product_img');
             $extension = $file->extension();
 
-            $fileName = md5(time().now().rand(1,10)).'.'.$extension;
+            $fileName = md5(time() . now() . rand(1, 10)) . '.' . $extension;
 
-            $file->move('product_img/',$fileName);
+            $file->move('product_img/', $fileName);
             $input['product_img'] = $fileName;
+        } else {
 
-        }else{
-
-            $input = Arr::except($input,array('product_img'));
+            $input = Arr::except($input, array('product_img'));
         }
 
 
@@ -133,21 +128,21 @@ class productController extends Controller
         $userId = auth()->user()->id;
         $title  = 'has update in  product  ' . $product['product_name'];
         $date = Carbon::now('Africa/Cairo')->format('D, M, d Y H:i:s A');
-        $this->saveLogs($userId,$title,$date);
+        $this->saveLogs($userId, $title, $date);
 
-        return response()->json(['success' => true , 'product' => $product],200);
-
+        return response()->json(['success' => true, 'product' => $product], 200);
     }
 
-    public function destroy($id){
+    public function destroy($id)
+    {
 
 
-        $oldImg = products::where('id','=',$id)->pluck('product_img');
+        $oldImg = products::where('id', '=', $id)->pluck('product_img');
 
-        $path =  'product_img\\'.$oldImg[0];
+        $path =  'product_img\\' . $oldImg[0];
 
-        if($oldImg[0]){
-            if(file_exists($path)){
+        if ($oldImg[0]) {
+            if (file_exists($path)) {
 
                 unlink($path);
             }
@@ -161,10 +156,8 @@ class productController extends Controller
         $userId = auth()->user()->id;
         $title  = 'has delete  a  product  ' . $product['product_name'] . '  from store ';
         $date = Carbon::now('Africa/Cairo')->format('D, M, d Y H:i:s A');
-        $this->saveLogs($userId,$title,$date);
+        $this->saveLogs($userId, $title, $date);
 
-        return response()->json(['success' => true , 'message' => 'product delete successfully'],200);
+        return response()->json(['success' => true, 'message' => 'product delete successfully'], 200);
     }
-
-
 }

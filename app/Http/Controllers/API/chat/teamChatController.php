@@ -19,38 +19,37 @@ class teamChatController extends Controller
 {
 
 
-    public function __construct(){
+    public function __construct()
+    {
 
         $this->middleware(['auth:api']);
     }
 
 
-    public function getOldMessageInChat(Request $request){
+    public function getOldMessageInChat(Request $request)
+    {
 
-        $messages = teamChatMessage::where('to','=',$request->to)
-        ->Where('from' ,'=' , $request->from)
-        ->orWhere('to' ,'=' , $request->from)
-        ->Where('from' ,'=', $request->to)
-        ->get();
+        $messages = teamChatMessage::where('to', '=', $request->to)
+            ->Where('from', '=', $request->from)
+            ->orWhere('to', '=', $request->from)
+            ->Where('from', '=', $request->to)
+            ->get();
 
-            // return $messages;
+        // return $messages;
 
-        $to = User::where('id','=',$request->to)->first() ;
+        $to = User::where('id', '=', $request->to)->first();
 
-        $from = User::where('id','=',$request->from)->first();
-
-
-
-
-
-        return response()->json(['success' => true , 'messages' => message::collection($messages ), 'to' => $to , 'from' => $from]);
+        $from = User::where('id', '=', $request->from)->first();
 
 
 
 
+
+        return response()->json(['success' => true, 'messages' => message::collection($messages), 'to' => $to, 'from' => $from]);
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
 
         $validator = validator::make($request->all(), [
             'from' => 'required',
@@ -60,7 +59,7 @@ class teamChatController extends Controller
 
 
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json(['success' => false, 'message' => $validator->errors()]);
         }
 
@@ -72,31 +71,28 @@ class teamChatController extends Controller
         $input['send_at'] = Carbon::now('Africa/Cairo')->toDateTimeString();
         $message = teamChatMessage::create($input);
 
-        $to = User::where('id','=',$message->to)->first() ;
+        $to = User::where('id', '=', $message->to)->first();
 
 
 
 
         // return $to fire event;
-        broadcast(new NewMessage($to,$message))->toOthers();
+        broadcast(new NewMessage($to, $message))->toOthers();
         // event(new NewMessage($to,$message));
 
-       return response()->json(['success' => true , 'message' =>new message($message),'to' => $to],200);
-
-
-
-
+        return response()->json(['success' => true, 'message' => new message($message), 'to' => $to], 200);
     }
 
 
-    public function setReadingMessage (Request $request){
+    public function setReadingMessage(Request $request)
+    {
 
         $validator = validator::make($request->all(), [
             'resever' => 'required',
         ]);
 
 
-        if($validator->fails()){
+        if ($validator->fails()) {
 
             return response()->json(['success' => false, 'message' => $validator->errors()]);
         }
@@ -105,37 +101,27 @@ class teamChatController extends Controller
 
 
         //هات الرسايل المجل دخول يكون قيها المستقبل
-        $unReadMessage = teamChatMessage::where('to' ,'=',auth()->user()->id )
-        ->where('from','=',$input['resever'])
-        ->Where('read','=',false)->get();
-            $makeMessageRead = '';
-            foreach($unReadMessage as $k => $v){
+        $unReadMessage = teamChatMessage::where('to', '=', auth()->user()->id)
+            ->where('from', '=', $input['resever'])
+            ->Where('read', '=', false)->get();
+        $makeMessageRead = '';
+        foreach ($unReadMessage as $k => $v) {
 
 
-                if($v['to'] == auth()->user()->id){
+            if ($v['to'] == auth()->user()->id) {
 
-                    $makeMessageRead = teamChatMessage::find($v['id']);
-                    $makeMessageRead->update([
-                        'read' => true,
-                        'reading_at' => Carbon::now('Africa/Cairo')->toDateTimeString(),
+                $makeMessageRead = teamChatMessage::find($v['id']);
+                $makeMessageRead->update([
+                    'read' => true,
+                    'reading_at' => Carbon::now('Africa/Cairo')->toDateTimeString(),
 
-                    ]);
+                ]);
+            }
+        }
 
-                }
+        if ($makeMessageRead) {
 
-             }
-
-             if($makeMessageRead){
-
-                return response()->json(['success' => true , 'messages' =>'readed']);
-
-             }
-
-
-
-
-
+            return response()->json(['success' => true, 'messages' => 'readed']);
+        }
     }
-
-
 }

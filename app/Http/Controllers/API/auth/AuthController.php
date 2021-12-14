@@ -23,8 +23,7 @@ class AuthController extends Controller
     public function __construct()
     {
         // $this->middleware(['JWTchecker'])->except(['login','resetPassword']);
-        $this->middleware(['auth:api'])->except(['login','resetPassword']);
-
+        $this->middleware(['auth:api'])->except(['login', 'resetPassword']);
     }
 
 
@@ -50,13 +49,12 @@ class AuthController extends Controller
 
 
 
-                if ($token = Auth::guard()->attempt($request->only(['email', 'password']))) {
-                    // return 'admin';
-                    return Response()->json(['success' => true, 'data' => $this->CreateNewToken($token)]);
-
-                }else{
-                    return response()->json(['success' => false, 'message' => 'Unauthorized', 'status' => '401']);
-                }
+        if ($token = Auth::guard()->attempt($request->only(['email', 'password']))) {
+            // return 'admin';
+            return Response()->json(['success' => true, 'data' => $this->CreateNewToken($token)]);
+        } else {
+            return response()->json(['success' => false, 'message' => 'Unauthorized', 'status' => '401']);
+        }
     }
 
 
@@ -65,38 +63,36 @@ class AuthController extends Controller
     {
 
 
-            $user = Auth::guard()->user()->roles;
+        $user = Auth::guard()->user()->roles;
 
-            $roles = RolesResource::collection($user);
+        $roles = RolesResource::collection($user);
 
-            $permission = Permission::all();
-
-
-            $role = [];
+        $permission = Permission::all();
 
 
-            $roleAndPermission = [];
-            $customPermission = model_has_permissions::with('permissionRelassion')->where('model_id','=',Auth()->user()->id)->get();
+        $role = [];
 
 
-            for ($i = 0 ; $i < count($roles) ; $i++) {
-                $role[] = $roles[$i];
-            }
-
-            foreach ($role as $kay => $val){
-                // return $val['id'];
-                $roleAndPermission[] = ['id' => $val->id, 'role' => $val->name, 'permission' => PermissionResource::collection(Permission::join('role_has_permissions', 'role_has_permissions.permission_id', '=', 'permissions.id')
-                ->where('role_has_permissions.role_id','=', $val->id)->get())];
-                
-            }
+        $roleAndPermission = [];
+        $customPermission = model_has_permissions::with('permissionRelassion')->where('model_id', '=', Auth()->user()->id)->get();
 
 
-
-
-
-            return response()->json(['success' => true, 'data' =>  new UserToRoleResource(Auth::guard()->user()), 'roleAndPermission' => $roleAndPermission,'customPermission' => $customPermission], 200);
-
+        for ($i = 0; $i < count($roles); $i++) {
+            $role[] = $roles[$i];
         }
+
+        foreach ($role as $kay => $val) {
+            // return $val['id'];
+            $roleAndPermission[] = ['id' => $val->id, 'role' => $val->name, 'permission' => PermissionResource::collection(Permission::join('role_has_permissions', 'role_has_permissions.permission_id', '=', 'permissions.id')
+                ->where('role_has_permissions.role_id', '=', $val->id)->get())];
+        }
+
+
+
+
+
+        return response()->json(['success' => true, 'data' =>  new UserToRoleResource(Auth::guard()->user()), 'roleAndPermission' => $roleAndPermission, 'customPermission' => $customPermission], 200);
+    }
 
 
 
@@ -137,15 +133,4 @@ class AuthController extends Controller
 
         ]);
     }
-
-
-
-
-
-
-
-
-
-
-
 }

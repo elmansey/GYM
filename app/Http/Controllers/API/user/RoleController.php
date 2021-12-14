@@ -26,7 +26,7 @@ class RoleController extends Controller
 
     public function index(Request $request)
     {
-        $roles = Role::where('name' ,'!=' , 'owner')->get();
+        $roles = Role::where('name', '!=', 'owner')->get();
         $permission = [];
 
 
@@ -40,11 +40,12 @@ class RoleController extends Controller
     }
 
 
-    public function getAllUserToCustomPermission(){
+    public function getAllUserToCustomPermission()
+    {
 
-        $users =  User::role(['staff','admin'])->select('name','id')->get();
+        $users =  User::role(['staff', 'admin'])->select('name', 'id')->get();
 
-        return response()->json(['success' => true , 'users' => $users]);
+        return response()->json(['success' => true, 'users' => $users]);
     }
 
     public function create()
@@ -52,7 +53,7 @@ class RoleController extends Controller
 
 
 
-            $permission = Permission::all();
+        $permission = Permission::all();
 
 
         return response()->json(['success' => true, 'permission' => PermissionResource::collection($permission)], 200);
@@ -148,23 +149,24 @@ class RoleController extends Controller
     }
 
 
-    public function getOldCustomPermission($id){
+    public function getOldCustomPermission($id)
+    {
 
-        $oldPermission = model_has_permissions::with('permissionRelassion')->where('model_id','=',$id)->get();
+        $oldPermission = model_has_permissions::with('permissionRelassion')->where('model_id', '=', $id)->get();
 
-        return response()->json(['success' => true,'oldPermission'=> $oldPermission]);
-
+        return response()->json(['success' => true, 'oldPermission' => $oldPermission]);
     }
 
-    public function assignCustomPermissions(Request $request){
+    public function assignCustomPermissions(Request $request)
+    {
 
-        $request['user'] = json_decode($request['user'],true);
-        $request['permissions'] = json_decode($request['permissions'],true);
+        $request['user'] = json_decode($request['user'], true);
+        $request['permissions'] = json_decode($request['permissions'], true);
 
-     
+
         $user = User::find($request->user['id']);
         $user->syncPermissions($request->permissions);
 
-        return response()->json(['success' => true,'user'=>$user]);
+        return response()->json(['success' => true, 'user' => $user]);
     }
 }

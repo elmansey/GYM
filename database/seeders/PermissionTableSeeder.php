@@ -85,8 +85,7 @@ class PermissionTableSeeder extends Seeder
 
 
         foreach ($ownerPermissions as $ownerPermission) {
-            Permission::create([  'name'=> $ownerPermission ]);
+            Permission::create(['name' => $ownerPermission]);
         }
-
     }
 }

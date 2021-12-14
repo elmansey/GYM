@@ -23,24 +23,23 @@ class resetPasswordController extends Controller
     public function  forgetPassword(Request $request)
     {
 
-        $validator = validator::make($request->all(),[
-            'email' => ['required','email'],
+        $validator = validator::make($request->all(), [
+            'email' => ['required', 'email'],
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
 
-            return response()->json(['success' => false , 'message' => $validator->errors()]);
-
+            return response()->json(['success' => false, 'message' => $validator->errors()]);
         }
 
 
 
 
 
-        $user = User::where('email','=',$request->email)->get();
+        $user = User::where('email', '=', $request->email)->get();
 
 
-        if(count($user) > 0){
+        if (count($user) > 0) {
 
             $token = Str::random(64);
 
@@ -50,37 +49,33 @@ class resetPasswordController extends Controller
                 'token' => $token,
                 'created_at' => Carbon::now()
 
-              ]);
+            ]);
 
 
 
-                mail::to($request->email)->send(new resetPassword($token,$request->email));
-                // Mail::send(new resetPassword,['token',$token],function($message) use ($request){
+            mail::to($request->email)->send(new resetPassword($token, $request->email));
+            // Mail::send(new resetPassword,['token',$token],function($message) use ($request){
 
-                //         $message->to($request->email);
-                //         $message->subject('reset password');
+            //         $message->to($request->email);
+            //         $message->subject('reset password');
 
-                // });
+            // });
 
-                return response()->json(['success' => true,'message' => 'sending mail successfully'],200);
-
-
-        }else{
-            return response()->json(['success' => false , 'status' => 404 ,'message' => ['email'=> 'the email is not valid']]);
+            return response()->json(['success' => true, 'message' => 'sending mail successfully'], 200);
+        } else {
+            return response()->json(['success' => false, 'status' => 404, 'message' => ['email' => 'the email is not valid']]);
         }
-
-
-
     }
 
-    public function resetPassword(Request $request){
+    public function resetPassword(Request $request)
+    {
 
 
 
 
-        $validator = validator::make($request->all(),[
+        $validator = validator::make($request->all(), [
 
-            'email'    => ['required','email'],
+            'email'    => ['required', 'email'],
             'token'    => 'required',
             'password'    => 'required|min:6',
             'confirm_password'    => 'required|same:password'
@@ -88,35 +83,29 @@ class resetPasswordController extends Controller
         ]);
 
 
-        if($validator->fails()){
-            return response()->json(['success' => false , 'message' => $validator->errors()]);
+        if ($validator->fails()) {
+            return response()->json(['success' => false, 'message' => $validator->errors()]);
         }
 
 
-            $updatePassword = DB::table('password_resets')
-            ->where(['email'=> $request->email ,'token' => $request->token])->first();
+        $updatePassword = DB::table('password_resets')
+            ->where(['email' => $request->email, 'token' => $request->token])->first();
 
 
-            if(!$updatePassword){
+        if (!$updatePassword) {
 
-                return response()->json(['success' => false , 'status' => 404]);
-            }
-
-            $request['password'] = bcrypt($request['password']);
-
-            $user = User::where('email','=',$request->email)->first();
-
-            $user->password = $request['password'];
-            $user->update();
-
-
-            DB::table('password_resets')->where('email' ,'=', $request->email)->delete();
-            return response()->json(['success' => true , 'message' => 'password reset successfully']);
-
-
-
+            return response()->json(['success' => false, 'status' => 404]);
         }
 
+        $request['password'] = bcrypt($request['password']);
+
+        $user = User::where('email', '=', $request->email)->first();
+
+        $user->password = $request['password'];
+        $user->update();
 
 
+        DB::table('password_resets')->where('email', '=', $request->email)->delete();
+        return response()->json(['success' => true, 'message' => 'password reset successfully']);
+    }
 }

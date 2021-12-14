@@ -15,57 +15,56 @@ class settingController extends Controller
 
     use addActivetyLogInHistory;
 
-    public function index (){
+    public function index()
+    {
 
         $allSetting = setting::all();
 
 
-        $handelSetting['setting'] = $allSetting->flatMap(function($item){
+        $handelSetting['setting'] = $allSetting->flatMap(function ($item) {
 
             return [$item->key  => $item->value];
-        }) ;
+        });
 
-        return response()->json(['success' => true , 'setting' => $handelSetting]);
-
+        return response()->json(['success' => true, 'setting' => $handelSetting]);
     }
 
 
 
-    public function update(Request $request){
+    public function update(Request $request)
+    {
 
-        $setting = $request->all() ;
+        $setting = $request->all();
 
-        if($request->file('logo')){
+        if ($request->file('logo')) {
 
             $file = $request->file('logo');
             $extension = $file->extension();
 
-            $fileName = md5(time().now().rand(1,10)).'.'.$extension;
+            $fileName = md5(time() . now() . rand(1, 10)) . '.' . $extension;
 
-            $file->move(public_path('app_setting'),$fileName);
+            $file->move(public_path('app_setting'), $fileName);
             $setting['logo'] = $fileName;
+        } else {
 
-        }else{
-
-            $setting = Arr::except($setting,array('logo'));
+            $setting = Arr::except($setting, array('logo'));
         }
 
 
 
-        foreach ($setting as $key => $value){
+        foreach ($setting as $key => $value) {
 
 
 
-                    $setting = setting::where('key','=',$key)->first();
-                    $setting->update(['value' => $value]);
-
+            $setting = setting::where('key', '=', $key)->first();
+            $setting->update(['value' => $value]);
         }
 
         //save logs
         $userId = auth()->user()->id;
         $title  = 'has edit  system  setting';
         $date = Carbon::now('Africa/Cairo')->format('D, M, d Y H:i:s A');
-        $this->saveLogs($userId,$title,$date);
+        $this->saveLogs($userId, $title, $date);
 
 
 
@@ -73,6 +72,6 @@ class settingController extends Controller
 
 
 
-        return response()->json(['success' => true , 'message' => 'setting update successfully']);
+        return response()->json(['success' => true, 'message' => 'setting update successfully']);
     }
 }

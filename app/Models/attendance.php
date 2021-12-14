@@ -15,7 +15,4 @@ class attendance extends Model
         'come_dateTime',
         'leave_dateTime',
     ];
-
-
-
 }

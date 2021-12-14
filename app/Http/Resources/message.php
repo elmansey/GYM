@@ -18,10 +18,10 @@ class message extends JsonResource
         return [
 
 
-        'from'  => $this->from,
-        'to'  => $this->to,
-        'message'  => $this->message,
-        'send_at'  => explode(' ',$this->send_at)
+            'from'  => $this->from,
+            'to'  => $this->to,
+            'message'  => $this->message,
+            'send_at'  => explode(' ', $this->send_at)
         ];
     }
 }
