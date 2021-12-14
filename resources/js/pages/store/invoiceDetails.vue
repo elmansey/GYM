@@ -2,12 +2,14 @@
   <div v-if="isLoading">
     <Breadcrumbs :main="$t('Dashboard')" :title="$t('Invoice details')" />
     <!-- Container-fluid starts-->
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-12">
-          <div class="card">
-            <div class="card-body">
-              <div class="invoice">
+
+    <div class="container"  >
+
+      <div class="row" >
+        <div class="col-sm-12" >
+          <div class="card" id="invoice">
+            <div class="card-body" >
+              <div >
                 <div>
                   <div>
                     <div class="row">
@@ -52,7 +54,7 @@
                   </div>
                   <!-- End Invoice Mid-->
                   <div>
-                    <div class="table-responsive invoice-table" id="table">
+                    <div class="table-responsive invoice-table" >
                       <table class="table table-bordered table-striped">
                         <tbody>
 
@@ -67,8 +69,9 @@
                             <td class="Rate">
                               <h6 class="p-2 mb-0">{{ $t('product quantity')}} </h6>
                             </td>
+                            
                             <td class="subtotal">
-                              <h6 class="p-2 mb-0">{{ $t('products price')}}</h6>
+                              <h6 class="p-2 mb-0">{{ $t('Total')}}</h6>
                             </td>
                           </tr>
 
@@ -76,21 +79,18 @@
 
                             <td>
                               <p class="m-0" >
-                                  {{ item.product_name }}
+                                  {{ item.product_name.name}}
                               </p>
                             </td>
-
                             <td>
-                              <p class="m-0" >
-                                  {{ Number(item.product_price) /  Number(item.product_quantity)}}
-                              </p>
+                              <p class="itemtext digits">{{ item.unit_price}}</p>
                             </td>
-
                             <td>
                               <p class="itemtext digits">{{ item.product_quantity}}</p>
                             </td>
+                          
                              <td>
-                              <p class="itemtext digits">{{ item.product_price}}</p>
+                              <p class="itemtext digits">{{ item.recourd_total}}</p>
                             </td>
 
                           </tr>
@@ -169,6 +169,10 @@ export default {
             })
 
         }
+    },
+    methods:{
+        
+    
     }
 }
 </script>

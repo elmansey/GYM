@@ -354,7 +354,13 @@
     "expiry at": "expiry at",
     "start data": "start data",
     "uuid": "uuid",
-    "city" : "city"
+    "city": "city",
+    "The monthly subscription has expired": "The monthly subscription has expired",
+    "attendance fail": "attendance fail",
+    "edit-member-in-gym": "edit-member-in-gym",
+    "freezeMemberAccountList": "freezeMemberAccountList",
+    "freezeMemberAccount" : "freezeMemberAccount"
+
 
 
 

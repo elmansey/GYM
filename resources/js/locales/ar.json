@@ -364,8 +364,15 @@
     "Subscription has expired": "انتهي الاشتراك",
     "subscription status": "حاله الاشتراك",
     "expiry at": "انتهي منذ",
-    "start data" :"تاريخ البدء",
-    "uuid" : "المعرف"
+    "start data": "تاريخ البدء",
+    "uuid": "المعرف",
+    "The monthly subscription has expired": "الاشتراك الشهري انتهي",
+    "attendance fail": "الدخول فشل",
+    "edit-member-in-gym": "تعديل عضو",
+    "freezeMemberAccountList": "قائمه الحسابات المجمده",
+    "freezeMemberAccount": "تجميد حساب"
+
+
 
 
 

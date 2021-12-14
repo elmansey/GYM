@@ -317,6 +317,20 @@
 
                             }
 
+                            if(res.data.status == 'expire'){
+
+
+                                this.$notify({
+                                    group: 'app',
+                                    type: 'error',
+                                    duration: 1000,
+                                    speed: 1000,
+                                    title: '<span style="color:#fff">'+ this.$t('attendance fail')+'</span>',
+                                    text: '<span style="color:#fff;padding:25px">'+ this.$t('The monthly subscription has expired')+'</span>'
+                                });
+
+                            }
+
                             if(res.data.status == 'come'){
 
                                 this.$notify({
@@ -399,6 +413,20 @@
 
 
                         }
+
+                        if(res.data.status == 'expire'){
+
+
+                                this.$notify({
+                                    group: 'app',
+                                    type: 'error',
+                                    duration: 1000,
+                                    speed: 1000,
+                                    title: '<span style="color:#fff">'+ this.$t('attendance fail')+'</span>',
+                                    text: '<span style="color:#fff;padding:25px">'+ this.$t('The monthly subscription has expired')+'</span>'
+                                });
+
+                            }
                         if(res.data.status == 400){
                               this.$notify({
                                     group:"app",

@@ -40,7 +40,15 @@ class attendanceController extends Controller
                         User::where('RF_code', '=', $RF_code)->first() :
                         members_extra_information::where('RF_code', '=', $RF_code)->first();
 
-
+                        if($input['period_Expiry'] && $input['subscription_status'] ){
+                            $today = Carbon::now('Africa/Cairo')->toDateString();
+                            if($input['period_Expiry'] <= $today && $input['subscription_status'] == 'expired'){
+    
+                                return response()->json(['success' => true , 'status' => 'expire' ]);
+                            }
+                        }
+                        
+                        
                     $find = attendance::where('RF_code', '=', $input['RF_code'])->latest()->get()->first();
 
 
@@ -110,6 +118,16 @@ class attendanceController extends Controller
                 $input = User::where('RF_code', '=', $RF_code)->first() ?
                     User::where('RF_code', '=', $RF_code)->first() :
                     members_extra_information::where('RF_code', '=', $RF_code)->first();
+
+
+
+                    if($input['period_Expiry'] && $input['subscription_status'] ){
+                        $today = Carbon::now('Africa/Cairo')->toDateString();
+                        if($input['period_Expiry'] <= $today && $input['subscription_status'] == 'expired'){
+
+                            return response()->json(['success' => true , 'status' => 'expire' ]);
+                        }
+                    }
 
 
                 $date = Carbon::now('Africa/Cairo')->toDateString();

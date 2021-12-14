@@ -22,7 +22,7 @@
                     "path": "/dashboard/profile",
                     "title": "Account",
                     "type": "link",
-                    "permission": "show-setting"
+                    "permission": "Account"
 
                 }
 

@@ -23,15 +23,16 @@ class default_role_Seeder extends Seeder
 
 
         $role = Role::create([ 'name'=> 'admin'  ]);
-        $permissions = DB::table('permissions')->whereIn('id',[ 1,27,28,29,35,36,37,38,40,41,47,48,49,50])->pluck('id','id')->all();
+        $permissions = DB::table('permissions')->whereIn('id',[ 1,22,23,24,25,26,29,35 ,37,40 ,42,43,44,45,47,52,55,57,58])->pluck('id','id')->all();
         $role->syncPermissions($permissions);
 
 
         $role = Role::create([ 'name'=> 'staff'  ]);
-        $permissions = DB::table('permissions')->whereIn('id',[ 1,27,28,29,35,36,37,38,40,41,47,48,49,50])->pluck('id','id')->all();
+        $permissions = DB::table('permissions')->whereIn('id',[ 1,22,23,24,25,26,29,35 ,37,40 ,42,43,44,45,47,52,55,57,58])->pluck('id','id')->all();
         $role->syncPermissions($permissions);
 
 
+       
 
     }
 }
