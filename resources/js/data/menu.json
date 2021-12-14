@@ -36,7 +36,7 @@
             "type": "sub",
             "badgeType": "primary",
             "active": false,
-            "permission": "show-chat-rooms",
+            "permission": "show-team-chat",
             "children": [
 
                 {

@@ -28,7 +28,7 @@
 
 
 
-            <div class="back-btn" @click="toggle_sidebar">
+            <div style="margin-top: -35px;" class="back-btn" @click="toggle_sidebar">
                 <i class="fa fa-angle-left"></i>
             </div>
 
@@ -86,7 +86,7 @@
                             : { margin: '0px' }
                     ]"
                 >
-                    <li class="back-btn">
+                    <li class="back-btn" >
                         <router-link to="/">
                             <img
                                 class="img-fluid"
