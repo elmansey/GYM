@@ -14,7 +14,7 @@
                                     type="Line"
                                     :data="chart5.data"
                                     :options="chart5.options">
-                            </chartist> -->
+                            </chartist>-->
 
               <GChart
                 class="chart-overflow"
@@ -42,7 +42,7 @@
 
                   <div class="row">
                     <div class="col-6">
-                      <p class="">{{ $t("Attendees today") }}</p>
+                      <p class>{{ $t("Attendees today") }}</p>
                     </div>
 
                     <div
@@ -69,7 +69,7 @@
 
                   <div class="row">
                     <div class="col-6">
-                      <p class="">{{ $t("members number") }}</p>
+                      <p class>{{ $t("members number") }}</p>
                     </div>
 
                     <div
@@ -96,7 +96,7 @@
 
                   <div class="row">
                     <div class="col-6">
-                      <p class="">{{ $t("products") }}</p>
+                      <p class>{{ $t("products") }}</p>
                     </div>
 
                     <div
@@ -123,7 +123,7 @@
 
                   <div class="row">
                     <div class="col-6">
-                      <p class="">{{ $t("staff team") }}</p>
+                      <p class>{{ $t("staff team") }}</p>
                     </div>
 
                     <div
@@ -203,15 +203,17 @@
                       ></feather>
                     </td>
                     <td style="padding: 0px">
-                      <span class="font-weight-medium"
-                        ><router-link :to="{ name: 'history' }">{{
-                          (
-                            item.user_relation.name +
-                            " " +
-                            item.title
-                          ).substring(0, 30)
-                        }}</router-link></span
-                      >
+                      <span class="font-weight-medium">
+                        <router-link :to="{ name: 'history' }">
+                          {{
+                            (
+                              item.user_relation.name +
+                              " " +
+                              item.title
+                            ).substring(0, 30)
+                          }}
+                        </router-link>
+                      </span>
                     </td>
                     <td style="padding: 0px" class="text-right">
                       <span class="text-muted">{{ item.date }}</span>
@@ -254,15 +256,15 @@
                       />
                     </td>
                     <td style="padding: 0px">
-                      <span class="font-weight-medium"
-                        ><router-link
+                      <span class="font-weight-medium">
+                        <router-link
                           :to="{
                             name: 'showMemberDetails',
                             params: { memberBaseId: item.id },
                           }"
                           >{{ item.name }}</router-link
-                        ></span
-                      >
+                        >
+                      </span>
                     </td>
                     <td style="padding: 0px" class="text-right">
                       {{ $t("expiry at") }}
@@ -324,24 +326,6 @@ export default {
         },
       },
 
-      chart5: {
-        data: {
-          labels: [],
-          series: [],
-        },
-
-        options: {
-          fullWidth: true,
-          chartPadding: {
-            right: 10,
-          },
-          lineSmooth: Chartist.Interpolation.cardinal({
-            fillHoles: true,
-          }),
-          low: 0,
-        },
-      },
-
       bar_chart: {
         chartData_1: [
           [this.$t("membership"), this.$t("number"), { role: "style" }],
@@ -350,7 +334,7 @@ export default {
           width: "100%",
           height: 250,
           bar: { groupWidth: "30%" },
-          // legend: { position: "none" },
+          legend: { position: "none" },
         },
       },
     };

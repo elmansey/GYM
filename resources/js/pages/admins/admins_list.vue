@@ -4,18 +4,49 @@
 <template>
   <div v-if="isLoadig">
     <Breadcrumbs :main="$t('Dashboard')" :title="$t('admin list')" />
+
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-12">
           <div class="card">
             <div class="card-body">
               <div class="datatable-vue m-0">
+                <div class="row" style="width: 80%">
+                  <div
+                    class="col-xl-4 col-sm-12"
+                    style="margin-bottom: 10px; margin-top: 32px"
+                  >
+                    <div>
+                      <input
+                        class="form-control"
+                        type="text"
+                        placeholder="search by phone number"
+                        v-model="Filter_text"
+                        style="width: 80%"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="col-xl-4 col-sm-12"
+                    style="margin-bottom: 10px; margin-top: 32px"
+                  >
+                    <div>
+                      <input
+                        class="form-control"
+                        type="text"
+                        placeholder="search by  name"
+                        v-model="Filter_name"
+                        style="width: 80%"
+                      />
+                    </div>
+                  </div>
+                </div>
                 <div class="table-responsive vue-smart">
                   <b-table
                     id="tablePrint"
                     show-empty
                     stacked="md"
-                    :items="admins"
+                    :items="adminsSearch"
                     :fields="tablefields"
                     :current-page="currentPage"
                     :per-page="perPage"
@@ -178,7 +209,7 @@ export default {
       perPage: 10,
       pageOptions: [5, 10, 15],
 
-      admins: null,
+      admins: [],
       filter: {
         currentPage: 1,
         totalPages: 0,
@@ -188,6 +219,8 @@ export default {
       isLoadig: false,
       path: "~/profile_pictures/",
       defaultImg: "@/assets/images/dashboard/DefaultProfile.jpg",
+      Filter_text: "",
+      Filter_name: "",
     };
   },
   beforeMount() {
@@ -203,6 +236,23 @@ export default {
       .catch((err) => {});
   },
   created() {},
+  computed: {
+    adminsSearch() {
+      if (this.Filter_text.length > 0) {
+        return this.admins.filter((item) => {
+          //match
+          return item.phone.includes(this.Filter_text.toLowerCase());
+        });
+      } else if (this.Filter_name.length > 0) {
+        return this.admins.filter((item) => {
+          //match
+          return item.name.includes(this.Filter_name.toLowerCase());
+        });
+      } else {
+        return this.admins;
+      }
+    },
+  },
   methods: {
     async EditAdmin(admin) {
       this.$router.push({ name: "updateAdmin", params: { admin } });

@@ -120,7 +120,7 @@
     "select day": "اختر اليوم",
     "select all days": "اختر جميع الايام",
     "captain Name": "اسم المدرب",
-    "group": "المجموغه",
+    "group": "المجموعه",
     "Delete membership": "حذف هذه العضويه",
     "are you sure to delete this membership": "هل انت متاكد من حذف هذه العضويه",
     "Membership private Features": "ميزات العضوية الخاصة",
@@ -218,8 +218,9 @@
     "copy  : ": "نسخ  : ",
     "attendance already taken": " تم تسجيل الحضور اليوم مسبقا",
     "taken": "تم التسجيل",
-    "Leave": "مغادره",
-    "Come": "حضور",
+    "leave": "مغادره",
+    "come": "حضور",
+    "attendance success": "تم تسجيل الحضور بنجاح",
     "Delete product": "حذف المنتج",
     "are you sure to delete this product": "هل انت متاكد من حذف هذا المنتج",
     "product name": "اسم المنتج",
@@ -372,7 +373,8 @@
     "edit-member-in-gym": "تعديل عضو",
     "freezeMemberAccountList": "قائمه الحسابات المجمده",
     "freezeMemberAccount": "تجميد حساب",
-    "expire": "الاشتراك منتهي"
+    "expire": "الاشتراك منتهي",
+    "date of birth": "تاريخ الميلاد"
 
 
 

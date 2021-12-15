@@ -55,7 +55,7 @@ class UserController extends Controller
     public function getAllPersonToAttendance()
     {
 
-        $users = User::select('name', 'RF_code')->get();
+        $users = User::role(['admin','staff'])->select('name', 'RF_code')->get();
         $members = members_extra_information::select('name', 'RF_code')->get();
 
         $users =  array_merge(($users)->toArray(), ($members)->toArray());

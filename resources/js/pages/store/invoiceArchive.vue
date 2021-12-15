@@ -7,12 +7,28 @@
           <div class="card">
             <div class="card-body">
               <div class="datatable-vue m-0">
+                <div class="row" style="width: 80%">
+                  <div
+                    class="col-xl-4 col-sm-12"
+                    style="margin-bottom: 10px; margin-top: 32px"
+                  >
+                    <div>
+                      <input
+                        class="form-control"
+                        type="text"
+                        placeholder="search by phone number"
+                        v-model="Filter_text"
+                        style="width: 80%"
+                      />
+                    </div>
+                  </div>
+                </div>
                 <div class="table-responsive vue-smart">
                   <b-table
                     id="tablePrint"
                     show-empty
                     stacked="md"
-                    :items="product_invoices_archived"
+                    :items="product_invoices_archivedSearch"
                     :fields="tablefields"
                     :current-page="currentPage"
                     :per-page="perPage"
@@ -38,14 +54,14 @@
 
                     <template #cell(action)="data">
                       <div class="col-xl-4 col-md-6 col-sm-12">
-                        <b-button-group size="sm" class="btn-group-pill">
-                          <b-button
+                        <b-button-group size="sm" class="btn-group">
+                          <!-- <b-button
                             variant="outline-danger"
                             @click="
                               deleteInvoiceModel(data.item.id, data.index)
                             "
                             >{{ $t("delete") }}</b-button
-                          >
+                          > -->
                           <b-button
                             variant="outline-success"
                             @click="
@@ -81,7 +97,7 @@
       </div>
     </div>
 
-    <b-modal id="invoiceModel2" hide-footer>
+    <!-- <b-modal id="invoiceModel2" hide-footer>
       <template #modal-title>
         {{ $t("Delete invoice") }}
       </template>
@@ -102,7 +118,7 @@
         @click="deletInvoice()"
         >{{ $t("delete") }}</b-button
       >
-    </b-modal>
+    </b-modal> -->
 
     <b-modal id="restoreModel" hide-footer>
       <template #modal-title>
@@ -182,6 +198,7 @@ export default {
       currentPage: 1,
       perPage: 10,
       pageOptions: [5, 10, 15],
+      Filter_text:""
     };
   },
 
@@ -194,6 +211,18 @@ export default {
         this.isLoadig = true;
       })
       .catch((err) => {});
+  },
+computed: {
+    product_invoices_archivedSearch() {
+      if (this.Filter_text.length > 0) {
+        return this.product_invoices_archived.filter((item) => {
+          //match
+          return item.invoice_number.includes(this.Filter_text);
+        });
+      }  else {
+        return this.product_invoices_archived;
+      }
+    },
   },
 
   methods: {
@@ -219,11 +248,11 @@ export default {
         .catch((err) => {});
     },
 
-    deleteInvoiceModel(id, index) {
-      this.id2 = id;
-      this.key2 = index;
-      this.$bvModal.show("invoiceModel2");
-    },
+    // deleteInvoiceModel(id, index) {
+    //   this.id2 = id;
+    //   this.key2 = index;
+    //   this.$bvModal.show("invoiceModel2");
+    // },
 
     restoreInvoiceInvoiceModel(id, index) {
       this.id2 = id;

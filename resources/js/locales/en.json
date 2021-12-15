@@ -217,8 +217,9 @@
     "copy  : ": "copy  : ",
     "attendance already taken": "attendance already taken",
     "taken": "taken",
-    "Leave": "Leave",
-    "Come": "Come",
+    "leave": "Leave",
+    "come": "Come",
+    "attendance success": "attendance success",
     "Delete product": "Delete product",
     "are you sure to delete this product": "are you sure to delete this product",
     "product name": "product name",
@@ -361,7 +362,8 @@
     "edit-member-in-gym": "edit-member-in-gym",
     "freezeMemberAccountList": "freezeMemberAccountList",
     "freezeMemberAccount": "freezeMemberAccount",
-    "expire": "expire"
+    "expire": "expire",
+    "date of birth": "date of birth"
 
 
 

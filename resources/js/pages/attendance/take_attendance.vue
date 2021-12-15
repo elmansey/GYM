@@ -24,11 +24,10 @@
                       :multiple="false"
                       :taggable="false"
                       style="margin: 0px; padding: 0px"
-                    >
-                    </multiselect>
-                    <small style="color: red" v-if="error.name">{{
-                      error.name[0]
-                    }}</small>
+                    ></multiselect>
+                    <small style="color: red" v-if="error.name">
+                      {{ error.name[0] }}
+                    </small>
                   </div>
 
                   <div class="col-lg-12" style="margin-bottom: 20px">
@@ -37,9 +36,9 @@
                       class="form-control"
                       v-model="attendanceDate.select.time"
                     />
-                    <small style="color: red" v-if="error.time">{{
-                      error.time[0]
-                    }}</small>
+                    <small style="color: red" v-if="error.time">
+                      {{ error.time[0] }}
+                    </small>
                   </div>
 
                   <div class="col-lg-12" style="margin-bottom: 20px">
@@ -51,9 +50,9 @@
                       format="dd-MM-yyyy"
                       v-model="attendanceDate.select.date"
                     ></datepicker>
-                    <small style="color: red" v-if="error.date">{{
-                      error.date[0]
-                    }}</small>
+                    <small style="color: red" v-if="error.date">
+                      {{ error.date[0] }}
+                    </small>
                   </div>
                 </div>
 
@@ -168,7 +167,7 @@
                               ? '../../profile_pictures/' + item.profile_picture
                               : '../../profile_pictures/DefaultProfile.jpg'
                           "
-                          alt=""
+                          alt
                           style="width: 50px; height: 50px"
                           class="
                             img-thumbnail
@@ -200,7 +199,7 @@
                             placement="top"
                           >
                             <p :id="'cop' + index">
-                              {{ $t("copy  : ") + item.RF_code + "  ? " }}
+                              {{ $t("copy : ") + item.RF_code + " ? " }}
                             </p>
                           </b-tooltip>
                         </div>

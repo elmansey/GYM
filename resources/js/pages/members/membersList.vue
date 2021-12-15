@@ -4,19 +4,54 @@
 <template>
   <div v-if="isLoadig">
     <Breadcrumbs :main="$t('Dashboard')" :title="$t('members list')" />
-    <button
-      v-if="can('freezeMemberAccountList')"
-      class="btn btn-primary btn-sm"
-      style="margin-left: 30px; margin-bottom: 15px"
-    >
-      <i class="icofont icofont-snow-alt"></i>
-      <router-link
-        style="color: #fff"
-        :to="{ name: 'freezeMemberAccountList' }"
+    <div class="row" style="width: 80%">
+      <div
+        class="col-xl-4 col-sm-12"
+        style="margin-bottom: 10px; margin-top: 32px"
       >
-        {{ $t("freeze list") }}
-      </router-link>
-    </button>
+        <button
+          v-if="can('freezeMemberAccountList')"
+          class="btn btn-primary btn-sm"
+          style="margin-left: 30px; margin-bottom: 15px"
+        >
+          <i class="icofont icofont-snow-alt"></i>
+          <router-link
+            style="color: #fff"
+            :to="{ name: 'freezeMemberAccountList' }"
+          >
+            {{ $t("freeze list") }}
+          </router-link>
+        </button>
+      </div>
+      <div
+        class="col-xl-4 col-sm-12"
+        style="margin-bottom: 10px; margin-top: 32px"
+      >
+        <div>
+          <input
+            class="form-control"
+            type="text"
+            placeholder="search by Rf code"
+            v-model="Filter_text"
+            style="width:80%"
+          />
+        </div>
+      </div>
+      <div
+        class="col-xl-4 col-sm-12"
+        style="margin-bottom: 10px; margin-top: 32px"
+      >
+        <div>
+          <input
+            class="form-control"
+            type="text"
+            placeholder="search by  name"
+            v-model="Filter_name"
+            style="width:80%"
+          />
+        </div>
+      </div>
+    </div>
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-12">
@@ -29,7 +64,7 @@
                       id="tablePrint"
                       show-empty
                       stacked="md"
-                      :items="members"
+                      :items="memberSearch"
                       :fields="tablefields1"
                       :current-page="currentPage"
                       :per-page="perPage"
@@ -237,12 +272,31 @@ export default {
       id: "",
       keyes: "",
       isLoadig: false,
+      Filter_text: "",
+      Filter_name: "",
     };
   },
   beforeMount() {
     this.getMmebers();
   },
   created() {},
+  computed: {
+    memberSearch() {
+      if (this.Filter_text.length > 0) {
+        return this.members.filter((item) => {
+          //match
+          return item.RF_code.includes(this.Filter_text.toLowerCase());
+        });
+      } else if (this.Filter_name.length > 0) {
+        return this.members.filter((item) => {
+          //match
+          return item.name.includes(this.Filter_name.toLowerCase());
+        });
+      } else {
+        return this.members;
+      }
+    },
+  },
   methods: {
     freezeAccountHandel(id, key) {
       this.freezeAccountId = id;

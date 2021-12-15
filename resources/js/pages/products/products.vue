@@ -10,12 +10,29 @@
           <div class="card">
             <div class="card-body">
               <div class="datatable-vue m-0">
+                <div class="row" style="width: 80%">
+                  <div
+                    class="col-xl-4 col-sm-12"
+                    style="margin-bottom: 10px; margin-top: 32px"
+                  >
+                    <div>
+                      <input
+                        class="form-control"
+                        type="text"
+                        placeholder="search by product name"
+                        v-model="Filter_text"
+                        style="width: 80%"
+                      />
+                    </div>
+                  </div>
+              
+                </div>
                 <div class="table-responsive vue-smart">
                   <b-table
                     id="tablePrint"
                     show-empty
                     stacked="md"
-                    :items="products"
+                    :items="productsSearch"
                     :fields="tablefields"
                     :current-page="currentPage"
                     :per-page="perPage"
@@ -168,6 +185,7 @@ export default {
       id: "",
       elkey: "",
       isLoadig: false,
+      Filter_text: "",
     };
   },
   beforeMount() {
@@ -180,6 +198,18 @@ export default {
       .then((err) => {});
   },
   mounted() {},
+  computed: {
+    productsSearch() {
+      if (this.Filter_text.length > 0) {
+        return this.products.filter((item) => {
+          //match
+          return item.product_name.includes(this.Filter_text);
+        });
+      } else {
+        return this.products;
+      }
+    },
+  },
   methods: {
     DeleteProductModal(id, key) {
       this.id = id;

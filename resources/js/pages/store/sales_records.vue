@@ -29,12 +29,28 @@
           <div class="card">
             <div class="card-body">
               <div class="datatable-vue m-0">
+                <div class="row" style="width: 80%">
+                  <div
+                    class="col-xl-4 col-sm-12"
+                    style="margin-bottom: 10px; margin-top: 32px"
+                  >
+                    <div>
+                      <input
+                        class="form-control"
+                        type="text"
+                        placeholder="search by invoice number"
+                        v-model="Filter_text"
+                        style="width: 80%"
+                      />
+                    </div>
+                  </div>
+                </div>
                 <div class="table-responsive vue-smart">
                   <b-table
                     id="invoiceTable"
                     show-empty
                     stacked="md"
-                    :items="product_invoices"
+                    :items="product_invoicesSearch"
                     :fields="tablefields"
                     :current-page="currentPage"
                     :per-page="perPage"
@@ -54,22 +70,22 @@
 
                     <template #cell(action)="data">
                       <div class="col-xl-4 col-md-6 col-sm-12">
-                        <b-button-group size="sm" class="btn-group-pill">
-                          <b-button
+                        <b-button-group size="sm" class="btn-group">
+                          <!-- <b-button
                             variant="outline-danger"
                             id="PageButton1"
                             @click="
                               deleteInvoiceModel(data.item.id, data.index)
                             "
                             >{{ $t("delete") }}</b-button
-                          >
+                          > -->
                           <b-button
-                            variant="outline-dark"
+                            variant="outline-danger"
                             id="PageButton2"
                             @click="
                               archiveInvoiceModel(data.item.id, data.index)
                             "
-                            >{{ $t("archive") }}</b-button
+                            >{{ $t("delete") }}</b-button
                           >
                         </b-button-group>
                       </div>
@@ -114,12 +130,12 @@
         class="mt-3"
         v-b-modal.modal-sm
         variant="danger"
-        @click="deletInvoice()"
+        @click="archiveInvoice()"
         >{{ $t("delete") }}</b-button
       >
     </b-modal>
 
-    <b-modal id="archiveModel" hide-footer>
+    <!-- <b-modal id="archiveModel" hide-footer>
       <template #modal-title>
         {{ $t("archive invoice") }}
       </template>
@@ -140,7 +156,7 @@
         @click="archiveInvoice()"
         >{{ $t("archive") }}</b-button
       >
-    </b-modal>
+    </b-modal> -->
   </div>
 
   <div
@@ -215,6 +231,7 @@ export default {
       currentPage: 1,
       perPage: 10,
       pageOptions: [5, 10, 15],
+      Filter_text: "",
     };
   },
 
@@ -228,6 +245,18 @@ export default {
         this.isLoadig = true;
       })
       .catch((err) => {});
+  },
+  computed: {
+    product_invoicesSearch() {
+      if (this.Filter_text.length > 0) {
+        return this.product_invoices.filter((item) => {
+          //match
+          return item.invoice_number.match(this.Filter_text);
+        });
+      } else {
+        return this.product_invoices;
+      }
+    },
   },
 
   methods: {
@@ -250,9 +279,9 @@ export default {
             this.product_invoices.splice(this.key, 1);
             this.id = "";
             this.key = "";
-            this.$bvModal.hide("archiveModel");
+            this.$bvModal.hide("invoiceModel");
             Toast.fire({
-              title: this.$t("invoice archived successfully"),
+             title: this.$t("invoice delete successfully"),
               icon: "success",
             });
           }
@@ -260,35 +289,35 @@ export default {
         .catch((err) => {});
     },
 
-    deleteInvoiceModel(id, index) {
+    // deleteInvoiceModel(id, index) {
+    //   this.id = id;
+    //   this.key = index;
+    //   this.$bvModal.show("invoiceModel");
+    // },
+
+    archiveInvoiceModel(id, index) {
       this.id = id;
       this.key = index;
       this.$bvModal.show("invoiceModel");
     },
 
-    archiveInvoiceModel(id, index) {
-      this.id = id;
-      this.key = index;
-      this.$bvModal.show("archiveModel");
-    },
-
-    deletInvoice() {
-      axios
-        .get(`deleteThisInvoice/${this.id}`)
-        .then((res) => {
-          if (res.data.success) {
-            this.product_invoices.splice(this.key, 1);
-            this.id = "";
-            this.key = "";
-            this.$bvModal.hide("invoiceModel");
-            Toast.fire({
-              title: this.$t("invoice delete successfully"),
-              icon: "success",
-            });
-          }
-        })
-        .catch((err) => {});
-    },
+    // deletInvoice() {
+    //   axios
+    //     .get(`deleteThisInvoice/${this.id}`)
+    //     .then((res) => {
+    //       if (res.data.success) {
+    //         this.product_invoices.splice(this.key, 1);
+    //         this.id = "";
+    //         this.key = "";
+    //         this.$bvModal.hide("invoiceModel");
+    //         Toast.fire({
+    //           title: this.$t("invoice delete successfully"),
+    //           icon: "success",
+    //         });
+    //       }
+    //     })
+    //     .catch((err) => {});
+    // },
 
     showDetails(id) {
       this.$router.push({ name: "invoiceDetails", params: { invoiceId: id } });
