@@ -369,59 +369,14 @@ export default {
         .then((res) => {
           if (res.data.success || res.data.status == "taken") {
             this.attendanceAction.unshift(res.data);
-
-            // if(res.data.status == 'leave'){
-
-            //     this.$notify({
-            //         group: 'app',
-            //         type: 'success',
-            //         duration: 1000,
-            //         speed: 1000,
-            //         title: 'attendance success',
-            //         text: 'god bay ' + '<span>' + res.data.how.name+ '</span>' + ' <h6>'+ this.$t('Leave') +'</h6>' +
-            //         'in '+res.data..leave_time
-            //     });
-
-            // }
-
-            // if(res.data.status == 'expire'){
-
-            //     this.$notify({
-            //         group: 'app',
-            //         type: 'error',
-            //         duration: 1000,
-            //         speed: 1000,
-            //         title: '<span style="color:#fff">'+ this.$t('attendance fail')+'</span>',
-            //         text: '<span style="color:#fff;padding:25px">'+ this.$t('The monthly subscription has expired')+'</span>'
-            //     });
-
-            // }
-
-            // if(res.data.status == 'come'){
-
-            //     this.$notify({
-            //         type: 'success',
-            //         group:"app",
-            //         duration: 1000,
-            //           speed: 1000,
-            //         title: 'attendance success',
-            //         text: 'welcome ' + '<span>' + res.data.how.name+ '</span>' + ' <h6>'+ this.$t('Come') +'</h6>' +
-            //         'in '+res.data.attendance.come_time
-            //     });
-
-            // }
+          } else {
+            if (res.data.status == 404) {
+              Toast.fire({
+                icon: "error",
+                title: this.$t("RF code not found"),
+              });
+            }
           }
-
-          // if(res.data.status == 400){
-          //       this.$notify({
-          //             group:"app",
-          //             type: 'danger',
-          //             duration: 1000,
-          //             speed: 1000,
-          //             title: this.$t('attendance are already taken'),
-          //             text: this.$t('<p> attendance are already taken</p>')
-          //         });
-          // }
         })
         .catch((err) => {});
     },
@@ -437,69 +392,15 @@ export default {
       axios
         .post("saveAttendance", formData)
         .then((res) => {
-          if (res.data.success) {
-            if (res.data.status == "leave") {
-              this.$notify({
-                group: "app",
-                type: "success",
-                duration: 10000,
-                speed: 1000,
-                title: "attendance success",
-                text:
-                  "god bay " +
-                  "<span>" +
-                  res.data.how.name +
-                  "</span>" +
-                  " <h6> leave </h6> " +
-                  "in " +
-                  res.data.attendance.leave_time,
+          if (res.data.success || res.data.status == "taken") {
+            this.attendanceAction.unshift(res.data);
+          } else {
+            if (res.data.status == 404) {
+              Toast.fire({
+                icon: "error",
+                title: this.$t("RF code not found"),
               });
             }
-
-            if (res.data.status == "come") {
-              this.$notify({
-                type: "success",
-                group: "app",
-                duration: 10000,
-                speed: 1000,
-                title: "attendance success",
-                text:
-                  "welcome " +
-                  "<span>" +
-                  res.data.how.name +
-                  "</span>" +
-                  " <h6> come </h6> " +
-                  "in " +
-                  res.data.attendance.come_time,
-              });
-            }
-          }
-
-          if (res.data.status == "expire") {
-            this.$notify({
-              group: "app",
-              type: "error",
-              duration: 1000,
-              speed: 1000,
-              title:
-                '<span style="color:#fff">' +
-                this.$t("attendance fail") +
-                "</span>",
-              text:
-                '<span style="color:#fff;padding:25px">' +
-                this.$t("The monthly subscription has expired") +
-                "</span>",
-            });
-          }
-          if (res.data.status == 400) {
-            this.$notify({
-              group: "app",
-              type: "danger",
-              duration: 10000,
-              speed: 1000,
-              title: "attendance are already taken ",
-              text: "<p> attendance are already taken</p>",
-            });
           }
         })
         .catch((err) => {});

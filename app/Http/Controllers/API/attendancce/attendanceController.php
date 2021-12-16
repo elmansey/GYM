@@ -40,6 +40,11 @@ class attendanceController extends Controller
                         User::where('RF_code', '=', $RF_code)->first() :
                         members_extra_information::where('RF_code', '=', $RF_code)->first();
 
+
+                        if(!$input){
+                            return response()->json(['success' => false, 'status' => 404,'message' => 'not found']);
+                        }
+
                     if ($input['period_Expiry']) {
                         $today = Carbon::now('Africa/Cairo')->toDateString();
                         if ($input['period_Expiry'] <= $today) {
@@ -113,7 +118,9 @@ class attendanceController extends Controller
                     User::where('RF_code', '=', $RF_code)->first() :
                     members_extra_information::where('RF_code', '=', $RF_code)->first();
 
-
+                    if(!$input){
+                        return response()->json(['success' => false, 'status' => 404,'message' => 'not found']);
+                    }
 
                 if ($input['period_Expiry']) {
                     $today = Carbon::now('Africa/Cairo')->toDateString();
